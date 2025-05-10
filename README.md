@@ -103,7 +103,7 @@ This framework is licensed under the
 - [Cosmic Breath Calculation](ResearchFiles/Comsic_Breath_Calculation.md)
 - [CU Post-Alignment Capabilities](ResearchFiles/CU-Post-Alignment-Capabilities.md)
 - [Cosmic Calculation Script (Python)](ResearchCodes/CalcCosmic.py)
-- [Cosmic Calculation Script (Python)](ResearchCodes/breathingSim.py)
+- [Cosmic Breath Script (Python)](ResearchCodes/breathingSim.py)
 
 ---
 
