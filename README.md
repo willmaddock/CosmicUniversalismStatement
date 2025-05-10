@@ -96,16 +96,26 @@ This framework is licensed under the
 
 ---
 
-## 📂 Key Research Files
+## 📚 Key Research Files
 
-- [CU Alignment Guide](ResearchFiles/CU_Alignment_Guide.md)
-- [Cosmic Breathing Cycle](ResearchFiles/Cosmic_Breathing_Cycle.md)
-- [Cosmic Breath Calculation](ResearchFiles/Comsic_Breath_Calculation.md)
-- [CU Post-Alignment Capabilities](ResearchFiles/CU-Post-Alignment-Capabilities.md)
-- [Cosmic Calculation Script (Python)](ResearchCodes/CalcCosmic.py)
-- [Cosmic Breath Script (Python)](ResearchCodes/breathingSim.py)
+<details>
+<summary>📝 CU Framework Documents</summary>
 
----
+- [CU Alignment Guide](ResearchFiles/CU_Alignment_Guide.md)  
+- [CU Post-Alignment Capabilities](ResearchFiles/CU-Post-Alignment-Capabilities.md)  
+- [Cosmic Breathing Cycle](ResearchFiles/Cosmic_Breathing_Cycle.md)  
+- [Cosmic Breath Calculation](ResearchFiles/Cosmic_Breath_Calculation.md) <!-- typo fixed -->
+
+</details>
+
+<details>
+<summary>🧮 Python Simulation Scripts</summary>
+
+- [Cosmic Calculation Script](ResearchCodes/CalcCosmic.py)  
+- [Cosmic Breath Simulation](ResearchCodes/breathingSim.py)  
+- [Forecasting Model](ResearchCodes/forcastingModel.py)
+
+</details>
 
 ## 🌱 Purpose
 
