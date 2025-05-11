@@ -19,7 +19,7 @@ This symbolic equation reflects the CU hierarchy, linking quantum and cosmic tim
 ### Key Insight:
 The "loss of quantum states" (e.g., decoherence) metaphorically signals the transition to Z-TOM, grounding cosmic time in quantum foundations.
 
-For deeper exploration, see the [CU Framework Documentation](/Users/williammaddock/Documents/CosmicUniversalismStatement/Docs/CU_Framework.md).
+For deeper exploration, see the [CU Framework Documentation](Docs/CU_Framework.md). 
 
 ---
 
