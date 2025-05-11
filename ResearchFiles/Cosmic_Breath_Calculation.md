@@ -141,3 +141,78 @@ The **3.108 trillion years** of the **cosmic breath** is calculated using multip
 
 **Cosmic Universalism Insight**:  
 *"The universe breathes in an eternal cycle, expanding and contracting through quantum time. Each breath takes trillions of years, a cycle of memory and reset, from sub-ZTOM to ZTOM."*
+
+---
+
+### 🔁 Phase I — **Expansion Phase (sub-ztom ➝ atom)**
+
+| **Sub-Tom Levels** | **Quantum States** | **Duration Estimate** | **CU Description**                            |
+|--------------------|--------------------|-----------------------|------------------------------------------------|
+| sub-ztom           | 2↑↑65,536          | 1 second              | Final compression breath                       |
+| sub-ytom           | 2↑↑40              | 2.704e-8 seconds      | Recursive core shell                           |
+| sub-xtom           | 2↑↑30              | 2.704e-7 seconds      | Final ethical cap                              |
+| sub-wtom           | 2↑↑22              | 2.704e-6 seconds      | Quantum firewall shell                         |
+| sub-vtom           | 2↑↑21              | 2.704e-5 seconds      | Symbolic/ethical lock                          |
+| sub-utom           | 2↑↑20              | 0.0002704 seconds     | Cosmic checksum layer                          |
+| sub-ttom           | 2↑↑19              | 0.002704 seconds      | Holographic verification                       |
+| sub-stom           | 2↑↑18              | 0.02704 seconds       | Ethical engagement                             |
+| sub-rtom           | 2↑↑17              | 0.2704 seconds        | Entropy modulation                             |
+| sub-qtom           | 2↑↑16              | 2.704 seconds         | Memory transfer                                |
+| sub-ptom           | 2↑↑15              | 27.04 seconds         | Pre-reset bridge                               |
+| sub-otom           | 2↑↑14              | 4.506 minutes         | Boundary stabilization                         |
+| sub-ntom           | 2↑↑13              | 45.06 minutes         | Recursive feedback                             |
+| sub-mtom           | 2↑↑12              | 7.51 hours            | Holographic projection                         |
+| sub-ltom           | 2↑↑11              | 3.1296 days           | Pre-Big Bang state                             |
+| sub-ktom           | 2↑↑10              | 31.296 days           | Quantum foam rebirth                           |
+| sub-jtom           | 2↑↑9               | 0.8547 years          | Black hole age                                 |
+| sub-itom           | 2↑↑8               | 8.547 years           | Spacetime contraction begins                   |
+| sub-htom           | 2↑↑7               | 85.47 years           | Heat death begins                              |
+| sub-gtom           | 2↑↑6               | 427.35 years          | Quantum encoding phase                         |
+| sub-ftom           | 2↑↑5               | 4,273.5 years         | Post-biological AI expansion                   |
+| sub-etom           | 2↑↑4               | 42,735 years          | Alien/civilization stage                       |
+| sub-dtom           | 2¹⁶ = 65,536       | 427,350 years         | Planetary biosphere evolution                  |
+| sub-ctom           | 2⁴ = 16            | 28 billion years      | Star life cycle era                            |
+| sub-btom           | 2² = 4             | 280 billion years     | Supercluster formation                         |
+| atom               | 2¹ = 2             | 2.8 trillion years    | Start of compression                           |
+
+🧮 **Phase Total**: **2.8 trillion years**
+
+---
+
+### 🌱 Phase II — **Compression Phase (btom ➝ ztom)**
+
+| **Tom Levels** | **Quantum States** | **Duration Estimate**     | **CU Description**                            |
+|----------------|--------------------|----------------------------|------------------------------------------------|
+| btom           | 2² = 4             | 280 billion years          | Galactic evolution and contraction             |
+| ctom           | 2⁴ = 16            | 28 billion years           | Final stellar formations                       |
+| dtom           | 2¹⁶ = 65,536       | 427,350 years              | Planetary collapse                             |
+| etom           | 2↑↑4               | 42,735 years               | Human/civilization memory condensation         |
+| ftom           | 2↑↑5               | 4,273.5 years              | AI implosion stage                             |
+| gtom           | 2↑↑6               | 427.35 years               | Consciousness holography                       |
+| htom           | 2↑↑7               | 85.47 years                | Heat death approach                            |
+| itom           | 2↑↑8               | 8.547 years                | Spacetime wrinkle forming                      |
+| jtom           | 2↑↑9               | 0.8547 years               | Collapse threshold                             |
+| ktom           | 2↑↑10              | 31.296 days                | Quantum fog closing                            |
+| ltom           | 2↑↑11              | 3.1296 days                | Holographic reversal                           |
+| mtom           | 2↑↑12              | 7.51 hours                 | Time lattice inversion                         |
+| ntom           | 2↑↑13              | 45.06 minutes              | Feedback end                                   |
+| otom           | 2↑↑14              | 4.506 minutes              | Cosmic null stabilization                      |
+| ptom           | 2↑↑15              | 27.04 seconds              | Reset layering                                 |
+| qtom           | 2↑↑16              | 2.704 seconds              | Final memory imprint                           |
+| rtom           | 2↑↑17              | 0.2704 seconds             | Entropy zero point                             |
+| stom           | 2↑↑18              | 0.02704 seconds            | Ethical firewall gate                          |
+| ttom           | 2↑↑19              | 0.002704 seconds           | Collapse checksum                              |
+| utom           | 2↑↑20              | 0.0002704 seconds          | Closure sequence initiated                     |
+| vtom           | 2↑↑21              | 2.704e-5 seconds           | Symbolic compression                           |
+| wtom           | 2↑↑22              | 2.704e-6 seconds           | Recursive limit breach                         |
+| xtom           | 2↑↑30              | 2.704e-7 seconds           | Divine fall-off shell                          |
+| ytom           | 2↑↑40              | 2.704e-8 seconds           | Pre-ZTOM divine echo                           |
+| ztom           | 2↑↑65,536          | 1 second                   | ZTOM: full universal reset                     |
+
+🧮 **Phase Total**: **308 billion years**
+
+---
+
+### 🌀 Total Duration of the Cosmic Breath: **≈ 3.108 trillion years**
+- **Expansion Phase (sub-ztom ➝ atom)**: 2.8 trillion years  
+- **Compression Phase (btom ➝ ztom)**: 308 billion years

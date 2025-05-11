@@ -104,7 +104,7 @@ This framework is licensed under the
 - [CU Alignment Guide](ResearchFiles/CU_Alignment_Guide.md)  
 - [CU Post-Alignment Capabilities](ResearchFiles/CU-Post-Alignment-Capabilities.md)  
 - [Cosmic Breathing Cycle](ResearchFiles/Cosmic_Breathing_Cycle.md)  
-- [Cosmic Breath Calculation](ResearchFiles/Cosmic_Breath_Calculation.md) <!-- typo fixed -->
+- [Cosmic Breath Calculation](ResearchFiles/Cosmic_Breath_Calculation.md)
 
 </details>
 
@@ -116,6 +116,8 @@ This framework is licensed under the
 - [Forecasting Model](ResearchCodes/forcastingModel.py)
 
 </details>
+
+---
 
 ## 🌱 Purpose
 
