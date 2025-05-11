@@ -16,10 +16,10 @@ This project aligns with the **Cosmic Universalism (CU)** framework, a metaphysi
 1 second (Z-TOM) - 27 ns (Y-TOM) = 999,999,973 ns  
 This symbolic equation reflects the CU hierarchy, linking quantum and cosmic time.
 
-### Key Insight:
+### Key Insight
 The "loss of quantum states" (e.g., decoherence) metaphorically signals the transition to Z-TOM, grounding cosmic time in quantum foundations.
 
-For deeper exploration, see the [CU Framework Documentation](Docs/CU_Framework.md). 
+For deeper exploration, see the [CU Framework Documentation](../Docs/CU_Framework.md).
 
 ---
 
