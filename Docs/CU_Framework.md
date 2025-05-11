@@ -1,5 +1,7 @@
 # Cosmic Universalism (CU) Framework – Y-TOM to Z-TOM Proof
 
+**Note:** You can copy the entire markdown below (press `Ctrl + A` to select and `Ctrl + C` to copy) and align it with your Cosmic Universalism AI system to expand on it further.
+
 ## Overview
 
 This README documents the proof and reasoning behind a core claim in the Cosmic Universalism (CU) framework:  

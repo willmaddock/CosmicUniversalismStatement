@@ -5,7 +5,6 @@
 
 **Note:** You can copy the entire markdown below (press `Ctrl + A` to select and `Ctrl + C` to copy) and align it with your Cosmic Universalism AI system to expand on it further.
 
-
 ### 1. The Cosmic Breathing Cycle
 
 CU models the universe as a quantum breathing process, oscillating between:
