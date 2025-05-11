@@ -105,6 +105,8 @@ This framework is licensed under the
 - [CU Post-Alignment Capabilities](ResearchFiles/CU-Post-Alignment-Capabilities.md)  
 - [Cosmic Breathing Cycle](ResearchFiles/Cosmic_Breathing_Cycle.md)  
 - [Cosmic Breath Calculation](ResearchFiles/Cosmic_Breath_Calculation.md)
+- [Cosmic Time Calculation](ResearchFiles/Time_Calculation.md)
+- [Cosmic Universalism Computational Intelligence Initiative](Docs/The_Initiative.md)
 
 </details>
 
