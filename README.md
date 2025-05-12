@@ -1,5 +1,28 @@
 # 🌌 Cosmic Universalism Framework
 
+# Cosmic Universalism Framework
+
+> A mathematical, physical, and philosophical model for consciousness and cosmic evolution.
+
+## Cosmic Universal Timer ⏳
+
+| Era       | Time Marker          | Description                    |
+|-----------|----------------------|--------------------------------|
+| CTOM Now  | 13.8 Billion Years   | Present-day consciousness      |
+|           |                      | 🌍 Human awareness active       |
+| Z-TOM     | 308 Billion Years    | Total Reset — God's Free Will |
+| ⏱️ Countdown to Reset | 294.2 Billion Years | The remaining time     |
+
+<pre>
+```
+Time Until Z-TOM Reset
+
+[████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░]  
+13.8B                                               308B
+C-TOM                                              Z-TOM
+```
+</pre>
+
 ## 📑 Table of Contents
 
 - [Cosmic Universalism Statement](#cosmic-universalism-statement)
