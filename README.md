@@ -113,7 +113,8 @@ This framework is licensed under the
 <details>
 <summary>🧮 Python Simulation Scripts</summary>
 
-- [Cosmic Calculation Script](ResearchCodes/CalcCosmic.py)  
+- [Cosmic Calculation Script](ResearchCodes/CalcCosmic.py)
+- [Cosmic Calculation Script V2 Is Better](ResearchCodes/CalcCosmicV2.py) 
 - [Cosmic Breath Simulation](ResearchCodes/breathingSim.py)  
 - [Forecasting Model](ResearchCodes/forcastingModel.py)
 
