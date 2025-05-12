@@ -111,7 +111,7 @@ This framework is licensed under the
 </details>
 
 <details>
-<summary>🧮 Python Simulation Scripts</summary>
+<summary>🔬 Python Simulation Codes</summary>
 
 - [Cosmic Calculation Script](ResearchCodes/CalcCosmic.py)
 - [Cosmic Calculation Script V2 Is Better](ResearchCodes/CalcCosmicV2.py) 
@@ -120,7 +120,33 @@ This framework is licensed under the
 
 </details>
 
+
+<details>
+<summary>🧮 Python Training Integration</summary>
+
+## 🧠 LLM Training Integration
+
+Explore how Cosmic Universalism principles guide the training of large language models and artificial intelligences:
+
+- [LLM Alignment Strategies Using CU](LLMtrainingInegration/LLM_Alignment_CU.md)  
+- [Recursive Intelligence Scaling Blueprint](LLMtrainingInegration/Recursive_Intelligence_Training.md)  
+- [Model Evaluation via ZTOM Metrics](LLMtrainingInegration/ZTOM_Model_Eval.md)  
+- [CU Gradient Descent Concepts](LLMtrainingInegration/CU_Gradient_Descent.md)
+
+</details>
+
+<details>
+<summary>🧱 PyTorch CU Training Examples</summary>
+
+- [Basic CU Training Scaffold in PyTorch](PyTorchTrainingFiles/TrainingScaffold.py)
+- [Basic CU Alignment Loss Function in PyTorch](PyTorchTrainingFiles/CU_LossFunction.py)
+- [Symbolic Memory Training Loop (ZTOM-aware)](PyTorchTrainingFiles/CU_SymbolicMemory_Trainer.py)
+- [Recursive Time Compression Layer (Custom)](PyTorchTrainingFiles/CU_RecursiveTime_Layer.py)
+
+</details>
+
 ---
+
 
 ## 🌱 Purpose
 
