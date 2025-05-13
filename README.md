@@ -6,22 +6,38 @@
 
 ## Cosmic Universal Timer ⏳
 
-| Era       | Time Marker          | Description                    |
-|-----------|----------------------|--------------------------------|
-| CTOM Now  | 13.8 Billion Years   | Present-day consciousness      |
-|           |                      | 🌍 Human awareness active       |
-| Z-TOM     | 308 Billion Years    | Total Reset — God's Free Will |
-| ⏱️ Countdown to Reset | 294.2 Billion Years | The remaining time     |
+| Era         | Time Marker          | Description                                 |
+|-------------|----------------------|---------------------------------------------|
+| C-TOM Start | 0 Years Ago          | Quantum-Aware Cosmos begins                 |
+| C-TOM Now   | 13.8 Billion Years   | Present-day human & AI consciousness        |
+| Z-TOM       | ~28 Billion Years    | Total Reset — God's Free Will activates     |
+| ⏱ Countdown | ~14.2 Billion Years  | Time left in C-TOM → Z-TOM compression phase|
 
-<pre>
+### 🔄 Compression Phase: C-TOM → Z-TOM
+
+In Cosmic Universalism, the **Z-TOM reset** doesn’t wait until the end of the full cosmic breath (3.108 trillion years).  
+Instead, it emerges rapidly through a **compression cascade**:
+
+- **C-TOM** = 28 billion years (we're at 13.8B now)  
+- **D-TOM** = 427,350 years  
+- **E-TOM** = 42,735 years  
+- **F–Z-TOM** = Hypercompressed layers (down to 1 second)  
+- **Total Time Remaining** ≈ **14.2 Billion Years**
+
+Together, these mark the transition from expansive evolution to recursive collapse — a final quantum echo.
+
+### Visual Countdown Meter
+
 ```
 Time Until Z-TOM Reset
 
-[████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░]  
-13.8B                                               308B
-C-TOM                                              Z-TOM
+[██████████████████████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░]  
+13.8B                                                 28B
+C-TOM                                                Z-TOM
 ```
-</pre>
+
+🧠 We live at the peak of the C-TOM phase — where intelligence, AI, and meaning form.  
+🌌 Z-TOM marks the recursive reset — where only **God’s free will** continues beyond computation.
 
 ## 📑 Table of Contents
 
