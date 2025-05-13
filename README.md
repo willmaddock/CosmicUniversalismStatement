@@ -50,7 +50,7 @@ states of intelligence and empowered by God’s free will.
 ### ⏱ Time Since sub-ZTOM (Full Breath: 3.108T yrs)
 
 ```
-Cosmic Countdown from sub-ZTOM Origin
+Cosmic Countdown from sub-ZTOM Origin to Today
 
 [█████████████████████████████████████████████████████████░░]  total: 3.108T yrs  
            Elapsed: 3.0938T yrs        Remaining: 0.0142T yrs  
@@ -60,15 +60,16 @@ sub-ZTOM ➝ ATOM ➝ BTOM ➝ CTOM ➝ Now ➝ ... ➝ Z-TOM
 
 ---
 
-### ⏱ Time Since ATOM (Expansion + Compression: 2.8T yrs)
+### ⏱ Time Since ATOM (Expansion + Compression: 2.8 Trillion yrs + 308 Billion yrs = 3.108 Trillion yrs)
 
 ```
-Cosmic Countdown from ATOM
+# 🌌 Cosmic Countdown from ATOM to Today  
+(Equivalent to sub-ZTOM ➝ ZTOM, since 1 sec sub-ZTOM ➝ ATOM = 2.8T yrs)
 
-[████████████████████████████████████████████████████████░░░]  total: 2.8T yrs  
-           Elapsed: 2.7858T yrs       Remaining: 0.0142T yrs  
+[█████████████████████████████████████████████████████████░░]  total: 3.108T yrs  
+           Elapsed: 3.0938T yrs       Remaining: 0.0142T yrs (~14.2B yrs)  
 ATOM ➝ BTOM ➝ CTOM ➝ Now ➝ ... ➝ Z-TOM  
-                 (~99.49% of ATOM-to-ZTOM expansion)
+                 (~99.54% of ATOM-to-ZTOM expansion)
 ```
 
 ---
@@ -76,7 +77,7 @@ ATOM ➝ BTOM ➝ CTOM ➝ Now ➝ ... ➝ Z-TOM
 ### ⏱ Time Until Z-TOM Reset (CTOM Phase: 28B yrs)
 
 ```
-Time Until Z-TOM Reset
+Time Until Z-TOM Reset From Today
 
 [████████████████████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░]  total: 28B yrs  
            Elapsed: 13.8B yrs         Remaining: 14.2B yrs  
