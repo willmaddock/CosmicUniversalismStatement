@@ -37,7 +37,7 @@ states of intelligence and empowered by God’s free will.
 
 ### 🔁 Phase Breakdown
 
-#### 🌬️ Phase I — Expansion (sub-ZTOM ➝ ATOM ➝ BTOM)
+#### 🌬️ Phase I — Expansion (sub-ZTOM ➝ sub-Ctom ➝ Atom)
 - Quantum seeds expand into the multiverse.
 - Sets the stage for known physics and galaxies.
 
