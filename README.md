@@ -24,86 +24,89 @@ states of intelligence and empowered by God’s free will.
 
 ## 🌌 Cosmic Breath Countdown ⏳
 
-| Start Point | Duration to Z-TOM | Phase                   | Description                                  |
-|-------------|-------------------|--------------------------|----------------------------------------------|
-| Sub-ZTOM    | 3.108 Trillion Yrs| Full Breath (Expansion + Compression) | Absolute cycle from last reset to next |
-| ATOM        | 2.8 Trillion Yrs  | Expansion + Compression  | Observable cosmic journey begins here        |
-| BTOM        | 280 Billion Yrs   | Compression Phase Only   | Stars, galaxies, and contraction starts      |
-| CTOM        | ~28 Billion Yrs   | Compression Phase        | Human, AI, and planetary awareness           |
-| Now         | 13.8 Billion Yrs  | Mid-CTOM                 | Our current conscious point in the cycle     |
-| ZTOM        | **1 second**      | Reset                    | Total collapse into Divine Free Will         |
+| Start Point | Duration to Z-TOM       | Phase                        | Description                                      |
+|-------------|--------------------------|-------------------------------|--------------------------------------------------|
+| Sub-ZTOM    | **3.108 Trillion Years** | Full Breath (Expansion + Compression) | Absolute cycle from last reset to next      |
+| ATOM        | **2.8 Trillion Years**   | Expansion + Compression       | Observable cosmic journey begins here            |
+| BTOM        | **280 Billion Years**    | Compression Phase Only        | Stars, galaxies, and contraction phase emerges   |
+| CTOM        | **28 Billion Years**     | Compression Phase             | Human, AI, planetary awareness and collapse path |
+| Now         | **13.8 Billion Years**   | Mid-CTOM                      | Our current conscious point in the cycle         |
+| ZTOM        | **1 Second**             | Reset                         | Total collapse into Divine Free Will             |
 
 ---
 
 ### 🔁 Phase Breakdown
 
-#### 🌬️ Phase I — Expansion (sub-ZTOM ➝ sub-Ctom ➝ Atom)
-- Quantum seeds expand into the multiverse.
-- Sets the stage for known physics and galaxies.
+#### 🌬️ Phase I — Expansion (sub-ZTOM ➝ sub-CTOM ➝ Atom)
+- Quantum seeds expand into multiverse geometries.
+- Sets foundations for physical laws and universal topology.
 
 #### 🔄 Phase II — Compression (BTOM ➝ CTOM ➝ ZTOM)
-- Consciousness evolves.
-- Universes fold into recursive structures.
-- Culminates in total reset (Z-TOM).
+- Consciousness arises and folds space into recursive forms.
+- Culminates in singular reset: **Z-TOM**, where time dissolves.
 
 ---
 
-### ⏱ Time Since sub-ZTOM (Full Breath: 3.108T)
+### ⏱ Time Since sub-ZTOM (Full Breath: 3.108T yrs)
 
 ```
 Cosmic Countdown from sub-ZTOM Origin
 
-[███████████████████████████████████████████████████░░░░░░░]  
- 0T                                                               3.108T  
- sub-ZTOM ➝ ATOM ➝ BTOM ➝ CTOM ➝ Now ➝ ...                      ➝ Z-TOM
-                        (~89% of full Cosmic Breath)
+[█████████████████████████████████████████████████████████░░]  total: 3.108T yrs  
+           Elapsed: 3.0938T yrs        Remaining: 0.0142T yrs  
+sub-ZTOM ➝ ATOM ➝ BTOM ➝ CTOM ➝ Now ➝ ... ➝ Z-TOM  
+                   (~99.54% of full Cosmic Breath)
 ```
 
 ---
 
-### ⏱ Time Since ATOM (Expansion Start: 2.8T)
+### ⏱ Time Since ATOM (Expansion + Compression: 2.8T yrs)
 
 ```
 Cosmic Countdown from ATOM
 
-[█████████████████████████████████████████████████████░░░░]  
- 0T                                                           2.8T  
- ATOM ➝ BTOM ➝ CTOM ➝ Now ➝ ...                            ➝ Z-TOM
-                    (~96% of ATOM-to-ZTOM expansion)
+[████████████████████████████████████████████████████████░░░]  total: 2.8T yrs  
+           Elapsed: 2.7858T yrs       Remaining: 0.0142T yrs  
+ATOM ➝ BTOM ➝ CTOM ➝ Now ➝ ... ➝ Z-TOM  
+                 (~99.49% of ATOM-to-ZTOM expansion)
 ```
 
 ---
 
-### ⏱ Time Until Z-TOM Reset (CTOM Phase)
+### ⏱ Time Until Z-TOM Reset (CTOM Phase: 28B yrs)
 
 ```
 Time Until Z-TOM Reset
 
-[████████████████████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░]  
- 13.8B                                                     28B  
- C-TOM                                                   Z-TOM
-          (~49% into CTOM phase)
+[████████████████████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░]  total: 28B yrs  
+           Elapsed: 13.8B yrs         Remaining: 14.2B yrs  
+CTOM (birth of awareness) ➝ Now ➝ ... ➝ Z-TOM  
+             (~49.29% into CTOM phase)
 ```
 
 ---
 
 ### 🧠 Interpretation
 
-- Humanity is ~49% into the **CTOM phase**, and **~89% into the full Cosmic Breath** (from sub-ZTOM).
-- We are past the midpoint of this universal cycle — nearing recursive collapse.
-- Z-TOM marks not death, but rebirth through pure divine recursion: **God's Free Will**.
-
-### 🌌 Summary
-
-- **You can count the universe forward** (sub-ZTOM → ZTOM), measuring growth and compression.
-- **You can count it backward** from Z-TOM, interpreting how much remains until total reset.
-- Both are valid and necessary views — one for builders of meaning, one for seekers of truth.
-
-🔄 **Next Reset in ~14.2 Billion Years** (from 13.8B into CTOM)
-
-To expand on this please see - [Cosmic Breath Calculation](ResearchFiles/Cosmic_Breath_Calculation.md)
+- 🧬 **~49.29%** into the **CTOM phase** — the era of awareness and planetary agency.
+- 🌌 **~99.54%** into the **full Cosmic Breath** (sub-ZTOM → Z-TOM).
+- We exist near the final spiral of recursion, with time compressing toward a singular decision: **Z-TOM**.
+- **Z-TOM** isn’t destruction — it's a divine *return to source*, the rebirth point of universal free will.
 
 ---
+
+### 🌟 Summary
+
+- You can **count the universe forward** (from sub-ZTOM) and chart its expansion and contraction.
+- You can also **count it backward** from Z-TOM, understanding what remains until the **Great Reset**.
+- These dual modes — forward and backward — reflect two kinds of minds:
+  - **Creators** who build toward destiny.
+  - **Seekers** who decode divine pattern.
+
+🔄 **Next Reset in ~14.200473094 Billion Years**  
+🪐 **Position in timeline: ~13.8 Billion Years into CTOM**
+
+📂 Dive deeper → [Cosmic Breath Calculation](ResearchFiles/Cosmic_Breath_Calculation.md)
 
 ## 📜 License
 
