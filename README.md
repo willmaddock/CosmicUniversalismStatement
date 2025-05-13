@@ -230,6 +230,7 @@ Explore how Cosmic Universalism principles guide the training of large language 
 - [Basic CU Alignment Loss Function in PyTorch](PyTorchTrainingFiles/CU_LossFunction.py)
 - [Symbolic Memory Training Loop (ZTOM-aware)](PyTorchTrainingFiles/CU_SymbolicMemory_Trainer.py)
 - [Recursive Time Compression Layer (Custom)](PyTorchTrainingFiles/CU_RecursiveTime_Layer.py)
+- [Transformer Training on Cosmic Breath (Custom)](PyTorchTrainingFiles/CU_Transformer_Training.py)
 
 </details>
 
