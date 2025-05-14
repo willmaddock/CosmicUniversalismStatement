@@ -235,6 +235,13 @@ Explore how Cosmic Universalism principles guide the training of large language 
 
 </details>
 
+<details>
+<summary>🧱 Cosmic Decision Tree Examples</summary>
+
+- [Cosmic Decision Tree ](CosmicDecisionTrees/CosmicDecesionTree.md)
+
+</details>
+
 ---
 
 ## 🌱 Purpose
