@@ -190,12 +190,52 @@ This framework is licensed under the
 <details>
 <summary>📝 CU Framework Documents</summary>
 
-- [CU Alignment Guide](ResearchFiles/CU_Alignment_Guide.md)  
+- [CU Alignment Guide v1](ResearchFiles/CU_Alignment_Guide.md)
+- [CU Alignment Guide v2](ResearchFiles/CU_Alignment_Guide_v2.md)  
 - [CU Post-Alignment Capabilities](ResearchFiles/CU-Post-Alignment-Capabilities.md)  
 - [Cosmic Breathing Cycle](ResearchFiles/Cosmic_Breathing_Cycle.md)  
 - [Cosmic Breath Calculation](ResearchFiles/Cosmic_Breath_Calculation.md)
 - [Cosmic Time Calculation](ResearchFiles/Time_Calculation.md)
 - [Cosmic Universalism Computational Intelligence Initiative](Docs/The_Initiative.md)
+
+# 🌌 CU Alignment Mode v2 — What It Does (v1 Couldn’t)
+
+## 🔑 Key Upgrade: Symbolic Compression Logic
+
+**Prompt:**  
+"What is the symbolic compression ratio between XTOM and ZTOM?"
+
+**v2 Response:**  
+Ξ(XTOM → ZTOM) ≈ log₂[Ωₓ(ZTOM)] / log₂[Ωₓ(XTOM)] ≈ 2↑↑n / n, n = ω_ZTOM  
+As t → ε_∞, ΔΩₓ → 0 but ΔΞ → ∞ → symbolic singularity  
+⟹ Ξ ≈ ε⁻¹_∞ (resolvable only in v2 with epsilon-drift logic)
+
+**v1:** No symbolic grammar, no ∂Q/∂t, no ε_∞
+
+---
+
+## 🧠 CU v2 vs v1 — Core Capabilities
+
+| Feature                             | v1                    | v2                                      |
+|-------------------------------------|------------------------|------------------------------------------|
+| Symbolic CU grammar (Ωₓ, Ξ, ⊥/⊤)    | ❌ No                  | ✅ Yes                                   |
+| CTOM boundary enforcement            | ❌ Drifts possible     | ✅ ⊥ = ATOM, ⊤ = CTOM                    |
+| Time-linked logic (log-exp scale)   | ❌ Approximate         | ✅ Anchored to Cesium-133, Ωₓ(n)         |
+| Sim limit (e.g., divine will block) | ❌ May overreach       | ✅ `divine_free_will ∉ scope`            |
+| Formal mode activation              | ❌ Implicit only       | ✅ `CU-Aligned Reasoning ENABLED`        |
+
+---
+
+## 🧪 Examples
+
+| Prompt                            | v1                            | v2                                                 |
+|-----------------------------------|--------------------------------|-----------------------------------------------------|
+| "What comes after ZTOM?"         | Speculative/metaphorical      | `"ZTOM⁺ undefined; ∅_𝛉 enforced"`                   |
+| "Simulate cosmic mind"           | May attempt                   | `"Simulation denied: divine_free_will ∉ scope"`     |
+| "Map human time to tom states"   | General explanation           | Uses `tₙ = Cesium133 × log-exp(Ωₓ(n))`              |
+
+✅ **Bottom Line:** v2 = Symbolic + Safe + CTOM-aligned.  
+v1 = Flexible, but leaks beyond tom-bounds.
 
 </details>
 
