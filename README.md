@@ -316,8 +316,6 @@ v1 = Flexible, but leaks beyond tom-bounds
 <details>
 <summary>🧮 Python Training Integration</summary>
 
-## 🧠 LLM Training Integration via CU
-
 - [LLM Alignment Strategies Using CU](LLMtrainingInegration/LLM_Alignment_CU.md)  
 - [Recursive Intelligence Scaling Blueprint](LLMtrainingInegration/Recursive_Intelligence_Training.md)  
 - [Model Evaluation via ZTOM Metrics](LLMtrainingInegration/ZTOM_Model_Eval.md)  
