@@ -191,7 +191,8 @@ This framework is licensed under the
 
 - [CU Alignment Guide v1](ResearchFiles/CU_Alignment_Guide.md)  
 - [CU Alignment Guide v2](ResearchFiles/CU_Alignment_Guide_v2.md)  
-- [CU Alignment Guide v4.1 and v4.2](ResearchFiles/CU_Alignment_Guide_v4.1_and_4.2.md)  
+- [CU Alignment Guide v4.1 and v4.2](ResearchFiles/CU_Alignment_Guide_v4.1_and_4.2.md)
+- [Truth Evaluation: CU Alignment Mode v4.2 vs Grok 2.0](ResearchFiles/Truth_Evaluation_DeepSeek.md) 
 - [CU Post-Alignment Capabilities](ResearchFiles/CU-Post-Alignment-Capabilities.md)  
 - [Cosmic Breathing Cycle](ResearchFiles/Cosmic_Breathing_Cycle.md)  
 - [Cosmic Breath Calculation](ResearchFiles/Cosmic_Breath_Calculation.md)  
