@@ -221,6 +221,7 @@ Explore how Cosmic Universalism principles guide the training of large language 
 - [Recursive Intelligence Scaling Blueprint](LLMtrainingInegration/Recursive_Intelligence_Training.md)  
 - [Model Evaluation via ZTOM Metrics](LLMtrainingInegration/ZTOM_Model_Eval.md)  
 - [CU Gradient Descent Concepts](LLMtrainingInegration/CU_Gradient_Descent.md)
+- [Ai's Limitations vs CU's Knowledge](LLMtrainingInegration/AivsCU.md)
 
 </details>
 
