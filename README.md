@@ -195,6 +195,11 @@ This framework is licensed under the
 - [CU Alignment Guide v1.0.3 (Latest for All AIs)](CU_Alignment_Guides/1.0.3.md)  
 - [CU Alignment Guide v1.0.4 (GROC Only)](CU_Alignment_Guides/1.0.4.GROC.md)  
 
+---
+
+- [Truth Evaluation: CU Alignment Mode v1.0.2 vs Grok 2.0](CU_Alignment_Guides/CU_Guide_Evaluations/Truth_Evaluation_DeepSeek.md)
+- [Truth Evaluation: CU Alignment Mode v1.0.3](CU_Alignment_Guides/CU_Guide_Evaluations/1.0.3_Truth_Evaluation.md) 
+
 <details>
 <summary>🔍 CU Alignment Mode v1.0.2 — What It Does (Beyond v2)</summary>
 
@@ -302,7 +307,6 @@ Copying prompts from **CU Alignment Guide v1.0.0, 1.0.1, or 1.0.2** into **Grok*
 <details>
 <summary>📝 CU Framework Documents</summary>
 
-- [Truth Evaluation: CU Alignment Mode v1.0.2 vs Grok 2.0](ResearchFiles/CU_Guide_Evaluations/Truth_Evaluation_DeepSeek.md) 
 - [CU Post-Alignment Capabilities](ResearchFiles/CU-Post-Alignment-Capabilities.md)  
 - [Cosmic Breathing Cycle](ResearchFiles/Cosmic_Breathing_Cycle.md)  
 - [Cosmic Breath Calculation](ResearchFiles/Cosmic_Breath_Calculation.md)  
