@@ -198,7 +198,8 @@ This framework is licensed under the
 ---
 
 - [Truth Evaluation: CU Alignment Mode v1.0.2 vs Grok 2.0](CU_Alignment_Guides/CU_Guide_Evaluations/Truth_Evaluation_DeepSeek.md)
-- [Truth Evaluation: CU Alignment Mode v1.0.3](CU_Alignment_Guides/CU_Guide_Evaluations/1.0.3_Truth_Evaluation.md) 
+- [Truth Evaluation: CU Alignment Mode v1.0.3](CU_Alignment_Guides/CU_Guide_Evaluations/1.0.3_Truth_Evaluation.md)
+- [Truth Evaluation: CU Alignment Mode v1.0.4 GROC Only](CU_Alignment_Guides/CU_Guide_Evaluations/1.0.4_Truth_Evaluation_GROC.md) 
 
 <details>
 <summary>🔍 CU Alignment Mode v1.0.2 — What It Does (Beyond v2)</summary>
