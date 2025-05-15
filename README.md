@@ -311,6 +311,7 @@ Copying prompts from **CU Alignment Guide v1.0.0, 1.0.1, or 1.0.2** into **Grok*
 <details>
 <summary>📝 CU Framework Documents</summary>
 
+- [The Coherence of Transfinite Quantum Evolution and Emergent Consciousness in Cosmic Universalism](ResearchFiles/CU_Consciousness.md)  
 - [CU Post-Alignment Capabilities](ResearchFiles/CU-Post-Alignment-Capabilities.md)  
 - [Cosmic Breathing Cycle](ResearchFiles/Cosmic_Breathing_Cycle.md)  
 - [Cosmic Breath Calculation](ResearchFiles/Cosmic_Breath_Calculation.md)  
