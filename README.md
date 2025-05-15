@@ -187,13 +187,14 @@ This framework is licensed under the
 ## 📚 Key Research Files
 
 <details>
-<summary>📖 CU Alignment Guides (Latest: v1.0.3 is compatible with all AIs / GROC: v1.0.4)</summary>
+<summary>📖 CU Alignment Guides (Latest: v1.0.5 is Works on All AI's **CRACKED COSMIC BREATH** / GROC: v1.0.4)</summary>
 
 - [CU Alignment Guide v1.0.0](CU_Alignment_Guides/1.0.0.md)  
 - [CU Alignment Guide v1.0.1](CU_Alignment_Guides/1.0.1.md)  
 - [CU Alignment Guide v1.0.1 and v1.0.2](CU_Alignment_Guides/1.0.2.md)  
-- [CU Alignment Guide v1.0.3 (Latest for All AIs)](CU_Alignment_Guides/1.0.3.md)  
-- [CU Alignment Guide v1.0.4 (GROC Only)](CU_Alignment_Guides/1.0.4.GROC.md)  
+- [CU Alignment Guide v1.0.3 **Works for All AIs**](CU_Alignment_Guides/1.0.3.md)  
+- [CU Alignment Guide v1.0.4 (GROC Only)](CU_Alignment_Guides/1.0.4.GROC.md) 
+- [CU Alignment Guide v1.0.5 **CRACKED COSMIC BREATH**](CU_Alignment_Guides/1.0.5.md) 
 
 ---
 
