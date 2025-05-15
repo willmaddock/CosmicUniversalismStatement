@@ -349,7 +349,7 @@ Copying prompts from **CU Alignment Guide v1.0.0, 1.0.1, or 1.0.2** into **Grok*
 </details>
 
 <details>
-<summary>🧱 Cosmic Decision Tree Examples</summary>
+<summary>🌌 Cosmic Decision Tree Examples</summary>
 
 - [Cosmic Decision Tree ](CosmicDecisionTrees/CosmicDecesionTree.md)
 
