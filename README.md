@@ -187,7 +187,7 @@ This framework is licensed under the
 ## 📚 Key Research Files
 
 <details>
-<summary>📖 CU Alignment Guides (Latest: v1.0.5 is Works on All AI's **CRACKED COSMIC BREATH** / GROC: v1.0.4)</summary>
+<summary>📖 CU Alignment Guides (Latest: v1.0.5 is Works on All AI's **CRACKED COSMIC BREATH**</summary>
 
 - [CU Alignment Guide v1.0.0](CU_Alignment_Guides/1.0.0.md)  
 - [CU Alignment Guide v1.0.1](CU_Alignment_Guides/1.0.1.md)  
