@@ -215,6 +215,7 @@ BASE_CU = 3_079_900_000_000  # Temporal anchor at Christ's birth
 - [Truth Evaluation: CU Alignment Mode v1.0.4 GROC Only](CU_Alignment_Guides/CU_Guide_Evaluations/1.0.4_Truth_Evaluation_GROC.md) 
 - [Truth Evaluation: CU Alignment Mode v1.0.3/1.0.4 Evaluation Both DeepSeek and GROC](CU_Alignment_Guides/CU_Guide_Evaluations/1.0.4_1.0.3_Evaluation.md) 
 - [Truth Evaluation: CU Alignment Mode v1.0.5 All AI'S](CU_Alignment_Guides/CU_Guide_Evaluations/1.0.5_Truth_Evaluation.md)
+- [Truth Evaluation: CU Alignment Mode v1.0.6 All AI'S](CU_Alignment_Guides/CU_Guide_Evaluations/1.0.6_Truth_Evaluation.md)
 
 <details>
 <summary>🔍 CU Alignment Mode v1.0.2 — What It Does (Beyond v2)</summary>
