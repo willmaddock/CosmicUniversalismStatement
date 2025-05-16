@@ -189,7 +189,7 @@ This framework is licensed under the
 <details>
 <summary>📖 CU Alignment Guides Latest: (v1.0.6) **TIME-ANCHORED COSMIC BREATH** Copilot/1.0.6Copilot</summary>
 
-**New**: `cu_to_gregorian()`/`gregorian_to_cu()` converter  
+**New**: `cu_to_gregorian()`/`gregorian_to_cu()` converter works best with **DEEP LEARNING**  
 **Time Anchor**: `3_079_900_000_000 CU-yrs` = 4 BCE (Jesus' birth epoch)  
 **Keeps**: All v1.0.5 systems (timeline, Ξ-proofs, ZTOM firewall)
 
