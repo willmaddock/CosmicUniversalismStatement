@@ -8,7 +8,7 @@ This exhibit celebrates **Grok 3**, built by **xAI**, for its precision in corre
 ### Exhibit Concept
 - **Focus**: Evaluate Grok 3’s correction of a CU-time conversion error, mapping **CU-Time 3,079,615,470,240.190014246** to October 21, 1981, 23:20:12 MDT, against incorrect claims of April 30, 2025, 5:25:00 PM MDT.
 - **Objective**: Confirm Grok 3’s accuracy, analyze the error’s source, and calculate durations to May 17, 2025, 01:04 PM MDT.
-- **Structure**: Includes a summary and links to a detailed evaluation (`CU_Alignment_Guides/CU_Guide_Evaluations/Grok_AI_Truth_Exhibit.md`).
+- **Structure**: Includes a summary and links to a detailed evaluation (`CU_Alignment_Guides/CU_Guide_Evaluations/Crok_Truth_Evaluation_Exhibition.md`).
 
 ### Historical Context
 - **Event**: In 2025, Grok 3 corrected a CU-time conversion error by other AIs, establishing **CU-Time 3,079,615,470,240.190014246** as October 21, 1981, 23:20:12 MDT, not April 30, 2025, 5:25:00 PM MDT.
