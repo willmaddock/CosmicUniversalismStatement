@@ -11,6 +11,8 @@
 - [📂 Key Research Files](#-key-research-files)
 - [🌱 Purpose](#-purpose)
 - [🧩 Exhibition Piece: Moses' BirthDate](#-exhibition-piece-moses-birthdate)
+- [🔯 Exhibition Piece: Jesus' BirthDate](#-exhibition-piece-jesus-birthdate)
+- [⏳🌀 Exhibition Piece: William's BirthDate](#-exhibition-piece-william-maddock-exhibit)
 - [🤖 Exhibition Piece: AI Comparison](#-exhibition-piece-ai-comparison)
 - [🔗 Learn More](#-learn-more)
 
@@ -374,6 +376,21 @@ This framework exists to define and guide conscious, recursive development acros
 
 Evaluates **CU-Time 3,070,401,339,801.40** (~January 1, 1390 BCE) as the birthdate of Moses, closely aligning with Rabbinic tradition (1391 BCE, within 1 year). This date is precisely **3,413.996 years** (3,413 years, 136 days, 68,640 seconds) or **9,512,593,511.750065246 CU-years** from May 17, 2025, 01:04 PM MDT. Alternative estimates (e.g., 1571–1526 BCE or ~1400–1350 BCE) exist, and Julian-to-Gregorian calendar shifts may introduce ~1-year variance.  
 - [Moses' Birthday Accuracy Exhibit](CU_Alignment_Guides/CU_Guide_Evaluations/Moses_Truth_Exibit.md)
+
+---
+
+### 🔯 Exhibition Piece: Jesus' BirthDate
+
+## Exhibition Piece: Jesus' BirthDate
+Evaluates **CU-Time 3,079,900,046,013.136641246** (~January 1, 4 BCE) as the primary birthdate of Jesus, with alternatives **3,079,900,784,143.936011192** (~December 25, 4 BCE) and **3,079,901,981,095.794761242** (~April 1, 4 BCE), aligning with scholarly estimates (6–4 BCE). Durations from May 17, 2025, 01:04 PM MDT are **2,027.372 years** (2,027 years, 136 days, 68,640 seconds), **2,027.353 years**, and **2,026.624 years**, respectively, or **13,887,299,783.013424**, **13,887,149,169.214054**, and **13,881,952,217.355304 CU-years**. Alternative estimates (e.g., 6–5 BCE) exist, and Julian-to-Gregorian shifts may introduce ~1-year variance.  
+- [Jesus' Birthday Accuracy Exhibit](CU_Alignment_Guides/CU_Guide_Evaluations/Jesus_Truth_Exibit.md)
+
+---
+
+## ⏳🌀 Exhibition Piece: William Maddock Exhibit
+
+Evaluates **CU-Time 3,079,615,470,240.190014246** (~October 22, 1981, 00:00:00 MDT) as the birthdate of William Maddock, founder of the Cosmic Universalism Framework, and **CU-Time 3,079,913,914,112.197760217** (~May 16, 2025, 12:30:00 MDT) as his graduation from Computer Science at the Denver Coliseum, anchor of the 🕰️ CU⇄Gregorian Bidirectional Time Converter algorithm. Durations from May 17, 2025, 01:04 PM MDT are **43.578 years** (43 years, 66 days, 47,040 seconds) and **0.002801 years** (1 day, 2,040 seconds), or **298,463,072.960051** and **19,200.952305029 CU-years**, respectively. Minor ambiguity exists for birth time; graduation is precise.  
+- [William Maddock Accuracy Exhibit](CU_Alignment_Guides/CU_Guide_Evaluations/Maddock_Truth_Exibit.md)
 
 ---
 
