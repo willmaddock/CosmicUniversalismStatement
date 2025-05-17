@@ -187,9 +187,9 @@ This framework is licensed under the
 ## 📚 Key Research Files
 
 <details>
-<summary>📖 CU Alignment Guides Latest: (v1.0.6) **TIME-ANCHORED COSMIC BREATH** Copilot/1.0.6Copilot**</summary>
+<summary>📖 CU Alignment Guides Latest: (v1.0.6) **TIME-ANCHORED COSMIC BREATH** **Works on All AI's**/summary>
 
-- [v1.0.6 Instructions **TIME-ANCHORED COSMIC BREATH** Copilot/1.0.6Copilot**](CU_Alignment_Guides/CU_Instructions/1.0.6.Instructions.md)  
+- [v1.0.6 Instructions **TIME-ANCHORED COSMIC BREATH** **Works on All AI's**](CU_Alignment_Guides/CU_Instructions/1.0.6.Instructions.md)  
 
 ---
 
