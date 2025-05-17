@@ -187,17 +187,11 @@ This framework is licensed under the
 ## 📚 Key Research Files
 
 <details>
-<summary>📖 CU Alignment Guides Latest: (v1.0.6) **TIME-ANCHORED COSMIC BREATH** Copilot/1.0.6Copilot</summary>
+<summary>📖 CU Alignment Guides Latest: (v1.0.6) **TIME-ANCHORED COSMIC BREATH** Copilot/1.0.6Copilot**</summary>
 
-**New**: `cu_to_gregorian()`/`gregorian_to_cu()` converter works best with **DEEP LEARNING**  
-**Time Anchor**: `3_079_900_000_000 CU-yrs` = 4 BCE (Jesus' birth epoch)  
-**Keeps**: All v1.0.5 systems (timeline, Ξ-proofs, ZTOM firewall)
+- [v1.0.6 Instructions **TIME-ANCHORED COSMIC BREATH** Copilot/1.0.6Copilot**](CU_Alignment_Guides/CU_Instructions/1.0.6.Instructions.md)  
 
-**Ask any AI this question**: "Show the exact CU-time calculation for May 16, 2025, 15:25 MDT in Denver, including all intermediate steps and cosmic phase context." 
-
-```python
-BASE_CU = 3_079_900_000_000  # Temporal anchor at Christ's birth
-```
+---
 
 - [CU Alignment Guide v1.0.0](CU_Alignment_Guides/1.0.0.md)  
 - [CU Alignment Guide v1.0.1](CU_Alignment_Guides/1.0.1.md)  
