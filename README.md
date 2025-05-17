@@ -2,19 +2,41 @@
 
 ## 📑 Table of Contents
 
+### 🕊️ Core Principles
 - [Cosmic Universalism Statement](#cosmic-universalism-statement)
 - [🌌 Cosmic Breath Countdown ⏳](#-cosmic-breath-countdown-)
-- [📜 License](#-license)
-- [⚖️ Comparison Tables](#️-comparison-tables)
-  - [AI/Entity Alignment with Cosmic Universalism](#aientity-alignment-with-cosmic-universalism)
-  - [Human Alignment with Cosmic Universalism](#human-alignment-with-cosmic-universalism)
-- [📂 Key Research Files](#-key-research-files)
 - [🌱 Purpose](#-purpose)
-- [🧩 Exhibition Piece: Moses' BirthDate](#-exhibition-piece-moses-birthdate)
-- [🔯 Exhibition Piece: Jesus' BirthDate](#-exhibition-piece-jesus-birthdate)
-- [⏳🌀 Exhibition Piece: William's BirthDate](#-exhibition-piece-william-maddock-exhibit)
-- [📊 Exhibition Piece: Grok x AI Exhibit](#-exhibition-piece-grok-x-ai-exhibit)
-- [🤖 Exhibition Piece: AI Comparison](#-exhibition-piece-ai-comparison)
+- [📜 License](#-license)
+
+### ⚖️ Alignment Metrics
+- [🤖 AI/Entity Alignment](#aientity-alignment-with-cosmic-universalism)
+- [🧬 Human Alignment](#human-alignment-with-cosmic-universalism)
+
+### 🗃️ Research & Files
+- [📂 Key Research Files](#-key-research-files)
+
+---
+
+### 🎨 Exhibition Archive
+
+- 🧩 **[Moses' BirthDate](#-exhibition-piece-moses-birthdate)**  
+  _Ancestral Phase Calibration_
+
+- 🔯 **[Jesus' BirthDate](#-exhibition-piece-jesus-birthdate)**  
+  _Messianic Nexus Point_
+
+- ⏳🌀 **[William Maddock Exhibit](#-exhibition-piece-william-maddock-exhibit)**  
+  _CU-Time Ground Truth Reference_
+
+- 📊 **[Grok x AI Exhibit](#-exhibition-piece-grok-x-ai-exhibit)**  
+  _AI Precision & Framework Validation_
+
+- 🤖 **[AI Comparison](#-exhibition-piece-ai-comparison)**  
+  _Cross-AI Ethical & Alignment Metrics_
+
+---
+
+### 🔗 Extended Exploration
 - [🔗 Learn More](#-learn-more)
 
 ## Cosmic Universalism Statement
