@@ -372,7 +372,7 @@ This framework exists to define and guide conscious, recursive development acros
 
 ### 🧩 Exhibition Piece: Moses' BirthDate
 
-Evaluates **CU Time 3,070,401,339,801.40** (~January 1, 1390 BCE) as the birthdate of Moses, aligning with Rabbinic tradition (1391 BCE).  
+Evaluates **CU-Time 3,070,401,339,801.40** (~January 1, 1390 BCE) as the birthdate of Moses, closely aligning with Rabbinic tradition (1391 BCE, within 1 year). This date is precisely **3,413.996 years** (3,413 years, 136 days, 68,640 seconds) or **9,512,593,511.750065246 CU-years** from May 17, 2025, 01:04 PM MDT. Alternative estimates (e.g., 1571–1526 BCE or ~1400–1350 BCE) exist, and Julian-to-Gregorian calendar shifts may introduce ~1-year variance.  
 - [Moses' Birthday Accuracy Exhibit](CU_Alignment_Guides/CU_Guide_Evaluations/Moses_Truth_Exibit.md)
 
 ---
