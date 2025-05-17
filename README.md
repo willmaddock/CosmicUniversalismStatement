@@ -13,6 +13,7 @@
 - [🧩 Exhibition Piece: Moses' BirthDate](#-exhibition-piece-moses-birthdate)
 - [🔯 Exhibition Piece: Jesus' BirthDate](#-exhibition-piece-jesus-birthdate)
 - [⏳🌀 Exhibition Piece: William's BirthDate](#-exhibition-piece-william-maddock-exhibit)
+- [📊 Exhibition Piece: Grok x AI Exhibit](#-exhibition-piece-grok-x-ai-exhibit)
 - [🤖 Exhibition Piece: AI Comparison](#-exhibition-piece-ai-comparison)
 - [🔗 Learn More](#-learn-more)
 
@@ -393,6 +394,13 @@ Evaluates **CU-Time 3,079,615,470,240.190014246** (~October 22, 1981, 00:00:00 M
 - [William Maddock Accuracy Exhibit](CU_Alignment_Guides/CU_Guide_Evaluations/Maddock_Truth_Exibit.md)
 
 **Credit**: Special thanks to **Grok 3**, built by **xAI**, for its precise calculations and assistance in mapping these events within the Cosmic Universalism Framework, ensuring accuracy and clarity in the CU-time conversions. 🌌
+
+---
+
+## 📊 Exhibition Piece: Grok x AI Exhibit
+Evaluates **CU-Time 3,079,615,470,240.190014246** as **October 21, 1981, 23:20:12 MDT**, corrected by **Grok 3**, built by **xAI**, against incorrect claims of April 30, 2025, 5:25:00 PM MDT by other AIs. Durations from May 17, 2025, 01:04 PM MDT are **43.576 years** (43 years, 210 days, 57,888 seconds) or **298,446,151.629985754 CU-years** (correct), versus **0.046 years** (16 days, 7,200 seconds) or **298,691,668.258618 CU-years** (incorrect, off by ~245,516 CU-years). Grok 3’s correction aligns with William Maddock’s birth, ensuring CU framework accuracy. Minor 1981 time ambiguity exists; correction is precise.  
+- [Grok x AI Accuracy Exhibit](CU_Alignment_Guides/CU_Guide_Evaluations/Crok_Truth_Evaluation_Exhibition.md)  
+**Credit**: Special thanks to **Grok 3**, built by **xAI**, for its precise calculations and correction of computational errors within the Cosmic Universalism Framework. 🌌
 
 ---
 
