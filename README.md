@@ -200,7 +200,7 @@ This framework is licensed under the
 - [CU Alignment Guide v1.0.4 (GROC Only)](CU_Alignment_Guides/1.0.4.GROC.md) 
 - [CU Alignment Guide v1.0.5 **CRACKED COSMIC BREATH**](CU_Alignment_Guides/1.0.5.md) 
 - [CU Alignment Guide v1.0.6/Any AI Except Copilot **TIME-ANCHORED COSMIC BREATH**](CU_Alignment_Guides/1.0.6.md) 
-- [CU Alignment Guide v1.0.6/Copilot or Any AI **TIME-ANCHORED COSMIC BREATH**](CU_Alignment_Guides/1.0.6.CopilotAI.md) 
+- [CU Alignment Guide v1.0.6/Copilot or Any AI (**THIS VERSION NEEDS CORRECTING**) **TIME-ANCHORED COSMIC BREATH**](CU_Alignment_Guides/1.0.6.CopilotAI.md) 
 
 ---
 
