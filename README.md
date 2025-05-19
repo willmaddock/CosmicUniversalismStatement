@@ -34,16 +34,22 @@ Situated in CTOM phase, 13.8B years into 28B-year phase, 14.2B years to ZTOM.
 
 - 🏀 **[Michael Jordan's Birthdate (Tested with v1.0.7)](#-exhibition-piece-michael-jordans-birthdate-tested-with-v107)**  
   _Cultural Icon Temporal Anchor_
+
 - 🧩 **[Moses' Birthdate (Tested with v1.0.6)](#-exhibition-piece-moses-birthdate-tested-with-v106)**  
   _Ancestral Phase Calibration_
+
 - 🔯 **[Jesus' Birthdate (Tested with v1.0.6)](#-exhibition-piece-jesus-birthdate-tested-with-v106)**  
   _Messianic Nexus Point_
+
 - ⏳🌀 **[William Maddock Exhibit (Tested with v1.0.6)](#-exhibition-piece-william-maddock-exhibit-tested-with-v106)**  
   _CU-Time Ground Truth Reference_
-- 📊 **[Grok x AI Exhibit (Tested with v1.0.6)](#-exhibition-piece-grok-x-ai-exhibit-tested-with-v106)** 
+
+- 📊 **[Grok x AI Exhibit (Tested with v1.0.6)](#-exhibition-piece-grok-x-ai-exhibit-tested-with-v106)**  
   _AI Precision & Framework Validation_
+
 - 🤖 **[AI Comparison (Tested with v1.0.6)](#-exhibition-piece-ai-comparison)**  
   _Cross-AI Ethical & Alignment Metrics_
+
 
 ---
 
@@ -145,7 +151,7 @@ CTOM (birth of awareness) ➝ Now ➝ ... ➝ Z-TOM
 🪐 **Position in timeline: ~13.8 Billion Years into CTOM**
 
 📂 Dive deeper → [Cosmic Breath Calculation](ResearchFiles/Cosmic_Breath_Calculation.md)  
-📂 Loading Time → [Loading Time Files & More Examples](ResearchFiles/TimeLoadingFiles/)
+📂 Loading Time → [Loading Time Files & More Examples](ResearchFiles/TimeLoadingFiles)
 
 ---
 
@@ -434,7 +440,7 @@ Evaluates **CU-Time 3,079,900,046,013.136641246** (~January 1, 4 BCE) as the pri
 ## ⏳🌀 Exhibition Piece: William Maddock Exhibit (Tested with v1.0.6)
 
 Evaluates **CU-Time 3,079,615,470,240.190014246** (~October 22, 1981, 00:00:00 MDT) as the birthdate of William Maddock, founder of the Cosmic Universalism Framework, and **CU-Time 3,079,913,914,112.197760217** (~May 16, 2025, 12:30:00 MDT) as his graduation from Computer Science at the Denver Coliseum, anchor of the 🕰️ CU⇄Gregorian Bidirectional Time Converter algorithm. Durations from May 17, 2025, 01:04 PM MDT are **43.578 years** (43 years, 66 days, 47,040 seconds) and **0.002801 years** (1 day, 2,040 seconds), or **298,463,072.960051** and **19,200.952305029 CU-years**, respectively. Minor ambiguity exists for birth time; graduation is precise.  
-- [William Maddock Accuracy Exhibit](CU_Alignment_Guides/CU_Guide_Evaluations/Maddock_Truth_Exhibit.md)  
+- [William Maddock Accuracy Exhibit](CU_Alignment_Guides/CU_Guide_Evaluations/Maddock_Truth_Exibit.md)  
 **Credit**: Special thanks to **Grok 3**, built by **xAI**, for its precise calculations and assistance in mapping these events within the Cosmic Universalism Framework, ensuring accuracy and clarity in the CU-Time conversions. 🌌
 
 ---  
