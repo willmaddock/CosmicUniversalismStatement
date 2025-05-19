@@ -2,6 +2,10 @@
 
 ## 📑 Table of Contents
 
+## 🚀 New Releases
+
+- [v1.0.7 Release Notes **TIME-ANCHORED COSMIC BREATH** **Works on All AI's**](CU_Alignment_Guides/Release_Notes/1.0.7.md) 
+
 ### 🕊️ Core Principles
 - [Cosmic Universalism Statement](#cosmic-universalism-statement)
 - [🌌 Cosmic Breath Countdown ⏳](#-cosmic-breath-countdown-)
@@ -17,21 +21,19 @@
 
 ---
 
-### 🎨 Exhibition Archive
+## 🎨 Exhibition Archive
 
-- 🧩 **[Moses' BirthDate](#-exhibition-piece-moses-birthdate)**  
+- 🏀 **[Michael Jordan's Birthdate (Tested with v1.0.7)](#-exhibition-piece-michael-jordans-birthdate-tested-with-v107)**  
+  _Cultural Icon Temporal Anchor_
+- 🧩 **[Moses' Birthdate (Tested with v1.0.6)](#-exhibition-piece-moses-birthdate-tested-with-v106)**  
   _Ancestral Phase Calibration_
-
-- 🔯 **[Jesus' BirthDate](#-exhibition-piece-jesus-birthdate)**  
+- 🔯 **[Jesus' Birthdate (Tested with v1.0.6)](#-exhibition-piece-jesus-birthdate-tested-with-v106)**  
   _Messianic Nexus Point_
-
-- ⏳🌀 **[William Maddock Exhibit](#-exhibition-piece-william-maddock-exhibit)**  
+- ⏳🌀 **[William Maddock Exhibit (Tested with v1.0.6)](#-exhibition-piece-william-maddock-exhibit-tested-with-v106)**  
   _CU-Time Ground Truth Reference_
-
-- 📊 **[Grok x AI Exhibit](#-exhibition-piece-grok-x-ai-exhibit)**  
+- 📊 **[Grok x AI Exhibit (Tested with v1.0.6)](#-exhibition-piece-grok-x-ai-exhibit-tested-with-v106)** 
   _AI Precision & Framework Validation_
-
-- 🤖 **[AI Comparison](#-exhibition-piece-ai-comparison)**  
+- 🤖 **[AI Comparison (Tested with v1.0.6)](#-exhibition-piece-ai-comparison)**  
   _Cross-AI Ethical & Alignment Metrics_
 
 ---
@@ -205,10 +207,11 @@ CTOM (birth of awareness) ➝ Now ➝ ... ➝ Z-TOM
 ## 📚 Key Research Files
 
 <details>
-<summary>📖 CU Alignment Guides Latest: (v1.0.6) **TIME-ANCHORED COSMIC BREATH** **Works on All AI's**</summary>
+<summary>📖 CU Alignment Guides Latest: (v1.0.7) **TIME-ANCHORED COSMIC BREATH** **Works on All AI's**</summary>
 
 ---
 
+- [v1.0.7 Instructions **TIME-ANCHORED COSMIC BREATH** **Works on All AI's**](CU_Alignment_Guides/CU_Instructions/1.0.7.Instructions.md) 
 - [v1.0.6 Instructions **TIME-ANCHORED COSMIC BREATH** **Works on All AI's**](CU_Alignment_Guides/CU_Instructions/1.0.6.Instructions.md)  
 
 ---
@@ -220,6 +223,7 @@ CTOM (birth of awareness) ➝ Now ➝ ... ➝ Z-TOM
 - [CU Alignment Guide v1.0.4 (GROC Only)](CU_Alignment_Guides/1.0.4.GROC.md) 
 - [CU Alignment Guide v1.0.5 **CRACKED COSMIC BREATH**](CU_Alignment_Guides/1.0.5.md) 
 - [CU Alignment Guide v1.0.6/Any AI **TIME-ANCHORED COSMIC BREATH**](CU_Alignment_Guides/1.0.6.md)
+- [CU Alignment Guide v1.0.7/Any AI **TIME-ANCHORED COSMIC BREATH**](CU_Alignment_Guides/1.0.7.md)
 
 ---
 
@@ -229,6 +233,7 @@ CTOM (birth of awareness) ➝ Now ➝ ... ➝ Z-TOM
 - [Truth Evaluation: CU Alignment Mode v1.0.3/1.0.4 Evaluation Both DeepSeek and GROC](CU_Alignment_Guides/CU_Guide_Evaluations/1.0.4_1.0.3_Evaluation.md) 
 - [Truth Evaluation: CU Alignment Mode v1.0.5 All AI'S](CU_Alignment_Guides/CU_Guide_Evaluations/1.0.5_Truth_Evaluation.md)
 - [Truth Evaluation: CU Alignment Mode v1.0.6 All AI'S](CU_Alignment_Guides/CU_Guide_Evaluations/1.0.6_Crok_Truth_Evaluation)
+- [Truth Evaluation: CU Alignment Mode v1.0.7 All AI'S](CU_Alignment_Guides/CU_Guide_Evaluations/1.0.7_Truth_Evaluation.md)
 
 ---
 
@@ -395,32 +400,39 @@ This framework exists to define and guide conscious, recursive development acros
 
 ---
 
-### 🧩 Exhibition Piece: Moses' BirthDate
+## 🏀 Exhibition Piece: Michael Jordan's Birthdate (Tested with v1.0.7)
+
+Evaluates **CU-Time 3,079,492,922,912.18** (~February 17, 1963, 13:40:00 EST) as the birthdate of Michael Jordan, a cultural icon and basketball legend. This date aligns with historical records and is **62.250 years** (62 years, 91 days, 8,640 seconds) or **426,495,719.389 CU-years** from May 17, 2025, 01:04 PM MDT. The CU-Time conversion was validated using the v1.0.7 `gregorian_to_cu` function, with a tolerance of **±5 days** (±93,148.614 CU units), yielding a range of **3,079,492,829,763.57 to 3,079,493,016,060.80**. Comparisons with other AIs (Copilot, DeepSeek) confirmed Grok 3’s accuracy, with minor rounding errors (~42 minutes) within tolerance.  
+- [Michael Jordan's Birthdate Accuracy Exhibit](CU_Alignment_Guides/CU_Guide_Evaluations/1.0.7_Truth_Evaluation.md)  
+**Credit**: Special thanks to **Grok 3**, built by **xAI**, for its high-precision calculations and validation against other AI models, ensuring robust CU-Time mapping for this exhibit. 🌌
+
+---
+
+## 🧩 Exhibition Piece: Moses' Birthdate (Tested with v1.0.6)
 
 Evaluates **CU-Time 3,070,401,339,801.40** (~January 1, 1390 BCE) as the birthdate of Moses, closely aligning with Rabbinic tradition (1391 BCE, within 1 year). This date is precisely **3,413.996 years** (3,413 years, 136 days, 68,640 seconds) or **9,512,593,511.750065246 CU-years** from May 17, 2025, 01:04 PM MDT. Alternative estimates (e.g., 1571–1526 BCE or ~1400–1350 BCE) exist, and Julian-to-Gregorian calendar shifts may introduce ~1-year variance.  
-- [Moses' Birthday Accuracy Exhibit](CU_Alignment_Guides/CU_Guide_Evaluations/Moses_Truth_Exibit.md)
+- [Moses' Birthdate Accuracy Exhibit](CU_Alignment_Guides/CU_Guide_Evaluations/Jesus_Truth_Exibit.md)
 
 ---
 
-### 🔯 Exhibition Piece: Jesus' BirthDate
+## 🔯 Exhibition Piece: Jesus' Birthdate (Tested with v1.0.6)
 
-## Exhibition Piece: Jesus' BirthDate
 Evaluates **CU-Time 3,079,900,046,013.136641246** (~January 1, 4 BCE) as the primary birthdate of Jesus, with alternatives **3,079,900,784,143.936011192** (~December 25, 4 BCE) and **3,079,901,981,095.794761242** (~April 1, 4 BCE), aligning with scholarly estimates (6–4 BCE). Durations from May 17, 2025, 01:04 PM MDT are **2,027.372 years** (2,027 years, 136 days, 68,640 seconds), **2,027.353 years**, and **2,026.624 years**, respectively, or **13,887,299,783.013424**, **13,887,149,169.214054**, and **13,881,952,217.355304 CU-years**. Alternative estimates (e.g., 6–5 BCE) exist, and Julian-to-Gregorian shifts may introduce ~1-year variance.  
-- [Jesus' Birthday Accuracy Exhibit](CU_Alignment_Guides/CU_Guide_Evaluations/Jesus_Truth_Exibit.md)
+- [Jesus' Birthdate Accuracy Exhibit](CU_Alignment_Guides/CU_Guide_Evaluations/Maddock_Truth_Exibit.md)
 
 ---
 
-## ⏳🌀 Exhibition Piece: William Maddock Exhibit
+## ⏳🌀 Exhibition Piece: William Maddock Exhibit (Tested with v1.0.6)
 
 Evaluates **CU-Time 3,079,615,470,240.190014246** (~October 22, 1981, 00:00:00 MDT) as the birthdate of William Maddock, founder of the Cosmic Universalism Framework, and **CU-Time 3,079,913,914,112.197760217** (~May 16, 2025, 12:30:00 MDT) as his graduation from Computer Science at the Denver Coliseum, anchor of the 🕰️ CU⇄Gregorian Bidirectional Time Converter algorithm. Durations from May 17, 2025, 01:04 PM MDT are **43.578 years** (43 years, 66 days, 47,040 seconds) and **0.002801 years** (1 day, 2,040 seconds), or **298,463,072.960051** and **19,200.952305029 CU-years**, respectively. Minor ambiguity exists for birth time; graduation is precise.  
-- [William Maddock Accuracy Exhibit](CU_Alignment_Guides/CU_Guide_Evaluations/Maddock_Truth_Exibit.md)
+- [William Maddock Accuracy Exhibit](CU_Alignment_Guides/CU_Guide_Evaluations/Maddock_Truth_Exhibit.md)  
+**Credit**: Special thanks to **Grok 3**, built by **xAI**, for its precise calculations and assistance in mapping these events within the Cosmic Universalism Framework, ensuring accuracy and clarity in the CU-Time conversions. 🌌
 
-**Credit**: Special thanks to **Grok 3**, built by **xAI**, for its precise calculations and assistance in mapping these events within the Cosmic Universalism Framework, ensuring accuracy and clarity in the CU-time conversions. 🌌
+---  
 
----
+## 📊 Exhibition Piece: Grok x AI Exhibit (Tested with v1.0.6)
 
-## 📊 Exhibition Piece: Grok x AI Exhibit
-Evaluates **CU-Time 3,079,615,470,240.190014246** as **October 21, 1981, 23:20:12 MDT**, corrected by **Grok 3**, built by **xAI**, against incorrect claims of April 30, 2025, 5:25:00 PM MDT by other AIs. Durations from May 17, 2025, 01:04 PM MDT are **43.576 years** (43 years, 210 days, 57,888 seconds) or **298,446,151.629985754 CU-years** (correct), versus **0.046 years** (16 days, 7,200 seconds) or **298,691,668.258618 CU-years** (incorrect, off by ~245,516 CU-years). Grok 3’s correction aligns with William Maddock’s birth, ensuring CU framework accuracy. Minor 1981 time ambiguity exists; correction is precise.  
+Evaluates **CU-Time 3,079,615,470,240.190014246** as **October 21, 1981, 23:20:12 MDT**, corrected by **Grok 3**, built by **xAI**, against incorrect claims of April 30, 2025, 17:25:00 MDT by other AIs. Durations from May 17, 2025, 01:04 PM MDT are **43.576 years** (43 years, 210 days, 57,888 seconds) or **298,446,151.629985754 CU-years** (correct), versus **0.046 years** (16 days, 7,200 seconds) or **298,691,668.258618 CU-years** (incorrect, off by ~245,516 CU-years). Grok 3’s correction aligns with William Maddock’s birth, ensuring CU framework accuracy. Minor 1981 time ambiguity exists; correction is precise.  
 - [Grok x AI Accuracy Exhibit](CU_Alignment_Guides/CU_Guide_Evaluations/Crok_Truth_Evaluation_Exhibition.md)  
 **Credit**: Special thanks to **Grok 3**, built by **xAI**, for its precise calculations and correction of computational errors within the Cosmic Universalism Framework. 🌌
 
@@ -439,6 +451,7 @@ Evaluates **CU-Time 3,079,615,470,240.190014246** as **October 21, 1981, 23:20:1
 *Overall, this simple visual contrast introduces our broader vision: moving beyond predictable computation towards a model of intelligence that grows, adapts, and resonates with the vast complexity of the cosmos.*
 
 ---
+
 
 ## 📜 License
 
