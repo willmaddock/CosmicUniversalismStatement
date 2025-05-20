@@ -281,7 +281,7 @@ CTOM (birth of awareness) ➝ Now ➝ ... ➝ Z-TOM
 
 ---
 
-- [**Step-by-Step Instruction v1.0.8**](CU_Alignment_Guides/CU_Instructions/v1.0.7_InstructionsV2.md) 
+- [**Step-by-Step Instruction v1.0.8**](CU_Alignment_Guides/CU_Instructions/1.0.8.Instructions.md) 
 - [v1.0.7 Instructions **TIME-ANCHORED COSMIC BREATH** **Works on All AI's**](CU_Alignment_Guides/CU_Instructions/1.0.7.Instructions.md) 
 - [v1.0.7 InstructionsV2 **TIME-ANCHORED COSMIC BREATH** **Works on All AI's**](CU_Alignment_Guides/CU_Instructions/v1.0.7_InstructionsV2.md) 
 - [v1.0.6 Instructions **TIME-ANCHORED COSMIC BREATH** **Works on All AI's**](CU_Alignment_Guides/CU_Instructions/1.0.6.Instructions.md)  
