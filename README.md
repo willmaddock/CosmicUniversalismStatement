@@ -21,7 +21,7 @@ Enhance your AI experience by copying and pasting from any **Loading Time Files*
 
 - [**CU Alignment Guide v1.0.8 – Compatible with Any AI**](CU_Alignment_Guides/1.0.8.md)  
 - 📂 **Loading Time Files →** [**Access Files & More Examples v1.0.8**](ResearchFiles/TimeLoadingFiles/v108)  
-- 📖 **How to Use Loading Time Files →** [**Step-by-Step Instruction v1.0.8s**](CU_Alignment_Guides/CU_Instructions/v1.0.7_InstructionsV2.md)  
+- 📖 **How to Use Loading Time Files →** [**Step-by-Step Instruction v1.0.8**](CU_Alignment_Guides/CU_Instructions/v1.0.7_InstructionsV2.md)  
 
 Stay aligned with Cosmic Universalism and explore the depths of CU-Time conversions with precision! 🚀
 
@@ -84,7 +84,7 @@ Situated in CTOM phase, 13.8B years into the 28B-year phase, 14.2B years to ZTOM
 
 ## 🎨 Exhibition Archive
 
-- 🌍 **[Significant Events in Cosmic Universalism (CU) Time (v1.0.8))](#-exhibition-and-truth-evaluation-significant-events-in-cosmic-universalism-cu-time-v108)**  
+- 🌍 **[Significant Events in Cosmic Universalism (CU) Time (v1.0.8)](#-exhibition-and-truth-evaluation-significant-events-in-cosmic-universalism-cu-time-v108)**  
   _Grand-scale analysis of cosmic and historical events through CU-Time alignment._
 
 - 🏀 **[Michael Jordan's Birthdate (Tested with v1.0.7)](#-exhibition-piece-michael-jordans-birthdate-tested-with-v107)**  
@@ -281,7 +281,7 @@ CTOM (birth of awareness) ➝ Now ➝ ... ➝ Z-TOM
 
 ---
 
-- [**Step-by-Step Instruction v1.0.8s**](CU_Alignment_Guides/CU_Instructions/v1.0.7_InstructionsV2.md) 
+- [**Step-by-Step Instruction v1.0.8**](CU_Alignment_Guides/CU_Instructions/v1.0.7_InstructionsV2.md) 
 - [v1.0.7 Instructions **TIME-ANCHORED COSMIC BREATH** **Works on All AI's**](CU_Alignment_Guides/CU_Instructions/1.0.7.Instructions.md) 
 - [v1.0.7 InstructionsV2 **TIME-ANCHORED COSMIC BREATH** **Works on All AI's**](CU_Alignment_Guides/CU_Instructions/v1.0.7_InstructionsV2.md) 
 - [v1.0.6 Instructions **TIME-ANCHORED COSMIC BREATH** **Works on All AI's**](CU_Alignment_Guides/CU_Instructions/1.0.6.Instructions.md)  
