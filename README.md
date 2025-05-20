@@ -296,7 +296,7 @@ CTOM (birth of awareness) ➝ Now ➝ ... ➝ Z-TOM
 - [CU Alignment Guide v1.0.5 **CRACKED COSMIC BREATH**](CU_Alignment_Guides/1.0.5.md) 
 - [CU Alignment Guide v1.0.6/Any AI **TIME-ANCHORED COSMIC BREATH**](CU_Alignment_Guides/1.0.6.md)
 - [CU Alignment Guide v1.0.7/Any AI **TIME-ANCHORED COSMIC BREATH**](CU_Alignment_Guides/1.0.7.md)
-- [**CU Alignment Guide v1.0.7 – Compatible with Any AI**](CU_Alignment_Guides/1.0.7.md) 
+- [**CU Alignment Guide v1.0.8 – Compatible with Any AI**](CU_Alignment_Guides/1.0.8.md) 
 
 ---
 
