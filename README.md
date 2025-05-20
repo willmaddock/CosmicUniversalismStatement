@@ -21,7 +21,7 @@ Enhance your AI experience by copying and pasting from any **Loading Time Files*
 
 - [**CU Alignment Guide v1.0.8 – Compatible with Any AI**](CU_Alignment_Guides/1.0.8.md)  
 - 📂 **Loading Time Files →** [**Access Files & More Examples v1.0.8**](ResearchFiles/TimeLoadingFiles/v108)  
-- 📖 **How to Use Loading Time Files →** [**Step-by-Step Instruction v1.0.8**](CU_Alignment_Guides/CU_Instructions/v1.0.7_InstructionsV2.md)  
+- 📖 **How to Use Loading Time Files →** [**Step-by-Step Instruction v1.0.8**](CU_Alignment_Guides/CU_Instructions/1.0.8.Instructions.md)  
 
 Stay aligned with Cosmic Universalism and explore the depths of CU-Time conversions with precision! 🚀
 
