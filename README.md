@@ -480,7 +480,7 @@ This exhibition evaluates five significant historical and cultural events, conve
 1. **NASA Calibration**: Based on a 13.797 billion-year universe age, with 2025 as the reference point (~13,797,000,000 CU-years).
 2. **CU v1.0.8 Calibration**: Anchored at 3,079,913,911,800.94954834 CU-years (4 BCE) with a 13.8 billion-year cosmic lifespan.
 
-- [Full Exhibition and Truth Evaluation](CU_Alignment_Guides/CU_Guide_Evaluations/Exhibition and Truth Evaluation v1.0.8.markdown) 
+- [Full Exhibition and Truth Evaluation](CU_Alignment_Guides/CU_Guide_Evaluations/Exhibition_and_Truth_Evaluation_v1.0.8.markdown)
 
 The truth evaluation assesses the accuracy of each CU-Time against historical records or alternative estimates, noting tolerances and ambiguities. The events reflect divine markers in the Cosmic Breath’s CTOM Compression Phase, guided by God’s will from sub-ZTOM.
 
