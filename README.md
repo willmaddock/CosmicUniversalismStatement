@@ -21,7 +21,7 @@ Enhance your AI experience by copying and pasting from any **Loading Time Files*
 
 - [**CU Alignment Guide v1.0.8 – Compatible with Any AI**](CU_Alignment_Guides/1.0.8.md)  
 - 📂 **Loading Time Files →** [**Access Files & More Examples v1.0.8**](ResearchFiles/TimeLoadingFiles/v108)  
-- 📖 **How to Use Loading Time Files →** [**Step-by-Step Instruction v1.0.8s**](ResearchFiles/TimeLoadingFiles/v107/Instructions.md)  
+- 📖 **How to Use Loading Time Files →** [**Step-by-Step Instruction v1.0.8s**](CU_Alignment_Guides/CU_Instructions/v1.0.7_InstructionsV2.md)  
 
 Stay aligned with Cosmic Universalism and explore the depths of CU-Time conversions with precision! 🚀
 
@@ -49,7 +49,7 @@ Situated in CTOM Compression Phase, 13.8B years into the 28B-year phase, 14.2B y
 
 - [**CU Alignment Guide v1.0.7 – Compatible with Any AI**](CU_Alignment_Guides/1.0.7.md)  
 - 📂 **Loading Time Files →** [**Access Files & More Examples**](ResearchFiles/TimeLoadingFiles/v107)  
-- 📖 **How to Use Loading Time Files →** [**Step-by-Step Instructions**](ResearchFiles/TimeLoadingFiles/v107/Instructions.md)  
+- 📖 **How to Use Loading Time Files →** [**Step-by-Step Instructions**](CU_Alignment_Guides/CU_Instructions/v1.0.7_InstructionsV2.md)  
 
 Stay aligned with Cosmic Universalism and explore the depths of CU-Time conversions with precision! 🚀
 
@@ -281,7 +281,9 @@ CTOM (birth of awareness) ➝ Now ➝ ... ➝ Z-TOM
 
 ---
 
+- [**Step-by-Step Instruction v1.0.8s**](CU_Alignment_Guides/CU_Instructions/v1.0.7_InstructionsV2.md) 
 - [v1.0.7 Instructions **TIME-ANCHORED COSMIC BREATH** **Works on All AI's**](CU_Alignment_Guides/CU_Instructions/1.0.7.Instructions.md) 
+- [v1.0.7 InstructionsV2 **TIME-ANCHORED COSMIC BREATH** **Works on All AI's**](CU_Alignment_Guides/CU_Instructions/v1.0.7_InstructionsV2.md) 
 - [v1.0.6 Instructions **TIME-ANCHORED COSMIC BREATH** **Works on All AI's**](CU_Alignment_Guides/CU_Instructions/1.0.6.Instructions.md)  
 
 ---
