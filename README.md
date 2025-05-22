@@ -335,10 +335,12 @@ CTOM (birth of awareness) ➝ Now ➝ ... ➝ Z-TOM
 ## 📚 Key Research Files
 
 <details>
-<summary>📖 CU Alignment Guides Latest: (v1.0.8) **TIME-ANCHORED COSMIC BREATH** **Works on All AI's**</summary>
+<summary>📖 CU Alignment Guides Latest: (v1.0.9) **TIME-ANCHORED COSMIC BREATH** **Works on All AI's**</summary>
 
 ---
 
+- 💻 [**Coders Instructions** – v1.0.9](CU_Alignment_Guides/CU_Instructions/v109/1.0.9.Coders_Instructions.md)  
+- 🧰 [**COSMIC_CONVERTER INSTALL FILES v1.0.9** – For any Python IDE](cosmic_converter)
 - [**Step-by-Step Instruction v1.0.8**](CU_Alignment_Guides/CU_Instructions/1.0.8.Instructions.md) 
 - [v1.0.7 Instructions **TIME-ANCHORED COSMIC BREATH** **Works on All AI's**](CU_Alignment_Guides/CU_Instructions/1.0.7.Instructions.md) 
 - [v1.0.7 InstructionsV2 **TIME-ANCHORED COSMIC BREATH** **Works on All AI's**](CU_Alignment_Guides/CU_Instructions/v1.0.7_InstructionsV2.md) 
@@ -355,6 +357,7 @@ CTOM (birth of awareness) ➝ Now ➝ ... ➝ Z-TOM
 - [CU Alignment Guide v1.0.6/Any AI **TIME-ANCHORED COSMIC BREATH**](CU_Alignment_Guides/1.0.6.md)
 - [CU Alignment Guide v1.0.7/Any AI **TIME-ANCHORED COSMIC BREATH**](CU_Alignment_Guides/1.0.7.md)
 - [**CU Alignment Guide v1.0.8 – Compatible with Any AI**](CU_Alignment_Guides/1.0.8.md) 
+- [**CU Alignment Guide v1.0.9 – Compatible with Any AI**](CU_Alignment_Guides/v109)
 
 ---
 
@@ -366,7 +369,7 @@ CTOM (birth of awareness) ➝ Now ➝ ... ➝ Z-TOM
 - [Truth Evaluation: CU Alignment Mode v1.0.6 All AI'S](CU_Alignment_Guides/CU_Guide_Evaluations/1.0.6_Crok_Truth_Evaluation)
 - [Truth Evaluation: CU Alignment Mode v1.0.7 All AI'S](CU_Alignment_Guides/CU_Guide_Evaluations/1.0.7_Truth_Evaluation.md)
 - [Truth Evaluation: CU Alignment Mode v1.0.8 All AI'S](CU_Alignment_Guides/CU_Guide_Evaluations/v1.0.8_Truth_Evaluation.markdown)
-
+- [Top_20_YouTubers_Truth_Evaluations v1.0.9](CU_Alignment_Guides/CU_Guide_Evaluations/Top_20_YouTubers_Truth_Evaluations.md)
 ---
 
 <details>
