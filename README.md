@@ -19,7 +19,7 @@ Enhance your AI experience by copying and pasting from any **Loading Time Files*
 [//]: # (<details>)
 [//]: # (<summary>✨ v1.0.9 Loading Time Files</summary>)
 
-- 📘 [**CU Alignment Guide v1.0.9 – Compatible with Any AI**](CU_Alignment_Guides/v109)  
+- 📘 [**CU Alignment Guide v1.0.9 – Compatible with Any AI - **cu_time_converter_v1_0_9.py is the FINAL VERSION** the cu_time_converter_v1_0_9.txt is for Copilot**](CU_Alignment_Guides/v109)  
 - 🔴📺 [**YouTube Top 20 Channel Data in 2025 And More for v1.0.9**](ResearchFiles/TimeLoadingFiles/v109)  
 - 🧭 [**How to Use Loading Time Files** → Step-by-Step Guide (v1.0.9)](CU_Alignment_Guides/CU_Instructions/v109)  
 
