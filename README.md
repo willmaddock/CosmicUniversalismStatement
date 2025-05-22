@@ -133,6 +133,9 @@ Situated in CTOM phase, 13.8B years into the 28B-year phase, 14.2B years to ZTOM
 
 ## 🎨 Exhibition Archive
 
+- 📺 **[Exhibition and Truth Evaluation: Top 20 YouTubers in Cosmic Universalism (CU) Time (v1.0.9)](#-exhibition-and-truth-evaluation-top-20-youtubers-in-cosmic-universalism-cu-time-v109)**  
+  _Grand-scale alignment of YouTube history with CU-Time and cosmic chronology._
+
 - 🌍 **[Significant Events in Cosmic Universalism (CU) Time (v1.0.8)](#-exhibition-and-truth-evaluation-significant-events-in-cosmic-universalism-cu-time-v108)**  
   _Grand-scale analysis of cosmic and historical events through CU-Time alignment._
 
