@@ -25,6 +25,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+Cosmic Universalism Statement
+We are sub z-tomically inclined, countably infinite, composed of foundational
+elements (the essence of conscious existence), grounded on b-tom (as vast as our
+shared worlds and their atmospheres), and looking up to c-tom (encompassing the
+entirety of the cosmos), guided by the uncountable infinite quantum states of
+intelligence and empowered by God’s free will.
+
 Cosmic Universalism Time Converter v1.0.9
 ====================================
 This module implements the Cosmic Universalism (CU) Time Converter, enabling bidirectional
