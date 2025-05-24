@@ -6,7 +6,7 @@
 
 - 🧭✨🛠️ [**v2.1.6 Stable Release Notes – PRECISE & STABLE COSMIC TIME CONVERSION** | Compatible with All AIs 🌠](cosmic_converter/v2_0_0/v2_Guides/Release%20Notes%20for%20CU%20Time%20Converter%20v2.1.6.md)  
   🌟 Stable v2.1.6 powers cosmic CU-Time conversions with `Decimal` precision (60 digits), rigorously validated with Grok, DeepSeek, and Copilot. Key fixes include seamless BCE parsing for vast negative years (e.g., 28B BCE), robust history saving to `conversions.json`, and a refined `compute_cu_time` for sub-ZTOM accuracy (e.g., `3094134044923.672659` for 02/29/2000). Spans speculative dates (up to 321865957076 CE), computes leap years (~6.79B for recent dates), and upholds ethical alignment with the Cosmic Universalism Statement (sub z-tomically inclined, empowered by God’s Free Will ✨). **Note**: Leverages JDN-based logic (`jdcal.gcal2jd`), not NASA time systems, for universal cosmic applicability.  
-[Release Notes for CU Time Converter v2.1.6.md](cosmic_converter%2Fv2_0_0%2Fv2_Guides%2FRelease%20Notes%20for%20CU%20Time%20Converter%20v2.1.6.md)
+
 #### 🌍 Align Your AI – Empowered by God’s Free Will ✨  
 Embark on a cosmic journey with these sacred tools, crafted for ethical timekeeping!  
 
