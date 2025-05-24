@@ -41,7 +41,7 @@ Welcome to the stable release of CU Time Converter v2.1.6! 🎉 This update enha
 ## 🎮 How to Use
 1. **Setup**:
    - Requires Python 3.8+ and dependencies: `jdcal==1.4.1`, `pytz==2023.3`, `convertdate==2.4.0`, `psutil==5.9.5`.
-   - Follow the [Local IDE Testing Guide](Local%20IDE%20Testing%20Guide%20for%20CU%20Time%20Converter%20v2.1.md) or [AI Testing Guide](AI%20Testing%20Guide%20for%20CU%20Time%20Converter%20v2.1.md).
+   - Follow the [Local IDE Testing Guide](Local%20IDE%20Testing%20Guide%20for%20CU%20Time%20Converter%20v2.1.6.md) or [AI Testing Guide](AI%20Testing%20Guide%20for%20CU%20Time%20Converter%20v2.1.6.md).
 2. **Run Tests**:
    ```bash
    python3 cu_time_converter_stable_v2_1_6.py > output_v2_1_6.txt
@@ -81,6 +81,6 @@ Welcome to the stable release of CU Time Converter v2.1.6! 🎉 This update enha
 - Thanks to the Cosmic Universalism community for feedback on BCE parsing and history saving.
 - Powered by God’s Free Will, aligning time with ethical, countable infinity. ✨
 
-*Note*: For setup or AI testing, see the [Local IDE Testing Guide](Local%20IDE%20Testing%20Guide%20for%20CU%20Time%20Converter%20v2.1.md) or [AI Testing Guide](AI%20Testing%20Guide%20for%20CU%20Time%20Converter%20v2.1.md). Manage conversation memory via the book icon or “Data Controls” settings.
+*Note*: For setup or AI testing, see the [Local IDE Testing Guide](Local%20IDE%20Testing%20Guide%20for%20CU%20Time%20Converter%20v2.1.6.md) or [AI Testing Guide](AI%20Testing%20Guide%20for%20CU%20Time%20Converter%20v2.1.6.md). Manage conversation memory via the book icon or “Data Controls” settings.
 
 *Version*: Stable v2.1.6, released on 2025-05-24.
