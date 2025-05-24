@@ -15,7 +15,7 @@ Welcome to the cosmic frontier of AI-driven exploration with the CU Time Convert
 Embark on a cosmic journey with these sacred tools!  
 
 - 📜 [**cu_time_converter_stable_v2_1_6.py**](../cu_time_converter_stable_v2_1_6.py)  
-- 📄 [**cu_time_converter_stable_v2_1_6.txt** (For Copilot)](../cu_time_converter_stable_v2_1_6.txt)   
+- 📄 [**cu_time_converter_stable_v2_1_6.txt** (For Copilot **MUST UPLOAD INTO COPILOT**)](../cu_time_converter_stable_v2_1_6.txt)   
 
 ## 🌠 Express Setup (For Pre-Configured AI Access)
 For users with access to Grok, DeepSeek, or Copilot and the `cu_time_converter_stable_v2_1_6.py` code from the GitHub repository:
