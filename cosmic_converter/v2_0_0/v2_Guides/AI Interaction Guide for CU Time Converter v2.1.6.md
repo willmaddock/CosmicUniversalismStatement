@@ -55,7 +55,7 @@ If issues arise (e.g., incorrect outputs), proceed to the **Detailed Setup** or 
   - Copy the **Raw** text of `cu_time_converter_stable_v2_1_6.py`.
   - Or clone:
     ```bash
-    git clone https://github.com/willmaddock/CosmicUniversalismStatement.git
+    git clone https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/cosmic_converter/v2_0_0/cu_time_converter_stable_v2_1_6.py
     ```
 - **Purpose**: Use the code in AI prompts for testing or enhancement.
 
@@ -93,7 +93,7 @@ Hi Grok! I’m exploring `cu_time_converter_stable_v2_1_6.py`, which converts Gr
 
 **Module Code**:
 ```python
-[Insert full cu_time_converter_stable_v2_1_6.py code from https://github.com/willmaddock/CosmicUniversalismStatement.git]
+https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/cosmic_converter/v2_0_0/cu_time_converter_stable_v2_1_6.py
 ```
 
 **Test Script (`snippet.py`)**:
@@ -122,7 +122,7 @@ I’m testing `cu_time_converter_stable_v2_1_6.py` for Cosmic Universalism time 
 
 **Module Code**:
 ```python
-[Insert full cu_time_converter_stable_v2_1_6.py code from https://github.com/willmaddock/CosmicUniversalismStatement.git]
+https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/cosmic_converter/v2_0_0/cu_time_converter_stable_v2_1_6.py
 ```
 
 **Test Script (`snippet.py`)**:
