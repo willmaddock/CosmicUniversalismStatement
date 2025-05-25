@@ -21,7 +21,7 @@ Embark on a cosmic journey with these sacred tools!
 For users with access to Grok, DeepSeek, or Copilot and the `cu_time_converter_stable_v2_1_6.py` code from the GitHub repository:
 
 1. **Obtain Module Code**:
-   - Copy `cu_time_converter_stable_v2_1_6.py` from [GitHub](https://github.com/willmaddock/CosmicUniversalismStatement.git) (click **Raw**).
+   - Copy `cu_time_converter_stable_v2_1_6.py` from (https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/cosmic_converter/v2_0_0/cu_time_converter_stable_v2_1_6.py) (click **Raw**).
 
 2. **Submit AI Prompt**:
    - Select the prompt for your AI (Grok, DeepSeek, or Copilot) from *Submit AI Prompts*.
@@ -51,7 +51,7 @@ If issues arise (e.g., incorrect outputs), proceed to the **Detailed Setup** or 
 
 ### 1. Obtain Module Code 📋
 - **Download `cu_time_converter_stable_v2_1_6.py`**:
-  - Visit [GitHub](https://github.com/willmaddock/CosmicUniversalismStatement.git).
+  - Visit (https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/cosmic_converter/v2_0_0/cu_time_converter_stable_v2_1_6.py).
   - Copy the **Raw** text of `cu_time_converter_stable_v2_1_6.py`.
   - Or clone:
     ```bash
