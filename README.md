@@ -17,6 +17,8 @@
 
 #### 🌍 Align Your AI – Empowered by God’s Free Will ✨  
 Embark on a cosmic journey with these sacred tools, crafted for ethical timekeeping!  
+- [AI Bash Commands For v2.1.6](cosmic_converter/v2_0_0/v2_Guides/Polished%20CU%20Time%20Converter%20v2.1.6.md)
+
 
 - 📜 [**cu_time_converter_stable_v2_1_6.py**](cosmic_converter/v2_0_0/cu_time_converter_stable_v2_1_6.py)  
 - 📄 [**cu_time_converter_stable_v2_1_6.txt** (For Copilot **MUST UPLOAD INTO COPILOT**)](cosmic_converter/v2_0_0/cu_time_converter_stable_v2_1_6.txt)  
