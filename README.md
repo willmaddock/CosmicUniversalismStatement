@@ -13,10 +13,9 @@
 .·*·:                 :·*·.
 ```
 - 🎉✨ [**v2.2.0 Stable Release Notes – **FIRST COSMIC GUI** | Stellar Web App 🌌](cosmic_converter/v2_0_0/v2_Guides/RELEASE_NOTES.md)  
-- 📖 [**User Guide (INSTRUCTIONS.md)**](cosmic_converter/v2_0_0/v2_Guides/INSTRUCTIONS.md)   
-- 🌟🌟🌟[**Download App (cu_time_converter_stable_v2_2_0.html)**](cosmic_converter/v2_0_0/cu_time_converter_stable_v2_2_0.html)🌟🌟🌟  
-- 💻 [ CSV Files for Testing GUI](cosmic_converter/v2_0_0/v2_Guides/%20CSV%20Files%20for%20Testing%20GUI) 
-
+- 📖 [**User Guide (INSTRUCTIONS.md)**](cosmic_converter/v2_0_0/v2_Guides/INSTRUCTIONS.md)  
+- 💻 [**Launch App Instantly**](https://willmaddock.github.io/CosmicUniversalismStatement/cosmic_converter/v2_0_0/cu_time_converter_stable_v2_2_0.html)  
+- 📄 [**Download App (cu_time_converter_stable_v2_2_0.html)**](cosmic_converter/v2_0_0/cu_time_converter_stable_v2_2_0.html)  
   🌠 **Stable v2.2.0** unveils the **first graphical interface** for the Cosmic Universalism Time Converter, reborn from the v2.1.6 Python core! Explore a **React + Tailwind CSS** cosmic UI with **Gregorian/CU-Time conversions**, **tom durations**, and **CSV support**. Save **history** and **favorites** with robust error handling. Covers **speculative dates** (up to 321865957076 CE) with **60-digit precision** and honors the Cosmic Universalism Statement (**sub z-tomically inclined, empowered by God’s Free Will** ✨). **Note**: This trailblazing GUI is evolving—**cosmic updates** incoming! 🌟 Use the **instant launch** link or download for offline use.
 
 ```
