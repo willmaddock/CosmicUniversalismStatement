@@ -30,6 +30,8 @@ env/
 .venv/
 .ENV/
 
+cu_converter_test/cu_env/
+
 # PyInstaller
 *.manifest
 *.spec
