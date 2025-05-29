@@ -12,7 +12,7 @@
  .·*·:               :·*·.
 .·*·:                 :·*·.
 ```
-- 🎉✨ [**v3.0.0 Stable Release Notes – **REFINED COSMIC GUI** | Enhanced Web App 🌌](cosmic_converter/v3_0_0/v3_Guides/Cosmic Universalism Time Converter v3.0.md)  
+- 🎉✨ [**v3.0.0 Stable Release Notes – **REFINED COSMIC GUI** | Enhanced Web App 🌌](cosmic_converter/v3_0_0/v3_Guides/Cosmic Universalism Time Converter Release Notes v3.0.md)  
 - 📖 [**User Guide (INSTRUCTIONS.md)**](cosmic_converter/v3_0_0/v3_Guides/Cosmic Universalism Time Converter Instrucitons v3.0.md)
 - 🔗 🌟🌟🌟**Live Demo:** [CU Time Converter v3.0.0](https://willmaddock.github.io/CosmicUniversalismStatement/cosmic_converter/v3_0_0/cu_time_converter_stable_v3_0_0.html)🌟🌟🌟
 - 📄 [**Download App (cu_time_converter_stable_v3_0_0.html)**](cosmic_converter/v3_0_0/cu_time_converter_stable_v3_0_0.html)  
