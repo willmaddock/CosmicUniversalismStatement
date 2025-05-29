@@ -1,3 +1,23 @@
+# Cosmic Universalism Time Converter v2.2.0 - Deprecated
+
+**Status:** Archived  
+**Date:** May 28, 2025
+
+This version (v2.2.0) of the Cosmic Universalism Time Converter is no longer supported due to a faulty `BASE_CU` calibration (`3094134044923.672659`). It has been replaced by v3.0.0, which uses a recalibrated `BASE_CU` (`3094134044923.509753564772922302508810`) for accurate CU-Time calculations and includes enhanced features like responsive navigation.
+
+Please use the updated version:
+
+[**Go to v3.0.0**](https://willmaddock.github.io/CosmicUniversalismStatement/cosmic_converter/v3_0_0/cu_time_converter_stable_v3_0_0.html)
+
+For more details, visit the [CosmicUniversalismStatement GitHub Repository](https://github.com/willmaddock/CosmicUniversalismStatement).
+
+---
+
+# This code is faulty is not calibrared correctly.
+
+```  
+*Note*: This file archives the v2.2.0 version. The original HTML content is no longer served as a web app. To access the v3.0.0 release notes and instructions, see the `cosmic_converter/v3_0_0/v3_Guides` directory.
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1682,3 +1702,4 @@
   </script>
 </body>
 </html>
+```
