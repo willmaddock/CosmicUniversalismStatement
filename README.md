@@ -18,8 +18,8 @@ The **Cosmic Universalism Time Converter v3.0.0** delivers a precise, intuitive,
 - **Instructions**: [v3.0.0 User Guide](cosmic_converter/v3_0_0/v3_Guides/Cosmic%20Universalism%20Time%20Converter%20Instrucitons%20v3.0.md)  
 - **Live Demo**: [Try CU Time Converter](https://willmaddock.github.io/CosmicUniversalismStatement/cosmic_converter/v3_0_0/cu_time_converter_stable_v3_0_0.html) – Click to explore!  
 - **Download**: [Get the App (Offline Use)](cosmic_converter/v3_0_0/cu_time_converter_stable_v3_0_0.html)  
-- **AI Integration**: Use for most AI's [cu_time_converter_ai.py](cosmic_converter/v3_0_0/cu_time_converter_ai.py) or to upload into Copilot Use [cu_time_converter_ai.py](cosmic_converter/v3_0_0/cu_time_converter_ai.txt)  
-  **How to Use**: Copy `cu_time_converter_ai.py` into an AI environment (e.g., DeepSeek, Grok) or upload as a file. Run with inputs like `"January 1st, 2023 BCE"` or `{"year": 2029, "month": 1, "day": 1}` for CU-Time conversions. You can also import results or CSV files from the v3.0.0 GUI into the AI after integration.
+- **AI Integration**: For most AI platforms, use the Python script [cu_time_converter_ai.py](cosmic_converter/v3_0_0/cu_time_converter_ai.py). For Copilot, upload the text file [cu_time_converter_ai.txt](cosmic_converter/v3_0_0/cu_time_converter_ai.txt).  
+  **How to Use**: Copy `cu_time_converter_ai.py` into an AI environment (e.g., DeepSeek, Grok) or upload it as a file. Run with inputs like `"January 1st, 2023 BCE"` or `{"year": 2029, "month": 1, "day": 1}` to perform CU-Time conversions. You can also import results or CSV files from the v3.0.0 GUI into the AI after integration.
 
 ---
 
