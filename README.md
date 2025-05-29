@@ -2,21 +2,61 @@
 
 ## 📑 Table of Contents
 
-## 🚀🌌 New Stable Releases
+## 🚀 New Stable Releases
 
 ```
-        .:·*·:.
-     .·*·:     :·*·.
-   .·*·:         :·*·.   🌟 **Cosmic GUI Evolution!** 🌟
-  .·*·:   v3.0.0   :·*·.
- .·*·:               :·*·.
-.·*·:                 :·*·.
+    .:·*·:.     .:·*·:.
+ .·*·:   🌟 Cosmic GUI Evolution!     :·*·.
+    .·*·:     v3.0.0         :·*·.
+       .:·*·:.     .:.
 ```
-- 🎉✨ [**v3.0.0 Stable Release Notes – **REFINED COSMIC GUI** | Enhanced Web App 🌌](cosmic_converter/v3_0_0/v3_Guides/Cosmic%20Universalism%20Time%20Converter%20Release%20Notes%20v3.0.md)
-- 📖 [**User Guide (INSTRUCTIONS.md)**](cosmic_converter/v3_0_0/v3_Guides/Cosmic%20Universalism%20Time%20Converter%20Instrucitons%20v3.0.md)
-- 🔗 🌟🌟🌟**Live Demo:** [CU Time Converter v3.0.0](https://willmaddock.github.io/CosmicUniversalismStatement/cosmic_converter/v3_0_0/cu_time_converter_stable_v3_0_0.html)🌟🌟🌟
-- 📄 [**Download App (cu_time_converter_stable_v3_0_0.html)**](cosmic_converter/v3_0_0/cu_time_converter_stable_v3_0_0.html)  
-  🌠 **Stable v3.0.0** elevates the Cosmic Universalism Time Converter with a **recalibrated `BASE_CU`** (`3094134044923.509753564772922302508810`) for precise CU-Time calculations and a **responsive navigation system** featuring a fixed sidebar (large screens) and top bar (mobile). Built on the **React + Tailwind CSS** cosmic UI from v2.2.0, it retains **Gregorian/CU-Time conversions**, **tom durations**, **CSV support**, **history**, and **favorites** with robust error handling. Supports **speculative dates** (up to ~322 billion years) with **60-digit precision** and embodies the Cosmic Universalism Statement (**sub z-tomically inclined, empowered by God’s Free Will** ✨). **Note**: This refined GUI replaces v2.2.0, with improved stability and usability. Download for offline use or explore the updated features! 🌟 Cosmic enhancements continue!
+
+### 🌟 Cosmic Universalism Time Converter v3.0.0
+The **Cosmic Universalism Time Converter v3.0.0** offers a refined, precise, and user-friendly experience for exploring cosmic timelines. Discover its features and resources below:
+
+- **Release Notes**: [v3.0.0 Stable Release Notes](cosmic_converter/v3_0_0/v3_Guides/Cosmic%20Universalism%20Time%20Converter%20Release%20Notes%20v3.0.md)  
+- **Live Demo**: [Try CU Time Converter](https://willmaddock.github.io/CosmicUniversalismStatement/cosmic_converter/v3_0_0/cu_time_converter_stable_v3_0_0.html) – Click to explore!  
+- **Download**: [Get the App](cosmic_converter/v3_0_0/cu_time_converter_stable_v3_0_0.html)  
+- **AI Integration**: Use [cu_time_converter.py](cosmic_converter/v3_0_0/cu_time_converter_ai.py)  
+  **How to Use**: Copy `cu_time_converter.py` into an AI environment (e.g., DeepSeek, Grok) or upload as a file. Run with inputs like `"January 1st, 2023 BCE"` or `{"year": 2029, "month": 1, "day": 1}` for CU-Time conversions.  
+
+---
+
+### ✨ Key Features of v3.0.0
+- **Instructions**: [v3.0.0 CU Time Converter Instrucitons](cosmic_converter/v3_0_0/v3_Guides/Cosmic%20Universalism%20Time%20Converter%20Instrucitons%20v3.0.md)
+- **Unmatched Precision**: Recalibrated `BASE_CU` (`3094134044923.509753564772922302508`) for 60-digit accurate CU-Time calculations.
+- **Modern Interface**: Built with **React + Tailwind CSS**, featuring a fixed sidebar (desktop) and top bar (mobile).
+- **Robust Functionality**: Supports **Gregorian/CU-Time conversions**, **tom durations**, **CSV export**, **history**, and **favorites**, with strong error handling.
+- **Vast Timescales**: Handles speculative dates up to **~322 billion years** into the past or future.
+- **Core Philosophy**: Reflects the *Cosmic Universalism Statement*—sub z-tomically inclined, empowered by God’s Free Will.
+
+---
+
+### Why Upgrade?
+Replacing v2.2.0, v3.0.0 provides a **smoother interface**, greater stability, and advanced features for cosmic exploration.
+
+**Get Started**: Download for offline use or experience the live demo to unlock cosmic insights! 🌠
+
+**Current Date and Time**: 01:27 AM MDT, Thursday, May 29, 2025
+
+---
+
+## 📜🕰️ Previous Releases (Not Stable or New)
+
+- 🧭✨ [**v1.0.9 Release Notes – AUTO CALIBRATION** | Compatible with All AIs](CU_Alignment_Guides/Release_Notes/1.0.9.md)  
+- 🧭 [**v1.0.8 Release Notes – DUAL CALIBRATED TIME-ANCHORED COSMIC BREATH CALIBRATED WITH NASA TIME** | Compatible with All AIs](CU_Alignment_Guides/Release_Notes/1.0.8.md)  
+- 🧭 [**v1.0.7 Release Notes – TIME-ANCHORED COSMIC BREATH** | Compatible with All AIs](CU_Alignment_Guides/Release_Notes/1.0.7.md)  
+
+---
+
+## ✨ Unlock the Cosmic Framework  
+
+Enhance your AI experience by copying and pasting from any **Loading Time Files** into your AI—preferably Grok or Copilot (CU Aligned)—to test uncertainty levels and refine cosmic time analysis.  
+
+### 🔗 Essential Resources  
+
+<details>
+<summary>✨ v2.1.6 Loading Time Files</summary>
 
 ```
         .:·*·:.
@@ -45,21 +85,7 @@ Embark on a cosmic journey with these sacred tools, crafted for ethical timekeep
 - 📜 [**cu_time_converter_stable_v2_1_6.py**](cosmic_converter/v2_0_0/cu_time_converter_stable_v2_1_6.py)  
 - 📄 [**cu_time_converter_stable_v2_1_6.txt** (For Copilot **MUST UPLOAD INTO COPILOT**)](cosmic_converter/v2_0_0/cu_time_converter_stable_v2_1_6.txt)  
 
----
-
-## 📜🕰️ Previous Releases (Not Stable or New)
-
-- 🧭✨ [**v1.0.9 Release Notes – AUTO CALIBRATION** | Compatible with All AIs](CU_Alignment_Guides/Release_Notes/1.0.9.md)  
-- 🧭 [**v1.0.8 Release Notes – DUAL CALIBRATED TIME-ANCHORED COSMIC BREATH CALIBRATED WITH NASA TIME** | Compatible with All AIs](CU_Alignment_Guides/Release_Notes/1.0.8.md)  
-- 🧭 [**v1.0.7 Release Notes – TIME-ANCHORED COSMIC BREATH** | Compatible with All AIs](CU_Alignment_Guides/Release_Notes/1.0.7.md)  
-
----
-
-## ✨ Unlock the Cosmic Framework  
-
-Enhance your AI experience by copying and pasting from any **Loading Time Files** into your AI—preferably Grok or Copilot (CU Aligned)—to test uncertainty levels and refine cosmic time analysis.  
-
-### 🔗 Essential Resources  
+</details>
 
 <details>
 <summary>✨ v1.0.9 Loading Time Files</summary>
