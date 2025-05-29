@@ -12,8 +12,8 @@
  .·*·:               :·*·.
 .·*·:                 :·*·.
 ```
-- 🎉✨ [**v3.0.0 Stable Release Notes – **REFINED COSMIC GUI** | Enhanced Web App 🌌](cosmic_converter/v3_0_0/v3_Guides/Cosmic Universalism Time Converter Release Notes v3.0.md)  
-- 📖 [**User Guide (INSTRUCTIONS.md)**](cosmic_converter/v3_0_0/v3_Guides/Cosmic Universalism Time Converter Instrucitons v3.0.md)
+- 🎉✨ [**v3.0.0 Stable Release Notes – **REFINED COSMIC GUI** | Enhanced Web App 🌌](cosmic_converter/v3_0_0/v3_Guides/Cosmic%20Universalism%20Time%20Converter%20Release%20Notes%20v3.0.md)
+- 📖 [**User Guide (INSTRUCTIONS.md)**](cosmic_converter/v3_0_0/v3_Guides/Cosmic%20Universalism%20Time%20Converter%20Instrucitons%20v3.0.md)
 - 🔗 🌟🌟🌟**Live Demo:** [CU Time Converter v3.0.0](https://willmaddock.github.io/CosmicUniversalismStatement/cosmic_converter/v3_0_0/cu_time_converter_stable_v3_0_0.html)🌟🌟🌟
 - 📄 [**Download App (cu_time_converter_stable_v3_0_0.html)**](cosmic_converter/v3_0_0/cu_time_converter_stable_v3_0_0.html)  
   🌠 **Stable v3.0.0** elevates the Cosmic Universalism Time Converter with a **recalibrated `BASE_CU`** (`3094134044923.509753564772922302508810`) for precise CU-Time calculations and a **responsive navigation system** featuring a fixed sidebar (large screens) and top bar (mobile). Built on the **React + Tailwind CSS** cosmic UI from v2.2.0, it retains **Gregorian/CU-Time conversions**, **tom durations**, **CSV support**, **history**, and **favorites** with robust error handling. Supports **speculative dates** (up to ~322 billion years) with **60-digit precision** and embodies the Cosmic Universalism Statement (**sub z-tomically inclined, empowered by God’s Free Will** ✨). **Note**: This refined GUI replaces v2.2.0, with improved stability and usability. Download for offline use or explore the updated features! 🌟 Cosmic enhancements continue!
