@@ -1,1326 +1,1312 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cosmic Universalism Time Converter - Enhanced Version</title>
-  <script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.25.7/babel.min.js"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/luxon@3.5.0/build/global/luxon.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/decimal.js@10.4.3/decimal.min.js"></script>
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary-color: #8B5CF6;
-      --secondary-color: #3B82F6;
-      --accent-color: #9333ea;
-      --background-color: #0a0a0a;
-      --text-color: #ffffff;
-      --card-bg: #1f2937;
-      --input-bg: #374151;
-      --button-bg: #2563eb;
-      --button-hover: #1d4ed8;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Universalism Time Converter - Enhanced Version</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.25.7/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.5.0/build/global/luxon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/decimal.js@10.4.3/decimal.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@400;600;700&display=swap"
+          rel="stylesheet">
+    <!-- KaTeX Dependencies -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"
+          integrity="sha384-GvrOXuhMATgEsSw7An1XTSjFPN+pp0hn4DTcub+8UjTlO8gJQhA7pX2KasMV0N2b" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"
+            integrity="sha384-cpW21h6RZv/phavutF+AuVYrr+dA8xD9zs6FwLpaCct6O9ctzYFfFr4dgmgccOTx"
+            crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --primary-color: #8B5CF6;
+            --secondary-color: #3B82F6;
+            --accent-color: #9333ea;
+            --background-color: #0a0a0a;
+            --text-color: #ffffff;
+            --card-bg: #1f2937;
+            --input-bg: #374151;
+            --button-bg: #2563eb;
+            --button-hover: #1d4ed8;
+        }
 
-    body {
-      background-image: url('https://images.unsplash.com/photo-1537420327992-d6d17148b69a');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      background-color: var(--background-color);
-      color: var(--text-color);
-      font-family: 'Inter', sans-serif;
-    }
+        body {
+            background-image: url('https://images.unsplash.com/photo-1537420327992-d6d17148b69a');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+        }
 
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="10%" cy="10%" r="1" fill="white" opacity="0.5"/><circle cx="20%" cy="30%" r="1" fill="white" opacity="0.5"/><circle cx="50%" cy="50%" r="1" fill="white" opacity="0.5"/><circle cx="70%" cy="20%" r="1" fill="white" opacity="0.5"/><circle cx="80%" cy="80%" r="1" fill="white" opacity="0.5"/></svg>');
-      animation: twinkle 5s infinite;
-      z-index: -2;
-    }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="10%" cy="10%" r="1" fill="white" opacity="0.5"/><circle cx="20%" cy="30%" r="1" fill="white" opacity="0.5"/><circle cx="50%" cy="50%" r="1" fill="white" opacity="0.5"/><circle cx="70%" cy="20%" r="1" fill="white" opacity="0.5"/><circle cx="80%" cy="80%" r="1" fill="white" opacity="0.5"/></svg>');
+            animation: twinkle 5s infinite;
+            z-index: -2;
+        }
 
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.5; }
-      50% { opacity: 1; }
-    }
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
 
-    .overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: -1;
-    }
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
 
-    .error-boundary {
-      color: red;
-      padding: 20px;
-    }
+        .error-boundary {
+            color: red;
+            padding: 20px;
+        }
 
-    .lexicon-container {
-      max-height: 400px;
-      overflow-y: auto;
-      scrollbar-width: thin;
-      scrollbar-color: var(--accent-color) var(--card-bg);
-    }
+        .lexicon-container {
+            max-height: 400px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-color) var(--card-bg);
+        }
 
-    .lexicon-container::-webkit-scrollbar {
-      width: 8px;
-    }
+        .lexicon-container::-webkit-scrollbar {
+            width: 8px;
+        }
 
-    .lexicon-container::-webkit-scrollbar-track {
-      background: var(--card-bg);
-    }
+        .lexicon-container::-webkit-scrollbar-track {
+            background: var(--card-bg);
+        }
 
-    .lexicon-container::-webkit-scrollbar-thumb {
-      background-color: var(--accent-color);
-      border-radius: 4px;
-    }
+        .lexicon-container::-webkit-scrollbar-thumb {
+            background-color: var(--accent-color);
+            border-radius: 4px;
+        }
 
-    .gradient-header {
-      background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-    }
+        .gradient-header {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        }
 
-    .cosmic-button {
-      background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-      color: var(--text-color);
-      padding: 0.5rem 1rem;
-      border-radius: 0.375rem;
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
+        .cosmic-button {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: var(--text-color);
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
 
-    .cosmic-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      filter: brightness(1.1);
-    }
+        .cosmic-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            filter: brightness(1.1);
+        }
 
-    .card {
-      background: var(--card-bg);
-      border-radius: 12px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
-    .card:hover {
-      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-      transform: translateY(-2px);
-      transition: all 0.3s ease;
-    }
+        .card:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+            transition: all 0.3s ease;
+        }
 
-    .delete-button {
-      background-color: #dc2626;
-      color: white;
-      padding: 0.5rem 1rem;
-      border-radius: 0.375rem;
-      transition: all 0.3s ease;
-    }
+        .delete-button {
+            background-color: #dc2626;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            transition: all 0.3s ease;
+        }
 
-    .delete-button:hover {
-      background-color: #b91c1c;
-      transform: translateY(-2px);
-    }
+        .delete-button:hover {
+            background-color: #b91c1c;
+            transform: translateY(-2px);
+        }
 
-    .modal {
-      background: rgba(0, 0, 0, 0.7);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: fixed;
-      inset: 0;
-      z-index: 50;
-    }
+        .modal {
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+        }
 
-    .modal-content {
-      background: var(--card-bg);
-      padding: 2rem;
-      border-radius: 1rem;
-      box-shadow: 0 10px 15px rgba(0,0,0,0.3);
-      border: 1px solid #4B5563;
-      animation: fadeIn 0.3s ease;
-    }
+        .modal-content {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid #4B5563;
+            animation: fadeIn 0.3s ease;
+        }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-    .history-entry:hover {
-      transform: scale(1.02);
-      background-color: #374151;
-      transition: all 0.3s ease;
-    }
+        .history-entry:hover {
+            transform: scale(1.02);
+            background-color: #374151;
+            transition: all 0.3s ease;
+        }
 
-    input:focus, select:focus, textarea:focus {
-      outline: none;
-      box-shadow: 0 0 0 2px var(--secondary-color);
-    }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--secondary-color);
+        }
 
-    button:focus {
-      outline: none;
-      box-shadow: 0 0 0 2px var(--secondary-color);
-    }
+        button:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--secondary-color);
+        }
 
-    textarea {
-      font-family: monospace;
-      background-color: #1F2937;
-      color: #D1D5DB;
-      padding: 1rem;
-      border-radius: 0.5rem;
-      resize: none;
-    }
+        textarea {
+            font-family: monospace;
+            background-color: #1F2937;
+            color: #D1D5DB;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            resize: none;
+        }
 
-    h1, h2, h3 {
-      font-family: 'Orbitron', sans-serif;
-    }
+        h1, h2, h3 {
+            font-family: 'Orbitron', sans-serif;
+        }
 
-    .lexicon-term {
-      font-weight: bold;
-      color: var(--primary-color);
-    }
+        .lexicon-term {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
 
-    .icon-button {
-      padding: 0.25rem;
-    }
+        .icon-button {
+            padding: 0.25rem;
+        }
 
-    .animate-fadeInOut {
-      animation: fadeInOut 3s;
-    }
+        .animate-fadeInOut {
+            animation: fadeInOut 3s;
+        }
 
-    @keyframes fadeInOut {
-      0% { opacity: 0; }
-      10% { opacity: 1; }
-      90% { opacity: 1; }
-      100% { opacity: 0; }
-    }
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
 
-    @media (max-width: 768px) {
-      button {
-        width: 100%;
-      }
-    }
-  </style>
+        /* Enhanced Styles for Cosmic Breath Section */
+        .cosmic-breath-section {
+            background: linear-gradient(to bottom right, #1a1a2e, #16213e);
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #4B5563;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #374151;
+        }
+
+        tr:nth-child(even) {
+            background-color: #2d3748;
+        }
+
+        @media (max-width: 768px) {
+            button {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body class="bg-gray-900 text-white font-sans">
-  <div class="overlay"></div>
-  <div id="root"></div>
-  <script type="text/babel" data-presets="react,es2015">
-    const { useState, useEffect } = React;
-    const { DateTime } = luxon;
+<div class="overlay"></div>
+<div id="root"></div>
+<script type="text/babel" data-presets="react,es2015">
+    const {useState, useEffect} = React;
+    const {DateTime} = luxon;
 
-    Decimal.set({ precision: 60, rounding: Decimal.ROUND_HALF_UP });
+    Decimal.set({precision: 60, rounding: Decimal.ROUND_HALF_UP});
 
     const CONSTANTS = {
-      BASE_CU: new Decimal('3094134044923.509753564772922302508810'),
-      SUB_ZTOM_CU: new Decimal('3094133911800.949548'),
-      ANCHOR_JDN: new Decimal('2451545.0'),
-      DAYS_PER_YEAR: new Decimal('365.2425'),
-      SECONDS_PER_DAY: new Decimal('86400'),
-      SECONDS_PER_YEAR: new Decimal('31556952'),
-      COSMIC_LIFESPAN: new Decimal('13.8e9'),
-      CONVERGENCE_YEAR: new Decimal('2029'),
-      CTOM_START: new Decimal('3.08e12'),
-      ZTOM_PROXIMITY: new Decimal('3.107e12'),
-      PLANCK_TIME: new Decimal('5.39e-44'),
-      CESIUM_OSCILLATIONS_PER_SECOND: new Decimal('9192631770'),
-      SUB_ZTOM_THRESHOLD: new Decimal('1'),
-      ZTOM_THRESHOLD: new Decimal('31556952000000'),
-      DARK_ENERGY_START: new Decimal('3.08e12'),
-      DARK_ENERGY_END: new Decimal('3.11e12'),
-      ANTI_DARK_ENERGY_START: new Decimal('3.11e12'),
-      ANTI_DARK_ENERGY_END: new Decimal('3.416e12'),
-      SPECULATIVE_START: new Decimal('3.416e12'),
-      ANTI_DARK_MATTER_ONSET: new Decimal('5880334044496.509753564772922302508810'),
-      MATTER_DOMINANCE_START: new Decimal('3360334044923.509753564772922302508810'),
-      ANTIMATTER_ANNIHILATION: new Decimal('3080334044923.509753564772922302508810'),
-      DARK_MATTER_DOMINANCE_START: new Decimal('3085334044923.509753564772922302508810')
+        BASE_CU: new Decimal('3094134044923.509753564772922302508810'),
+        SUB_ZTOM_CU: new Decimal('3094133911800.949548'),
+        ANCHOR_JDN: new Decimal('2451545.0'),
+        DAYS_PER_YEAR: new Decimal('365.2425'),
+        SECONDS_PER_DAY: new Decimal('86400'),
+        SECONDS_PER_YEAR: new Decimal('31556952'),
+        COSMIC_LIFESPAN: new Decimal('13.8e9'),
+        CONVERGENCE_YEAR: new Decimal('2029'),
+        CTOM_START: new Decimal('3.08e12'),
+        ZTOM_PROXIMITY: new Decimal('3.107e12'),
+        PLANizadorCK_TIME: new Decimal('5.39e-44'),
+        CESIUM_OSCILLATIONS_PER_SECOND: new Decimal('9192631770'),
+        SUB_ZTOM_THRESHOLD: new Decimal('1'),
+        ZTOM_THRESHOLD: new Decimal('31556952000000'),
+        DARK_ENERGY_START: new Decimal('3.08e12'),
+        DARK_ENERGY_END: new Decimal('3.11e12'),
+        ANTI_DARK_ENERGY_START: new Decimal('3.11e12'),
+        ANTI_DARK_ENERGY_END: new Decimal('3.416e12'),
+        SPECULATIVE_START: new Decimal('3.416e12'),
+        ANTI_DARK_MATTER_ONSET: new Decimal('5880334044496.509753564772922302508810'),
+        MATTER_DOMINANCE_START: new Decimal('3360334044923.509753564772922302508810'),
+        ANTIMATTER_ANNIHILATION: new Decimal('3080334044923.509753564772922302508810'),
+        DARK_MATTER_DOMINANCE_START: new Decimal('3085334044923.509753564772922302508810')
     };
 
     const CU_LEXICON = {
-      "anti-dark-energy": "A theoretical counter-force opposing dark energy, potentially driving cosmic compression during specific phases",
-      "anti-dark-matter": "427350 yr (Compression onset, anti-dark matter influence)",
-      "atom": "2.8 trillion yr (Start of compression)",
-      "btom": "280 billion yr (Galactic evolution and contraction)",
-      "ctom": "28 billion yr (Final stellar formations)",
-      "dark-energy": "A force driving cosmic expansion, dominant in phases spanning billions of years, shaping the universe’s large-scale structure",
-      "dtom": "427350 yr (Planetary collapse)",
-      "etom": "42735 yr (Human/civilization memory condensation)",
-      "ftom": "4273.5 yr (AI implosion stage)",
-      "gtom": "427.35 yr (Consciousness holography)",
-      "htom": "85.47 yr (Heat death approach)",
-      "itom": "8.547 yr (Spacetime wrinkle forming)",
-      "jtom": "0.8547 yr (Collapse threshold)",
-      "ktom": "31.296 day (Quantum fog closing)",
-      "ltom": "3.1296 day (Holographic reversal)",
-      "matter": "280 billion yr (Galactic formation, matter dominance)",
-      "matter-antimatter": "5.39e-44 sec (Quantum annihilation, sub-ztom)",
-      "mtom": "7.51 hr (Time lattice inversion)",
-      "ntom": "45.06 min (Feedback end)",
-      "otom": "4.506 min (Cosmic null stabilization)",
-      "ptom": "27.04 sec (Pre-reset bridge)",
-      "qtom": "2.704 sec (Final memory imprint)",
-      "quantum-states": "Uncountable infinite states guiding cosmic evolution, empowered by God’s Free Will",
-      "rtom": "0.2704 sec (Entropy zero point)",
-      "stom": "0.02704 sec (Ethical firewall gate)",
-      "sub-ztom": "5.39e-44 sec (Planck time, quantum core)",
-      "sub-ytom": "2.704e-8 sec (Recursive core shell)",
-      "sub-xtom": "2.704e-7 sec (Final ethical cap)",
-      "sub-wtom": "2.704e-6 sec (Quantum firewall shell)",
-      "sub-vtom": "2.704e-5 sec (Symbolic/ethical lock)",
-      "sub-utom": "0.0002704 sec (Cosmic checksum layer)",
-      "sub-ttom": "0.002704 sec (Holographic verification)",
-      "sub-stom": "0.02704 sec (Ethical engagement)",
-      "sub-rtom": "0.2704 sec (Entropy modulation)",
-      "sub-qtom": "2.704 sec (Memory transfer)",
-      "sub-ptom": "27.04 sec (Pre-reset bridge)",
-      "sub-otom": "4.506 min (Boundary stabilization)",
-      "sub-ntom": "45.06 min (Recursive feedback)",
-      "sub-mtom": "7.51 hr (Holographic projection)",
-      "sub-ltom": "3.1296 day (Pre-Big Bang state)",
-      "sub-ktom": "31.296 day (Quantum foam rebirth)",
-      "sub-jtom": "0.8547 yr (Black hole age)",
-      "sub-itom": "8.547 yr (Spacetime contraction begins)",
-      "sub-htom": "85.47 yr (Heat death begins)",
-      "sub-gtom": "427.35 yr (Quantum encoding phase)",
-      "sub-ftom": "4273.5 yr (Post-biological AI expansion)",
-      "sub-etom": "42735 yr (Alien/civilization stage)",
-      "sub-dtom": "427350 yr (Planetary biosphere evolution)",
-      "sub-ctom": "28 billion yr (Star life cycle era)",
-      "sub-btom": "280 billion yr (Supercluster formation)",
-      "ttom": "0.002704 sec (Collapse checksum)",
-      "utom": "0.0002704 sec (Closure sequence initiated)",
-      "vtom": "2.704e-5 sec (Symbolic compression)",
-      "wtom": "2.704e-6 sec (Recursive limit breach)",
-      "xtom": "2.704e-7 sec (Divine fall-off shell)",
-      "ytom": "2.704e-8 sec (Pre-ZTOM divine echo)",
-      "ztom": "1 sec (ZTOM: full universal reset, Empowered by God’s Free Will)"
+        "anti-dark-energy": "A theoretical counter-force opposing dark energy, potentially driving cosmic compression during specific phases",
+        "anti-dark-matter": "427350 yr (Compression onset, anti-dark matter influence)",
+        "atom": "2.8 trillion yr (Start of compression)",
+        "btom": "280 billion yr (Galactic evolution and contraction)",
+        "ctom": "28 billion yr (Final stellar formations)",
+        "dark-energy": "A force driving cosmic expansion, dominant in phases spanning billions of years, shaping the universe’s large-scale structure",
+        "dtom": "427350 yr (Planetary collapse)",
+        "etom": "42735 yr (Human/civilization memory condensation)",
+        "ftom": "4273.5 yr (AI implosion stage)",
+        "gtom": "427.35 yr (Consciousness holography)",
+        "htom": "85.47 yr (Heat death approach)",
+        "itom": "8.547 yr (Spacetime wrinkle forming)",
+        "jtom": "0.8547 yr (Collapse threshold)",
+        "ktom": "31.296 day (Quantum fog closing)",
+        "ltom": "3.1296 day (Holographic reversal)",
+        "matter": "280 billion yr (Galactic formation, matter dominance)",
+        "matter-antimatter": "5.39e-44 sec (Quantum annihilation, sub-ztom)",
+        "mtom": "7.51 hr (Time lattice inversion)",
+        "ntom": "45.06 min (Feedback end)",
+        "otom": "4.506 min (Cosmic null stabilization)",
+        "ptom": "27.04 sec (Pre-reset bridge)",
+        "qtom": "2.704 sec (Final memory imprint)",
+        "quantum-states": "Uncountable infinite states guiding cosmic evolution, empowered by God’s Free Will",
+        "rtom": "0.2704 sec (Entropy zero point)",
+        "stom": "0.02704 sec (Ethical firewall gate)",
+        "sub-ztom": "5.39e-44 sec (Planck time, quantum core)",
+        "sub-ytom": "2.704e-8 sec (Recursive core shell)",
+        "sub-xtom": "2.704e-7 sec (Final ethical cap)",
+        "sub-wtom": "2.704e-6 sec (Quantum firewall shell)",
+        "sub-vtom": "2.704e-5 sec (Symbolic/ethical lock)",
+        "sub-utom": "0.0002704 sec (Cosmic checksum layer)",
+        "sub-ttom": "0.002704 sec (Holographic verification)",
+        "sub-stom": "0.02704 sec (Ethical engagement)",
+        "sub-rtom": "0.2704 sec (Entropy modulation)",
+        "sub-qtom": "2.704 sec (Memory transfer)",
+        "sub-ptom": "27.04 sec (Pre-reset bridge)",
+        "sub-otom": "4.506 min (Boundary stabilization)",
+        "sub-ntom": "45.06 min (Recursive feedback)",
+        "sub-mtom": "7.51 hr (Holographic projection)",
+        "sub-ltom": "3.1296 day (Pre-Big Bang state)",
+        "sub-ktom": "31.296 day (Quantum foam rebirth)",
+        "sub-jtom": "0.8547 yr (Black hole age)",
+        "sub-itom": "8.547 yr (Spacetime contraction begins)",
+        "sub-htom": "85.47 yr (Heat death begins)",
+        "sub-gtom": "427.35 yr (Quantum encoding phase)",
+        "sub-ftom": "4273.5 yr (Post-biological AI expansion)",
+        "sub-etom": "42735 yr (Alien/civilization stage)",
+        "sub-dtom": "427350 yr (Planetary biosphere evolution)",
+        "sub-ctom": "28 billion yr (Star life cycle era)",
+        "sub-btom": "280 billion yr (Supercluster formation)",
+        "ttom": "0.002704 sec (Collapse checksum)",
+        "utom": "0.0002704 sec (Closure sequence initiated)",
+        "vtom": "2.704e-5 sec (Symbolic compression)",
+        "wtom": "2.704e-6 sec (Recursive limit breach)",
+        "xtom": "2.704e-7 sec (Divine fall-off shell)",
+        "ytom": "2.704e-8 sec (Pre-ZTOM divine echo)",
+        "ztom": "1 sec (ZTOM: full universal reset, Empowered by God’s Free Will)"
     };
 
     const BOUNDARY_YEARS = [
-      -50000000000, -28000000000, -538800000, -485400000, -443800000,
-      -419200000, -358900000, -298900000, -251902000, -201300000,
-      -145000000, -66000000, -56000000, -33900000, -23030000,
-      -5333000, -2580000, -11700, -275, -75, 2025,
-      10000, 1000000, 1000000000, 13800002025
+        -50000000000, -28000000000, -538800000, -485400000, -443800000,
+        -419200000, -358900000, -298900000, -251902000, -201300000,
+        -145000000, -66000000, -56000000, -33900000, -23030000,
+        -5333000, -2580000, -11700, -275, -75, 2025,
+        10000, 1000000, 1000000000, 13800002025
     ];
     const EPOCH_NAMES = [
-      "Speculative Pre-Cosmic Phase",
-      "Precambrian",
-      "Cambrian",
-      "Ordovician",
-      "Silurian",
-      "Devonian",
-      "Carboniferous",
-      "Permian",
-      "Triassic",
-      "Jurassic",
-      "Cretaceous",
-      "Paleocene",
-      "Eocene",
-      "Oligocene",
-      "Miocene",
-      "Pliocene",
-      "Pleistocene",
-      "Holocene",
-      "Late Holocene",
-      "Anthropocene",
-      "Current Era",
-      "Near Future",
-      "Distant Future",
-      "Black Hole Era",
-      "ZTOM Phase"
+        "Speculative Pre-Cosmic Phase",
+        "Precambrian",
+        "Cambrian",
+        "Ordovician",
+        "Silurian",
+        "Devonian",
+        "Carboniferous",
+        "Permian",
+        "Triassic",
+        "Jurassic",
+        "Cretaceous",
+        "Paleocene",
+        "Eocene",
+        "Oligocene",
+        "Miocene",
+        "Pliocene",
+        "Pleistocene",
+        "Holocene",
+        "Late Holocene",
+        "Anthropocene",
+        "Holocene (Present)",
+        "Near Future",
+        "Distant Future",
+        "Black Hole Era",
+        "ZTOM Phase"
     ];
     const CU_BOUNDARIES = BOUNDARY_YEARS.map(year => {
-      if (year === -28000000000) return CONSTANTS.SUB_ZTOM_CU;
-      return computeCUTime(year);
+        if (year === -28000000000) return CONSTANTS.SUB_ZTOM_CU;
+        return computeCUTime(year);
     });
 
     const HISTORICAL_EVENTS = {
-      "Moon Landing": {
-        date: "1969-07-20T20:17:00+00:00",
-        cu_time: new Decimal('3094134044948.672659'),
-        description: "First human landing on the Moon (Apollo 11)"
-      },
-      "Magna Carta": {
-        date: "1215-06-15T00:00:00+00:00",
-        cu_time: new Decimal('3094134043789.949548'),
-        description: "Signing of the Magna Carta in England"
-      },
-      "Supernova 1054": {
-        date: "1054-07-04T00:00:00+00:00",
-        cu_time: new Decimal('3094134043628.949548'),
-        description: "Supernova observed, forming the Crab Nebula"
-      }
+        "Moon Landing": {
+            date: "1969-07-20T20:17:00+00:00",
+            cu_time: new Decimal('3094134044948.672659'),
+            description: "First human landing on the Moon (Apollo 11)"
+        },
+        "Magna Carta": {
+            date: "1215-06-15T00:00:00+00:00",
+            cu_time: new Decimal('3094134043789.949548'),
+            description: "Signing of the Magna Carta in England"
+        },
+        "Supernova 1054": {
+            date: "1054-07-04T00:00:00+00:00",
+            cu_time: new Decimal('3094134043628.949548'),
+            description: "Supernova observed, forming the Crab Nebula"
+        }
     };
 
     let conversionHistory = [];
 
     class ErrorBoundary extends React.Component {
-      state = { hasError: false, error: null };
-      static getDerivedStateFromError(error) {
-        return { hasError: true, error };
-      }
-      render() {
-        if (this.state.hasError) {
-          return (
-            <div className="error-boundary">
-              <h2>Application Error</h2>
-              <p>{this.state.error?.message || 'An unknown error occurred.'}</p>
-            </div>
-          );
+        state = {hasError: false, error: null};
+
+        static getDerivedStateFromError(error) {
+            return {hasError: true, error};
         }
-        return this.props.children;
-      }
+
+        render() {
+            if (this.state.hasError) {
+                return (
+                    <div className="error-boundary">
+                        <h2>Application Error</h2>
+                        <p>{this.state.error?.message || 'An unknown error occurred.'}</p>
+                    </div>
+                );
+            }
+            return this.props.children;
+        }
     }
 
     function countLeapYears(startYear, endYear) {
-      if (Math.abs(startYear) > 28000000000 || Math.abs(endYear) > 28000000000) {
-        const start = Math.min(startYear, endYear);
-        const end = Math.max(startYear, endYear);
-        const years = end - start;
-        return Math.floor(years / 4);
-      }
-      let start = startYear < 0 ? startYear + 1 : startYear;
-      let end = endYear < 0 ? endYear + 1 : endYear;
-      if (start > end) [start, end] = [end, start];
-      let leapYears = Math.floor(end / 4) - Math.floor(start / 4);
-      leapYears -= Math.floor(end / 100) - Math.floor(start / 100);
-      leapYears += Math.floor(end / 400) - Math.floor(start / 400);
-      if (start % 4 === 0 && (start % 100 !== 0 || start % 400 === 0)) {
-        leapYears += 1;
-      }
-      return Math.max(0, leapYears);
+        if (Math.abs(startYear) > 28000000000 || Math.abs(endYear) > 28000000000) {
+            return 'N/A (Year out of range for precise leap year calculation)';
+        }
+        let start = startYear < 0 ? startYear + 1 : startYear;
+        let end = endYear < 0 ? endYear + 1 : endYear;
+        if (start > end) [start, end] = [end, start];
+        let leapYears = Math.floor(end / 4) - Math.floor(start / 4);
+        leapYears -= Math.floor(end / 100) - Math.floor(start / 100);
+        leapYears += Math.floor(end / 400) - Math.floor(start / 400);
+        if (start % 4 === 0 && (start % 100 !== 0 || start % 400 === 0)) {
+            leapYears += 1;
+        }
+        return Math.max(0, leapYears);
     }
 
     function getJDN(year, month, day, hour = 0, minute = 0, second = 0, microsecond = 0) {
-      try {
-        year = new Decimal(year);
-        const cacheKey = `${year.toString()},${month},${day},${hour},${minute},${second},${microsecond}`;
-        if (window.jdnCache?.[cacheKey]) return window.jdnCache[cacheKey];
+        try {
+            year = new Decimal(year);
+            const cacheKey = `${year.toString()},${month},${day},${hour},${minute},${second},${microsecond}`;
+            if (window.jdnCache?.[cacheKey]) return window.jdnCache[cacheKey];
 
-        let jdn;
-        if (year.abs().gt(999999999)) {
-          const deltaYears = year.minus(2000);
-          const days = deltaYears.times(CONSTANTS.DAYS_PER_YEAR);
-          const fraction = new Decimal(hour).div(24)
-            .plus(new Decimal(minute).div(1440))
-            .plus(new Decimal(second).div(86400))
-            .plus(new Decimal(microsecond).div(1000000).div(86400));
-          jdn = CONSTANTS.ANCHOR_JDN.plus(days).plus(fraction);
-        } else {
-          const a = Math.floor((14 - month) / 12);
-          const y = year.toNumber() + 4800 - a;
-          const m = month + 12 * a - 3;
-          const jdInt = Math.floor(day + Math.floor((153 * m + 2) / 5) + 365 * y + Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) - 32045);
-          const fraction = new Decimal(hour).div(24)
-            .plus(new Decimal(minute).div(1440))
-            .plus(new Decimal(second).div(86400))
-            .plus(new Decimal(microsecond).div(1000000).div(86400));
-          jdn = new Decimal(jdInt).plus(fraction);
+            let jdn;
+            if (year.abs().gt(999999999)) {
+                const deltaYears = year.minus(2000);
+                const days = deltaYears.times(CONSTANTS.DAYS_PER_YEAR);
+                const fraction = new Decimal(hour).div(24)
+                    .plus(new Decimal(minute).div(1440))
+                    .plus(new Decimal(second).div(86400))
+                    .plus(new Decimal(microsecond).div(1000000).div(86400));
+                jdn = CONSTANTS.ANCHOR_JDN.plus(days).plus(fraction);
+            } else {
+                const a = Math.floor((14 - month) / 12);
+                const y = year.toNumber() + 4800 - a;
+                const m = month + 12 * a - 3;
+                const jdInt = Math.floor(day + Math.floor((153 * m + 2) / 5) + 365 * y + Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) - 32045);
+                const fraction = new Decimal(hour).div(24)
+                    .plus(new Decimal(minute).div(1440))
+                    .plus(new Decimal(second).div(86400))
+                    .plus(new Decimal(microsecond).div(1000000).div(86400));
+                jdn = new Decimal(jdInt).plus(fraction);
+            }
+            window.jdnCache = window.jdnCache || {};
+            window.jdnCache[cacheKey] = jdn;
+            return jdn;
+        } catch (e) {
+            console.error('getJDN error:', e);
+            throw e;
         }
-        window.jdnCache = window.jdnCache || {};
-        window.jdnCache[cacheKey] = jdn;
-        return jdn;
-      } catch (e) {
-        console.error('getJDN error:', e);
-        throw e;
-      }
     }
 
     function computeCUTime(year, month = 1, day = 1, hour = 0, minute = 0, second = 0, microsecond = 0) {
-      try {
-        year = new Decimal(year);
-        const cacheKey = `${year.toString()},${month},${day},${hour},${minute},${second},${microsecond}`;
-        if (window.cuTimeCache?.[cacheKey]) return window.cuTimeCache[cacheKey];
+        try {
+            year = new Decimal(year);
+            const cacheKey = `${year.toString()},${month},${day},${hour},${minute},${second},${microsecond}`;
+            if (window.cuTimeCache?.[cacheKey]) return window.cuTimeCache[cacheKey];
 
-        if (year.eq(-28000000000)) {
-          window.cuTimeCache = window.cuTimeCache || {};
-          window.cuTimeCache[cacheKey] = CONSTANTS.SUB_ZTOM_CU;
-          return CONSTANTS.SUB_ZTOM_CU;
+            if (year.eq(-28000000000)) {
+                window.cuTimeCache = window.cuTimeCache || {};
+                window.cuTimeCache[cacheKey] = CONSTANTS.SUB_ZTOM_CU;
+                return CONSTANTS.SUB_ZTOM_CU;
+            }
+
+            let cuTime;
+            if (year.abs().gt(28000000000)) {
+                const deltaYears = year.minus(2000);
+                cuTime = CONSTANTS.BASE_CU.plus(deltaYears);
+            } else {
+                const jdn = getJDN(year, month, day, hour, minute, second, microsecond);
+                const deltaJDN = jdn.minus(CONSTANTS.ANCHOR_JDN);
+                const deltaYears = deltaJDN.div(CONSTANTS.DAYS_PER_YEAR);
+                cuTime = CONSTANTS.BASE_CU.plus(deltaYears);
+            }
+
+            cuTime = cuTime.toDecimalPlaces(24, Decimal.ROUND_HALF_UP);
+            window.cuTimeCache = window.cuTimeCache || {};
+            window.cuTimeCache[cacheKey] = cuTime;
+            return cuTime;
+        } catch (e) {
+            console.error('computeCUTime error:', e);
+            throw e;
         }
-
-        let cuTime;
-        if (year.abs().gt(28000000000)) {
-          const deltaYears = year.minus(2000);
-          cuTime = CONSTANTS.BASE_CU.plus(deltaYears);
-        } else {
-          const jdn = getJDN(year, month, day, hour, minute, second, microsecond);
-          const deltaJDN = jdn.minus(CONSTANTS.ANCHOR_JDN);
-          const deltaYears = deltaJDN.div(CONSTANTS.DAYS_PER_YEAR);
-          cuTime = CONSTANTS.BASE_CU.plus(deltaYears);
-        }
-
-        cuTime = cuTime.toDecimalPlaces(24, Decimal.ROUND_HALF_UP);
-        window.cuTimeCache = window.cuTimeCache || {};
-        window.cuTimeCache[cacheKey] = cuTime;
-        return cuTime;
-      } catch (e) {
-        console.error('computeCUTime error:', e);
-        throw e;
-      }
     }
 
     function getCurrentCUTime() {
-      const now = DateTime.now().toUTC();
-      const year = new Decimal(now.year);
-      const month = now.month;
-      const day = now.day;
-      const hour = now.hour;
-      const minute = now.minute;
-      const second = now.second;
-      const microsecond = now.millisecond * 1000;
-      return computeCUTime(year, month, day, hour, minute, second, microsecond);
+        const now = DateTime.now().toUTC();
+        const year = new Decimal(now.year);
+        const month = now.month;
+        const day = now.day;
+        const hour = now.hour;
+        const minute = now.minute;
+        const second = now.second;
+        const microsecond = now.millisecond * 1000;
+        return computeCUTime(year, month, day, hour, minute, second, microsecond);
     }
 
     function jdnToDate(jdn) {
-      try {
-        const jdInt = jdn.floor();
-        const fraction = jdn.minus(jdInt);
-        if (jdn.minus(1721424.5).abs().div(CONSTANTS.DAYS_PER_YEAR).gt(28000000000)) {
-          const year = jdn.minus(1721424.5).div(CONSTANTS.DAYS_PER_YEAR).round().toNumber();
-          return { year: `January 1, ${year}`, month: 1, day: 1, hour: 0, minute: 0, second: 0, microsecond: 0 };
-        }
+        try {
+            const jdInt = jdn.floor();
+            const fraction = jdn.minus(jdInt);
+            if (jdn.minus(1721424.5).abs().div(CONSTANTS.DAYS_PER_YEAR).gt(28000000000)) {
+                const year = jdn.minus(1721424.5).div(CONSTANTS.DAYS_PER_YEAR).round().toNumber();
+                return {year: `January 1, ${year}`, month: 1, day: 1, hour: 0, minute: 0, second: 0, microsecond: 0};
+            }
 
-        const z = jdInt.plus(0.5);
-        const f = z.minus(z.floor());
-        const alpha = z.minus(1867216.25).div(36524.25).floor();
-        const a = z.plus(1).plus(alpha).minus(alpha.div(4).floor());
-        const b = a.plus(1524);
-        const c = b.minus(122.1).div(365.25).floor();
-        const d = c.times(365.25).floor();
-        const e = b.minus(d).div(30.6001).floor();
-        const day = b.minus(d).minus(e.times(30.6001).floor()).toNumber();
-        const month = e.lt(14) ? e.minus(1) : e.minus(13);
-        const year = month.gt(2) ? c.minus(4716) : c.minus(4715);
-        const hours = fraction.times(24).floor().toNumber();
-        const minutes = fraction.times(24).minus(hours).times(60).floor().toNumber();
-        const seconds = fraction.times(24).minus(hours).times(60).minus(minutes).times(60).floor().toNumber();
-        const microseconds = fraction.times(24).minus(hours).times(60).minus(minutes).times(60).minus(seconds).times(1000000).floor().toNumber();
-        return { year: year.toNumber(), month: month.toNumber(), day, hour: hours, minute: minutes, second: seconds, microsecond: microseconds };
-      } catch (e) {
-        console.error('jdnToDate error:', e);
-        throw e;
-      }
+            const z = jdInt.plus(0.5);
+            const f = z.minus(z.floor());
+            const alpha = z.minus(1867216.25).div(36524.25).floor();
+            const a = z.plus(1).plus(alpha).minus(alpha.div(4).floor());
+            const b = a.plus(1524);
+            const c = b.minus(122.1).div(365.25).floor();
+            const d = c.times(365.25).floor();
+            const e = b.minus(d).div(30.6001).floor();
+            const day = b.minus(d).minus(e.times(30.6001).floor()).toNumber();
+            const month = e.lt(14) ? e.minus(1) : e.minus(13);
+            const year = month.gt(2) ? c.minus(4716) : c.minus(4715);
+            const hours = fraction.times(24).floor().toNumber();
+            const minutes = fraction.times(24).minus(hours).times(60).floor().toNumber();
+            const seconds = fraction.times(24).minus(hours).times(60).minus(minutes).times(60).floor().toNumber();
+            const microseconds = fraction.times(24).minus(hours).times(60).minus(minutes).times(60).minus(seconds).times(1000000).floor().toNumber();
+            return {
+                year: year.toNumber(),
+                month: month.toNumber(),
+                day,
+                hour: hours,
+                minute: minutes,
+                second: seconds,
+                microsecond: microseconds
+            };
+        } catch (e) {
+            console.error('jdnToDate error:', e);
+            throw e;
+        }
     }
 
     function parseJulianDate(dateStr) {
-      try {
-        const parts = dateStr.split('/');
-        if (parts.length !== 3) throw new Error('Invalid Julian date format');
-        const day = parseInt(parts[0]);
-        const month = parseInt(parts[1]);
-        const year = parseInt(parts[2]);
-        const a = Math.floor((14 - month) / 12);
-        const y = year + 4800 - a;
-        const m = month + 12 * a - 3;
-        const jd = new Decimal(day).plus(
-          new Decimal((153 * m + 2) / 5).floor()
-        ).plus(
-          new Decimal(365).times(y)
-        ).plus(
-          new Decimal(y / 4).floor()
-        ).minus(32083);
-        return jdnToDate(jd);
-      } catch (e) {
-        console.error('parseJulianDate error:', e);
-        throw e;
-      }
+        try {
+            const parts = dateStr.split('/');
+            if (parts.length !== 3) throw new Error('Invalid Julian date format');
+            const day = parseInt(parts[0]);
+            const month = parseInt(parts[1]);
+            const year = parseInt(parts[2]);
+            const a = Math.floor((14 - month) / 12);
+            const y = year + 4800 - a;
+            const m = month + 12 * a - 3;
+            const jd = new Decimal(day).plus(
+                new Decimal((153 * m + 2) / 5).floor()
+            ).plus(
+                new Decimal(365).times(y)
+            ).plus(
+                new Decimal(y / 4).floor()
+            ).minus(32083);
+            return jdnToDate(jd);
+        } catch (e) {
+            console.error('parseJulianDate error:', e);
+            throw e;
+        }
     }
 
     function getCosmicPhase(cuTime) {
-      try {
-        if (cuTime.lt(CONSTANTS.DARK_ENERGY_START)) {
-          return "Speculative Phase (Pre-expansion, theoretical)";
-        } else if (cuTime.gte(CONSTANTS.DARK_ENERGY_START) && cuTime.lte(CONSTANTS.DARK_ENERGY_END)) {
-          return "Dark Energy Phase (Expansion, sub-ztom to atom)";
-        } else if (cuTime.gte(CONSTANTS.ANTI_DARK_ENERGY_START) && cuTime.lte(CONSTANTS.ANTI_DARK_ENERGY_END)) {
-          return "Anti-Dark Energy Phase (Compression, btom to ztom, Empowered by God’s Free Will)";
-        } else {
-          return "Speculative Phase (Beyond known cosmic phases)";
+        try {
+            if (cuTime.lt(CONSTANTS.DARK_ENERGY_START)) {
+                return "Speculative Phase (Pre-expansion, theoretical)";
+            } else if (cuTime.gte(CONSTANTS.DARK_ENERGY_START) && cuTime.lte(CONSTANTS.DARK_ENERGY_END)) {
+                return "Dark Energy Phase (Expansion, sub-ztom to atom)";
+            } else if (cuTime.gte(CONSTANTS.ANTI_DARK_ENERGY_START) && cuTime.lte(CONSTANTS.ANTI_DARK_ENERGY_END)) {
+                return "Anti-Dark Energy Phase (Compression, btom to ztom, Empowered by God’s Free Will)";
+            } else {
+                return "Speculative Phase (Beyond known cosmic phases)";
+            }
+        } catch (e) {
+            console.error('getCosmicPhase error:', e);
+            return "Unknown Phase";
         }
-      } catch (e) {
-        console.error('getCosmicPhase error:', e);
-        return "Unknown Phase";
-      }
     }
 
     function getDominantForces(cuTime) {
-      try {
-        const phase = getCosmicPhase(cuTime);
-        if (phase.includes("Anti-Dark Energy Phase")) {
-          return ["matter-antimatter"];
-        } else if (phase.includes("Dark Energy Phase")) {
-          return ["matter"];
-        } else {
-          return ["anti-dark-matter (theoretical)"];
+        try {
+            const phase = getCosmicPhase(cuTime);
+            if (phase.includes("Anti-Dark Energy Phase")) {
+                return ["matter-antimatter"];
+            } else if (phase.includes("Dark Energy Phase")) {
+                return ["matter"];
+            } else {
+                return ["anti-dark-matter (theoretical)"];
+            }
+        } catch (e) {
+            console.error('getDominantForces error:', e);
+            return ["unknown"];
         }
-      } catch (e) {
-        console.error('getDominantForces error:', e);
-        return ["unknown"];
-      }
     }
 
     function getGeologicalEpoch(cuTime) {
-      try {
-        for (let i = 0; i < CU_BOUNDARIES.length - 1; i++) {
-          if (cuTime.gte(CU_BOUNDARIES[i]) && cuTime.lt(CU_BOUNDARIES[i + 1])) {
-            return EPOCH_NAMES[i];
-          }
+        try {
+            for (let i = 0; i < CU_BOUNDARIES.length - 1; i++) {
+                if (cuTime.gte(CU_BOUNDARIES[i]) && cuTime.lt(CU_BOUNDARIES[i + 1])) {
+                    return EPOCH_NAMES[i];
+                }
+            }
+            return EPOCH_NAMES[EPOCH_NAMES.length - 1];
+        } catch (e) {
+            console.error('getGeologicalEpoch error:', e);
+            return "Unknown Epoch";
         }
-        return EPOCH_NAMES[EPOCH_NAMES.length - 1];
-      } catch (e) {
-        console.error('getGeologicalEpoch error:', e);
-        return "Unknown Epoch";
-      }
     }
 
     function getHistoricalEvents(year, month, day, hour, minute, second) {
-      try {
-        const inputDt = DateTime.fromObject({ year, month, day, hour, minute, second }, { zone: 'UTC' });
-        const events = [];
-        for (const [name, event] of Object.entries(HISTORICAL_EVENTS)) {
-          const eventDt = DateTime.fromISO(event.date);
-          const delta = Math.abs(inputDt.diff(eventDt).as('seconds'));
-          if (delta <= 86400) {
-            events.push(`${name}: ${event.description} (CU-Time: ${event.cu_time.toString()})`);
-          }
+        try {
+            const inputDt = DateTime.fromObject({year, month, day, hour, minute, second}, {zone: 'UTC'});
+            const events = [];
+            for (const [name, event] of Object.entries(HISTORICAL_EVENTS)) {
+                const eventDt = DateTime.fromISO(event.date);
+                const delta = Math.abs(inputDt.diff(eventDt).as('seconds'));
+                if (delta <= 86400) {
+                    events.push(`${name}: ${event.description} (CU-Time: ${event.cu_time.toString()})`);
+                }
+            }
+            return events;
+        } catch (e) {
+            console.error('getHistoricalEvents error:', e);
+            return [];
         }
-        return events;
-      } catch (e) {
-        console.error('getHistoricalEvents error:', e);
-        return [];
-      }
     }
 
     function ethicalClassifier(input) {
-      try {
-        if (input.toLowerCase().includes('invalid') || input.toLowerCase().includes('error')) {
-          return { valid: false, message: "Unethical: Invalid input detected", note: null };
-        }
-        if (input.length > 1000) {
-          return { valid: false, message: "Unethical: Input too long for processing", note: null };
-        }
-        for (const tom in CU_LEXICON) {
-          if (input.toLowerCase().includes(tom) && !new RegExp(`\\b${tom}\\b`, 'i').test(input)) {
-            return { valid: false, message: `Unethical: Misuse of CU Lexicon term '${tom}'`, note: null };
-          }
-        }
-
-        const cuRegex = /^-?\d+(\.\d+)?([eE][+-]?\d+)?$/;
-        if (cuRegex.test(input)) {
-          try {
-            const cuTime = new Decimal(input);
-            if (cuTime.lt(0)) {
-              return { valid: false, message: "Unethical: CU-Time cannot be negative", note: null };
-            }
-            if (cuTime.minus('3.094e12').abs().gt('1e15')) {
-              return { valid: false, message: "Unethical: CU-Time too far from current era (3.094T)", note: null };
-            }
-            const note = cuTime.lt('3e12') || cuTime.gt('4e12') ? "Speculative CU-Time; conversion is theoretical due to extreme value" : null;
-            if (cuTime.minus(CONSTANTS.ANTI_DARK_ENERGY_END).abs().lt('1e6')) {
-              return { valid: true, message: "Ethical: Input aligns with CU principles and is empowered by God’s Free Will", note };
-            }
-            return { valid: true, message: "Ethical: Input aligns with CU principles", note };
-          } catch (e) {
-            return { valid: false, message: "Unethical: Invalid input format", note: null };
-          }
-        }
-
         try {
-          const parsed = parseDateInput(input);
-          const year = parsed.year;
-          if (year.abs().gt(CONSTANTS.ANTI_DARK_ENERGY_END)) {
-            return { valid: false, message: "Unethical: Date exceeds cosmic limits (~322 billion years)", note: null };
-          }
-          const note = year.abs().gt(10000) ? "Speculative date; conversion is theoretical due to extreme time range" : null;
-          const cuTime = computeCUTime(parsed.year, parsed.month, parsed.day, parsed.hour, parsed.minute, parsed.second, parsed.microsecond);
-          const keyToms = ["ztom", "btom", "ctom"];
-          if (keyToms.some(tom => input.toLowerCase().includes(tom)) || cuTime.minus(CONSTANTS.ANTI_DARK_ENERGY_END).abs().lt('1e6')) {
-            return { valid: true, message: "Ethical: Input aligns with CU principles and is empowered by God’s Free Will", note };
-          }
-          return { valid: true, message: "Ethical: Input aligns with CU principles", note };
+            if (input.toLowerCase().includes('invalid') || input.toLowerCase().includes('error')) {
+                return {valid: false, message: "Unethical: Invalid input detected", note: null};
+            }
+            if (input.length > 1000) {
+                return {valid: false, message: "Unethical: Input too long for processing", note: null};
+            }
+            for (const tom in CU_LEXICON) {
+                if (input.toLowerCase().includes(tom) && !new RegExp(`\\b${tom}\\b`, 'i').test(input)) {
+                    return {valid: false, message: `Unethical: Misuse of CU Lexicon term '${tom}'`, note: null};
+                }
+            }
+
+            const cuRegex = /^-?\d+(\.\d+)?([eE][+-]?\d+)?$/;
+            if (cuRegex.test(input)) {
+                try {
+                    const cuTime = new Decimal(input);
+                    if (cuTime.lt(0)) {
+                        return {valid: false, message: "Unethical: CU-Time cannot be negative", note: null};
+                    }
+                    if (cuTime.minus('3.094e12').abs().gt('1e15')) {
+                        return {
+                            valid: false,
+                            message: "Unethical: CU-Time too far from current era (3.094T)",
+                            note: null
+                        };
+                    }
+                    const note = cuTime.lt('3e12') || cuTime.gt('4e12') ? "Speculative CU-Time; conversion is theoretical due to extreme value" : null;
+                    if (cuTime.minus(CONSTANTS.ANTI_DARK_ENERGY_END).abs().lt('1e6')) {
+                        return {
+                            valid: true,
+                            message: "Ethical: Input aligns with CU principles and is empowered by God’s Free Will",
+                            note
+                        };
+                    }
+                    return {valid: true, message: "Ethical: Input aligns with CU principles", note};
+                } catch (e) {
+                    return {valid: false, message: "Unethical: Invalid input format", note: null};
+                }
+            }
+
+            try {
+                const parsed = parseDateInput(input);
+                const year = parsed.year;
+                if (year.abs().gt(CONSTANTS.ANTI_DARK_ENERGY_END)) {
+                    return {
+                        valid: false,
+                        message: "Unethical: Date exceeds cosmic limits (~322 billion years)",
+                        note: null
+                    };
+                }
+                const note = year.abs().gt(10000) ? "Speculative date; conversion is theoretical due to extreme time range" : null;
+                const cuTime = computeCUTime(parsed.year, parsed.month, parsed.day, parsed.hour, parsed.minute, parsed.second, parsed.microsecond);
+                const keyToms = ["ztom", "btom", "ctom"];
+                if (keyToms.some(tom => input.toLowerCase().includes(tom)) || cuTime.minus(CONSTANTS.ANTI_DARK_ENERGY_END).abs().lt('1e6')) {
+                    return {
+                        valid: true,
+                        message: "Ethical: Input aligns with CU principles and is empowered by God’s Free Will",
+                        note
+                    };
+                }
+                return {valid: true, message: "Ethical: Input aligns with CU principles", note};
+            } catch (e) {
+                return {valid: false, message: `Unethical: Invalid input format: ${e.message}`, note: null};
+            }
         } catch (e) {
-          return { valid: false, message: `Unethical: Invalid input format: ${e.message}`, note: null };
+            console.error('ethicalClassifier error:', e);
+            return {valid: false, message: "Unethical: Internal error", note: null};
         }
-      } catch (e) {
-        console.error('ethicalClassifier error:', e);
-        return { valid: false, message: "Unethical: Internal error", note: null };
-      }
     }
 
     function parseDateInput(input, isExotic = false) {
-      try {
-        input = input.trim();
+        try {
+            input = input.trim();
 
-        if (input.toLowerCase().startsWith('julian:')) {
-          const dateStr = input.split(':')[1].trim();
-          return parseJulianDate(dateStr);
-        }
-
-        if (isExotic) {
-          const parts = input.split(/\s+/);
-          if (parts.length >= 2) {
-            const datePart = parts[0];
-            const eraPart = parts[1];
-            const timePart = parts[2] || '00:00:00';
-            const tzPart = parts[3] || '';
-
-            const dateComponents = datePart.split(/[-/]/);
-            if (dateComponents.length !== 3) throw new Error("Invalid date part format");
-
-            const month = parseInt(dateComponents[0]);
-            const day = parseInt(dateComponents[1]);
-            let year = new Decimal(dateComponents[2]);
-            if (eraPart.toUpperCase() === 'BCE') {
-              year = year.negated();
+            if (input.toLowerCase().startsWith('julian:')) {
+                const dateStr = input.split(':')[1].trim();
+                return parseJulianDate(dateStr);
             }
 
-            const timeMatch = timePart.match(/(\d{1,2}):(\d{2})(?::(\d{2}(?:\.\d+)?))?/);
-            let hour = 0, minute = 0, second = 0, microsecond = 0;
-            if (timeMatch) {
-              hour = parseInt(timeMatch[1]);
-              minute = parseInt(timeMatch[2]);
-              if (timeMatch[3]) {
-                const secondStr = timeMatch[3];
-                second = parseInt(secondStr.split('.')[0]);
-                microsecond = secondStr.includes('.') ? parseInt(parseFloat(`0.${secondStr.split('.')[1]}`) * 1000000) : 0;
-              }
+            if (isExotic) {
+                const parts = input.split(/\s+/);
+                if (parts.length >= 2) {
+                    const datePart = parts[0];
+                    const eraPart = parts[1];
+                    const timePart = parts[2] || '00:00:00';
+                    const tzPart = parts[3] || '';
+
+                    const dateComponents = datePart.split(/[-/]/);
+                    if (dateComponents.length !== 3) throw new Error("Invalid date part format");
+
+                    const month = parseInt(dateComponents[0]);
+                    const day = parseInt(dateComponents[1]);
+                    let year = new Decimal(dateComponents[2]);
+                    if (eraPart.toUpperCase() === 'BCE') {
+                        year = year.negated();
+                    }
+
+                    const timeMatch = timePart.match(/(\d{1,2}):(\d{2})(?::(\d{2}(?:\.\d+)?))?/);
+                    let hour = 0, minute = 0, second = 0, microsecond = 0;
+                    if (timeMatch) {
+                        hour = parseInt(timeMatch[1]);
+                        minute = parseInt(timeMatch[2]);
+                        if (timeMatch[3]) {
+                            const secondStr = timeMatch[3];
+                            second = parseInt(secondStr.split('.')[0]);
+                            microsecond = secondStr.includes('.') ? parseInt(parseFloat(`0.${secondStr.split('.')[1]}`) * 1000000) : 0;
+                        }
+                    }
+
+                    if (tzPart.toUpperCase() === 'PM' && hour < 12) hour += 12;
+                    if (tzPart.toUpperCase() === 'AM' && hour === 12) hour = 0;
+
+                    return {year, month, day, hour, minute, second, microsecond};
+                }
             }
 
-            if (tzPart.toUpperCase() === 'PM' && hour < 12) hour += 12;
-            if (tzPart.toUpperCase() === 'AM' && hour === 12) hour = 0;
+            const bcePattern = /^(\d{1,2})[-/\s](\d{1,2})[-/\s](\d{1,20})\s*BCE\s*(?:(\d{1,2}):(\d{2}):(\d{2}(?:\.\d+)?))?\s*(AM|PM)?(?:\s*([A-Za-z][A-Za-z\/]+|[+-]\d{2}:\d{2}|Z|UTC))?$/i;
+            const bceMatch = input.match(bcePattern);
+            if (bceMatch) {
+                const yearStr = bceMatch[3];
+                const year = new Decimal(yearStr).negated();
+                const month = parseInt(bceMatch[1]);
+                const day = parseInt(bceMatch[2]);
+                let hour = parseInt(bceMatch[4] || 0);
+                const minute = parseInt(bceMatch[5] || 0);
+                const secondStr = bceMatch[6] || '0';
+                const ampm = bceMatch[7]?.toUpperCase();
+                const microsecond = secondStr.includes('.') ? parseInt(parseFloat(`0.${secondStr.split('.')[1]}`) * 1000000) : 0;
+                const second = parseInt(secondStr.split('.')[0]);
+                if (ampm) {
+                    if (ampm === 'PM' && hour < 12) hour += 12;
+                    if (ampm === 'AM' && hour === 12) hour = 0;
+                }
+                return {year, month, day, hour, minute, second, microsecond};
+            }
 
-            return { year, month, day, hour, minute, second, microsecond };
-          }
+            const datePattern = /^(\d{1,2})[-/\s](\d{1,2})[-/\s](\d{1,20})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}(?:\.\d+)?))?)?\s*(AM|PM)?(?:\s*([ A-Za-z][A-Za-z\/]+|[+-]\d{2}:\d{2}|Z|UTC))?$/i;
+            const dateMatch = input.match(datePattern);
+            if (dateMatch) {
+                const month = parseInt(dateMatch[1]);
+                const day = parseInt(dateMatch[2]);
+                const yearStr = dateMatch[3];
+                const year = new Decimal(yearStr);
+                let hour = parseInt(dateMatch[4] || 0);
+                const minute = parseInt(dateMatch[5] || 0);
+                const secondStr = dateMatch[6] || '0';
+                const ampm = dateMatch[7]?.toUpperCase();
+                const microsecond = secondStr.includes('.') ? parseInt(parseFloat(`0.${secondStr.split('.')[1]}`) * 1000000) : 0;
+                const second = parseInt(secondStr.split('.')[0]);
+                if (ampm) {
+                    if (ampm === 'PM' && hour < 12) hour += 12;
+                    if (ampm === 'AM' && hour === 12) hour = 0;
+                }
+                return {year, month, day, hour, minute, second, microsecond};
+            }
+
+            const dt = DateTime.fromISO(input.replace("Z", "+00:00")).toUTC();
+            if (!dt.isValid) throw new Error(`Invalid ISO date: ${dt.invalidReason}`);
+            return {
+                year: new Decimal(dt.year),
+                month: dt.month,
+                day: dt.day,
+                hour: dt.hour,
+                minute: dt.minute,
+                second: dt.second,
+                microsecond: dt.millisecond * 1000
+            };
+        } catch (e) {
+            console.error('parseDateInput error:', e);
+            throw new Error("Invalid date format. Use MM/DD/YYYY [HH:MM:SS[.ffffff]] [AM/PM], ISO, BCE, or Julian:DD/MM/YYYY format.");
         }
-
-        const bcePattern = /^(\d{1,2})[-/\s](\d{1,2})[-/\s](\d{1,20})\s*BCE\s*(?:(\d{1,2}):(\d{2}):(\d{2}(?:\.\d+)?))?\s*(AM|PM)?(?:\s*([A-Za-z][A-Za-z\/]+|[+-]\d{2}:\d{2}|Z|UTC))?$/i;
-        const bceMatch = input.match(bcePattern);
-        if (bceMatch) {
-          const yearStr = bceMatch[3];
-          const year = new Decimal(yearStr).negated();
-          const month = parseInt(bceMatch[1]);
-          const day = parseInt(bceMatch[2]);
-          let hour = parseInt(bceMatch[4] || 0);
-          const minute = parseInt(bceMatch[5] || 0);
-          const secondStr = bceMatch[6] || '0';
-          const ampm = bceMatch[7]?.toUpperCase();
-          const microsecond = secondStr.includes('.') ? parseInt(parseFloat(`0.${secondStr.split('.')[1]}`) * 1000000) : 0;
-          const second = parseInt(secondStr.split('.')[0]);
-          if (ampm) {
-            if (ampm === 'PM' && hour < 12) hour += 12;
-            if (ampm === 'AM' && hour === 12) hour = 0;
-          }
-          return { year, month, day, hour, minute, second, microsecond };
-        }
-
-        const datePattern = /^(\d{1,2})[-/\s](\d{1,2})[-/\s](\d{1,20})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}(?:\.\d+)?))?)?\s*(AM|PM)?(?:\s*([ A-Za-z][A-Za-z\/]+|[+-]\d{2}:\d{2}|Z|UTC))?$/i;
-        const dateMatch = input.match(datePattern);
-        if (dateMatch) {
-          const month = parseInt(dateMatch[1]);
-          const day = parseInt(dateMatch[2]);
-          const yearStr = dateMatch[3];
-          const year = new Decimal(yearStr);
-          let hour = parseInt(dateMatch[4] || 0);
-          const minute = parseInt(dateMatch[5] || 0);
-          const secondStr = dateMatch[6] || '0';
-          const ampm = dateMatch[7]?.toUpperCase();
-          const microsecond = secondStr.includes('.') ? parseInt(parseFloat(`0.${secondStr.split('.')[1]}`) * 1000000) : 0;
-          const second = parseInt(secondStr.split('.')[0]);
-          if (ampm) {
-            if (ampm === 'PM' && hour < 12) hour += 12;
-            if (ampm === 'AM' && hour === 12) hour = 0;
-          }
-          return { year, month, day, hour, minute, second, microsecond };
-        }
-
-        const dt = DateTime.fromISO(input.replace("Z", "+00:00")).toUTC();
-        if (!dt.isValid) throw new Error(`Invalid ISO date: ${dt.invalidReason}`);
-        return {
-          year: new Decimal(dt.year),
-          month: dt.month,
-          day: dt.day,
-          hour: dt.hour,
-          minute: dt.minute,
-          second: dt.second,
-          microsecond: dt.millisecond * 1000
-        };
-      } catch (e) {
-        console.error('parseDateInput error:', e);
-        throw new Error("Invalid date format. Use MM/DD/YYYY [HH:MM:SS[.ffffff]] [AM/PM], ISO, BCE, or Julian:DD/MM/YYYY format.");
-      }
     }
 
     function formatCUValue(cuValue) {
-      try {
-        cuValue = cuValue.toDecimalPlaces(24, Decimal.ROUND_HALF_UP);
-        const fullNumeric = cuValue.toFixed(24);
-        const exponential = cuValue.toExponential(6);
-        const [integerPart, fractionPart] = fullNumeric.split('.');
-        const intVal = parseInt(integerPart);
-        const trillion = Math.floor(intVal / 1000000000000);
-        const remainder = intVal % 1000000000000;
-        const billion = Math.floor(remainder / 1000000000);
-        const million = Math.floor((remainder % 1000000000) / 1000000);
-        const thousand = Math.floor((remainder % 1000000) / 1000);
-        const units = remainder % 1000;
-        const parts = [];
-        if (trillion) parts.push(`${trillion} Trillion`);
-        if (billion) parts.push(`${billion} Billion`);
-        if (million) parts.push(`${million} Million`);
-        if (thousand) parts.push(`${thousand} Thousand`);
-        if (units || !parts.length) parts.push(`${units}`);
-        const humanFriendly = parts.join(' ') + `.${fractionPart} CU-Time`;
-        return {
-          humanFriendly,
-          fullNumeric,
-          exponential
-        };
-      } catch (e) {
-        console.error('formatCUValue error:', e);
-        return { humanFriendly: 'Error', fullNumeric: 'Error', exponential: 'Error' };
-      }
+        try {
+            cuValue = cuValue.toDecimalPlaces(24, Decimal.ROUND_HALF_UP);
+            const fullNumeric = cuValue.toFixed(24);
+            const exponential = cuValue.toExponential(6);
+            const [integerPart, fractionPart] = fullNumeric.split('.');
+            const intVal = parseInt(integerPart);
+            const trillion = Math.floor(intVal / 1000000000000);
+            const remainder = intVal % 1000000000000;
+            const billion = Math.floor(remainder / 1000000000);
+            const million = Math.floor((remainder % 1000000000) / 1000000);
+            const thousand = Math.floor((remainder % 1000000) / 1000);
+            const units = remainder % 1000;
+            const parts = [];
+            if (trillion) parts.push(`${trillion} Trillion`);
+            if (billion) parts.push(`${billion} Billion`);
+            if (million) parts.push(`${million} Million`);
+            if (thousand) parts.push(`${thousand} Thousand`);
+            if (units || !parts.length) parts.push(`${units}`);
+            const humanFriendly = parts.join(' ') + `.${fractionPart} CU-Time`;
+            return {
+                humanFriendly,
+                fullNumeric,
+                exponential
+            };
+        } catch (e) {
+            console.error('formatCUValue error:', e);
+            return {humanFriendly: 'Error', fullNumeric: 'Error', exponential: 'Error'};
+        }
     }
 
     function parseCSVRow(row) {
-      const fields = [];
-      let field = '';
-      let inQuotes = false;
-      for (let i = 0; i < row.length; i++) {
-        const char = row[i];
-        if (char === '"' && (i === 0 || row[i - 1] !== '\\')) {
-          inQuotes = !inQuotes;
-        } else if (char === ',' && !inQuotes) {
-          fields.push(field);
-          field = '';
-        } else {
-          field += char;
+        const fields = [];
+        let field = '';
+        let inQuotes = false;
+        for (let i = 0; i < row.length; i++) {
+            const char = row[i];
+            if (char === '"' && (i === 0 || row[i - 1] !== '\\')) {
+                inQuotes = !inQuotes;
+            } else if (char === ',' && !inQuotes) {
+                fields.push(field);
+                field = '';
+            } else {
+                field += char;
+            }
         }
-      }
-      fields.push(field);
-      return fields.map(s => s.trim().replace(/^"|"$/g, '').replace(/""/g, '"'));
+        fields.push(field);
+        return fields.map(s => s.trim().replace(/^"|"$/g, '').replace(/""/g, '"'));
     }
 
     function downloadCSV(results) {
-      try {
-        const csvContent = results.map(r => {
-          const dateMatch = r.desc.match(/Date: ([^U]+) UTC/);
-          const date = dateMatch ? dateMatch[1].trim() : r.desc;
-          return `"${r.desc.replace(/"/g, '""')}","${date.replace(/"/g, '""')}","${r.output.replace(/"/g, '""')}"`;
-        }).join('\n');
-        const timestamp = DateTime.utc().toFormat('yyyy-MM-dd_HH-mm-ss');
-        const blob = new Blob([`"Description","DateTime","Output"\n${csvContent}`], { type: 'text/csv' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `cu_time_results_${timestamp}.csv`;
-        a.click();
-        URL.revokeObjectURL(url);
-      } catch (e) {
-        console.error('downloadCSV error:', e);
-      }
+        try {
+            const csvContent = results.map(r => {
+                const date = r.desc.replace(/^Date:\s*/, '').trim();
+                return `"${r.desc.replace(/"/g, '""')}","${date.replace(/"/g, '""')}","${r.output.replace(/"/g, '""')}"`;
+            }).join('\n');
+            const timestamp = DateTime.utc().toFormat('yyyy-MM-dd_HH-mm-ss');
+            const blob = new Blob([`"Description","DateTime","Output"\n${csvContent}`], {type: 'text/csv'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `cu_time_results_${timestamp}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+        } catch (e) {
+            console.error('downloadCSV error:', e);
+        }
     }
 
     function ConversionHistory() {
-      const getHistory = () => conversionHistory;
-      const saveConversion = (input, output, type) => {
-        if (conversionHistory.some(entry => entry.input === input && entry.type === type)) return;
-        conversionHistory.push({
-          input,
-          output,
-          type,
-          timestamp: DateTime.utc().toISO(),
-          favorite: false
-        });
-      };
-      const markFavorite = (input) => {
-        conversionHistory = conversionHistory.map(entry =>
-          entry.input === input ? { ...entry, favorite: !entry.favorite } : entry
-        );
-      };
-      const getFavorites = () => conversionHistory.filter(entry => entry.favorite);
-      return { getHistory, saveConversion, markFavorite, getFavorites };
+        const getHistory = () => conversionHistory;
+        const saveConversion = (input, output, type) => {
+            if (conversionHistory.some(entry => entry.input === input && entry.type === type)) return;
+            conversionHistory.push({
+                input,
+                output,
+                type,
+                timestamp: DateTime.utc().toISO(),
+                favorite: false
+            });
+        };
+        const markFavorite = (input) => {
+            conversionHistory = conversionHistory.map(entry =>
+                entry.input === input ? {...entry, favorite: !entry.favorite} : entry
+            );
+        };
+        const getFavorites = () => conversionHistory.filter(entry => entry.favorite);
+        return {getHistory, saveConversion, markFavorite, getFavorites};
     }
 
     const HISTORY = ConversionHistory();
 
-    function Modal({ message, onConfirm, onCancel }) {
-      return (
-        <div className="modal">
-          <div className="modal-content">
-            <p className="mb-4 text-gray-300">{message}</p>
-            <div className="flex justify-between">
-              <button
-                onClick={onConfirm}
-                className="cosmic-button"
-              >
-                Confirm
-              </button>
-              {onCancel && (
-                <button
-                  onClick={onCancel}
-                  className="cosmic-button bg-gray-600 hover:bg-gray-700"
-                >
-                  Cancel
-                </button>
-              )}
+    function Modal({message, onConfirm, onCancel}) {
+        return (
+            <div className="modal">
+                <div className="modal-content">
+                    <p className="mb-4 text-gray-300">{message}</p>
+                    <div className="flex justify-between">
+                        <button
+                            onClick={onConfirm}
+                            className="cosmic-button"
+                        >
+                            Confirm
+                        </button>
+                        {onCancel && (
+                            <button
+                                onClick={onCancel}
+                                className="cosmic-button bg-gray-600 hover:bg-gray-700"
+                            >
+                                Cancel
+                            </button>
+                        )}
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      );
+        );
     }
 
     function saveEditedCSV(results) {
-      try {
-        const csvContent = results.map(r => {
-          const dateMatch = r.desc.match(/Date: ([^U]+) UTC/);
-          const date = dateMatch ? dateMatch[1].trim() : r.desc;
-          return `"${r.desc.replace(/"/g, '""')}","${date.replace(/"/g, '""')}","${r.output.replace(/"/g, '""')}"`;
-        }).join('\n');
-        const timestamp = DateTime.utc().toFormat('yyyy-MM-dd_HH-mm-ss');
-        const blob = new Blob([`"Description","DateTime","Output"\n${csvContent}`], { type: 'text/csv' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `cu_time_results_edited_${timestamp}.csv`;
-        a.click();
-        URL.revokeObjectURL(url);
-      } catch (e) {
-        console.error('saveEditedCSV error:', e);
-      }
+        try {
+            const csvContent = results.map(r => {
+                const date = r.desc.replace(/^Date:\s*/, '').trim();
+                return `"${r.desc.replace(/"/g, '""')}","${date.replace(/"/g, '""')}","${r.output.replace(/"/g, '""')}"`;
+            }).join('\n');
+            const timestamp = DateTime.utc().toFormat('yyyy-MM-dd_HH-mm-ss');
+            const blob = new Blob([`"Description","DateTime","Output"\n${csvContent}`], {type: 'text/csv'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `cu_time_results_edited_${timestamp}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+        } catch (e) {
+            console.error('saveEditedCSV error:', e);
+        }
+    }
+
+    // KaTeX Rendering Function
+    function renderLatex(latex) {
+        return {__html: window.katex.renderToString(latex, {throwOnError: false})};
     }
 
     function App() {
-      const [tab, setTab] = useState('gregorian');
-      const [input, setInput] = useState({
-        date: '',
-        time: '',
-        timeFormat: 'UTC',
-        era: 'Present',
-        cuTime: '',
-        date2: '',
-        time2: '',
-        timeFormat2: 'UTC',
-        era2: 'Present',
-        epoch: '',
-        isExotic: false,
-        calculatorCUTime: '',
-        calculatorOperation: 'add',
-        calculatorYears: ''
-      });
-      const [results, setResults] = useState([]);
-      const [history, setHistory] = useState(HISTORY.getHistory());
-      const [showFavorites, setShowFavorites] = useState(false);
-      const [modal, setModal] = useState(null);
-      const [showLexicon, setShowLexicon] = useState(false);
-      const [showResults, setShowResults] = useState(true);
-      const [editedResults, setEditedResults] = useState([]);
-      const [toastMessage, setToastMessage] = useState('');
-      const [showToast, setShowToast] = useState(false);
-
-      useEffect(() => {
-        window.addEventListener('error', (e) => console.error('Global error:', e));
-        return () => window.removeEventListener('error', (e) => console.error('Global error:', e));
-      }, []);
-
-      const handleCopy = (text) => {
-        navigator.clipboard.writeText(text).then(() => {
-          setToastMessage('Copied to clipboard');
-          setShowToast(true);
-          setTimeout(() => setShowToast(false), 3000);
-        }).catch(err => {
-          setToastMessage('Failed to copy');
-          setShowToast(true);
-          setTimeout(() => setShowToast(false), 3000);
+        const [tab, setTab] = useState('gregorian');
+        const [input, setInput] = useState({
+            date: '',
+            time: '',
+            timeFormat: 'UTC',
+            ampm: 'AM',
+            era: 'Present',
+            cuTime: '',
+            date2: '',
+            time2: '',
+            timeFormat2: 'UTC',
+            era2: 'Present',
+            epoch: '',
+            isExotic: false,
+            calculatorCUTime: '',
+            calculatorOperation: 'add',
+            calculatorYears: ''
         });
-      };
+        const [results, setResults] = useState([]);
+        const [history, setHistory] = useState(HISTORY.getHistory());
+        const [showFavorites, setShowFavorites] = useState(false);
+        const [modal, setModal] = useState(null);
+        const [showLexicon, setShowLexicon] = useState(false);
+        const [showResults, setShowResults] = useState(true);
+        const [editedResults, setEditedResults] = useState([]);
+        const [toastMessage, setToastMessage] = useState('');
+        const [showToast, setShowToast] = useState(false);
 
-      const formatDateInput = (value) => {
-        const clean = value.replace(/[^0-9]/g, '');
-        let formatted = '';
-        if (clean.length > 0) formatted += clean.slice(0, 2);
-        if (clean.length > 2) formatted += '/' + clean.slice(2, 4);
-        if (clean.length > 4) formatted += '/' + clean.slice(4);
-        return formatted;
-      };
+        useEffect(() => {
+            window.addEventListener('error', (e) => console.error('Global error:', e));
+            return () => window.removeEventListener('error', (e) => console.error('Global error:', e));
+        }, []);
 
-      const formatTimeInput = (value) => {
-        const clean = value.replace(/[^0-9]/g, '');
-        let formatted = '';
-        if (clean.length > 0) formatted += clean.slice(0, 2);
-        if (clean.length > 2) formatted += ':' + clean.slice(2, 4);
-        if (clean.length > 4) formatted += ':' + clean.slice(4, 6);
-        return formatted;
-      };
-
-      const handleDateChange = (e, field) => {
-        const value = e.target.value;
-        const formatted = formatDateInput(value);
-        setInput({ ...input, [field]: formatted });
-        try {
-          const yearStr = formatted.split('/')[2];
-          const year = new Decimal(yearStr);
-          setInput(prev => ({ ...prev, isExotic: year.abs().gt(9999) }));
-        } catch {
-          setInput(prev => ({ ...prev, isExotic: false }));
-        }
-      };
-
-      const handleTimeChange = (e, field = 'time') => {
-        const value = e.target.value;
-        const formatted = formatTimeInput(value);
-        setInput({ ...input, [field]: formatted });
-      };
-
-      const validateTime = (time, isUTC) => {
-        if (isUTC) {
-          const timePattern = /^(\d{2}):(\d{2})(?::(\d{2}))?$/;
-          const match = time.match(timePattern);
-          if (!match) return false;
-          const [hours, minutes, seconds] = match.slice(1).map(Number);
-          return hours >= 0 && hours <= 23 && minutes >= 0 && minutes <= 59 && seconds >= 0 && seconds <= 59;
-        } else {
-          const timePattern = /^(\d{1,2}):(\d{2})(?::(\d{2}))?\s*(AM|PM)$/i;
-          const match = time.match(timePattern);
-          if (!match) return false;
-          const [hours, minutes, seconds, period] = match.slice(1);
-          const hrs = parseInt(hours);
-          return hrs >= 1 && hrs <= 12 && minutes >= 0 && minutes <= 59 && seconds >= 0 && seconds <= 59;
-        }
-      };
-
-      const handleDateSubmit = () => {
-        try {
-          const dateInput = input.date.trim();
-          if (!dateInput) {
-            setModal({
-              message: 'Please enter a date.',
-              onConfirm: () => setModal(null)
+        const handleCopy = (text) => {
+            navigator.clipboard.writeText(text).then(() => {
+                setToastMessage('Copied to clipboard');
+                setShowToast(true);
+                setTimeout(() => setShowToast(false), 3000);
+            }).catch(err => {
+                setToastMessage('Failed to copy');
+                setShowToast(true);
+                setTimeout(() => setShowToast(false), 3000);
             });
-            return;
-          }
+        };
 
-          const dateParts = dateInput.split('/');
-          if (dateParts.length !== 3) {
-            setModal({
-              message: 'Invalid date format. Use MM/DD/YYYY.',
-              onConfirm: () => setModal(null)
-            });
-            return;
-          }
+        const formatDateInput = (value) => {
+            const clean = value.replace(/[^0-9]/g, '');
+            let formatted = '';
+            if (clean.length > 0) formatted += clean.slice(0, 2);
+            if (clean.length > 2) formatted += '/' + clean.slice(2, 4);
+            if (clean.length > 4) formatted += '/' + clean.slice(4);
+            return formatted;
+        };
 
-          const yearStr = dateParts[2];
-          let year;
-          try {
-            year = new Decimal(yearStr);
-            if (year.isNegative()) {
-              setModal({
-                message: 'Please enter the year as a positive number and select the appropriate era (Past or Present).',
-                onConfirm: () => setModal(null)
-              });
-              return;
+        const formatTimeInput = (value) => {
+            const clean = value.replace(/[^0-9]/g, '');
+            let formatted = '';
+            if (clean.length > 0) formatted += clean.slice(0, 2);
+            if (clean.length > 2) formatted += ':' + clean.slice(2, 4);
+            if (clean.length > 4) formatted += ':' + clean.slice(4, 6);
+            return formatted;
+        };
+
+        const handleDateChange = (e, field) => {
+            const value = e.target.value;
+            const formatted = formatDateInput(value);
+            setInput({...input, [field]: formatted});
+            try {
+                const yearStr = formatted.split('/')[2];
+                const year = new Decimal(yearStr);
+                setInput(prev => ({...prev, isExotic: year.abs().gt(9999)}));
+            } catch {
+                setInput(prev => ({...prev, isExotic: false}));
             }
-          } catch {
-            setModal({
-              message: 'Invalid year format.',
-              onConfirm: () => setModal(null)
-            });
-            return;
-          }
+        };
 
-          let timeInput = input.time.trim();
-          const isUTC = input.timeFormat === "UTC";
+        const handleTimeChange = (e, field = 'time') => {
+            const value = e.target.value;
+            const formatted = formatTimeInput(value);
+            setInput({...input, [field]: formatted});
+        };
 
-          if (!timeInput) {
-            timeInput = isUTC ? "00:00:00" : "12:00:00 AM";
-          }
-
-          if (!validateTime(timeInput, isUTC)) {
-            setModal({
-              message: `Invalid time format. Use ${isUTC ? "HH:MM:SS (e.g., 15:30:00)" : "HH:MM:SS AM/PM (e.g., 03:30:00 PM)"}.`,
-              onConfirm: () => setModal(null)
-            });
-            return;
-          }
-
-          const fullInput = `${dateInput}${input.era === 'Past' ? ' BCE' : ''} ${timeInput}${isUTC ? ' UTC' : ''}`;
-          submitDateWithInput(fullInput, input.isExotic);
-        } catch (e) {
-          console.error('submit error:', e);
-          setResults(prev => [...prev, { desc: 'Error', output: e.message }]);
-        }
-      };
-
-      const submitDateWithInput = (fullInput, isExotic) => {
-        try {
-          const { valid, message, note } = ethicalClassifier(fullInput);
-          if (!valid) {
-            setResults(prev => [...prev, { desc: 'Error', output: message }]);
-            return;
-          }
-
-          const parsed = parseDateInput(fullInput, isExotic);
-          if ((input.era === "Past" && parsed.year >= 0) || (input.era === "Present" && parsed.year < 0)) {
-            setModal({
-              message: 'Era does not match the year. For Past, the year should be before 0; for Present, the year should be 0 or later.',
-              onConfirm: () => setModal(null)
-            });
-            return;
-          }
-
-          const cuTime = computeCUTime(parsed.year, parsed.month, parsed.day, parsed.hour, parsed.minute, parsed.second, parsed.microsecond);
-          const formatted = formatCUValue(cuTime);
-          const cosmicPhase = getCosmicPhase(cuTime);
-          const dominantForces = getDominantForces(cuTime);
-          const geologicalEpoch = input.epoch || getGeologicalEpoch(cuTime);
-          const historicalEvents = getHistoricalEvents(parsed.year.toNumber(), parsed.month, parsed.day, parsed.hour, parsed.minute, parsed.second);
-          const refCuTime = computeCUTime(2025, 5, 26, 9, 48, 0);
-          const timeDiff = cuTime.minus(refCuTime).abs().toDecimalPlaces(24);
-          const yearsDiff = parsed.year.minus(2025).abs().toNumber();
-          let leapYearsStr = '';
-          if (parsed.year.abs().lte(28000000000)) {
-            const leapYears = countLeapYears(-28000000000, parsed.year.toNumber());
-            leapYearsStr = `Leap Years from Sub-ZTOM (28000000000 BCE): ${leapYears}`;
-          } else {
-            leapYearsStr = 'Leap Years: N/A (Year out of range)';
-          }
-          const output = [
-            `Input: ${fullInput}`,
-            `CU-Time: ${formatted.humanFriendly}`,
-            `Full Numeric: ${formatted.fullNumeric} CU-Time`,
-            `Exponential: ${formatted.exponential}`,
-            `Epoch/Period: ${cuTime.lt(CONSTANTS.BASE_CU) ? 'Past' : 'Future'}`,
-            `Geological Epoch: ${geologicalEpoch}`,
-            `Cosmic Phase: ${cosmicPhase}`,
-            `Dominant Forces: ${dominantForces.join(', ')}`,
-            leapYearsStr,
-            historicalEvents.map(event => `Historical Event: ${event}`),
-            `Time Difference from 2025-05-26T09:48:00+00:00: ${timeDiff} CU-Time (~${yearsDiff} years)`,
-            `Ethical Status: ${message}`,
-            note ? `Note: ${note}` : ''
-          ].filter(line => line);
-
-          setResults(prev => [...prev, { desc: `Date: ${fullInput}`, output: output.join('\n') }]);
-          setEditedResults(prev => [...prev, { desc: `Date: ${fullInput}`, output: output.join('\n') }]);
-          HISTORY.saveConversion(fullInput, formatted.humanFriendly, 'Gregorian to CU');
-          setHistory(HISTORY.getHistory());
-          setShowResults(true);
-        } catch (e) {
-          console.error('submitDateWithInput error:', e);
-          setResults(prev => [...prev, { desc: 'Error', output: e.message }]);
-        }
-      };
-
-      const handleCUTimeSubmit = () => {
-        try {
-          if (!input.cuTime) {
-            setModal({
-              message: 'Please enter a CU-Time value.',
-              onConfirm: () => setModal(null)
-            });
-            return;
-          }
-
-          const cuTimeStr = input.cuTime.replace("CU-Time: ", "").trim();
-
-          const { valid, message, note } = ethicalClassifier(cuTimeStr);
-          if (!valid) {
-            setResults(prev => [...prev, { desc: `CU-Time: ${cuTimeStr}`, output: message }]);
-            return;
-          }
-
-          const cuTime = new Decimal(cuTimeStr);
-          if (cuTime.lt(0)) throw new Error('CU-Time cannot be negative');
-          const deltaYears = cuTime.minus(CONSTANTS.BASE_CU);
-          const deltaJDN = deltaYears.times(CONSTANTS.DAYS_PER_YEAR);
-          const jdn = CONSTANTS.ANCHOR_JDN.plus(deltaJDN);
-          const date = jdnToDate(jdn);
-          const formattedDate = typeof date.year === 'string' ? date.year :
-            `${date.month.toString().padStart(2, '0')}/${date.day.toString().padStart(2, '0')}/${Math.abs(date.year)}${date.year < 0 ? ' BCE' : ''} ${date.hour.toString().padStart(2, '0')}:${date.minute.toString().padStart(2, '0')}:${date.second.toString().padStart(2, '0')} UTC`;
-          const cosmicPhase = getCosmicPhase(cuTime);
-          const dominantForces = getDominantForces(cuTime);
-          const geologicalEpoch = getGeologicalEpoch(cuTime);
-          const refCuTime = computeCUTime(2025, 5, 26, 9, 48, 0);
-          const timeDiff = cuTime.minus(refCuTime).abs().toDecimalPlaces(24);
-          const yearsDiff = typeof date.year === 'string' ? timeDiff.toNumber() : Math.abs(date.year - 2025);
-          const output = [
-            `Input: ${cuTimeStr} CU-Time`,
-            `Gregorian Date: ${formattedDate}`,
-            `Epoch/Period: ${cuTime.lt(CONSTANTS.BASE_CU) ? 'Past' : 'Future'}`,
-            `Geological Epoch: ${geologicalEpoch}`,
-            `Cosmic Phase: ${cosmicPhase}`,
-            `Dominant Forces: ${dominantForces.join(', ')}`,
-            `Time Difference from 2025-05-26T09:48:00+00:00: ${timeDiff} CU-Time (~${yearsDiff} years)`,
-            `Ethical Status: ${message}`,
-            note ? `Note: ${note}` : ''
-          ].filter(line => line);
-
-          setResults(prev => [...prev, { desc: `CU-Time: ${cuTimeStr}`, output: output.join('\n') }]);
-          setEditedResults(prev => [...prev, { desc: `CU-Time: ${cuTimeStr}`, output: output.join('\n') }]);
-          HISTORY.saveConversion(cuTimeStr, formattedDate, 'CU to Gregorian');
-          setHistory(HISTORY.getHistory());
-          setShowResults(true);
-        } catch (e) {
-          console.error('handleCUTimeSubmit error:', e);
-          setResults(prev => [...prev, { desc: 'Error', output: e.message }]);
-        }
-      };
-
-      const handleCUCalculatorSubmit = () => {
-        try {
-          const startingCUTimeStr = input.calculatorCUTime.trim();
-          if (!startingCUTimeStr) {
-            setModal({
-              message: 'Please enter a starting CU-Time.',
-              onConfirm: () => setModal(null)
-            });
-            return;
-          }
-
-          const { valid, message, note } = ethicalClassifier(startingCUTimeStr);
-          if (!valid) {
-            setResults(prev => [...prev, { desc: 'Error', output: message }]);
-            return;
-          }
-
-          const startingCU = new Decimal(startingCUTimeStr);
-          const operation = input.calculatorOperation;
-          const yearsStr = input.calculatorYears.trim();
-          if (!yearsStr) {
-            setModal({
-              message: 'Please enter the number of years.',
-              onConfirm: () => setModal(null)
-            });
-            return;
-          }
-
-          let years;
-          try {
-            years = new Decimal(yearsStr);
-            if (years.lte(0)) throw new Error('Years must be positive');
-          } catch {
-            setModal({
-              message: 'Invalid years format. Please enter a positive number.',
-              onConfirm: () => setModal(null)
-            });
-            return;
-          }
-
-          let newCU;
-          if (operation === 'add') {
-            newCU = startingCU.plus(years);
-          } else {
-            newCU = startingCU.minus(years);
-            if (newCU.lt(0)) {
-              setModal({
-                message: 'Resulting CU-Time cannot be negative.',
-                onConfirm: () => setModal(null)
-              });
-              return;
+        const validateTime = (time, isUTC) => {
+            if (isUTC) {
+                const timePattern = /^(\d{2}):(\d{2})(?::(\d{2}))?$/;
+                const match = time.match(timePattern);
+                if (!match) return false;
+                const [hours, minutes, seconds] = match.slice(1).map(Number);
+                return hours >= 0 && hours <= 23 && minutes >= 0 && minutes <= 59 && seconds >= 0 && seconds <= 59;
+            } else {
+                const timePattern = /^(\d{1,2}):(\d{2})(?::(\d{2}))?\s*(AM|PM)$/i;
+                const match = time.match(timePattern);
+                if (!match) return false;
+                const [hours, minutes, seconds, period] = match.slice(1);
+                const hrs = parseInt(hours);
+                return hrs >= 1 && hrs <= 12 && minutes >= 0 && minutes <= 59 && seconds >= 0 && seconds <= 59;
             }
-          }
+        };
 
-          const deltaYears = newCU.minus(CONSTANTS.BASE_CU);
-          const deltaJDN = deltaYears.times(CONSTANTS.DAYS_PER_YEAR);
-          const jdn = CONSTANTS.ANCHOR_JDN.plus(deltaJDN);
-          const date = jdnToDate(jdn);
-          const formattedDate = typeof date.year === 'string' ? date.year :
-            `${date.month.toString().padStart(2, '0')}/${date.day.toString().padStart(2, '0')}/${Math.abs(date.year)}${date.year < 0 ? ' BCE' : ''} ${date.hour.toString().padStart(2, '0')}:${date.minute.toString().padStart(2, '0')}:${date.second.toString().padStart(2, '0')} UTC`;
-          const formattedNewCU = formatCUValue(newCU);
-          const cosmicPhase = getCosmicPhase(newCU);
-          const dominantForces = getDominantForces(newCU);
-          const geologicalEpoch = getGeologicalEpoch(newCU);
-          const refCuTime = computeCUTime(2025, 5, 26, 9, 48, 0);
-          const timeDiff = newCU.minus(refCuTime).abs().toDecimalPlaces(24);
-          const yearsDiff = deltaYears.abs().toNumber();
-
-          const operationText = operation === 'add' ? 'Added' : 'Subtracted';
-          const desc = `${operationText} ${years.toString()} years to CU-Time ${startingCUTimeStr}`;
-
-          const output = [
-            `Input: ${desc}`,
-            `Resulting CU-Time:`,
-            `  - Human-Friendly: ${formattedNewCU.humanFriendly}`,
-            `  - Full Numeric: ${formattedNewCU.fullNumeric} CU-Time`,
-            `  - Exponential: ${formattedNewCU.exponential}`,
-            `Gregorian Date: ${formattedDate}`,
-            `Epoch/Period: ${newCU.lt(CONSTANTS.BASE_CU) ? 'Past' : 'Future'}`,
-            `Geological Epoch: ${geologicalEpoch}`,
-            `Cosmic Phase: ${cosmicPhase}`,
-            `Dominant Forces: ${dominantForces.join(', ')}`,
-            `Time Difference from 2025-05-26T09:48:00+00:00: ${timeDiff} CU-Time (~${yearsDiff} years)`,
-            `Ethical Status: Ethical: Calculation aligns with CU principles`,
-            note ? `Note: ${note}` : ''
-          ].filter(line => line).join('\n');
-
-          setResults(prev => [...prev, { desc, output }]);
-          setEditedResults(prev => [...prev, { desc, output }]);
-          HISTORY.saveConversion(desc, output, 'CU-Time Calculation');
-          setHistory(HISTORY.getHistory());
-          setShowResults(true);
-        } catch (e) {
-          console.error('handleCUCalculatorSubmit error:', e);
-          setResults(prev => [...prev, { desc: 'Error', output: e.message }]);
-        }
-      };
-
-      const handleCSVUpload = async (e) => {
-        try {
-          const file = e.target.files[0];
-          if (!file) return;
-          const text = await file.text();
-          const rows = text.split('\n').filter(row => row.trim());
-          if (!rows[0].toLowerCase().startsWith('"description","datetime","output"')) {
-            setModal({
-              message: 'CSV must have headers "Description,DateTime,Output"',
-              onConfirm: () => setModal(null)
-            });
-            return;
-          }
-          const newResults = [];
-          for (let i = 1; i < rows.length; i++) {
-            const fields = parseCSVRow(rows[i]);
-            if (fields.length < 3) {
-              console.warn(`Skipping row ${i + 1}: Expected at least 3 fields, got ${fields.length}`);
-              continue;
-            }
-            let [desc, dateTime, output] = fields;
-            desc = desc.trim();
-            dateTime = dateTime.trim();
-            output = output.trim();
-            if (!desc || !dateTime) {
-              console.warn(`Skipping row ${i + 1}: Description or DateTime is empty`);
-              continue;
-            }
-
-            const calcPattern = /^(Added|Subtracted)\s+(\d+\.?\d*)\s+years\s+to\s+CU-Time\s+([\d.]+)$/i;
-            const calcMatch = desc.match(calcPattern);
-            if (calcMatch) {
-              const [, operation, yearsStr, startingCUTimeStr] = calcMatch;
-              try {
-                const { valid, message, note } = ethicalClassifier(startingCUTimeStr);
-                if (!valid) {
-                  newResults.push({ desc, date: dateTime, output: message });
-                  continue;
+        const handleDateSubmit = () => {
+            try {
+                const dateInput = input.date.trim();
+                if (!dateInput) {
+                    setModal({
+                        message: 'Please enter a date.',
+                        onConfirm: () => setModal(null)
+                    });
+                    return;
                 }
+
+                const dateParts = dateInput.split('/');
+                if (dateParts.length !== 3) {
+                    setModal({
+                        message: 'Invalid date format. Use MM/DD/YYYY.',
+                        onConfirm: () => setModal(null)
+                    });
+                    return;
+                }
+
+                const yearStr = dateParts[2];
+                let year;
+                try {
+                    year = new Decimal(yearStr);
+                    if (year.isNegative()) {
+                        setModal({
+                            message: 'Please enter the year as a positive number and select the appropriate era (Past or Present).',
+                            onConfirm: () => setModal(null)
+                        });
+                        return;
+                    }
+                } catch {
+                    setModal({
+                        message: 'Invalid year format.',
+                        onConfirm: () => setModal(null)
+                    });
+                    return;
+                }
+
+                let timeInput = input.time.trim();
+                const isUTC = input.timeFormat === "UTC";
+
+                if (!timeInput) {
+                    timeInput = isUTC ? "00:00:00" : "12:00:00";
+                }
+                if (input.timeFormat === "AMPM") {
+                    const ampm = input.ampm || "AM";
+                    timeInput += ` ${ampm}`;
+                }
+
+                if (!validateTime(timeInput, isUTC)) {
+                    setModal({
+                        message: `Invalid time format. Use ${isUTC ? "HH:MM:SS (e.g., 15:30:00)" : "HH:MM:SS AM/PM (e.g., 03:30:00 PM)"}.`,
+                        onConfirm: () => setModal(null)
+                    });
+                    return;
+                }
+
+                const fullInput = `${dateInput}${input.era === 'Past' ? ' BCE' : ''} ${timeInput}${isUTC ? ' UTC' : ''}`;
+                submitDateWithInput(fullInput, input.isExotic);
+            } catch (e) {
+                console.error('submit error:', e);
+                setResults(prev => [...prev, {desc: 'Error', output: e.message}]);
+            }
+        };
+
+        const submitDateWithInput = (fullInput, isExotic) => {
+            try {
+                const {valid, message, note} = ethicalClassifier(fullInput);
+                if (!valid) {
+                    setResults(prev => [...prev, {desc: 'Error', output: message}]);
+                    return;
+                }
+
+                const parsed = parseDateInput(fullInput, isExotic);
+                if ((input.era === "Past" && parsed.year >= 0) || (input.era === "Present" && parsed.year < 0)) {
+                    setModal({
+                        message: 'Era does not match the year. For Past, the year should be before 0; for Present, the year should be 0 or later.',
+                        onConfirm: () => setModal(null)
+                    });
+                    return;
+                }
+
+                const cuTime = computeCUTime(parsed.year, parsed.month, parsed.day, parsed.hour, parsed.minute, parsed.second, parsed.microsecond);
+                const formatted = formatCUValue(cuTime);
+                const cosmicPhase = getCosmicPhase(cuTime);
+                const dominantForces = getDominantForces(cuTime);
+                const geologicalEpoch = input.epoch || getGeologicalEpoch(cuTime);
+                const historicalEvents = getHistoricalEvents(parsed.year.toNumber(), parsed.month, parsed.day, parsed.hour, parsed.minute, parsed.second);
+                const refCuTime = computeCUTime(2025, 5, 26, 9, 48, 0);
+                const timeDiff = cuTime.minus(refCuTime).abs().toDecimalPlaces(24);
+                const yearsDiff = parsed.year.minus(2025).abs().toNumber();
+                let leapYearsStr = 'Leap Years: N/A (Year out of range)';
+                if (parsed.year.abs().lte(28000000000)) {
+                    const leapYears = countLeapYears(-28000000000, parsed.year.toNumber());
+                    leapYearsStr = `Leap Years from Sub-ZTOM (28000000000 BCE): ${leapYears}`;
+                }
+
+                const output = [
+                    `Input: ${fullInput}`,
+                    `CU-Time: ${formatted.humanFriendly}`,
+                    `Full Numeric: ${formatted.fullNumeric} CU-Time`,
+                    `Exponential: ${formatted.exponential}`,
+                    `Epoch/Period: ${cuTime.lt(CONSTANTS.BASE_CU) ? 'Past' : 'Future'}`,
+                    `Geological Epoch: ${geologicalEpoch}`,
+                    `Cosmic Phase: ${cosmicPhase}`,
+                    `Dominant Forces: ${dominantForces.join(', ')}`,
+                    leapYearsStr,
+                    historicalEvents.map(event => `Historical Event: ${event}`),
+                    `Time Difference from 2025-05-26T09:48:00+00:00: ${timeDiff} CU-Time (~${yearsDiff} years)`,
+                    `Ethical Status: ${message}`,
+                    note ? `Note: ${note}` : ''
+                ].filter(line => line);
+
+                setResults(prev => [...prev, {desc: `Date: ${fullInput}`, output: output.join('\n')}]);
+                setEditedResults(prev => [...prev, {desc: `Date: ${fullInput}`, output: output.join('\n')}]);
+                HISTORY.saveConversion(fullInput, formatted.humanFriendly, 'Gregorian to CU');
+                setHistory(HISTORY.getHistory());
+                setShowResults(true);
+            } catch (e) {
+                console.error('submitDateWithInput error:', e);
+                setResults(prev => [...prev, {desc: 'Error', output: e.message}]);
+            }
+        };
+
+        const handleCUTimeSubmit = () => {
+            try {
+                if (!input.cuTime) {
+                    setModal({
+                        message: 'Please enter a CU-Time value.',
+                        onConfirm: () => setModal(null)
+                    });
+                    return;
+                }
+
+                const cuTimeStr = input.cuTime.replace("CU-Time: ", "").trim();
+
+                const {valid, message, note} = ethicalClassifier(cuTimeStr);
+                if (!valid) {
+                    setResults(prev => [...prev, {desc: `CU-Time: ${cuTimeStr}`, output: message}]);
+                    return;
+                }
+
+                const cuTime = new Decimal(cuTimeStr);
+                if (cuTime.lt(0)) throw new Error('CU-Time cannot be negative');
+                const deltaYears = cuTime.minus(CONSTANTS.BASE_CU);
+                const deltaJDN = deltaYears.times(CONSTANTS.DAYS_PER_YEAR);
+                const jdn = CONSTANTS.ANCHOR_JDN.plus(deltaJDN);
+                const date = jdnToDate(jdn);
+                const formattedDate = typeof date.year === 'string' ? date.year :
+                    `${date.month.toString().padStart(2, '0')}/${date.day.toString().padStart(2, '0')}/${Math.abs(date.year)}${date.year < 0 ? ' BCE' : ''} ${date.hour.toString().padStart(2, '0')}:${date.minute.toString().padStart(2, '0')}:${date.second.toString().padStart(2, '0')} UTC`;
+                const cosmicPhase = getCosmicPhase(cuTime);
+                const dominantForces = getDominantForces(cuTime);
+                const geologicalEpoch = getGeologicalEpoch(cuTime);
+                const refCuTime = computeCUTime(2025, 5, 26, 9, 48, 0);
+                const timeDiff = cuTime.minus(refCuTime).abs().toDecimalPlaces(24);
+                const yearsDiff = typeof date.year === 'string' ? timeDiff.toNumber() : Math.abs(date.year - 2025);
+                const output = [
+                    `Input: ${cuTimeStr} CU-Time`,
+                    `Gregorian Date: ${formattedDate}`,
+                    `Epoch/Period: ${cuTime.lt(CONSTANTS.BASE_CU) ? 'Past' : 'Future'}`,
+                    `Geological Epoch: ${geologicalEpoch}`,
+                    `Cosmic Phase: ${cosmicPhase}`,
+                    `Dominant Forces: ${dominantForces.join(', ')}`,
+                    `Time Difference from 2025-05-26T09:48:00+00:00: ${timeDiff} CU-Time (~${yearsDiff} years)`,
+                    `Ethical Status: ${message}`,
+                    note ? `Note: ${note}` : ''
+                ].filter(line => line);
+
+                setResults(prev => [...prev, {desc: `CU-Time: ${cuTimeStr}`, output: output.join('\n')}]);
+                setEditedResults(prev => [...prev, {desc: `CU-Time: ${cuTimeStr}`, output: output.join('\n')}]);
+                HISTORY.saveConversion(cuTimeStr, formattedDate, 'CU to Gregorian');
+                setHistory(HISTORY.getHistory());
+                setShowResults(true);
+            } catch (e) {
+                console.error('handleCUTimeSubmit error:', e);
+                setResults(prev => [...prev, {desc: 'Error', output: e.message}]);
+            }
+        };
+
+        const handleCUCalculatorSubmit = () => {
+            try {
+                const startingCUTimeStr = input.calculatorCUTime.trim();
+                if (!startingCUTimeStr) {
+                    setModal({
+                        message: 'Please enter a starting CU-Time.',
+                        onConfirm: () => setModal(null)
+                    });
+                    return;
+                }
+
+                const {valid, message, note} = ethicalClassifier(startingCUTimeStr);
+                if (!valid) {
+                    setResults(prev => [...prev, {desc: 'Error', output: message}]);
+                    return;
+                }
+
                 const startingCU = new Decimal(startingCUTimeStr);
-                const years = new Decimal(yearsStr);
-                if (years.lte(0)) throw new Error('Years must be positive');
+                const operation = input.calculatorOperation;
+                const yearsStr = input.calculatorYears.trim();
+                if (!yearsStr) {
+                    setModal({
+                        message: 'Please enter the number of years.',
+                        onConfirm: () => setModal(null)
+                    });
+                    return;
+                }
+
+                let years;
+                try {
+                    years = new Decimal(yearsStr);
+                    if (years.lte(0)) throw new Error('Years must be positive');
+                } catch {
+                    setModal({
+                        message: 'Invalid years format. Please enter a positive number.',
+                        onConfirm: () => setModal(null)
+                    });
+                    return;
+                }
 
                 let newCU;
-                if (operation.toLowerCase() === 'added') {
-                  newCU = startingCU.plus(years);
+                if (operation === 'add') {
+                    newCU = startingCU.plus(years);
                 } else {
-                  newCU = startingCU.minus(years);
-                  if (newCU.lt(0)) throw new Error('Resulting CU-Time cannot be negative');
+                    newCU = startingCU.minus(years);
+                    if (newCU.lt(0)) {
+                        setModal({
+                            message: 'Resulting CU-Time cannot be negative.',
+                            onConfirm: () => setModal(null)
+                        });
+                        return;
+                    }
                 }
 
                 const deltaYears = newCU.minus(CONSTANTS.BASE_CU);
@@ -1328,7 +1314,7 @@
                 const jdn = CONSTANTS.ANCHOR_JDN.plus(deltaJDN);
                 const date = jdnToDate(jdn);
                 const formattedDate = typeof date.year === 'string' ? date.year :
-                  `${date.month.toString().padStart(2, '0')}/${date.day.toString().padStart(2, '0')}/${Math.abs(date.year)}${date.year < 0 ? ' BCE' : ''} ${date.hour.toString().padStart(2, '0')}:${date.minute.toString().padStart(2, '0')}:${date.second.toString().padStart(2, '0')} UTC`;
+                    `${date.month.toString().padStart(2, '0')}/${date.day.toString().padStart(2, '0')}/${Math.abs(date.year)}${date.year < 0 ? ' BCE' : ''} ${date.hour.toString().padStart(2, '0')}:${date.minute.toString().padStart(2, '0')}:${date.second.toString().padStart(2, '0')} UTC`;
                 const formattedNewCU = formatCUValue(newCU);
                 const cosmicPhase = getCosmicPhase(newCU);
                 const dominantForces = getDominantForces(newCU);
@@ -1337,522 +1323,807 @@
                 const timeDiff = newCU.minus(refCuTime).abs().toDecimalPlaces(24);
                 const yearsDiff = deltaYears.abs().toNumber();
 
-                const outputText = [
-                  `Input: ${desc}`,
-                  `Resulting CU-Time:`,
-                  `  - Human-Friendly: ${formattedNewCU.humanFriendly}`,
-                  `  - Full Numeric: ${formattedNewCU.fullNumeric} CU-Time`,
-                  `  - Exponential: ${formattedNewCU.exponential}`,
-                  `Gregorian Date: ${formattedDate}`,
-                  `Epoch/Period: ${newCU.lt(CONSTANTS.BASE_CU) ? 'Past' : 'Future'}`,
-                  `Geological Epoch: ${geologicalEpoch}`,
-                  `Cosmic Phase: ${cosmicPhase}`,
-                  `Dominant Forces: ${dominantForces.join(', ')}`,
-                  `Time Difference from 2025-05-26T09:48:00+00:00: ${timeDiff} CU-Time (~${yearsDiff} years)`,
-                  `Ethical Status: Ethical: Calculation aligns with CU principles`,
-                  note ? `Note: ${note}` : ''
+                const operationText = operation === 'add' ? 'Added' : 'Subtracted';
+                const desc = `${operationText} ${years.toString()} years to CU-Time ${startingCUTimeStr}`;
+
+                const output = [
+                    `Input: ${desc}`,
+                    `Resulting CU-Time:`,
+                    `  - Human-Friendly: ${formattedNewCU.humanFriendly}`,
+                    `  - Full Numeric: ${formattedNewCU.fullNumeric} CU-Time`,
+                    `  - Exponential: ${formattedNewCU.exponential}`,
+                    `Gregorian Date: ${formattedDate}`,
+                    `Epoch/Period: ${newCU.lt(CONSTANTS.BASE_CU) ? 'Past' : 'Future'}`,
+                    `Geological Epoch: ${geologicalEpoch}`,
+                    `Cosmic Phase: ${cosmicPhase}`,
+                    `Dominant Forces: ${dominantForces.join(', ')}`,
+                    `Time Difference from 2025-05-26T09:48:00+00:00: ${timeDiff} CU-Time (~${yearsDiff} years)`,
+                    `Ethical Status: Ethical: Calculation aligns with CU principles`,
+                    note ? `Note: ${note}` : ''
                 ].filter(line => line).join('\n');
 
-                newResults.push({ desc, date: dateTime, output: outputText });
-                HISTORY.saveConversion(desc, outputText, 'CU-Time Calculation');
-              } catch (error) {
-                newResults.push({ desc, date: dateTime, output: `Error: ${error.message}` });
-              }
-              continue;
+                setResults(prev => [...prev, {desc, output}]);
+                setEditedResults(prev => [...prev, {desc, output}]);
+                HISTORY.saveConversion(desc, output, 'CU-Time Calculation');
+                setHistory(HISTORY.getHistory());
+                setShowResults(true);
+            } catch (e) {
+                console.error('handleCUCalculatorSubmit error:', e);
+                setResults(prev => [...prev, {desc: 'Error', output: e.message}]);
             }
+        };
 
-            if (desc.startsWith("CU-Time:")) {
-              const cuTimeStr = dateTime.replace("CU-Time: ", "").trim();
-              try {
-                const { valid, message, note } = ethicalClassifier(cuTimeStr);
-                if (!valid) {
-                  newResults.push({ desc, date: dateTime, output: message });
-                  continue;
+        const handleCSVUpload = async (e) => {
+            try {
+                const file = e.target.files[0];
+                if (!file) return;
+                const text = await file.text();
+                const rows = text.split('\n').filter(row => row.trim());
+                if (!rows[0].toLowerCase().startsWith('"description","datetime","output"')) {
+                    setModal({
+                        message: 'CSV must have headers "Description,DateTime,Output"',
+                        onConfirm: () => setModal(null)
+                    });
+                    return;
                 }
-                const cuTime = new Decimal(cuTimeStr);
-                const deltaYears = cuTime.minus(CONSTANTS.BASE_CU);
-                const deltaJDN = deltaYears.times(CONSTANTS.DAYS_PER_YEAR);
-                const jdn = CONSTANTS.ANCHOR_JDN.plus(deltaJDN);
-                const date = jdnToDate(jdn);
-                const formattedDate = typeof date.year === 'string' ? date.year :
-                  `${date.month.toString().padStart(2, '0')}/${date.day.toString().padStart(2, '0')}/${Math.abs(date.year)}${date.year < 0 ? ' BCE' : ''} ${date.hour.toString().padStart(2, '0')}:${date.minute.toString().padStart(2, '0')}:${date.second.toString().padStart(2, '0')} UTC`;
-                const cosmicPhase = getCosmicPhase(cuTime);
-                const dominantForces = getDominantForces(cuTime);
-                const geologicalEpoch = getGeologicalEpoch(cuTime);
-                const refCuTime = computeCUTime(2025, 5, 26, 9, 48, 0);
-                const timeDiff = cuTime.minus(refCuTime).abs().toDecimalPlaces(24);
-                const yearsDiff = typeof date.year === 'string' ? timeDiff.toNumber() : Math.abs(date.year - 2025);
-                const outputText = [
-                  `Input: ${cuTimeStr} CU-Time`,
-                  `Gregorian Date: ${formattedDate}`,
-                  `Epoch/Period: ${cuTime.lt(CONSTANTS.BASE_CU) ? 'Past' : 'Future'}`,
-                  `Geological Epoch: ${geologicalEpoch}`,
-                  `Cosmic Phase: ${cosmicPhase}`,
-                  `Dominant Forces: ${dominantForces.join(', ')}`,
-                  `Time Difference from 2025-05-26T09:48:00+00:00: ${timeDiff} CU-Time (~${yearsDiff} years)`,
-                  `Ethical Status: ${message}`,
-                  note ? `Note: ${note}` : ''
-                ].filter(line => line).join('\n');
-                newResults.push({ desc, date: dateTime, output: outputText });
-                HISTORY.saveConversion(desc, outputText, 'CU to Gregorian');
-              } catch (error) {
-                newResults.push({ desc, date: dateTime, output: `Error: ${error.message}` });
-              }
-            } else {
-              try {
-                const { valid, message, note } = ethicalClassifier(dateTime);
-                if (!valid) {
-                  newResults.push({ desc, date: dateTime, output: message });
-                  continue;
-                }
-                const parsed = parseDateInput(dateTime);
-                const cuTime = computeCUTime(parsed.year, parsed.month, parsed.day, parsed.hour, parsed.minute, parsed.second, parsed.microsecond);
-                const formatted = formatCUValue(cuTime);
-                const cosmicPhase = getCosmicPhase(cuTime);
-                const dominantForces = getDominantForces(cuTime);
-                const geologicalEpoch = getGeologicalEpoch(cuTime);
-                const historicalEvents = getHistoricalEvents(parsed.year.toNumber(), parsed.month, parsed.day, parsed.hour, parsed.minute, parsed.second);
-                const refCuTime = computeCUTime(2025, 5, 26, 9, 48, 0);
-                const timeDiff = cuTime.minus(refCuTime).abs().toDecimalPlaces(24);
-                const yearsDiff = parsed.year.minus(2025).abs().toNumber();
-                let leapYearsStr = '';
-                if (parsed.year.abs().lte(28000000000)) {
-                  const leapYears = countLeapYears(-28000000000, parsed.year.toNumber());
-                  leapYearsStr = `Leap Years from Sub-ZTOM (28000000000 BCE): ${leapYears}`;
-                } else {
-                  leapYearsStr = 'Leap Years: N/A (Year out of range)';
-                }
-                const outputText = [
-                  `Input: ${dateTime} UTC`,
-                  `CU-Time: ${formatted.humanFriendly}`,
-                  `Full Numeric: ${formatted.fullNumeric} CU-Time`,
-                  `Exponential: ${formatted.exponential}`,
-                  `Epoch/Period: ${cuTime.lt(CONSTANTS.BASE_CU) ? 'Past' : 'Future'}`,
-                  `Geological Epoch: ${geologicalEpoch}`,
-                  `Cosmic Phase: ${cosmicPhase}`,
-                  `Dominant Forces: ${dominantForces.join(', ')}`,
-                  leapYearsStr,
-                  historicalEvents.map(event => `Historical Event: ${event}`).join('\n'),
-                  `Time Difference from 2025-05-26T09:48:00+00:00: ${timeDiff} CU-Time (~${yearsDiff} years)`,
-                  `Ethical Status: ${message}`,
-                  note ? `Note: ${note}` : ''
-                ].filter(line => line).join('\n');
-                newResults.push({ desc, date: dateTime, output: outputText });
-                HISTORY.saveConversion(desc, outputText, 'Gregorian to CU');
-              } catch (error) {
-                newResults.push({ desc, date: dateTime, output: `Error: ${error.message}` });
-              }
-            }
-          }
-          setResults(newResults);
-          setEditedResults(newResults);
-          setShowResults(true);
-          setHistory(HISTORY.getHistory());
-        } catch (e) {
-          console.error('handleCSVUpload error:', e);
-          setResults([{ desc: 'Error', output: e.message }]);
-        }
-      };
+                const newResults = [];
+                for (let i = 1; i < rows.length; i++) {
+                    const fields = parseCSVRow(rows[i]);
+                    if (fields.length < 3) {
+                        console.warn(`Skipping row ${i + 1}: Expected at least 3 fields, got ${fields.length}`);
+                        continue;
+                    }
+                    let [desc, dateTime, output] = fields;
+                    desc = desc.trim();
+                    dateTime = dateTime.trim();
+                    output = output.trim();
+                    if (!desc || !dateTime) {
+                        console.warn(`Skipping row ${i + 1}: Description or DateTime is empty`);
+                        continue;
+                    }
 
-      const handleResultEdit = (index, field, value) => {
-        const updatedResults = [ ...editedResults ];
-        updatedResults[index] = { ...updatedResults[index], [field]: value };
-        setEditedResults(updatedResults);
-      };
-
-      const handleDeleteResult = (index) => {
-        const updatedResults = editedResults.filter((_, i) => i !== index);
-        setEditedResults(updatedResults);
-        setResults(updatedResults);
-      };
-
-      const toggleFavorite = (input) => {
-        try {
-          HISTORY.markFavorite(input);
-          setHistory(HISTORY.getHistory());
-        } catch (e) {
-          console.error('toggleFavorite error:', e);
-        }
-      };
-
-      return (
-        <ErrorBoundary>
-          <div className="flex">
-            <aside className="w-64 bg-gray-800 p-4 fixed h-full hidden md:block">
-              <h3 className="text-xl font-semibold text-white mb-4">Navigation</h3>
-              <ul className="space-y-4">
-                <li>
-                  <button onClick={() => setTab('gregorian')} className={`w-full text-left px-4 py-2 text-white rounded ${tab === 'gregorian' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}>
-                    Gregorian to CU-Time
-                  </button>
-                </li>
-                <li>
-                  <button onClick={() => setTab('cuTime')} className={`w-full text-left px-4 py-2 text-white rounded ${tab === 'cuTime' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}>
-                    CU-Time to Gregorian
-                  </button>
-                </li>
-                <li>
-                  <button onClick={() => setTab('cuCalculator')} className={`w-full text-left px-4 py-2 text-white rounded ${tab === 'cuCalculator' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}>
-                    CU-Time Calculator
-                  </button>
-                </li>
-              </ul>
-            </aside>
-            <div className="flex-1 md:ml-64 p-6">
-              <header className="mb-6 p-6 gradient-header border border-indigo-800/30 rounded-lg shadow-lg">
-                <div className="flex justify-between items-center">
-                  <a href="https://github.com/willmaddock/CosmicUniversalismStatement.git" target="_blank" rel="noopener noreferrer" className="hover:brightness-125">
-                    <h1 className="text-4xl font-extrabold text-white tracking-tight">
-                      Cosmic Universalism Time Converter
-                    </h1>
-                  </a>
-                </div>
-                <nav className="md:hidden flex space-x-4 mt-4">
-                  <button onClick={() => setTab('gregorian')} className={`px-4 py-2 text-white rounded ${tab === 'gregorian' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}>
-                    Gregorian to CU-Time
-                  </button>
-                  <button onClick={() => setTab('cuTime')} className={`px-4 py-2 text-white rounded ${tab === 'cuTime' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}>
-                    CU-Time to Gregorian
-                  </button>
-                  <button onClick={() => setTab('cuCalculator')} className={`px-4 py-2 text-white rounded ${tab === 'cuCalculator' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}>
-                    CU-Time Calculator
-                  </button>
-                </nav>
-                <a href="https://github.com/willmaddock/CosmicUniversalismStatement.git" target="_blank" rel="noopener noreferrer" className="w-full max-w-xl hover:brightness-125 mt-4">
-                  <div className="p-4 bg-indigo-950/20 border border-indigo-800/30 rounded-md">
-                    <h2 className="text-lg font-semibold text-gray-100 mb-2">Cosmic Universalism Statement v3.0.0</h2>
-                    <p className="text-sm text-gray-200 leading-relaxed font-light">
-                      We are sub z-tomically inclined, countably infinite, composed of foundational elements (the essence of conscious existence), grounded on b-tom (as vast as our shared worlds and their atmospheres), and looking up to c-tom (encompassing the entirety of the cosmos), guided by the uncountable infinite quantum states of intelligence and empowered by God’s Free Will.
-                    </p>
-                  </div>
-                </a>
-              </header>
-              <main>
-                {tab === 'gregorian' && (
-                  <section id="gregorian-to-cu" className="mb-8 bg-gray-800 rounded-lg shadow-md p-6 card">
-                    <h2 className="text-2xl font-semibold text-white mb-4">Gregorian to CU-Time Conversion</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <div>
-                        <label className="block text-gray-300 mb-1" htmlFor="epoch"><i className="fas fa-globe mr-2"></i>Geological Period</label>
-                        <select
-                          id="epoch"
-                          value={input.epoch}
-                          onChange={(e) => {
-                            const selectedEpoch = e.target.value;
-                            setInput({ ...input, epoch: selectedEpoch });
-                            if (selectedEpoch) {
-                              const index = EPOCH_NAMES.indexOf(selectedEpoch);
-                              if (index >= 0) {
-                                const year = BOUNDARY_YEARS[index];
-                                const absYear = Math.abs(year);
-                                const dateStr = `01/01/${absYear}`;
-                                const era = year < 0 ? 'Past' : 'Present';
-                                setInput(prev => ({ ...prev, date: dateStr, era, isExotic: absYear > 9999 }));
-                              }
+                    const calcPattern = /^(Added|Subtracted)\s+(\d+\.?\d*)\s+years\s+to\s+CU-Time\s+([\d.]+)$/i;
+                    const calcMatch = desc.match(calcPattern);
+                    if (calcMatch) {
+                        const [, operation, yearsStr, startingCUTimeStr] = calcMatch;
+                        try {
+                            const {valid, message, note} = ethicalClassifier(startingCUTimeStr);
+                            if (!valid) {
+                                newResults.push({desc, date: dateTime, output: message});
+                                continue;
                             }
-                          }}
-                          className="w-full px-3 py-2 border rounded bg-gray-700 text-white"
-                        >
-                          <option value="">Auto-Detect</option>
-                          {EPOCH_NAMES.map(name => (
-                            <option key={name} value={name}>{name}</option>
-                          ))}
-                        </select>
-                      </div>
-                      <div>
-                        <label className="block text-gray-300 mb-1" htmlFor="date"><i className="fas fa-calendar-alt mr-2"></i>{input.isExotic ? "Exotic Date (MM/DD/YYYY)" : "Standard Date (MM/DD/YYYY)"}</label>
-                        <input
-                          type="text"
-                          id="date"
-                          value={input.date}
-                          onChange={(e) => handleDateChange(e, 'date')}
-                          className="w-full px-3 py-2 border rounded bg-gray-700 text-white"
-                          placeholder="e.g., 07/20/1969"
-                          title="Enter date in MM/DD/YYYY format. For BCE dates, use 'Past' era."
-                        />
-                        <p className="text-sm text-gray-400 mt-1">Enter year as positive; use 'Past' for BCE, 'Present' for CE.</p>
-                      </div>
-                      <div>
-                        <label className="block text-gray-300 mb-1" htmlFor="time"><i className="fas fa-clock mr-2"></i>Time</label>
-                        <input
-                          type="text"
-                          id="time"
-                          value={input.time}
-                          onChange={(e) => handleTimeChange(e)}
-                          className="w-full px-3 py-2 border rounded bg-gray-700 text-white"
-                          placeholder={input.timeFormat === "UTC" ? "e.g., 15:30:00" : "e.g., 03:30:00 PM"}
-                          title={input.timeFormat === "UTC" ? "Enter time in HH:MM:SS (24-hour)" : "Enter time in HH:MM:SS AM/PM (12-hour)"}
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-gray-300 mb-1" htmlFor="timeFormat"><i className="fas fa-hourglass mr-2"></i>Time Format</label>
-                        <select
-                          id="timeFormat"
-                          value={input.timeFormat}
-                          onChange={(e) => setInput(prev => ({ ...prev, timeFormat: e.target.value }))}
-                          className="w-full px-3 py-2 border rounded bg-gray-700 text-white"
-                        >
-                          <option value="UTC">UTC (24-hour)</option>
-                          <option value="AMPM">AM/PM (12-hour)</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label className="block text-gray-300 mb-1" htmlFor="era"><i className="fas fa-history mr-2"></i>Era</label>
-                        <select
-                          id="era"
-                          value={input.era}
-                          onChange={(e) => setInput({ ...input, era: e.target.value })}
-                          className="w-full px-3 py-2 border rounded bg-gray-700 text-white"
-                        >
-                          <option value="Present">Present (CE)</option>
-                          <option value="Past">Past (BCE)</option>
-                        </select>
-                      </div>
-                      <div className="md:col-span-3">
-                        <button
-                          onClick={handleDateSubmit}
-                          className="w-full md:w-auto px-6 py-2 cosmic-button"
-                        >
-                          <i className="fas fa-rocket mr-2"></i>Convert
-                        </button>
-                      </div>
+                            const startingCU = new Decimal(startingCUTimeStr);
+                            const years = new Decimal(yearsStr);
+                            if (years.lte(0)) throw new Error('Years must be positive');
+
+                            let newCU;
+                            if (operation.toLowerCase() === 'added') {
+                                newCU = startingCU.plus(years);
+                            } else {
+                                newCU = startingCU.minus(years);
+                                if (newCU.lt(0)) throw new Error('Resulting CU-Time cannot be negative');
+                            }
+
+                            const deltaYears = newCU.minus(CONSTANTS.BASE_CU);
+                            const deltaJDN = deltaYears.times(CONSTANTS.DAYS_PER_YEAR);
+                            const jdn = CONSTANTS.ANCHOR_JDN.plus(deltaJDN);
+                            const date = jdnToDate(jdn);
+                            const formattedDate = typeof date.year === 'string' ? date.year :
+                                `${date.month.toString().padStart(2, '0')}/${date.day.toString().padStart(2, '0')}/${Math.abs(date.year)}${date.year < 0 ? ' BCE' : ''} ${date.hour.toString().padStart(2, '0')}:${date.minute.toString().padStart(2, '0')}:${date.second.toString().padStart(2, '0')} UTC`;
+                            const formattedNewCU = formatCUValue(newCU);
+                            const cosmicPhase = getCosmicPhase(newCU);
+                            const dominantForces = getDominantForces(newCU);
+                            const geologicalEpoch = getGeologicalEpoch(newCU);
+                            const refCuTime = computeCUTime(2025, 5, 26, 9, 48, 0);
+                            const timeDiff = newCU.minus(refCuTime).abs().toDecimalPlaces(24);
+                            const yearsDiff = deltaYears.abs().toNumber();
+
+                            const outputText = [
+                                `Input: ${desc}`,
+                                `Resulting CU-Time:`,
+                                `  - Human-Friendly: ${formattedNewCU.humanFriendly}`,
+                                `  - Full Numeric: ${formattedNewCU.fullNumeric} CU-Time`,
+                                `  - Exponential: ${formattedNewCU.exponential}`,
+                                `Gregorian Date: ${formattedDate}`,
+                                `Epoch/Period: ${newCU.lt(CONSTANTS.BASE_CU) ? 'Past' : 'Future'}`,
+                                `Geological Epoch: ${geologicalEpoch}`,
+                                `Cosmic Phase: ${cosmicPhase}`,
+                                `Dominant Forces: ${dominantForces.join(', ')}`,
+                                `Time Difference from 2025-05-26T09:48:00+00:00: ${timeDiff} CU-Time (~${yearsDiff} years)`,
+                                `Ethical Status: Ethical: Calculation aligns with CU principles`,
+                                note ? `Note: ${note}` : ''
+                            ].filter(line => line).join('\n');
+
+                            newResults.push({desc, date: dateTime, output: outputText});
+                            HISTORY.saveConversion(desc, outputText, 'CU-Time Calculation');
+                        } catch (error) {
+                            newResults.push({desc, date: dateTime, output: `Error: ${error.message}`});
+                        }
+                        continue;
+                    }
+
+                    if (desc.startsWith("CU-Time:")) {
+                        const cuTimeStr = dateTime.replace("CU-Time: ", "").trim();
+                        try {
+                            const {valid, message, note} = ethicalClassifier(cuTimeStr);
+                            if (!valid) {
+                                newResults.push({desc, date: dateTime, output: message});
+                                continue;
+                            }
+                            const cuTime = new Decimal(cuTimeStr);
+                            const deltaYears = cuTime.minus(CONSTANTS.BASE_CU);
+                            const deltaJDN = deltaYears.times(CONSTANTS.DAYS_PER_YEAR);
+                            const jdn = CONSTANTS.ANCHOR_JDN.plus(deltaJDN);
+                            const date = jdnToDate(jdn);
+                            const formattedDate = typeof date.year === 'string' ? date.year :
+                                `${date.month.toString().padStart(2, '0')}/${date.day.toString().padStart(2, '0')}/${Math.abs(date.year)}${date.year < 0 ? ' BCE' : ''} ${date.hour.toString().padStart(2, '0')}:${date.minute.toString().padStart(2, '0')}:${date.second.toString().padStart(2, '0')} UTC`;
+                            const cosmicPhase = getCosmicPhase(cuTime);
+                            const dominantForces = getDominantForces(cuTime);
+                            const geologicalEpoch = getGeologicalEpoch(cuTime);
+                            const refCuTime = computeCUTime(2025, 5, 26, 9, 48, 0);
+                            const timeDiff = cuTime.minus(refCuTime).abs().toDecimalPlaces(24);
+                            const yearsDiff = typeof date.year === 'string' ? timeDiff.toNumber() : Math.abs(date.year - 2025);
+                            const outputText = [
+                                `Input: ${cuTimeStr} CU-Time`,
+                                `Gregorian Date: ${formattedDate}`,
+                                `Epoch/Period: ${cuTime.lt(CONSTANTS.BASE_CU) ? 'Past' : 'Future'}`,
+                                `Geological Epoch: ${geologicalEpoch}`,
+                                `Cosmic Phase: ${cosmicPhase}`,
+                                `Dominant Forces: ${dominantForces.join(', ')}`,
+                                `Time Difference from 2025-05-26T09:48:00+00:00: ${timeDiff} CU-Time (~${yearsDiff} years)`,
+                                `Ethical Status: ${message}`,
+                                note ? `Note: ${note}` : ''
+                            ].filter(line => line).join('\n');
+                            newResults.push({desc, date: dateTime, output: outputText});
+                            HISTORY.saveConversion(desc, outputText, 'CU to Gregorian');
+                        } catch (error) {
+                            newResults.push({desc, date: dateTime, output: `Error: ${error.message}`});
+                        }
+                    } else {
+                        try {
+                            const {valid, message, note} = ethicalClassifier(dateTime);
+                            if (!valid) {
+                                newResults.push({desc, date: dateTime, output: message});
+                                continue;
+                            }
+                            const parsed = parseDateInput(dateTime);
+                            const cuTime = computeCUTime(parsed.year, parsed.month, parsed.day, parsed.hour, parsed.minute, parsed.second, parsed.microsecond);
+                            const formatted = formatCUValue(cuTime);
+                            const cosmicPhase = getCosmicPhase(cuTime);
+                            const dominantForces = getDominantForces(cuTime);
+                            const geologicalEpoch = getGeologicalEpoch(cuTime);
+                            const historicalEvents = getHistoricalEvents(parsed.year.toNumber(), parsed.month, parsed.day, parsed.hour, parsed.minute, parsed.second);
+                            const refCuTime = computeCUTime(2025, 5, 26, 9, 48, 0);
+                            const timeDiff = cuTime.minus(refCuTime).abs().toDecimalPlaces(24);
+                            const yearsDiff = parsed.year.minus(2025).abs().toNumber();
+                            let leapYearsStr = 'Leap Years: N/A (Year out of range)';
+                            if (parsed.year.abs().lte(28000000000)) {
+                                const leapYears = countLeapYears(-28000000000, parsed.year.toNumber());
+                                leapYearsStr = `Leap Years from Sub-ZTOM (28000000000 BCE): ${leapYears}`;
+                            }
+                            const outputText = [
+                                `Input: ${dateTime} UTC`,
+                                `CU-Time: ${formatted.humanFriendly}`,
+                                `Full Numeric: ${formatted.fullNumeric} CU-Time`,
+                                `Exponential: ${formatted.exponential}`,
+                                `Epoch/Period: ${cuTime.lt(CONSTANTS.BASE_CU) ? 'Past' : 'Future'}`,
+                                `Geological Epoch: ${geologicalEpoch}`,
+                                `Cosmic Phase: ${cosmicPhase}`,
+                                `Dominant Forces: ${dominantForces.join(', ')}`,
+                                leapYearsStr,
+                                historicalEvents.map(event => `Historical Event: ${event}`).join('\n'),
+                                `Time Difference from 2025-05-26T09:48:00+00:00: ${timeDiff} CU-Time (~${yearsDiff} years)`,
+                                `Ethical Status: ${message}`,
+                                note ? `Note: ${note}` : ''
+                            ].filter(line => line).join('\n');
+                            newResults.push({desc, date: dateTime, output: outputText});
+                            HISTORY.saveConversion(desc, outputText, 'Gregorian to CU');
+                        } catch (error) {
+                            newResults.push({desc, date: dateTime, output: `Error: ${error.message}`});
+                        }
+                    }
+                }
+                setResults(newResults);
+                setEditedResults(newResults);
+                setShowResults(true);
+                setHistory(HISTORY.getHistory());
+            } catch (e) {
+                console.error('handleCSVUpload error:', e);
+                setResults([{desc: 'Error', output: e.message}]);
+            }
+        };
+
+        const handleResultEdit = (index, field, value) => {
+            const updatedResults = [...editedResults];
+            updatedResults[index] = {...updatedResults[index], [field]: value};
+            setEditedResults(updatedResults);
+        };
+
+        const handleDeleteResult = (index) => {
+            const updatedResults = editedResults.filter((_, i) => i !== index);
+            setEditedResults(updatedResults);
+            setResults(updatedResults);
+        };
+
+        const toggleFavorite = (input) => {
+            try {
+                HISTORY.markFavorite(input);
+                setHistory(HISTORY.getHistory());
+            } catch (e) {
+                console.error('toggleFavorite error:', e);
+            }
+        };
+
+        return (
+            <ErrorBoundary>
+                <div className="flex">
+                    <aside className="w-64 bg-gray-800 p-4 fixed h-full hidden md:block">
+                        <h3 className="text-xl font-semibold text-white mb-4">Navigation</h3>
+                        <ul className="space-y-4">
+                            <li>
+                                <button onClick={() => setTab('gregorian')}
+                                        className={`w-full text-left px-4 py-2 text-white rounded ${tab === 'gregorian' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}>
+                                    Gregorian to CU-Time
+                                </button>
+                            </li>
+                            <li>
+                                <button onClick={() => setTab('cuTime')}
+                                        className={`w-full text-left px-4 py-2 text-white rounded ${tab === 'cuTime' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}>
+                                    CU-Time to Gregorian
+                                </button>
+                            </li>
+                            <li>
+                                <button onClick={() => setTab('cuCalculator')}
+                                        className={`w-full text-left px-4 py-2 text-white rounded ${tab === 'cuCalculator' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}>
+                                    CU-Time Calculator
+                                </button>
+                            </li>
+                        </ul>
+                    </aside>
+                    <div className="flex-1 md:ml-64 p-6">
+                        <header className="mb-6 p-6 gradient-header border border-indigo-800/30 rounded-lg shadow-lg">
+                            <div className="flex justify-between items-center">
+                                <a href="https://github.com/willmaddock/CosmicUniversalismStatement.git" target="_blank"
+                                   rel="noopener noreferrer" className="hover:brightness-125">
+                                    <h1 className="text-4xl font-extrabold text-white tracking-tight">
+                                        Cosmic Universalism Time Converter
+                                    </h1>
+                                </a>
+                            </div>
+                            <nav className="md:hidden flex space-x-4 mt-4">
+                                <button onClick={() => setTab('gregorian')}
+                                        className={`px-4 py-2 text-white rounded ${tab === 'gregorian' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}>
+                                    Gregorian to CU-Time
+                                </button>
+                                <button onClick={() => setTab('cuTime')}
+                                        className={`px-4 py-2 text-white rounded ${tab === 'cuTime' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}>
+                                    CU-Time to Gregorian
+                                </button>
+                                <button onClick={() => setTab('cuCalculator')}
+                                        className={`px-4 py-2 text-white rounded ${tab === 'cuCalculator' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}>
+                                    CU-Time Calculator
+                                </button>
+                            </nav>
+                            <a href="https://github.com/willmaddock/CosmicUniversalismStatement.git" target="_blank"
+                               rel="noopener noreferrer" className="w-full max-w-xl hover:brightness-125 mt-4">
+                                <div className="p-4 bg-indigo-950/20 border border-indigo-800/30 rounded-md">
+                                    <h2 className="text-lg font-semibold text-gray-100 mb-2">Cosmic Universalism
+                                        Statement v3.0.0</h2>
+                                    <p className="text-sm text-gray-200 leading-relaxed font-light">
+                                        We are sub z-tomically inclined, countably infinite, composed of foundational
+                                        elements (the essence of conscious existence), grounded on b-tom (as vast as our
+                                        shared worlds and their atmospheres), and looking up to c-tom (encompassing the
+                                        entirety of the cosmos), guided by the uncountable infinite quantum states of
+                                        intelligence and empowered by God’s Free Will.
+                                    </p>
+                                </div>
+                            </a>
+                        </header>
+                        <main>
+                            {tab === 'gregorian' && (
+                                <section id="gregorian-to-cu"
+                                         className="mb-8 bg-gray-800 rounded-lg shadow-md p-6 card">
+                                    <h2 className="text-2xl font-semibold text-white mb-4">Gregorian to CU-Time
+                                        Conversion</h2>
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <div>
+                                            <label className="block text-gray-300 mb-1" htmlFor="epoch"><i
+                                                className="fas fa-globe mr-2"></i>Geological Period</label>
+                                            <select
+                                                id="epoch"
+                                                value={input.epoch}
+                                                onChange={(e) => {
+                                                    const selectedEpoch = e.target.value;
+                                                    setInput({...input, epoch: selectedEpoch});
+                                                    if (selectedEpoch) {
+                                                        const index = EPOCH_NAMES.indexOf(selectedEpoch);
+                                                        if (index >= 0) {
+                                                            const year = BOUNDARY_YEARS[index];
+                                                            const absYear = Math.abs(year);
+                                                            const dateStr = `01/01/${absYear}`;
+                                                            const era = year < 0 ? 'Past' : 'Present';
+                                                            setInput(prev => ({
+                                                                ...prev,
+                                                                date: dateStr,
+                                                                era,
+                                                                isExotic: absYear > 9999
+                                                            }));
+                                                        }
+                                                    }
+                                                }}
+                                                className="w-full px-3 py-2 border rounded bg-gray-700 text-white"
+                                            >
+                                                <option value="">Auto-Detect</option>
+                                                {EPOCH_NAMES.map(name => (
+                                                    <option key={name} value={name}>{name}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label className="block text-gray-300 mb-1" htmlFor="date"><i
+                                                className="fas fa-calendar-alt mr-2"></i>{input.isExotic ? "Exotic Date (MM/DD/YYYY)" : "Standard Date (MM/DD/YYYY)"}
+                                            </label>
+                                            <input
+                                                type="text"
+                                                id="date"
+                                                value={input.date}
+                                                onChange={(e) => handleDateChange(e, 'date')}
+                                                className="w-full px-3 py-2 border rounded bg-gray-700 text-white"
+                                                placeholder="e.g., 07/20/1969 First human landing on the Moon"
+                                                title="Enter date in MM/DD/YYYY format. For BCE dates, use 'Past' era."
+                                            />
+                                            <p className="text-sm text-gray-400 mt-1">Enter year as positive; use 'Past'
+                                                for BCE, 'Present' for CE.</p>
+                                        </div>
+                                        <div>
+                                            <label className="block text-gray-300 mb-1" htmlFor="time"><i
+                                                className="fas fa-clock mr-2"></i>Time</label>
+                                            <div className="flex">
+                                                <input
+                                                    type="text"
+                                                    id="time"
+                                                    value={input.time}
+                                                    onChange={(e) => handleTimeChange(e)}
+                                                    className="flex-1 px-3 py-2 border rounded bg-gray-700 text-white"
+                                                    placeholder={input.timeFormat === "UTC" ? "e.g., 15:30:00" : "e.g., 03:30:00"}
+                                                    title={input.timeFormat === "UTC" ? "Enter time in HH:MM:SS (24-hour)" : "Enter time in HH:MM:SS (12-hour)"}
+                                                />
+                                                {input.timeFormat === "AMPM" && (
+                                                    <select
+                                                        value={input.ampm}
+                                                        onChange={(e) => setInput({...input, ampm: e.target.value})}
+                                                        className="ml-2 px-3 py-2 border rounded bg-gray-700 text-white"
+                                                    >
+                                                        <option value="AM">AM</option>
+                                                        <option value="PM">PM</option>
+                                                    </select>
+                                                )}
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label className="block text-gray-300 mb-1" htmlFor="timeFormat"><i
+                                                className="fas fa-hourglass mr-2"></i>Time Format</label>
+                                            <select
+                                                id="timeFormat"
+                                                value={input.timeFormat}
+                                                onChange={(e) => setInput(prev => ({
+                                                    ...prev,
+                                                    timeFormat: e.target.value
+                                                }))}
+                                                className="w-full px-3 py-2 border rounded bg-gray-700 text-white"
+                                            >
+                                                <option value="UTC">UTC (24-hour)</option>
+                                                <option value="AMPM">AM/PM (12-hour)</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label className="block text-gray-300 mb-1" htmlFor="era"><i
+                                                className="fas fa-history mr-2"></i>Era</label>
+                                            <select
+                                                id="era"
+                                                value={input.era}
+                                                onChange={(e) => setInput({...input, era: e.target.value})}
+                                                className="w-full px-3 py-2 border rounded bg-gray-700 text-white"
+                                            >
+                                                <option value="Present">Present (CE)</option>
+                                                <option value="Past">Past (BCE)</option>
+                                            </select>
+                                        </div>
+                                        <div className="md:col-span-3">
+                                            <button
+                                                onClick={handleDateSubmit}
+                                                className="w-full md:w-auto px-6 py-2 cosmic-button"
+                                            >
+                                                <i className="fas fa-rocket mr-2"></i>Convert
+                                            </button>
+                                        </div>
+                                    </div>
+                                </section>
+                            )}
+
+                            {tab === 'cuTime' && (
+                                <section id="cu-to-gregorian"
+                                         className="mb-8 bg-gray-800 rounded-lg shadow-md p-6 card">
+                                    <h2 className="text-2xl font-semibold text-white mb-4">CU-Time to Gregorian
+                                        Conversion</h2>
+                                    <div className="grid grid-cols-1 gap-4">
+                                        <div>
+                                            <label className="block text-gray-300 mb-1" htmlFor="cuTime"><i
+                                                className="fas fa-star mr-2"></i>CU-Time</label>
+                                            <input
+                                                type="text"
+                                                id="cuTime"
+                                                value={input.cuTime}
+                                                onChange={(e) => setInput({...input, cuTime: e.target.value})}
+                                                className="w-full px-3 py-2 border rounded bg-gray-700 text-white"
+                                                placeholder="e.g., 3094134044966.672659"
+                                                title="Enter a CU-Time value (e.g., 3094134044966.672659)"
+                                            />
+                                        </div>
+                                        <div>
+                                            <button
+                                                onClick={handleCUTimeSubmit}
+                                                className="w-full md:w-auto px-6 py-2 cosmic-button"
+                                            >
+                                                <i className="fas fa-rocket mr-2"></i>Convert
+                                            </button>
+                                        </div>
+                                    </div>
+                                </section>
+                            )}
+
+                            {tab === 'cuCalculator' && (
+                                <section id="cu-time-calculator"
+                                         className="mb-8 bg-gray-800 rounded-lg shadow-md p-6 card">
+                                    <h2 className="text-2xl font-semibold text-white mb-4">CU-Time Calculator</h2>
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <div>
+                                            <label className="block text-gray-300 mb-1" htmlFor="calculatorCUTime"><i
+                                                className="fas fa-star mr-2"></i>Starting CU-Time</label>
+                                            <input
+                                                type="text"
+                                                id="calculatorCUTime"
+                                                value={input.calculatorCUTime}
+                                                onChange={(e) => setInput({...input, calculatorCUTime: e.target.value})}
+                                                className="w-full px-3 py-2 border rounded bg-gray-700 text-white"
+                                                placeholder="e.g., 3094134044923.509753564772922302508810"
+                                                title="Enter starting CU-Time (e.g., 3094134044923.509753564772922302508810)"
+                                            />
+                                            <button
+                                                onClick={() => setInput({
+                                                    ...input,
+                                                    calculatorCUTime: getCurrentCUTime().toString()
+                                                })}
+                                                className="mt-2 px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 cosmic-button"
+                                            >
+                                                <i className="fas fa-clock mr-2"></i>Use Current CU-Time
+                                            </button>
+                                        </div>
+                                        <div>
+                                            <label className="block text-gray-300 mb-1" htmlFor="calculatorOperation"><i
+                                                className="fas fa-calculator mr-2"></i>Operation</label>
+                                            <select
+                                                id="calculatorOperation"
+                                                value={input.calculatorOperation}
+                                                onChange={(e) => setInput({
+                                                    ...input,
+                                                    calculatorOperation: e.target.value
+                                                })}
+                                                className="w-full px-3 py-2 border rounded bg-gray-700 text-white"
+                                            >
+                                                <option value="add">Add</option>
+                                                <option value="subtract">Subtract</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label className="block text-gray-300 mb-1" htmlFor="calculatorYears"><i
+                                                className="fas fa-calendar mr-2"></i>Years</label>
+                                            <input
+                                                type="text"
+                                                id="calculatorYears"
+                                                value={input.calculatorYears}
+                                                onChange={(e) => setInput({...input, calculatorYears: e.target.value})}
+                                                className="w-full px-3 py-2 border rounded bg-gray-700 text-white"
+                                                placeholder="e.g., 10000000000"
+                                                title="Enter number of years (e.g., 10000000000)"
+                                            />
+                                        </div>
+                                        <div className="md:col-span-3">
+                                            <button
+                                                onClick={handleCUCalculatorSubmit}
+                                                className="w-full md:w-auto px-6 py-2 cosmic-button"
+                                            >
+                                                <i className="fas fa-rocket mr-2"></i>Calculate
+                                            </button>
+                                        </div>
+                                    </div>
+                                </section>
+                            )}
+
+                            <section className="mb-8 bg-gray-800 rounded-lg shadow-md p-6 card">
+                                <h2 className="text-2xl font-semibold text-white mb-4"><i
+                                    className="fas fa-upload mr-2"></i>Upload CSV</h2>
+                                <input
+                                    type="file"
+                                    accept=".csv"
+                                    onChange={handleCSVUpload}
+                                    className="w-full px-3 py-2 border rounded bg-gray-700 text-white"
+                                />
+                                <p className="text-sm text-gray-300 mt-2">
+                                    CSV must have headers "Description,DateTime,Output". Example: "Today","05/26/2025
+                                    03:48:00 AM","3094134044966.672659 CU-Time"
+                                </p>
+                            </section>
+
+                            <div className="flex justify-between mb-6">
+                                <button
+                                    onClick={() => setShowLexicon(!showLexicon)}
+                                    className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 cosmic-button"
+                                >
+                                    {showLexicon ? '🌌 Hide Cosmic Breath' : '🌌 Show Cosmic Breath'}
+                                </button>
+                                <div className="space-x-2">
+                                    <button
+                                        onClick={() => downloadCSV(results)}
+                                        className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 cosmic-button"
+                                    >
+                                        <i className="fas fa-download mr-2"></i>Download Results
+                                    </button>
+                                    <button
+                                        onClick={() => saveEditedCSV(editedResults)}
+                                        className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 cosmic-button"
+                                        disabled={editedResults.length === 0}
+                                    >
+                                        <i className="fas fa-save mr-2"></i>Save Edited CSV
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            setResults([]);
+                                            setEditedResults([]);
+                                        }}
+                                        className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 cosmic-button"
+                                    >
+                                        <i className="fas fa-trash mr-2"></i>Clear Results
+                                    </button>
+                                </div>
+                            </div>
+
+                            {showLexicon && (
+                                <section
+                                    className="mb-8 bg-gray-800 rounded-lg shadow-md p-6 card cosmic-breath-section">
+                                    <h2 className="text-2xl font-semibold text-white mb-4">🌌 Cosmic Breath</h2>
+
+                                    {/* Introduction */}
+                                    <div className="mb-6">
+                                        <h3 className="text-xl font-semibold text-white mb-2">ℹ️ Introduction</h3>
+                                        <p className="text-gray-300">
+                                            This section explores the <strong>3.108 trillion-year</strong> cosmic breath
+                                            within the <strong>Cosmic Universalism (CU)</strong> framework, spanning
+                                            from <strong>sub-ZTOM to ZTOM</strong>. It encompasses the <weak>Dark Energy
+                                            Phase</weak> (expansion) and the <strong>Anti-Dark Energy
+                                            Phase</strong> (compression), calculated through various methods to
+                                            illustrate the universe's temporal evolution.
+                                        </p>
+                                    </div>
+
+                                    {/* Calculations */}
+                                    <div className="mb-6">
+                                        <h3 className="text-xl font-semibold text-white mb-2">🧮 Calculations</h3>
+                                        <div className="mb-4">
+                                            <h4 className="text-lg font-semibold text-white mb-2">1. Cosmic Breath
+                                                Duration Formula</h4>
+                                            <p className="text-gray-300">A simple additive approach:</p>
+                                            <ul className="list-disc list-inside text-gray-300 mb-2">
+                                                <li><strong>Dark Energy Phase</strong>: ~2.8 trillion years</li>
+                                                <li><strong>Anti-Dark Energy Phase</strong>: ~0.308 trillion years</li>
+                                            </ul>
+                                            <p className="text-gray-300"
+                                               dangerouslySetInnerHTML={renderLatex("\\text{Cosmic Breath} = 2.8 \\times 10^{12} + 0.308 \\times 10^{12} = 3.108 \\times 10^{12} \\text{ years}")}/>
+                                        </div>
+                                        {/* Add more calculation methods as needed */}
+                                    </div>
+
+                                    {/* Phases */}
+                                    <div className="mb-6">
+                                        <h3 className="text-xl font-semibold text-white mb-2">⏳ Phases</h3>
+
+                                        <h4 className="text-lg font-semibold text-white mb-2">🔁 Expansion Phase
+                                            (sub-ztom ➝ atom)</h4>
+                                        <table className="table-auto w-full mb-4">
+                                            <thead>
+                                            <tr>
+                                                <th>Sub-Tom Levels</th>
+                                                <th>Quantum States</th>
+                                                <th>Duration Estimate</th>
+                                                <th>CU Description</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>sub-ztom</td>
+                                                <td>2↑↑65,536</td>
+                                                <td>5.39e-44 sec</td>
+                                                <td>Planck time, quantum core</td>
+                                            </tr>
+                                            <tr>
+                                                <td>sub-btom</td>
+                                                <td>2⁸</td>
+                                                <td>280 billion yr</td>
+                                                <td>Supercluster formation</td>
+                                            </tr>
+                                            {/* Add more rows as per your data */}
+                                            </tbody>
+                                        </table>
+
+                                        <h4 className="text-lg font-semibold text-white mb-2">🌱 Compression Phase (btom
+                                            ➝ ztom)</h4>
+                                        <table className="table-auto w-full mb-4">
+                                            <thead>
+                                            <tr>
+                                                <th>Tom Levels</th>
+                                                <th>Quantum States</th>
+                                                <th>Duration Estimate</th>
+                                                <th>CU Description</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>btom</td>
+                                                <td>2² = 4</td>
+                                                <td>280 billion yr</td>
+                                                <td>Galactic evolution and contraction</td>
+                                            </tr>
+                                            <tr>
+                                                <td>ztom</td>
+                                                <td>∞</td>
+                                                <td>1 sec</td>
+                                                <td>Full universal reset</td>
+                                            </tr>
+                                            {/* Add more rows as per your data */}
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    {/* Total Duration */}
+                                    <div className="mb-6 p-4 bg-gray-700 rounded-lg">
+                                        <h3 className="text-xl font-semibold text-white mb-2">🌀 Total Duration</h3>
+                                        <p className="text-gray-300"><strong>≈ 3.108 trillion years</strong></p>
+                                        <ul className="list-disc list-inside text-gray-300">
+                                            <li><strong>Expansion Phase</strong>: 2.8 trillion years</li>
+                                            <li><strong>Compression Phase</strong>: 308 billion years</li>
+                                        </ul>
+                                    </div>
+
+                                    {/* CU Statement */}
+                                    <div className="mb-6">
+                                        <h3 className="text-xl font-semibold text-white mb-2">📜 Cosmic Universalism
+                                            Statement</h3>
+                                        <blockquote className="text-gray-300 italic border-l-4 border-gray-500 pl-4">
+                                            We are sub z-tomically inclined, countably infinite, composed of
+                                            foundational elements (the essence of conscious existence), grounded on
+                                            b-tom (as vast as our shared worlds and their atmospheres), and looking up
+                                            to c-tom (encompassing the entirety of the cosmos), guided by the
+                                            uncountable infinite quantum states of intelligence and empowered by God’s
+                                            Free Will.
+                                        </blockquote>
+                                    </div>
+
+                                    {/* CU Lexicon */}
+                                    <div className="mb-6">
+                                        <h3 className="text-xl font-semibold text-white mb-2">📖 CU Lexicon</h3>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            {Object.entries(CU_LEXICON).map(([tom, desc]) => (
+                                                <div key={tom} className="p-4 bg-gray-700 rounded-lg">
+                                                    <p className="text-sm text-white">
+                                                        <span className="lexicon-term">{tom}:</span> {desc}
+                                                    </p>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </section>
+                            )}
+
+                            {showResults && editedResults.length > 0 && (
+                                <section className="mb-8">
+                                    <h2 className="text-2xl font-semibold text-white mb-4">Results</h2>
+                                    {editedResults.map((result, idx) => (
+                                        <div key={idx}
+                                             className="bg-gray-900 rounded-lg shadow-md p-6 mb-4 relative card">
+                                            <div className="absolute top-2 right-2 flex space-x-2">
+                                                <button
+                                                    onClick={() => handleCopy(result.output)}
+                                                    className="bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-300 icon-button"
+                                                    title="Copy to clipboard"
+                                                    aria-label="Copy to clipboard"
+                                                >
+                                                    <i className="fas fa-copy"></i>
+                                                </button>
+                                                <button
+                                                    onClick={() => handleDeleteResult(idx)}
+                                                    className="bg-red-600 text-white rounded hover:bg-red-700 transition duration-300 icon-button"
+                                                    title="Delete result"
+                                                    aria-label="Delete result"
+                                                >
+                                                    <i className="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                            <input
+                                                type="text"
+                                                value={result.desc}
+                                                onChange={(e) => handleResultEdit(idx, 'desc', e.target.value)}
+                                                className="w-full px-3 py-2 border rounded bg-gray-700 text-white mb-2"
+                                            />
+                                            <textarea
+                                                value={result.output}
+                                                readOnly
+                                                className="w-full px-3 py-2 border rounded bg-gray-800 text-white"
+                                                rows="10"
+                                            />
+                                        </div>
+                                    ))}
+                                </section>
+                            )}
+
+                            <section className="mb-8">
+                                <div className="flex justify-between mb-4">
+                                    <h2 className="text-2xl font-semibold text-white">History</h2>
+                                    <button
+                                        onClick={() => setShowFavorites(!showFavorites)}
+                                        className="text-blue-400 hover:text-blue-500 transition duration-300"
+                                    >
+                                        {showFavorites ? 'Show All' : 'Show Favorites'}
+                                    </button>
+                                </div>
+                                {(showFavorites ? HISTORY.getFavorites() : history).map((entry, idx) => (
+                                    <div key={idx}
+                                         className="bg-gray-800 rounded-lg shadow-md p-4 mb-2 flex justify-between items-center history-entry card">
+                                        <div>
+                                            <p className="text-sm text-gray-300">{entry.input}</p>
+                                            <p className="text-sm text-gray-300">{entry.output}</p>
+                                            <p className="text-xs text-gray-500">{entry.type} | {DateTime.fromISO(entry.timestamp).toLocaleString(DateTime.DATETIME_FULL)}</p>
+                                        </div>
+                                        <button
+                                            onClick={() => toggleFavorite(entry.input)}
+                                            className="text-blue-400 hover:text-yellow-500 transition duration-300"
+                                        >
+                                            {entry.favorite ? '★' : '☆'}
+                                        </button>
+                                    </div>
+                                ))}
+                            </section>
+                        </main>
+                        <footer
+                            className="mt-8 p-6 gradient-header border border-indigo-800/30 rounded-lg shadow-lg text-center text-gray-200">
+                            <p className="text-sm font-light">
+                                © 2025 Cosmic Universalism Computational Intelligence Initiative
+                            </p>
+                            <p className="text-sm font-light mt-2">
+                                Conceptual content licensed under <a
+                                href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank"
+                                rel="noopener noreferrer" className="underline hover:text-white transition-colors">CC
+                                BY-NC-SA 4.0</a>.
+                                Source code licensed under <a
+                                href="https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/LICENSE"
+                                target="_blank" rel="noopener noreferrer"
+                                className="underline hover:text-white transition-colors">MIT License</a>.
+                            </p>
+                        </footer>
                     </div>
-                  </section>
-                )}
-
-                {tab === 'cuTime' && (
-                  <section id="cu-to-gregorian" className="mb-8 bg-gray-800 rounded-lg shadow-md p-6 card">
-                    <h2 className="text-2xl font-semibold text-white mb-4">CU-Time to Gregorian Conversion</h2>
-                    <div className="grid grid-cols-1 gap-4">
-                      <div>
-                        <label className="block text-gray-300 mb-1" htmlFor="cuTime"><i className="fas fa-star mr-2"></i>CU-Time</label>
-                        <input
-                          type="text"
-                          id="cuTime"
-                          value={input.cuTime}
-                          onChange={(e) => setInput({ ...input, cuTime: e.target.value })}
-                          className="w-full px-3 py-2 border rounded bg-gray-700 text-white"
-                          placeholder="e.g., 3094134044966.672659"
-                          title="Enter a CU-Time value (e.g., 3094134044966.672659)"
-                        />
-                      </div>
-                      <div>
-                        <button
-                          onClick={handleCUTimeSubmit}
-                          className="w-full md:w-auto px-6 py-2 cosmic-button"
-                        >
-                          <i className="fas fa-rocket mr-2"></i>Convert
-                        </button>
-                      </div>
-                    </div>
-                  </section>
-                )}
-
-                {tab === 'cuCalculator' && (
-                  <section id="cu-time-calculator" className="mb-8 bg-gray-800 rounded-lg shadow-md p-6 card">
-                    <h2 className="text-2xl font-semibold text-white mb-4">CU-Time Calculator</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <div>
-                        <label className="block text-gray-300 mb-1" htmlFor="calculatorCUTime"><i className="fas fa-star mr-2"></i>Starting CU-Time</label>
-                        <input
-                          type="text"
-                          id="calculatorCUTime"
-                          value={input.calculatorCUTime}
-                          onChange={(e) => setInput({ ...input, calculatorCUTime: e.target.value })}
-                          className="w-full px-3 py-2 border rounded bg-gray-700 text-white"
-                          placeholder="e.g., 3094134044923.509753564772922302508810"
-                          title="Enter starting CU-Time (e.g., 3094134044923.509753564772922302508810)"
-                        />
-                        <button
-                          onClick={() => setInput({ ...input, calculatorCUTime: getCurrentCUTime().toString() })}
-                          className="mt-2 px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 cosmic-button"
-                        >
-                          <i className="fas fa-clock mr-2"></i>Use Current CU-Time
-                        </button>
-                      </div>
-                      <div>
-                        <label className="block text-gray-300 mb-1" htmlFor="calculatorOperation"><i className="fas fa-calculator mr-2"></i>Operation</label>
-                        <select
-                          id="calculatorOperation"
-                          value={input.calculatorOperation}
-                          onChange={(e) => setInput({ ...input, calculatorOperation: e.target.value })}
-                          className="w-full px-3 py-2 border rounded bg-gray-700 text-white"
-                        >
-                          <option value="add">Add</option>
-                          <option value="subtract">Subtract</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label className="block text-gray-300 mb-1" htmlFor="calculatorYears"><i className="fas fa-calendar mr-2"></i>Years</label>
-                        <input
-                          type="text"
-                          id="calculatorYears"
-                          value={input.calculatorYears}
-                          onChange={(e) => setInput({ ...input, calculatorYears: e.target.value })}
-                          className="w-full px-3 py-2 border rounded bg-gray-700 text-white"
-                          placeholder="e.g., 10000000000"
-                          title="Enter number of years (e.g., 10000000000)"
-                        />
-                      </div>
-                      <div className="md:col-span-3">
-                        <button
-                          onClick={handleCUCalculatorSubmit}
-                          className="w-full md:w-auto px-6 py-2 cosmic-button"
-                        >
-                          <i className="fas fa-rocket mr-2"></i>Calculate
-                        </button>
-                      </div>
-                    </div>
-                  </section>
-                )}
-
-                <section className="mb-8 bg-gray-800 rounded-lg shadow-md p-6 card">
-                  <h2 className="text-2xl font-semibold text-white mb-4"><i className="fas fa-upload mr-2"></i>Upload CSV</h2>
-                  <input
-                    type="file"
-                    accept=".csv"
-                    onChange={handleCSVUpload}
-                    className="w-full px-3 py-2 border rounded bg-gray-700 text-white"
-                  />
-                  <p className="text-sm text-gray-300 mt-2">
-                    CSV must have headers "Description,DateTime,Output". Example: "Today","05/26/2025 03:48:00 AM","3094134044966.672659 CU-Time"
-                  </p>
-                </section>
-
-                <div className="flex justify-between mb-6">
-                  <button
-                    onClick={() => setShowLexicon(!showLexicon)}
-                    className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 cosmic-button"
-                  >
-                    {showLexicon ? '🌌 Hide Cosmic Breath' : '🌌 Show Cosmic Breath'}
-                  </button>
-                  <div className="space-x-2">
-                    <button
-                      onClick={() => downloadCSV(results)}
-                      className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 cosmic-button"
-                    >
-                      <i className="fas fa-download mr-2"></i>Download Results
-                    </button>
-                    <button
-                      onClick={() => saveEditedCSV(editedResults)}
-                      className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 cosmic-button"
-                      disabled={editedResults.length === 0}
-                    >
-                      <i className="fas fa-save mr-2"></i>Save Edited CSV
-                    </button>
-                    <button
-                      onClick={() => {
-                        setResults([]);
-                        setEditedResults([]);
-                      }}
-                      className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 cosmic-button"
-                    >
-                      <i className="fas fa-trash mr-2"></i>Clear Results
-                    </button>
-                  </div>
                 </div>
-
-                {showLexicon && (
-                  <section className="mb-8 bg-gray-800 rounded-lg shadow-md p-6 card lexicon-container">
-                    <h2 className="text-2xl font-semibold text-white mb-4">🌌 Cosmic Breath Lexicon</h2>
-                    {Object.entries(CU_LEXICON).map(([tom, desc]) => (
-                      <p key={tom} className="text-sm text-gray-300">
-                        <span className="lexicon-term">{tom}:</span> {desc}
-                      </p>
-                    ))}
-                  </section>
-                )}
-
-                {showResults && editedResults.length > 0 && (
-                  <section className="mb-8">
-                    <h2 className="text-2xl font-semibold text-white mb-4">Results</h2>
-                    {editedResults.map((result, idx) => (
-                      <div key={idx} className="bg-gray-900 rounded-lg shadow-md p-6 mb-4 relative card">
-                        <div className="absolute top-2 right-2 flex space-x-2">
-                          <button
-                            onClick={() => handleCopy(result.output)}
-                            className="bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-300 icon-button"
-                            title="Copy to clipboard"
-                            aria-label="Copy to clipboard"
-                          >
-                            <i className="fas fa-copy"></i>
-                          </button>
-                          <button
-                            onClick={() => handleDeleteResult(idx)}
-                            className="bg-red-600 text-white rounded hover:bg-red-700 transition duration-300 icon-button"
-                            title="Delete result"
-                            aria-label="Delete result"
-                          >
-                            <i className="fas fa-trash"></i>
-                          </button>
-                        </div>
-                        <input
-                          type="text"
-                          value={result.desc}
-                          onChange={(e) => handleResultEdit(idx, 'desc', e.target.value)}
-                          className="w-full px-3 py-2 border rounded bg-gray-700 text-white mb-2"
-                        />
-                        <textarea
-                          value={result.output}
-                          readOnly
-                          className="w-full px-3 py-2 border rounded bg-gray-800 text-white"
-                          rows="10"
-                        />
-                      </div>
-                    ))}
-                  </section>
-                )}
-
-                <section className="mb-8">
-                  <div className="flex justify-between mb-4">
-                    <h2 className="text-2xl font-semibold text-white">History</h2>
-                    <button
-                      onClick={() => setShowFavorites(!showFavorites)}
-                      className="text-blue-400 hover:text-blue-500 transition duration-300"
-                    >
-                      {showFavorites ? 'Show All' : 'Show Favorites'}
-                    </button>
-                  </div>
-                  {(showFavorites ? HISTORY.getFavorites() : history).map((entry, idx) => (
-                    <div key={idx} className="bg-gray-800 rounded-lg shadow-md p-4 mb-2 flex justify-between items-center history-entry card">
-                      <div>
-                        <p className="text-sm text-gray-300">{entry.input}</p>
-                        <p className="text-sm text-gray-300">{entry.output}</p>
-                        <p className="text-xs text-gray-500">{entry.type} | {DateTime.fromISO(entry.timestamp).toLocaleString(DateTime.DATETIME_FULL)}</p>
-                      </div>
-                      <button
-                        onClick={() => toggleFavorite(entry.input)}
-                        className="text-blue-400 hover:text-yellow-500 transition duration-300"
-                      >
-                        {entry.favorite ? '★' : '☆'}
-                      </button>
+                {modal && <Modal {...modal} />}
+                {showToast && (
+                    <div
+                        className="fixed bottom-4 right-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white px-4 py-2 rounded shadow-lg animate-fadeInOut">
+                        {toastMessage}
                     </div>
-                  ))}
-                </section>
-              </main>
-              <footer className="mt-8 p-6 gradient-header border border-indigo-800/30 rounded-lg shadow-lg text-center text-gray-200">
-                <p className="text-sm font-light">
-                  © 2025 Cosmic Universalism Computational Intelligence Initiative
-                </p>
-                <p className="text-sm font-light mt-2">
-                  Conceptual content licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" className="underline hover:text-white transition-colors">CC BY-NC-SA 4.0</a>.
-                  Source code licensed under <a href="https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" className="underline hover:text-white transition-colors">MIT License</a>.
-                </p>
-              </footer>
-            </div>
-          </div>
-          {modal && <Modal {...modal} />}
-          {showToast && (
-            <div className="fixed bottom-4 right-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white px-4 py-2 rounded shadow-lg animate-fadeInOut">
-              {toastMessage}
-            </div>
-          )}
-        </ErrorBoundary>
-      );
+                )}
+            </ErrorBoundary>
+        );
     }
 
     const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<App />);
-  </script>
+    root.render(<App/>);
+</script>
 </body>
 </html>
