@@ -6,38 +6,38 @@
 
 ```
     .:·*·:.     .:·*·:.
- .·*·:   🌟 Cosmic GUI Evolution!     :·*·.
+ .·*·:   🌟 Cosmic GUI Evolution! 🌟   :·*·.
     .·*·:     v3.0.0         :·*·.
-       .:·*·:.     .:.
+       .:·*·:.     .:·*·:.
 ```
 
 ### 🌟 Cosmic Universalism Time Converter v3.0.0
-The **Cosmic Universalism Time Converter v3.0.0** offers a refined, precise, and user-friendly experience for exploring cosmic timelines. Discover its features and resources below:
+The **Cosmic Universalism Time Converter v3.0.0** delivers a precise, intuitive, and modern platform for exploring cosmic timelines. Discover its features and resources below:
 
 - **Release Notes**: [v3.0.0 Stable Release Notes](cosmic_converter/v3_0_0/v3_Guides/Cosmic%20Universalism%20Time%20Converter%20Release%20Notes%20v3.0.md)  
+- **Instructions**: [v3.0.0 User Guide](cosmic_converter/v3_0_0/v3_Guides/Cosmic%20Universalism%20Time%20Converter%20Instrucitons%20v3.0.md)  
 - **Live Demo**: [Try CU Time Converter](https://willmaddock.github.io/CosmicUniversalismStatement/cosmic_converter/v3_0_0/cu_time_converter_stable_v3_0_0.html) – Click to explore!  
-- **Download**: [Get the App](cosmic_converter/v3_0_0/cu_time_converter_stable_v3_0_0.html)  
-- **AI Integration**: Use [cu_time_converter.py](cosmic_converter/v3_0_0/cu_time_converter_ai.py)  
-  **How to Use**: Copy `cu_time_converter.py` into an AI environment (e.g., DeepSeek, Grok) or upload as a file. Run with inputs like `"January 1st, 2023 BCE"` or `{"year": 2029, "month": 1, "day": 1}` for CU-Time conversions.  
+- **Download**: [Get the App (Offline Use)](cosmic_converter/v3_0_0/cu_time_converter_stable_v3_0_0.html)  
+- **AI Integration**: Use [cu_time_converter_ai.py](cosmic_converter/v3_0_0/cu_time_converter_ai.py)  
+  **How to Use**: Copy `cu_time_converter_ai.py` into an AI environment (e.g., DeepSeek, Grok) or upload as a file. Run with inputs like `"January 1st, 2023 BCE"` or `{"year": 2029, "month": 1, "day": 1}` for CU-Time conversions. You can also import results or CSV files from the v3.0.0 GUI into the AI after integration.
 
 ---
 
 ### ✨ Key Features of v3.0.0
-- **Instructions**: [v3.0.0 CU Time Converter Instrucitons](cosmic_converter/v3_0_0/v3_Guides/Cosmic%20Universalism%20Time%20Converter%20Instrucitons%20v3.0.md)
-- **Unmatched Precision**: Recalibrated `BASE_CU` (`3094134044923.509753564772922302508`) for 60-digit accurate CU-Time calculations.
+- **Unmatched Precision**: Recalibrated `BASE_CU` (`3094134044923.509753564772922302508810`) ensures 60-digit accurate CU-Time calculations.
 - **Modern Interface**: Built with **React + Tailwind CSS**, featuring a fixed sidebar (desktop) and top bar (mobile).
-- **Robust Functionality**: Supports **Gregorian/CU-Time conversions**, **tom durations**, **CSV export**, **history**, and **favorites**, with strong error handling.
+- **Robust Functionality**: Supports **Gregorian/CU-Time conversions**, **tom durations**, **CSV export**, **history**, and **favorites**, with reliable error handling.
 - **Vast Timescales**: Handles speculative dates up to **~322 billion years** into the past or future.
-- **Core Philosophy**: Reflects the *Cosmic Universalism Statement*—sub z-tomically inclined, empowered by God’s Free Will.
+- **Core Philosophy**: Embodies the *Cosmic Universalism Statement*—sub z-tomically inclined, empowered by God’s Free Will.
 
 ---
 
 ### Why Upgrade?
-Replacing v2.2.0, v3.0.0 provides a **smoother interface**, greater stability, and advanced features for cosmic exploration.
+Replacing v2.2.0, v3.0.0 offers a **smoother interface**, enhanced stability, and advanced features for cosmic exploration.
 
-**Get Started**: Download for offline use or experience the live demo to unlock cosmic insights! 🌠
+**Get Started**: Download for offline use or try the live demo to unlock cosmic insights! 🌠
 
-**Current Date and Time**: 01:27 AM MDT, Thursday, May 29, 2025
+**Current Date and Time**: 01:44 AM MDT, Thursday, May 29, 2025
 
 ---
 
