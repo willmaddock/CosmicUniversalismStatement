@@ -227,7 +227,6 @@
             }
         }
 
-        /* Enhanced Styles for Cosmic Breath Section */
         .cosmic-breath-section {
             background: linear-gradient(to bottom right, #1a1a2e, #16213e);
             max-height: 600px;
@@ -280,7 +279,7 @@
         CONVERGENCE_YEAR: new Decimal('2029'),
         CTOM_START: new Decimal('3.08e12'),
         ZTOM_PROXIMITY: new Decimal('3.107e12'),
-        PLANizadorCK_TIME: new Decimal('5.39e-44'),
+        PLANIZADORCK_TIME: new Decimal('5.39e-44'),
         CESIUM_OSCILLATIONS_PER_SECOND: new Decimal('9192631770'),
         SUB_ZTOM_THRESHOLD: new Decimal('1'),
         ZTOM_THRESHOLD: new Decimal('31556952000000'),
@@ -450,6 +449,10 @@
         return Math.max(0, leapYears);
     }
 
+    // Calculate the Julian Day Number (JDN) for the given date and time.
+    // The JDN is adjusted to be midnight-based by subtracting 0.5 from the integer part.
+    // For years within ±999,999,999, use the standard Meeus algorithm.
+    // For larger years, approximate using the average days per year.
     function getJDN(year, month, day, hour = 0, minute = 0, second = 0, microsecond = 0) {
         try {
             year = new Decimal(year);
@@ -458,6 +461,7 @@
 
             let jdn;
             if (year.abs().gt(999999999)) {
+                // For very large years, approximate using the average days per year
                 const deltaYears = year.minus(2000);
                 const days = deltaYears.times(CONSTANTS.DAYS_PER_YEAR);
                 const fraction = new Decimal(hour * 3600 + minute * 60 + second)
@@ -465,6 +469,7 @@
                     .div(86400);
                 jdn = CONSTANTS.ANCHOR_JDN.plus(days).plus(fraction).toDecimalPlaces(24, Decimal.ROUND_HALF_UP);
             } else {
+                // Use the standard Meeus algorithm for JDN calculation
                 const a = new Decimal((14 - month) / 12).floor();
                 const y = year.plus(4800).minus(a);
                 const m = new Decimal(month).plus(12 * a).minus(3);
@@ -478,6 +483,7 @@
                 const fraction = new Decimal(hour * 3600 + minute * 60 + second)
                     .plus(new Decimal(microsecond).div(1000000))
                     .div(86400);
+                // Adjust to midnight-based JDN
                 jdn = jdInt.minus(new Decimal(0.5)).plus(fraction).toDecimalPlaces(24, Decimal.ROUND_HALF_UP);
             }
             window.jdnCache = window.jdnCache || {};
@@ -534,10 +540,12 @@
         return computeCUTime(year, month, day, hour, minute, second, microsecond);
     }
 
+    // Convert a Julian Day Number (JDN) back to a Gregorian date and time.
+    // The input JDN is midnight-based, so we add 0.5 to align with the noon-based Meeus algorithm.
     function jdnToDate(jdn) {
         try {
             jdn = new Decimal(jdn).toDecimalPlaces(24, Decimal.ROUND_HALF_UP);
-            let f = jdn.plus(0.5); // Shift to align with noon-based Meeus algorithm
+            let f = jdn.plus(0.5); // Shift to noon-based JDN for Meeus algorithm
             let z = f.floor();
             let fraction = f.minus(z);
 
@@ -562,7 +570,7 @@
             let minutes = remainingSeconds.div(60).floor().toNumber();
             let seconds = remainingSeconds.minus(minutes * 60).round().toNumber();
 
-            // Normalize time
+            // Normalize time components
             if (seconds >= 60) {
                 seconds -= 60;
                 minutes += 1;
@@ -614,6 +622,24 @@
             console.error('parseJulianDate error:', e);
             throw e;
         }
+    }
+
+    // Helper function to check if a year is a leap year
+    function isLeapYear(year) {
+        year = new Decimal(year);
+        if (year.mod(4).neq(0)) return false;
+        if (year.mod(100).neq(0)) return true;
+        if (year.mod(400).eq(0)) return true;
+        return false;
+    }
+
+    // Helper function to get the number of days in a month
+    function daysInMonth(year, month) {
+        if (month === 2) {
+            return isLeapYear(year) ? 29 : 28;
+        }
+        if ([4, 6, 9, 11].includes(month)) return 30;
+        return 31;
     }
 
     function getCosmicPhase(cuTime) {
@@ -795,6 +821,15 @@
                     if (tzPart.toUpperCase() === 'PM' && hour < 12) hour += 12;
                     if (tzPart.toUpperCase() === 'AM' && hour === 12) hour = 0;
 
+                    // Validate date components
+                    if (month < 1 || month > 12) throw new Error('Invalid month');
+                    const dim = daysInMonth(year, month);
+                    if (day < 1 || day > dim) throw new Error(`Invalid day: ${day} for month ${month} in year ${year}`);
+                    if (hour < 0 || hour > 23) throw new Error('Invalid hour');
+                    if (minute < 0 || minute > 59) throw new Error('Invalid minute');
+                    if (second < 0 || second > 59) throw new Error('Invalid second');
+                    if (microsecond < 0 || microsecond > 999999) throw new Error('Invalid microsecond');
+
                     return {year, month, day, hour, minute, second, microsecond};
                 }
             }
@@ -816,6 +851,16 @@
                     if (ampm === 'PM' && hour < 12) hour += 12;
                     if (ampm === 'AM' && hour === 12) hour = 0;
                 }
+
+                // Validate date components
+                if (month < 1 || month > 12) throw new Error('Invalid month');
+                const dim = daysInMonth(year, month);
+                if (day < 1 || day > dim) throw new Error(`Invalid day: ${day} for month ${month} in year ${year}`);
+                if (hour < 0 || hour > 23) throw new Error('Invalid hour');
+                if (minute < 0 || minute > 59) throw new Error('Invalid minute');
+                if (second < 0 || second > 59) throw new Error('Invalid second');
+                if (microsecond < 0 || microsecond > 999999) throw new Error('Invalid microsecond');
+
                 return {year, month, day, hour, minute, second, microsecond};
             }
 
@@ -836,6 +881,16 @@
                     if (ampm === 'PM' && hour < 12) hour += 12;
                     if (ampm === 'AM' && hour === 12) hour = 0;
                 }
+
+                // Validate date components
+                if (month < 1 || month > 12) throw new Error('Invalid month');
+                const dim = daysInMonth(year, month);
+                if (day < 1 || day > dim) throw new Error(`Invalid day: ${day} for month ${month} in year ${year}`);
+                if (hour < 0 || hour > 23) throw new Error('Invalid hour');
+                if (minute < 0 || minute > 59) throw new Error('Invalid minute');
+                if (second < 0 || second > 59) throw new Error('Invalid second');
+                if (microsecond < 0 || microsecond > 999999) throw new Error('Invalid microsecond');
+
                 return {year, month, day, hour, minute, second, microsecond};
             }
 
@@ -993,7 +1048,6 @@
         }
     }
 
-    // KaTeX Rendering Function
     function renderLatex(latex) {
         return {__html: window.katex.renderToString(latex, {throwOnError: false})};
     }
@@ -1756,6 +1810,7 @@
                                             <button
                                                 onClick={handleDateSubmit}
                                                 className="w-full md:w-auto px-6 py-2 cosmic-button"
+                                                aria-label="Convert Gregorian date to CU-Time"
                                             >
                                                 <i className="fas fa-rocket mr-2"></i>Convert
                                             </button>
@@ -1787,6 +1842,7 @@
                                             <button
                                                 onClick={handleCUTimeSubmit}
                                                 className="w-full md:w-auto px-6 py-2 cosmic-button"
+                                                aria-label="Convert CU-Time to Gregorian date"
                                             >
                                                 <i className="fas fa-rocket mr-2"></i>Convert
                                             </button>
@@ -1855,6 +1911,7 @@
                                             <button
                                                 onClick={handleCUCalculatorSubmit}
                                                 className="w-full md:w-auto px-6 py-2 cosmic-button"
+                                                aria-label="Calculate CU-Time"
                                             >
                                                 <i className="fas fa-rocket mr-2"></i>Calculate
                                             </button>
@@ -1943,7 +2000,6 @@
                                             <p className="text-gray-300"
                                                dangerouslySetInnerHTML={renderLatex("\\text{Cosmic Breath} = 2.8 \\times 10^{12} + 0.308 \\times 10^{12} = 3.108 \\times 10^{12} \\text{ years}")}/>
                                         </div>
-                                        {/* Add more calculation methods as needed */}
                                     </div>
 
                                     {/* Phases */}
@@ -1974,7 +2030,6 @@
                                                 <td>280 billion yr</td>
                                                 <td>Supercluster formation</td>
                                             </tr>
-                                            {/* Add more rows as per your data */}
                                             </tbody>
                                         </table>
 
@@ -2002,7 +2057,6 @@
                                                 <td>1 sec</td>
                                                 <td>Full universal reset</td>
                                             </tr>
-                                            {/* Add more rows as per your data */}
                                             </tbody>
                                         </table>
                                     </div>
