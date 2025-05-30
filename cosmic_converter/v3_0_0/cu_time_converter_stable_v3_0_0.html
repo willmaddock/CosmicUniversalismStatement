@@ -272,8 +272,8 @@
     const CONSTANTS = {
         BASE_CU: new Decimal('3094134044923.509753564772922302508810'),
         SUB_ZTOM_CU: new Decimal('3094133911800.949548'),
-        ANCHOR_JDN: new Decimal('2451545.0'),
-        DAYS_PER_YEAR: new Decimal('365.2425'),
+        ANCHOR_JDN: new Decimal('2451544.5'),
+        DAYS_PER_YEAR: new Decimal('365.2421897'),
         SECONDS_PER_DAY: new Decimal('86400'),
         SECONDS_PER_YEAR: new Decimal('31556952'),
         COSMIC_LIFESPAN: new Decimal('13.8e9'),
@@ -460,21 +460,25 @@
             if (year.abs().gt(999999999)) {
                 const deltaYears = year.minus(2000);
                 const days = deltaYears.times(CONSTANTS.DAYS_PER_YEAR);
-                const fraction = new Decimal(hour).div(24)
-                    .plus(new Decimal(minute).div(1440))
-                    .plus(new Decimal(second).div(86400))
-                    .plus(new Decimal(microsecond).div(1000000).div(86400));
-                jdn = CONSTANTS.ANCHOR_JDN.plus(days).plus(fraction);
+                const fraction = new Decimal(hour * 3600 + minute * 60 + second)
+                    .plus(new Decimal(microsecond).div(1000000))
+                    .div(86400);
+                jdn = CONSTANTS.ANCHOR_JDN.plus(days).plus(fraction).toDecimalPlaces(24, Decimal.ROUND_HALF_UP);
             } else {
-                const a = Math.floor((14 - month) / 12);
-                const y = year.toNumber() + 4800 - a;
-                const m = month + 12 * a - 3;
-                const jdInt = Math.floor(day + Math.floor((153 * m + 2) / 5) + 365 * y + Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) - 32045);
-                const fraction = new Decimal(hour).div(24)
-                    .plus(new Decimal(minute).div(1440))
-                    .plus(new Decimal(second).div(86400))
-                    .plus(new Decimal(microsecond).div(1000000).div(86400));
-                jdn = new Decimal(jdInt).plus(fraction);
+                const a = new Decimal((14 - month) / 12).floor();
+                const y = year.plus(4800).minus(a);
+                const m = new Decimal(month).plus(12 * a).minus(3);
+                const jdInt = new Decimal(day)
+                    .plus(new Decimal((153 * m + 2) / 5).floor())
+                    .plus(y.times(365))
+                    .plus(y.div(4).floor())
+                    .minus(y.div(100).floor())
+                    .plus(y.div(400).floor())
+                    .minus(32045);
+                const fraction = new Decimal(hour * 3600 + minute * 60 + second)
+                    .plus(new Decimal(microsecond).div(1000000))
+                    .div(86400);
+                jdn = jdInt.minus(new Decimal(0.5)).plus(fraction).toDecimalPlaces(24, Decimal.ROUND_HALF_UP);
             }
             window.jdnCache = window.jdnCache || {};
             window.jdnCache[cacheKey] = jdn;
@@ -532,32 +536,51 @@
 
     function jdnToDate(jdn) {
         try {
-            const jdInt = jdn.floor();
-            const fraction = jdn.minus(jdInt);
-            if (jdn.minus(1721424.5).abs().div(CONSTANTS.DAYS_PER_YEAR).gt(28000000000)) {
-                const year = jdn.minus(1721424.5).div(CONSTANTS.DAYS_PER_YEAR).round().toNumber();
-                return {year: `January 1, ${year}`, month: 1, day: 1, hour: 0, minute: 0, second: 0, microsecond: 0};
-            }
+            jdn = new Decimal(jdn).toDecimalPlaces(24, Decimal.ROUND_HALF_UP);
+            let f = jdn.plus(0.5); // Shift to align with noon-based Meeus algorithm
+            let z = f.floor();
+            let fraction = f.minus(z);
 
-            const z = jdInt.plus(0.5);
-            const f = z.minus(z.floor());
-            const alpha = z.minus(1867216.25).div(36524.25).floor();
-            const a = z.plus(1).plus(alpha).minus(alpha.div(4).floor());
+            // Apply Meeus algorithm to z
+            let a = z;
+            if (z.gte(2299161)) {
+                const alpha = z.minus(1867216.25).div(36524.25).floor();
+                a = z.plus(1).plus(alpha).minus(alpha.div(4).floor());
+            }
             const b = a.plus(1524);
             const c = b.minus(122.1).div(365.25).floor();
             const d = c.times(365.25).floor();
             const e = b.minus(d).div(30.6001).floor();
-            const day = b.minus(d).minus(e.times(30.6001).floor()).toNumber();
+            const day = b.minus(d).minus(e.times(30.6001).floor()).floor();
             const month = e.lt(14) ? e.minus(1) : e.minus(13);
             const year = month.gt(2) ? c.minus(4716) : c.minus(4715);
-            const hours = fraction.times(24).floor().toNumber();
-            const minutes = fraction.times(24).minus(hours).times(60).floor().toNumber();
-            const seconds = fraction.times(24).minus(hours).times(60).minus(minutes).times(60).floor().toNumber();
-            const microseconds = fraction.times(24).minus(hours).times(60).minus(minutes).times(60).minus(seconds).times(1000000).floor().toNumber();
+
+            // Compute time from fraction
+            const totalSeconds = fraction.times(86400).toDecimalPlaces(24, Decimal.ROUND_HALF_UP);
+            let hours = totalSeconds.div(3600).floor().toNumber();
+            let remainingSeconds = totalSeconds.minus(hours * 3600);
+            let minutes = remainingSeconds.div(60).floor().toNumber();
+            let seconds = remainingSeconds.minus(minutes * 60).round().toNumber();
+
+            // Normalize time
+            if (seconds >= 60) {
+                seconds -= 60;
+                minutes += 1;
+            }
+            if (minutes >= 60) {
+                minutes -= 60;
+                hours += 1;
+            }
+            if (hours >= 24) {
+                hours -= 24;
+            }
+
+            const microseconds = remainingSeconds.minus(minutes * 60).minus(seconds).times(1000000).floor().toNumber();
+
             return {
                 year: year.toNumber(),
                 month: month.toNumber(),
-                day,
+                day: day.toNumber(),
                 hour: hours,
                 minute: minutes,
                 second: seconds,
@@ -1221,8 +1244,8 @@
                 const cuTime = new Decimal(cuTimeStr);
                 if (cuTime.lt(0)) throw new Error('CU-Time cannot be negative');
                 const deltaYears = cuTime.minus(CONSTANTS.BASE_CU);
-                const deltaJDN = deltaYears.times(CONSTANTS.DAYS_PER_YEAR);
-                const jdn = CONSTANTS.ANCHOR_JDN.plus(deltaJDN);
+                const deltaJDN = deltaYears.times(CONSTANTS.DAYS_PER_YEAR).toDecimalPlaces(24, Decimal.ROUND_HALF_UP);
+                const jdn = CONSTANTS.ANCHOR_JDN.plus(deltaJDN).toDecimalPlaces(24, Decimal.ROUND_HALF_UP);
                 const date = jdnToDate(jdn);
                 const formattedDate = typeof date.year === 'string' ? date.year :
                     `${date.month.toString().padStart(2, '0')}/${date.day.toString().padStart(2, '0')}/${Math.abs(date.year)}${date.year < 0 ? ' BCE' : ''} ${date.hour.toString().padStart(2, '0')}:${date.minute.toString().padStart(2, '0')}:${date.second.toString().padStart(2, '0')} UTC`;
