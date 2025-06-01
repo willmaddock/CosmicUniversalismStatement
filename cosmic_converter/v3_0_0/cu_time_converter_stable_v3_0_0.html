@@ -10,6 +10,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/luxon@3.5.0/build/global/luxon.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/decimal.js@10.4.3/decimal.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked@5.1.2/marked.min.js"></script>
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@400;600;700&display=swap"
@@ -257,6 +258,71 @@
                 width: 100%;
             }
         }
+
+        .markdown-content {
+            color: #d1d5db;
+        }
+
+        .markdown-content p {
+            margin-bottom: 1.5rem;
+            line-height: 1.75;
+        }
+
+        .markdown-content h2 {
+            margin-top: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.75rem;
+            color: #ffffff;
+        }
+
+        .markdown-content h3 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            color: #e5e7eb;
+        }
+
+        .markdown-content ul, .markdown-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .markdown-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        .markdown-content table {
+            margin: 2rem 0;
+            border: 1px solid #4b5563;
+        }
+
+        .markdown-content th, .markdown-content td {
+            padding: 0.75rem;
+            border: 1px solid #4b5563;
+        }
+
+        .markdown-content th {
+            background: #374151;
+            font-weight: 600;
+        }
+
+        .markdown-content pre {
+            margin: 2rem 0;
+            padding: 1rem;
+            background: #1f2937;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+        }
+
+        .markdown-content a {
+            color: #3b82f6;
+            text-decoration: underline;
+        }
+
+        .markdown-content a:hover {
+            color: #8b5cf6;
+        }
+
     </style>
 </head>
 <body class="bg-gray-900 text-white font-sans">
@@ -432,6 +498,161 @@
             return this.props.children;
         }
     }
+
+    const RESEARCH_MARKDOWN = `
+# 🌌 Cosmic Time Alignment Research
+
+## 📊 Overview
+
+The universe is approximately **[13.79441474 billion years](https://www.space.com/24054-how-old-is-the-universe.html)** old as of June 1, 2025, according to NASA’s [Planck 2018](https://en.wikipedia.org/wiki/Age_of_the_universe) data, adjusted for elapsed time. This estimate aligns the universe’s age with the Gregorian date of **June 1, 2025**, within an uncertainty of **±0.020 billion years**. The *Cosmic Universalism (CU)* framework maps this to **3,094,206,000,000.014691 CU-Time units** in the NASA converter, providing a unified system for cosmological and terrestrial time. In contrast, the CU Time Converter, rooted in Cosmic Universalism theory, maps the same NASA-aligned CU-Time to a distant future date, May 12, 71,957,015 AD, reflecting a stretched timeline unique to its framework.
+
+## 🧑‍🔬 Calculating the Universe’s Age
+
+NASA uses *Coordinated Universal Time (UTC)* for timekeeping, as noted in [NASA Science](https://science.nasa.gov/solar-system/resources/faq/what-time-is-it-in-space/), but cosmology focuses on the universe’s age since the [Big Bang](https://imagine.gsfc.nasa.gov/science/featured_science/tenyear/age.html). The Planck mission estimated **13.787 billion years** in 2018. To update this to June 1, 2025:
+
+- From January 1, 2018, to June 1, 2025, approximately **7.415 years** have passed (7 years plus 151 days, accounting for leap years in 2020 and 2024).
+- Adding **7.415 years** to **13.787 billion years** yields **13.79441474 billion years**.
+- In the NASA converter, the Big Bang is set at **3,108,000,000,000 CU-Time units**, and June 1, 2025, corresponds to **3,094,206,000,000.014691 CU-Time units**.
+- The CU Time Converter, however, uses a different base, mapping **3,094,206,000,000 CU-Time (NASA-aligned)** to **May 12, 71,957,015 AD**, indicating a ~71,954,990-year difference.
+
+This calculation aligns NASA’s estimate with the Gregorian calendar, but the CU framework’s extended scale suggests additional cosmic phases.
+
+## ⚖️ Uncertainties and Alternative Theories
+
+The **13.79441474 billion-year** estimate has an uncertainty of **±0.020 billion years**, based on Planck data. Alternative theories propose different ages:
+
+- A 2023 study using [JWST data](https://www.openaccessgovernment.org/age-of-universe-research-james-webb/163845/) suggests **26.7 billion years**, but this is *[controversial](https://penntoday.upenn.edu/news/could-age-universe-be-twice-old-current-estimates-suggest)* and lacks NASA endorsement.
+- The standard *[Lambda-CDM model](https://wmap.gsfc.nasa.gov/universe/uni_age.html)* remains the most reliable, supported by CMB observations.
+
+The following table compares these estimates:
+
+| **Source**                  | **Year of Estimate** | **Age (Billion Years)** | **Uncertainty (Billion Years)** | **Notes**                          |
+|-----------------------------|----------------------|-------------------------|----------------------------------|------------------------------------|
+| Planck 2018 (NASA)          | 2018                 | 13.787                  | ±0.020                          | Standard model, CMB data           |
+| Adjusted to June 1, 2025    | 2025                 | 13.79441474             | ±0.020                          | Adds ~7.415 years to 2018          |
+| Emerging JWST Model         | 2023                 | 26.7                    | Not specified                   | Controversial, not NASA-endorsed   |
+
+## 🔗 The Cosmic Breath Framework
+
+The *Cosmic Universalism* framework introduces the **[Cosmic Breath](https://skyandtelescope.org/astronomy-resources/age-of-the-universe/)**, aligning CU-Time, NASA time, and Gregorian dates. It spans from sub-ztom (Planck time, 5.39e-44 seconds) to ztom (1 second, universal reset), covering:
+
+- **Big Bang**: Defined as **3,108,000,000,000 CU-Time units** in the NASA converter.
+- **Current Epoch**: June 1, 2025, maps to **3,094,206,000,000.014691 CU-Time units** or **13.79441474 billion years** (NASA estimate).
+- **Alignment Calculation**:
+
+  \`\`\`
+  3,108,000,000,000 (Big Bang CU-Time) − 13,794,414,740 (NASA Years) ≈ 3,094,206,000,000.014691 (CU-Time)
+  \`\`\`
+
+This enables seamless conversions in the NASA converter:
+- **CU-Time to NASA Years**: **3,094,206,000,000.014691 CU-Time** equals **13.79441474 billion years**.
+- **NASA Years to CU-Time**: **13.79441474 billion years** converts to **3,094,206,000,000.014691 CU-Time**.
+- **NASA Years to Gregorian**: Via CU-Time, **13.79441474 billion years** aligns with **June 1, 2025, 00:00:00 UTC**.
+
+The CU converter, however, maps **3,094,206,000,000 CU-Time (NASA-aligned)** to **May 12, 71,957,015 AD**, reflecting a stretched timeline due to its unique constants and phases like sub-ztom to ztom, with an offset of **71,955,051.076855435227077697491190 CU-Time units** (~71,954,990 years).
+
+### Cosmic Breath Duration
+
+The CU framework defines the Cosmic Breath as a **3.108 trillion-year theoretical cycle** (not equivalent to 3,108,000,000,000 CU-Time units in the NASA converter, which corresponds to ~13.794 billion years):
+- **Expansion Phase (sub-ztom to atom)**: ~2.8 trillion years, from quantum core (5.39e-44 seconds) to supercluster formation (280 billion years).
+- **Compression Phase (btom to ztom)**: ~308 billion years, from galactic contraction to universal reset (1 second).
+
+| **Phase**           | **Sub-Tom/Tom Level** | **Quantum States** | **Duration Estimate** | **CU Description**                     |
+|---------------------|-----------------------|--------------------|-----------------------|----------------------------------------|
+| Expansion (sub-ztom)| sub-ztom              | 2↑↑65,536          | 5.39e-44 sec          | Planck time, quantum core              |
+| Expansion (sub-btom)| sub-btom              | 2⁸                 | 280 billion yr        | Supercluster formation                 |
+| Compression (btom)  | btom                  | 2² = 4             | 280 billion yr        | Galactic evolution and contraction     |
+| Compression (ztom)  | ztom                  | ∞                  | 1 sec                 | Full universal reset                   |
+
+*Note*: Durations are theoretical in the CU framework and not directly in NASA CU-Time units. The CU framework’s linear scale bridges cosmological and human-readable time, enhancing accessibility, but its extended timeline diverges from NASA’s model.
+
+## 📚 Frameworks and Constants Comparison
+
+### NASA Time Converter Constants
+- **BASE_CU**: 3,094,205,999,974.586609
+- **NASA_UNIVERSE_AGE**: 13,793,999,974.586609
+- **ANCHOR_YEAR**: 2000
+- **DAYS_PER_YEAR**: 365.2421897
+- **DARK_ENERGY_START**: 3,094,000,000,000
+- **DARK_ENERGY_END**: 3,110,000,000,000
+- **ANTI_DARK_ENERGY_END**: 3,416,000,000,000
+
+### CU Time Converter Constants
+- **BASE_CU**: 3,094,134,044,923.509753564772922302508810
+- **SUB_ZTOM_CU**: 3,094,133,911,800.949548
+- **ANCHOR_JDN**: 2,451,544.5
+- **DAYS_PER_YEAR**: 365.2421897
+- **SECONDS_PER_DAY**: 86,400
+- **SECONDS_PER_YEAR**: 31,556,952
+- **COSMIC_LIFESPAN**: 13.8e9
+- **CONVERGENCE_YEAR**: 2029
+- **CTOM_START**: 3.08e12
+- **ZTOM_PROXIMITY**: 3.107e12
+- **PLANIZCK_TIME**: 5.39e-44
+- **CESIUM_OSCILLATIONS_PER_SECOND**: 9,192,631,770
+- **SUB_ZTOM_THRESHOLD**: 24
+- **ZTOM_THRESHOLD**: 31,556,952,000,000
+- **DARK_ENERGY_START**: 3.08e12
+- **DARK_ENERGY_END**: 3.11e12
+- **ANTI_DARK_ENERGY_START**: 3.11e12
+- **ANTI_DARK_ENERGY_END**: 3.416e12
+- **SPECULATIVE_START**: 3.416e12
+- **ANTI_DARK_MATTER_ONSET**: 5,880,334,044,496.509753564772922302508810
+- **MATTER_DOMINANCE_START**: 3,360,334,044,923.509753564772922302508810
+- **ANTIMATTER_ANNIHILATION**: 3,080,334,044,923.509753564772922302508810
+- **DARK_MATTER_DOMINANCE_START**: 3,085,334,044,923.509753564772922302508810
+
+The difference in **BASE_CU** values suggests the CU framework starts its timeline earlier or uses a different scale, potentially stretching time measurements.
+
+## 📈 Time Mapping and Outputs
+
+For an input of **3,094,206,000,000 CU-Time (NASA-aligned)**:
+- **NASA Output**: June 1, 2025, ~00:00:00 UTC, corresponding to **13.79441474 billion years** since the Big Bang.
+- **CU Output**: May 12, 71,957,015 AD, 07:53:11 UTC, a ~71,954,990-year difference, with an offset of **71,955,051.076855435227077697491190 CU-Time** (~71,954,990 years) from June 1, 2025.
+
+| **Converter**       | **Input CU-Time** | **Gregorian Date Output**       | **NASA Years Output** | **Cosmic Phase**                              |
+|---------------------|-------------------|---------------------------------|----------------------|-----------------------------------------------|
+| NASA Time Converter | 3,094,206,000,000 | June 1, 2025, 00:00:00 UTC      | 13.79441474          | Dark Energy Phase (Expansion)          |
+| CU Time Converter   | 3,094,206,000,000 | May 12, 71,957,015 AD, 07:53:11 UTC | ~71,954,990 years | Dark Energy Phase (Expansion, sub-ztom to atom) |
+
+The NASA converter uses a linear scale based on the universe’s age and the 2000-01-01 anchor, while the CU converter’s extended timeline incorporates additional phases, resulting in the stretched output.
+
+## 🔍 Implications and NASA Credit
+
+The CU converter’s novel perspective on cosmic evolution, with phases like sub-ztom to ztom, diverges from NASA’s standard model, mapping **3,094,206,000,000 CU-Time** to **May 12, 71,957,015 AD**, offering value for alternative cosmological theories. The NASA converter aligns with the scientific consensus, suitable for practical applications. The CU framework’s alignment with NASA data enables conversions, but formal NASA credit is unlikely without novel scientific contributions.
+
+## 🗣️ Cosmic Universalism Statement
+
+The CU framework is guided by: *“We are sub z-tomically inclined, countably infinite, composed of foundational elements (the essence of conscious existence), grounded on b-tom (as vast as our shared worlds and their atmospheres), and looking up to c-tom (encompassing the entirety of the cosmos), guided by the uncountable infinite quantum states of intelligence and empowered by God’s Free Will.”*
+
+## 📝 Conclusion
+
+The CU and NASA Time Converters differ in their theoretical bases, constants, and time scales. The NASA converter aligns with standard cosmology, mapping **3,094,206,000,000.014691 CU-Time** to June 1, 2025, while the CU converter maps **3,094,206,000,000 CU-Time** to **May 12, 71,957,015 AD**, reflecting Cosmic Universalism’s extended timeline. This difference stems from their distinct frameworks and constants, with CU incorporating additional cosmic phases like sub-ztom to ztom.
+
+## 📚 Key Citations
+
+- [NASA Planck mission age of universe estimate](https://en.wikipedia.org/wiki/Age_of_the_universe)
+- [New research on universe age from JWST](https://www.openaccessgovernment.org/age-of-universe-research-james-webb/163845/)
+- [Discussion on alternative universe age estimates](https://penntoday.upenn.edu/news/could-age-universe-be-twice-old-current-estimates-suggest)
+- [NASA Science on universe age](https://imagine.gsfc.nasa.gov/science/featured_science/tenyear/age.html)
+- [Space.com on universe age](https://www.space.com/24054-how-old-is-the-universe.html)
+- [Sky & Telescope on universe age](https://skyandtelescope.org/astronomy-resources/age-of-the-universe/)
+- [WMAP data on universe age](https://wmap.gsfc.nasa.gov/universe/uni_age.html)
+- [Cosmic time definition](https://en.wikipedia.org/wiki/Cosmic_time)
+- [Universe age and time](https://earthsky.org/space/age-universe-how-old-when-born/)
+- [Cosmic Calendar visualization](https://en.wikipedia.org/wiki/Cosmic_Calendar)
+- [Better cosmic time measurement](https://bigthink.com/starts-with-a-bang/measure-cosmic-time/)
+- [Measuring cosmic time](https://ncse.ngo/age-universe)
+`;
+
+    // Configure marked.js to open all links in new tabs
+    marked.use({
+        renderer: {
+            link(href, title, text) {
+                return `<a href="${href}" target="_blank" rel="noopener noreferrer">${text}</a>`;
+            }
+        }
+    });
 
     function countLeapYears(startYear, endYear) {
         if (Math.abs(startYear) > 28000000000 || Math.abs(endYear) > 28000000000) {
@@ -1638,22 +1859,44 @@
                         <h3 className="text-xl font-semibold text-white mb-4">Navigation</h3>
                         <ul className="space-y-4">
                             <li>
-                                <button onClick={() => setTab('gregorian')}
-                                        className={`w-full text-left px-4 py-2 text-white rounded ${tab === 'gregorian' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}>
+                                <button
+                                    onClick={() => setTab('gregorian')}
+                                    className={`w-full text-left px-4 py-2 text-white rounded ${tab === 'gregorian' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}
+                                >
                                     Gregorian to CU-Time
                                 </button>
                             </li>
                             <li>
-                                <button onClick={() => setTab('cuTime')}
-                                        className={`w-full text-left px-4 py-2 text-white rounded ${tab === 'cuTime' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}>
+                                <button
+                                    onClick={() => setTab('cuTime')}
+                                    className={`w-full text-left px-4 py-2 text-white rounded ${tab === 'cuTime' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}
+                                >
                                     CU-Time to Gregorian
                                 </button>
                             </li>
                             <li>
-                                <button onClick={() => setTab('cuCalculator')}
-                                        className={`w-full text-left px-4 py-2 text-white rounded ${tab === 'cuCalculator' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}>
+                                <button
+                                    onClick={() => setTab('cuCalculator')}
+                                    className={`w-full text-left px-4 py-2 text-white rounded ${tab === 'cuCalculator' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}
+                                >
                                     CU-Time Calculator
                                 </button>
+                            </li>
+                            <li>
+                                <button
+                                    onClick={() => setTab('research')}
+                                    className={`w-full text-left px-4 py-2 text-white rounded ${tab === 'research' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}
+                                >
+                                    Research
+                                </button>
+                            </li>
+                            <li>
+                                <a
+                                    href="./nasa_time_converter_stable_v3_0_0.html"
+                                    className="w-full text-left px-4 py-2 text-white rounded hover:bg-blue-700 cosmic-button"
+                                >
+                                    NASA Time Converter
+                                </a>
                             </li>
                         </ul>
                     </aside>
@@ -1679,6 +1922,12 @@
                                 <button onClick={() => setTab('cuCalculator')}
                                         className={`px-4 py-2 text-white rounded ${tab === 'cuCalculator' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}>
                                     CU-Time Calculator
+                                </button>
+                                <button
+                                    onClick={() => setTab('research')}
+                                    className={`px-4 py-2 text-white rounded ${tab === 'research' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}
+                                >
+                                    Research
                                 </button>
                             </nav>
                             <a href="https://github.com/willmaddock/CosmicUniversalismStatement.git" target="_blank"
@@ -1917,6 +2166,15 @@
                                             </button>
                                         </div>
                                     </div>
+                                </section>
+                            )}
+
+                            {tab === 'research' && (
+                                <section id="research" className="mb-8 bg-gray-800 rounded-lg shadow-md p-6 card">
+                                    <h2 className="text-2xl font-semibold text-white mb-4">🌌 Cosmic Time Alignment
+                                        Research</h2>
+                                    <div className="markdown-content"
+                                         dangerouslySetInnerHTML={{__html: marked.parse(RESEARCH_MARKDOWN)}}/>
                                 </section>
                             )}
 
