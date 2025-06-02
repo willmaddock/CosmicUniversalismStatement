@@ -177,7 +177,7 @@
         DARK_ENERGY_END: new Decimal('3110000000000'),
         ANTI_DARK_ENERGY_END: new Decimal('3416000000000'),
         MIN_CU_TIME: new Decimal('3094205999974.586609').minus(new Decimal('13793999974.586609')),
-        CURRENT_CU_TIME: new Decimal('3094206000000') // June 1, 2025
+        CURRENT_CU_TIME: new Decimal('3094206000000') // June 1, 2025; retained for future date checks
     };
 
     const OFFSET = new Decimal('71955051.076855435227077697491190');
@@ -206,10 +206,12 @@
     }
 
     function computeCUTimeFromDateComponents(year, month, day, hour, minute, second) {
-        if (year >= 1970 && year <= 9999) {
-            const dateStr = `${year.toString().padStart(4, '0')}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}T${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}Z`;
-            const date = new Date(dateStr);
-            if (isNaN(date.getTime())) throw new Error('Invalid date');
+        // Use Date object if within its valid range (approx -271821 to 275760)
+        const sign = year < 0 ? '-' : '';
+        const absYear = Math.abs(year).toString().padStart(4, '0');
+        const dateStr = `${sign}${absYear}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}T${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}Z`;
+        const date = new Date(dateStr);
+        if (!isNaN(date.getTime())) {
             const anchorDate = new Date('2000-01-01T00:00:00Z');
             const millisecondsDiff = new Decimal(date.getTime() - anchorDate.getTime());
             const secondsDiff = millisecondsDiff.div(1000);
@@ -217,6 +219,7 @@
             const yearsDiff = daysDiff.div(CONSTANTS.DAYS_PER_YEAR);
             return CONSTANTS.BASE_CU.plus(yearsDiff);
         } else {
+            // Fallback to approximation for years outside Date range
             const yearsDiffInteger = new Decimal(year - CONSTANTS.ANCHOR_YEAR);
             const daysInYear = CONSTANTS.DAYS_PER_YEAR;
             const daysPerMonth = daysInYear.div(12); // Approx 30.437 days
@@ -278,14 +281,29 @@
         const dayOffset = fractionalPart.times(CONSTANTS.DAYS_PER_YEAR);
         const fullDays = dayOffset.floor();
         const timeFraction = dayOffset.minus(fullDays);
-        let year = new Decimal(2000).plus(integerYears).toNumber();
-        let dayOfYear = fullDays.toNumber() + 1; // Start from 1 for Jan 1
-        const {month, day} = computeMonthDay(dayOfYear, year);
-        const totalSeconds = timeFraction.times(86400).toNumber();
-        const hours = Math.floor(totalSeconds / 3600);
-        const minutes = Math.floor((totalSeconds % 3600) / 60);
-        const seconds = Math.floor(totalSeconds % 60);
-        return {year, month, day, hour: hours, minute: minutes, second: seconds};
+        const anchorDate = new Date('2000-01-01T00:00:00Z');
+        const millisecondsDiff = totalYears.times(CONSTANTS.DAYS_PER_YEAR).times(86400).times(1000);
+        const date = new Date(anchorDate.getTime() + millisecondsDiff.toNumber());
+        if (isNaN(date.getTime())) {
+            // Fallback to approximation if outside Date range
+            let year = new Decimal(2000).plus(integerYears).toNumber();
+            let dayOfYear = fullDays.toNumber() + 1; // Start from 1 for Jan 1
+            const {month, day} = computeMonthDay(dayOfYear, year);
+            const totalSeconds = timeFraction.times(86400).toNumber();
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = Math.floor(totalSeconds % 60);
+            return {year, month, day, hour: hours, minute: minutes, second: seconds};
+        } else {
+            // Use Date object within its valid range
+            const year = date.getUTCFullYear();
+            const month = date.getUTCMonth() + 1; // Months are 0-based in Date
+            const day = date.getUTCDate();
+            const hour = date.getUTCHours();
+            const minute = date.getUTCMinutes();
+            const second = date.getUTCSeconds();
+            return {year, month, day, hour, minute, second};
+        }
     }
 
     function formatGregorianDate(year, month, day, hour, minute, second) {
@@ -415,17 +433,17 @@
 
 ## 📊 Overview
 
-The universe is approximately **[13.794 billion years](https://www.space.com/24054-how-old-is-the-universe.html)** old as of June 1, 2025, according to NASA’s [Planck 2018](https://en.wikipedia.org/wiki/Age_of_the_universe) data, adjusted for elapsed time. This estimate aligns the universe’s age with the Gregorian date of **June 1, 2025**, within an uncertainty of **±0.020 billion years**. The *Cosmic Universalism (CU)* framework maps this to approximately **3,094,206,000,000 CU-Time units**, providing a unified system for cosmological and terrestrial time.
+The universe is approximately **[13.794 billion years](https://www.space.com/24054-how-old-is-the-universe.html)** old as of May 31, 2025, according to NASA’s [Planck 2018](https://en.wikipedia.org/wiki/Age_of_the_universe) data, adjusted for elapsed time. This estimate aligns the universe’s age with the Gregorian date of **May 31, 2025**, within an uncertainty of **±0.020 billion years**. The *Cosmic Universalism (CU)* framework maps this to approximately **3,094,206,000,000 CU-Time units**, providing a unified system for cosmological and terrestrial time.
 
 ## 🧑‍🔬 Calculating the Universe’s Age
 
 NASA uses *Coordinated Universal Time (UTC)* for timekeeping, but cosmology focuses on the universe’s age since the [Big Bang](https://imagine.gsfc.nasa.gov/science/featured_science/tenyear/age.html). The Planck mission estimated **13.787 billion years** in 2018.
 
-To update this to June 1, 2025:
+To update this to May 31, 2025:
 
-- From January 1, 2018, to June 1, 2025, approximately **7.416 years** have passed (7 years plus 152 days, accounting for leap years in 2020 and 2024).
-- Adding **7.416 years** to **13.787 billion years** yields **13.794 billion years**.
-- In the CU system, the Big Bang is set at **3,108,000,000,000 CU-Time units**, and June 1, 2025, corresponds to approximately **3,094,206,000,000 CU-Time units**.
+- From January 1, 2018, to May 31, 2025, approximately **7.413 years** have passed (7 years plus 151 days, accounting for leap years in 2020 and 2024).
+- Adding **7.413 years** to **13.787 billion years** yields **13.794 billion years**.
+- In the CU system, the Big Bang is set at **3,108,000,000,000 CU-Time units**, and May 31, 2025, corresponds to approximately **3,094,206,000,000 CU-Time units**.
 
 This calculation aligns NASA’s estimate with the Gregorian calendar and CU-Time.
 
@@ -443,19 +461,19 @@ The following table compares these estimates:
 | **Source**                  | **Year of Estimate** | **Age (Billion Years)** | **Uncertainty (Billion Years)** | **Notes**                          |
 |-----------------------------|----------------------|-------------------------|----------------------------------|------------------------------------|
 | Planck 2018 (NASA)          | 2018                 | 13.787                  | ±0.020                          | Standard model, CMB data           |
-| Adjusted to June 1, 2025    | 2025                 | 13.794                  | ±0.020                          | Adds ~7.416 years to 2018          |
+| Adjusted to May 31, 2025    | 2025                 | 13.794                  | ±0.020                          | Adds ~7.413 years to 2018          |
 | Emerging JWST Model         | 2023                 | 26.7                    | Not specified                   | Controversial, not NASA-endorsed   |
 
 ### Future Predictions
 
-Dates beyond June 1, 2025, are considered predictable and based on extrapolation of current cosmological models. For very large years (e.g., up to 11 digits), the converter assumes the Gregorian calendar and universe expansion continue as modeled, though such distant futures remain speculative. The JWST model's suggestion of a 26.7 billion-year-old universe could imply different future timelines, but this tool adheres to the NASA Planck estimate for consistency.
+Dates beyond May 31, 2025, are considered predictable and based on extrapolation of current cosmological models. For very large years (e.g., up to 11 digits), the converter assumes the Gregorian calendar and universe expansion continue as modeled, though such distant futures remain speculative. The JWST model's suggestion of a 26.7 billion-year-old universe could imply different future timelines, but this tool adheres to the NASA Planck estimate for consistency.
 
 ## 🔗 The Cosmic Breath Framework
 
 The *Cosmic Universalism* framework introduces the **[Cosmic Breath](https://skyandtelescope.org/astronomy-resources/age-of-the-universe/)**, aligning CU-Time, NASA time, and Gregorian dates:
 
 - **Big Bang**: Defined as **3,108,000,000,000 CU-Time units**.
-- **Current Epoch**: June 1, 2025, maps to approximately **3,094,206,000,000 CU-Time units** or **13.794 billion years** (NASA estimate).
+- **Current Epoch**: May 31, 2025, maps to approximately **3,094,206,000,000 CU-Time units** or **13.794 billion years** (NASA estimate).
 - **Alignment Calculation**:
 
   \`\`\`
@@ -466,7 +484,7 @@ This enables seamless conversions:
 
 - **CU-Time to NASA Years**: **3,094,206,000,000 CU-Time** equals **13.794 billion years**.
 - **NASA Years to CU-Time**: **13.794 billion years** converts to **3,094,206,000,000 CU-Time**.
-- **NASA Years to Gregorian**: Via CU-Time, **13.794 billion years** aligns with **June 1, 2025, 00:00:00 UTC**.
+- **NASA Years to Gregorian**: Via CU-Time, **13.794 billion years** aligns with **May 31, 2025, 00:00:00 UTC**.
 
 The CU framework’s *linear scale* bridges cosmological and human-readable time, enhancing precision and accessibility.
 
@@ -1183,7 +1201,7 @@ The CU framework’s *linear scale* bridges cosmological and human-readable time
                                     </div>
                                 </div>
                                 <p className="text-sm text-gray-300 mt-2">Enter positive years up to 11 digits; dates
-                                    beyond June 1, 2025 CE are predictable and based on extrapolation.</p>
+                                    beyond May 31, 2025 CE are predictable and based on extrapolation.</p>
                                 {preview && !preview.error && (
                                     <div className="mt-4 p-4 bg-gray-700 rounded">
                                         <p>Preview:</p>
