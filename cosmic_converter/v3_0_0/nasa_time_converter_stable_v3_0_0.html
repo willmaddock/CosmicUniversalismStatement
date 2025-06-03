@@ -80,7 +80,7 @@
             padding: 2rem;
             border-radius: 1rem;
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
-            border: 1px solid #4B5563;
+            border: 1px solid #4b5563; /* Corrected */
         }
 
         .icon-button {
@@ -206,7 +206,6 @@
     }
 
     function computeCUTimeFromDateComponents(year, month, day, hour, minute, second) {
-        // Use Date object if within its valid range (approx -271821 to 275760)
         const sign = year < 0 ? '-' : '';
         const absYear = Math.abs(year).toString().padStart(4, '0');
         const dateStr = `${sign}${absYear}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}T${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}Z`;
@@ -219,10 +218,9 @@
             const yearsDiff = daysDiff.div(CONSTANTS.DAYS_PER_YEAR);
             return CONSTANTS.BASE_CU.plus(yearsDiff);
         } else {
-            // Fallback to approximation for years outside Date range
             const yearsDiffInteger = new Decimal(year - CONSTANTS.ANCHOR_YEAR);
             const daysInYear = CONSTANTS.DAYS_PER_YEAR;
-            const daysPerMonth = daysInYear.div(12); // Approx 30.437 days
+            const daysPerMonth = daysInYear.div(12);
             const daysSinceStartOfYear = new Decimal(month - 1).times(daysPerMonth).plus(day - 1);
             const fractionalYear = daysSinceStartOfYear.div(daysInYear);
             const yearsDiff = yearsDiffInteger.plus(fractionalYear);
@@ -285,9 +283,8 @@
         const millisecondsDiff = totalYears.times(CONSTANTS.DAYS_PER_YEAR).times(86400).times(1000);
         const date = new Date(anchorDate.getTime() + millisecondsDiff.toNumber());
         if (isNaN(date.getTime())) {
-            // Fallback to approximation if outside Date range
             let year = new Decimal(2000).plus(integerYears).toNumber();
-            let dayOfYear = fullDays.toNumber() + 1; // Start from 1 for Jan 1
+            let dayOfYear = fullDays.toNumber() + 1;
             const {month, day} = computeMonthDay(dayOfYear, year);
             const totalSeconds = timeFraction.times(86400).toNumber();
             const hours = Math.floor(totalSeconds / 3600);
@@ -295,9 +292,8 @@
             const seconds = Math.floor(totalSeconds % 60);
             return {year, month, day, hour: hours, minute: minutes, second: seconds};
         } else {
-            // Use Date object within its valid range
             const year = date.getUTCFullYear();
-            const month = date.getUTCMonth() + 1; // Months are 0-based in Date
+            const month = date.getUTCMonth() + 1;
             const day = date.getUTCDate();
             const hour = date.getUTCHours();
             const minute = date.getUTCMinutes();
@@ -540,6 +536,80 @@ The CU framework’s *linear scale* bridges cosmological and human-readable time
         return `${cleaned.slice(0, 2)}:${cleaned.slice(2, 4)}:${cleaned.slice(4, 6)}`;
     }
 
+    function ResultCard({result, index, handleCopy, handleDeleteResult}) {
+        const parseOutput = (output) => {
+            const lines = output.split('\n');
+            const parsed = {
+                gregorianDate: '',
+                cuTimeNASA: '',
+                fullNumericNASA: '',
+                cuTimeConverter: '',
+                fullNumericConverter: '',
+                nasaYears: '',
+                cosmicPhase: '',
+            };
+            lines.forEach(line => {
+                if (line.startsWith('Gregorian Date:') || line.startsWith('Corresponding Gregorian Date:')) {
+                    parsed.gregorianDate = line.replace(/^(Gregorian Date:|Corresponding Gregorian Date:)/, '').trim();
+                } else if (line.startsWith('CU-Time (NASA alignment):') || line.startsWith('Result CU-Time (NASA alignment):')) {
+                    parsed.cuTimeNASA = line.replace(/^(CU-Time \(NASA alignment\):|Result CU-Time \(NASA alignment\):)/, '').trim();
+                } else if (line.startsWith('Full Numeric (NASA):')) {
+                    parsed.fullNumericNASA = line.replace('Full Numeric (NASA):', '').trim();
+                } else if (line.startsWith('CU-Time (Converter alignment):') || line.startsWith('Result CU-Time (Converter alignment):')) {
+                    parsed.cuTimeConverter = line.replace(/^(CU-Time \(Converter alignment\):|Result CU-Time \(Converter alignment\):)/, '').trim();
+                } else if (line.startsWith('Full Numeric (Converter):')) {
+                    parsed.fullNumericConverter = line.replace('Full Numeric (Converter):', '').trim();
+                } else if (line.startsWith('Years since Big Bang (NASA):') || line.startsWith('Corresponding Years since Big Bang (NASA):')) {
+                    parsed.nasaYears = line.replace(/^(Years since Big Bang \(NASA\):|Corresponding Years since Big Bang \(NASA\):)/, '').trim();
+                } else if (line.startsWith('Cosmic Phase:')) {
+                    parsed.cosmicPhase = line.replace('Cosmic Phase:', '').trim();
+                }
+            });
+            return parsed;
+        };
+
+        if (result.desc === 'Error') {
+            return (
+                <div className="bg-red-900 p-4 rounded-lg shadow-lg">
+                    <p className="text-lg font-semibold text-white">Error</p>
+                    <p className="text-sm text-gray-300">{result.output}</p>
+                    <div className="flex space-x-2 mt-2">
+                        <button onClick={() => handleDeleteResult(index)}
+                                className="px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700">Delete
+                        </button>
+                    </div>
+                </div>
+            );
+        } else {
+            const parsed = parseOutput(result.output);
+            const dateTime = result.desc.replace(/^Gregorian: |NASA to CU: |CU to NASA: |Calculation: /, '').trim();
+            return (
+                <div className="bg-gray-800 p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
+                    <h3 className="text-lg font-semibold text-white">{result.desc}</h3>
+                    <p className="text-sm text-gray-300"><strong>DateTime:</strong> {dateTime}</p>
+                    <p className="text-sm text-gray-300"><strong>Gregorian Date:</strong> {parsed.gregorianDate}</p>
+                    <p className="text-sm text-gray-300"><strong>CU-Time (NASA):</strong> {parsed.cuTimeNASA}</p>
+                    <p className="text-xs text-gray-400"><strong>Full Numeric (NASA):</strong> {parsed.fullNumericNASA}
+                    </p>
+                    <p className="text-sm text-gray-300"><strong>CU-Time (Converter):</strong> {parsed.cuTimeConverter}
+                    </p>
+                    <p className="text-xs text-gray-400"><strong>Full Numeric
+                        (Converter):</strong> {parsed.fullNumericConverter}</p>
+                    <p className="text-sm text-gray-300"><strong>NASA Years:</strong> {parsed.nasaYears}</p>
+                    <p className="text-sm text-gray-300"><strong>Cosmic Phase:</strong> {parsed.cosmicPhase}</p>
+                    <div className="flex space-x-2 mt-2">
+                        <button onClick={() => handleCopy(result.output)}
+                                className="px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">Copy
+                        </button>
+                        <button onClick={() => handleDeleteResult(index)}
+                                className="px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700">Delete
+                        </button>
+                    </div>
+                </div>
+            );
+        }
+    }
+
     function App() {
         const [tab, setTab] = useState('gregorian');
         const [inputs, setInputs] = useState({
@@ -577,9 +647,9 @@ The CU framework’s *linear scale* bridges cosmological and human-readable time
                 const currentYear = parseInt(currentYearStr);
                 if (prev.gregorianEra === 'CE') {
                     const newYear = currentYear + 1;
-                    if (newYear.toString().length > 11) return prev; // Prevent exceeding 11 digits
+                    if (newYear.toString().length > 11) return prev;
                     return {...prev, gregorianYear: newYear.toString()};
-                } else { // BCE
+                } else {
                     const newYear = currentYear - 1;
                     if (newYear <= 0) {
                         return {...prev, gregorianEra: 'CE', gregorianYear: '1'};
@@ -601,9 +671,9 @@ The CU framework’s *linear scale* bridges cosmological and human-readable time
                     } else {
                         return {...prev, gregorianYear: newYear.toString()};
                     }
-                } else { // BCE
+                } else {
                     const newYear = currentYear + 1;
-                    if (newYear.toString().length > 11) return prev; // Prevent exceeding 11 digits
+                    if (newYear.toString().length > 11) return prev;
                     return {...prev, gregorianYear: newYear.toString()};
                 }
             });
@@ -630,7 +700,7 @@ The CU framework’s *linear scale* bridges cosmological and human-readable time
                     }
                 }
                 const newYearStr = Math.abs(newYear).toString();
-                if (newYearStr.length > 11) return; // Prevent exceeding 11 digits
+                if (newYearStr.length > 11) return;
                 setInputs(prev => ({
                     ...prev,
                     gregorianYear: newYearStr,
@@ -1068,28 +1138,51 @@ The CU framework’s *linear scale* bridges cosmological and human-readable time
                 </aside>
                 <div className="flex-1 md:ml-64 p-6">
                     <header className="mb-6 p-6 gradient-header border border-indigo-800/30 rounded-lg shadow-lg">
-                        <h1 className="text-4xl font-extrabold text-white tracking-tight">
-                            NASA Cosmic Time Converter
-                        </h1>
-                        <nav className="md:hidden flex flex-wrap space-x-4 mt-4">
-                            <button onClick={() => setTab('gregorian')}
-                                    className={`px-4 py-2 text-white rounded ${tab === 'gregorian' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}>Gregorian
-                                to Cosmic
+                        <div className="flex justify-between items-center">
+                            <a href="https://github.com/willmaddock/CosmicUniversalismStatement.git" target="_blank"
+                               rel="noopener noreferrer" className="hover:brightness-125">
+                                <h1 className="text-4xl font-extrabold text-white tracking-tight">
+                                    NASA Cosmic Time Converter
+                                </h1>
+                            </a>
+                        </div>
+                        <nav className="md:hidden flex space-x-4 mt-4">
+                            <button
+                                onClick={() => setTab('gregorian')}
+                                className={`px-4 py-2 text-white rounded ${tab === 'gregorian' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}
+                            >
+                                Gregorian to Cosmic
                             </button>
-                            <button onClick={() => setTab('nasaToCU')}
-                                    className={`px-4 py-2 text-white rounded ${tab === 'nasaToCU' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}>NASA
-                                to CU-Time
+                            <button
+                                onClick={() => setTab('nasaToCU')}
+                                className={`px-4 py-2 text-white rounded ${tab === 'nasaToCU' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}
+                            >
+                                NASA to CU-Time
                             </button>
-                            <button onClick={() => setTab('cuToNASA')}
-                                    className={`px-4 py-2 text-white rounded ${tab === 'cuToNASA' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}>CU-Time
-                                to NASA
+                            <button
+                                onClick={() => setTab('cuToNASA')}
+                                className={`px-4 py-2 text-white rounded ${tab === 'cuToNASA' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}
+                            >
+                                CU-Time to NASA
                             </button>
-                            <button onClick={() => setTab('calculator')}
-                                    className={`px-4 py-2 text-white rounded ${tab === 'calculator' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}>Calculator
+                            <button
+                                onClick={() => setTab('calculator')}
+                                className={`px-4 py-2 text-white rounded ${tab === 'calculator' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}
+                            >
+                                Calculator
                             </button>
-                            <button onClick={() => setTab('cosmicTimeResearch')}
-                                    className={`px-4 py-2 text-white rounded ${tab === 'cosmicTimeResearch' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}>Research
+                            <button
+                                onClick={() => setTab('cosmicTimeResearch')}
+                                className={`px-4 py-2 text-white rounded ${tab === 'cosmicTimeResearch' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}
+                            >
+                                Research
                             </button>
+                            <a
+                                href="./cu_time_converter_stable_v3_0_0.html"
+                                className={`px-4 py-2 text-white rounded hover:bg-blue-700 cosmic-button`}
+                            >
+                                CU Time Converter
+                            </a>
                         </nav>
                     </header>
                     <main>
@@ -1377,18 +1470,14 @@ The CU framework’s *linear scale* bridges cosmological and human-readable time
                         </section>
 
                         <div className="flex justify-between mb-6">
-                            <button
-                                onClick={() => downloadCSV(results)}
-                                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 cosmic-button"
-                                aria-label="Download results as CSV"
-                            >
+                            <button onClick={() => downloadCSV(results)}
+                                    className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 cosmic-button"
+                                    aria-label="Download results as CSV">
                                 <i className="fas fa-download mr-2"></i>Download Results
                             </button>
-                            <button
-                                onClick={() => setResults([])}
-                                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 cosmic-button"
-                                aria-label="Clear all results"
-                            >
+                            <button onClick={() => setResults([])}
+                                    className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 cosmic-button"
+                                    aria-label="Clear all results">
                                 <i className="fas fa-trash mr-2"></i>Clear Results
                             </button>
                         </div>
@@ -1396,36 +1485,12 @@ The CU framework’s *linear scale* bridges cosmological and human-readable time
                         {results.length > 0 && (
                             <section className="mb-8">
                                 <h2 className="text-2xl font-semibold text-white mb-4">Results</h2>
-                                {results.map((result, idx) => (
-                                    <div key={idx} className="bg-gray-900 rounded-lg shadow-md p-6 mb-4 relative card">
-                                        <div className="absolute top-2 right-2 flex space-x-2">
-                                            <button
-                                                onClick={() => handleCopy(result.output)}
-                                                className="bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-300 icon-button"
-                                                title="Copy to clipboard"
-                                                aria-label="Copy result to clipboard"
-                                            >
-                                                <i className="fas fa-copy"></i>
-                                            </button>
-                                            <button
-                                                onClick={() => handleDeleteResult(idx)}
-                                                className="bg-red-600 text-white rounded hover:bg-red-700 transition duration-300 icon-button"
-                                                title="Delete result"
-                                                aria-label="Delete result"
-                                            >
-                                                <i className="fas fa-trash"></i>
-                                            </button>
-                                        </div>
-                                        <p className="text-sm text-gray-300 mb-2">{result.desc}</p>
-                                        <textarea
-                                            value={result.output}
-                                            readOnly
-                                            className="w-full px-3 py-2 border rounded bg-gray-800 text-white"
-                                            rows="10"
-                                            aria-label="Conversion result"
-                                        />
-                                    </div>
-                                ))}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    {results.map((result, idx) => (
+                                        <ResultCard key={idx} result={result} index={idx} handleCopy={handleCopy}
+                                                    handleDeleteResult={handleDeleteResult}/>
+                                    ))}
+                                </div>
                             </section>
                         )}
 
@@ -1433,18 +1498,14 @@ The CU framework’s *linear scale* bridges cosmological and human-readable time
                             <div className="flex justify-between mb-4">
                                 <h2 className="text-2xl font-semibold text-white">History</h2>
                                 <div>
-                                    <button
-                                        onClick={downloadHistoryCSV}
-                                        className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 cosmic-button mr-4"
-                                        aria-label="Download history as CSV"
-                                    >
+                                    <button onClick={downloadHistoryCSV}
+                                            className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 cosmic-button mr-4"
+                                            aria-label="Download history as CSV">
                                         <i className="fas fa-download mr-2"></i>Download History
                                     </button>
-                                    <button
-                                        onClick={() => setShowFavorites(!showFavorites)}
-                                        className="text-blue-400 hover:text-blue-500 transition duration-300"
-                                        aria-label={showFavorites ? "Show all history" : "Show favorite history"}
-                                    >
+                                    <button onClick={() => setShowFavorites(!showFavorites)}
+                                            className="text-blue-400 hover:text-blue-500 transition duration-300"
+                                            aria-label={showFavorites ? "Show all history" : "Show favorite history"}>
                                         {showFavorites ? 'Show All' : 'Show Favorites'}
                                     </button>
                                 </div>
@@ -1457,11 +1518,9 @@ The CU framework’s *linear scale* bridges cosmological and human-readable time
                                         <p className="text-sm text-gray-300">{entry.output}</p>
                                         <p className="text-xs text-gray-500">{entry.type} | {new Date(entry.timestamp).toLocaleString()}</p>
                                     </div>
-                                    <button
-                                        onClick={() => toggleFavorite(entry.input)}
-                                        className="text-blue-400 hover:text-yellow-500 transition duration-300"
-                                        aria-label={entry.favorite ? "Remove from favorites" : "Add to favorites"}
-                                    >
+                                    <button onClick={() => toggleFavorite(entry.input)}
+                                            className="text-blue-400 hover:text-yellow-500 transition duration-300"
+                                            aria-label={entry.favorite ? "Remove from favorites" : "Add to favorites"}>
                                         {entry.favorite ? '★' : '☆'}
                                     </button>
                                 </div>

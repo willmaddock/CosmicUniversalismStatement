@@ -85,3 +85,6 @@ node_modules/
 # License and metadata caches
 LICENSE/*.log
 LICENSE/*.tmp
+
+# Testing concepts
+cosmic_converter/v3_0_0/Testing/

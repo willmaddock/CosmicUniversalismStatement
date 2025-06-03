@@ -36,7 +36,7 @@
         }
 
         body {
-            background-image: url('https://images.unsplash.com/photo-1537420327992-d6d17148b69a');
+            background-image: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -1274,6 +1274,138 @@ The CU and NASA Time Converters differ in their theoretical bases, constants, an
         return {__html: window.katex.renderToString(latex, {throwOnError: false})};
     }
 
+    function ResultCard({result, index, handleCopy, handleDeleteResult, handleResultEdit}) {
+        const parseOutput = (output) => {
+            const lines = output.split('\n');
+            const parsed = {
+                input: '',
+                cuTime: '',
+                fullNumeric: '',
+                exponential: '',
+                gregorianDate: '',
+                epochPeriod: '',
+                geologicalEpoch: '',
+                cosmicPhase: '',
+                dominantForces: '',
+                leapYears: '',
+                historicalEvent: '',
+                timeDifference: '',
+                ethicalStatus: '',
+                note: ''
+            };
+            lines.forEach(line => {
+                if (line.startsWith('Input:')) {
+                    parsed.input = line.replace('Input:', '').trim();
+                } else if (line.startsWith('CU-Time:') && !line.includes('Resulting')) {
+                    parsed.cuTime = line.replace('CU-Time:', '').trim();
+                } else if (line.startsWith('Resulting CU-Time:')) {
+                    // Skip this line as it's a header for calculator results
+                } else if (line.startsWith('  - Human-Friendly:')) {
+                    parsed.cuTime = line.replace('  - Human-Friendly:', '').trim();
+                } else if (line.startsWith('  - Full Numeric:')) {
+                    parsed.fullNumeric = line.replace('  - Full Numeric:', '').trim();
+                } else if (line.startsWith('  - Exponential:')) {
+                    parsed.exponential = line.replace('  - Exponential:', '').trim();
+                } else if (line.startsWith('Gregorian Date:')) {
+                    parsed.gregorianDate = line.replace('Gregorian Date:', '').trim();
+                } else if (line.startsWith('Epoch/Period:')) {
+                    parsed.epochPeriod = line.replace('Epoch/Period:', '').trim();
+                } else if (line.startsWith('Geological Epoch:')) {
+                    parsed.geologicalEpoch = line.replace('Geological Epoch:', '').trim();
+                } else if (line.startsWith('Cosmic Phase:')) {
+                    parsed.cosmicPhase = line.replace('Cosmic Phase:', '').trim();
+                } else if (line.startsWith('Dominant Forces:')) {
+                    parsed.dominantForces = line.replace('Dominant Forces:', '').trim();
+                } else if (line.startsWith('Leap Years')) {
+                    parsed.leapYears = line.trim();
+                } else if (line.startsWith('Historical Event:')) {
+                    parsed.historicalEvent = line.replace('Historical Event:', '').trim();
+                } else if (line.startsWith('Time Difference')) {
+                    parsed.timeDifference = line.replace('Time Difference from 2025-05-26T09:48:00+00:00:', '').trim();
+                } else if (line.startsWith('Ethical Status:')) {
+                    parsed.ethicalStatus = line.replace('Ethical Status:', '').trim();
+                } else if (line.startsWith('Note:')) {
+                    parsed.note = line.replace('Note:', '').trim();
+                }
+            });
+            return parsed;
+        };
+
+        const isError = result.desc.toLowerCase().includes('error') || result.output.toLowerCase().startsWith('error');
+        if (isError) {
+            return (
+                <div className="bg-red-900 p-4 rounded-lg shadow-lg">
+                    <p className="text-lg font-semibold text-white">Error</p>
+                    <p className="text-sm text-gray-300">{result.output}</p>
+                    <div className="flex space-x-2 mt-2">
+                        <button
+                            onClick={() => handleDeleteResult(index)}
+                            className="px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700"
+                        >
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            );
+        } else {
+            const parsed = parseOutput(result.output);
+            const dateTime = result.desc.replace(/^Date: |CU-Time: |Added |Subtracted \d+\.?\d* years to CU-Time /, '').trim();
+            return (
+                <div className="bg-gray-800 p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
+                    <h3 className="text-lg font-semibold text-white">{result.desc}</h3>
+                    <p className="text-sm text-gray-300"><strong>DateTime:</strong> {dateTime}</p>
+                    {parsed.input && <p className="text-sm text-gray-300"><strong>Input:</strong> {parsed.input}</p>}
+                    {parsed.cuTime &&
+                        <p className="text-sm text-gray-300"><strong>CU-Time:</strong> {parsed.cuTime}</p>}
+                    {parsed.fullNumeric &&
+                        <p className="text-xs text-gray-400"><strong>Full Numeric:</strong> {parsed.fullNumeric}</p>}
+                    {parsed.exponential &&
+                        <p className="text-xs text-gray-400"><strong>Exponential:</strong> {parsed.exponential}</p>}
+                    {parsed.gregorianDate &&
+                        <p className="text-sm text-gray-300"><strong>Gregorian Date:</strong> {parsed.gregorianDate}
+                        </p>}
+                    {parsed.epochPeriod &&
+                        <p className="text-sm text-gray-300"><strong>Epoch/Period:</strong> {parsed.epochPeriod}</p>}
+                    {parsed.geologicalEpoch &&
+                        <p className="text-sm text-gray-300"><strong>Geological Epoch:</strong> {parsed.geologicalEpoch}
+                        </p>}
+                    {parsed.cosmicPhase &&
+                        <p className="text-sm text-gray-300"><strong>Cosmic Phase:</strong> {parsed.cosmicPhase}</p>}
+                    {parsed.dominantForces &&
+                        <p className="text-sm text-gray-300"><strong>Dominant Forces:</strong> {parsed.dominantForces}
+                        </p>}
+                    {parsed.leapYears && <p className="text-sm text-gray-300">
+                        <strong>{parsed.leapYears.split(':')[0]}:</strong> {parsed.leapYears.split(':').slice(1).join(':').trim()}
+                    </p>}
+                    {parsed.historicalEvent &&
+                        <p className="text-sm text-gray-300"><strong>Historical Event:</strong> {parsed.historicalEvent}
+                        </p>}
+                    {parsed.timeDifference &&
+                        <p className="text-sm text-gray-300"><strong>Time Difference:</strong> {parsed.timeDifference}
+                        </p>}
+                    {parsed.ethicalStatus &&
+                        <p className="text-sm text-gray-300"><strong>Ethical Status:</strong> {parsed.ethicalStatus}
+                        </p>}
+                    {parsed.note && <p className="text-sm text-gray-400"><strong>Note:</strong> {parsed.note}</p>}
+                    <div className="flex space-x-2 mt-2">
+                        <button
+                            onClick={() => handleCopy(result.output)}
+                            className="px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+                        >
+                            Copy
+                        </button>
+                        <button
+                            onClick={() => handleDeleteResult(index)}
+                            className="px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700"
+                        >
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            );
+        }
+    }
+
     function App() {
         const [tab, setTab] = useState('gregorian');
         const [input, setInput] = useState({
@@ -1912,16 +2044,22 @@ The CU and NASA Time Converters differ in their theoretical bases, constants, an
                                 </a>
                             </div>
                             <nav className="md:hidden flex space-x-4 mt-4">
-                                <button onClick={() => setTab('gregorian')}
-                                        className={`px-4 py-2 text-white rounded ${tab === 'gregorian' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}>
+                                <button
+                                    onClick={() => setTab('gregorian')}
+                                    className={`px-4 py-2 text-white rounded ${tab === 'gregorian' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}
+                                >
                                     Gregorian to CU-Time
                                 </button>
-                                <button onClick={() => setTab('cuTime')}
-                                        className={`px-4 py-2 text-white rounded ${tab === 'cuTime' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}>
+                                <button
+                                    onClick={() => setTab('cuTime')}
+                                    className={`px-4 py-2 text-white rounded ${tab === 'cuTime' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}
+                                >
                                     CU-Time to Gregorian
                                 </button>
-                                <button onClick={() => setTab('cuCalculator')}
-                                        className={`px-4 py-2 text-white rounded ${tab === 'cuCalculator' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}>
+                                <button
+                                    onClick={() => setTab('cuCalculator')}
+                                    className={`px-4 py-2 text-white rounded ${tab === 'cuCalculator' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}
+                                >
                                     CU-Time Calculator
                                 </button>
                                 <button
@@ -1930,6 +2068,13 @@ The CU and NASA Time Converters differ in their theoretical bases, constants, an
                                 >
                                     Research
                                 </button>
+                                {/* Add NASA Time Converter link here */}
+                                <a
+                                    href="./nasa_time_converter_stable_v3_0_0.html"
+                                    className={`px-4 py-2 text-white rounded hover:bg-blue-700 cosmic-button`}
+                                >
+                                    NASA Time Converter
+                                </a>
                             </nav>
                             <a href="https://github.com/willmaddock/CosmicUniversalismStatement.git" target="_blank"
                                rel="noopener noreferrer" className="w-full max-w-xl hover:brightness-125 mt-4">
@@ -2363,41 +2508,28 @@ The CU and NASA Time Converters differ in their theoretical bases, constants, an
                             {showResults && editedResults.length > 0 && (
                                 <section className="mb-8">
                                     <h2 className="text-2xl font-semibold text-white mb-4">Results</h2>
-                                    {editedResults.map((result, idx) => (
-                                        <div key={idx}
-                                             className="bg-gray-900 rounded-lg shadow-md p-6 mb-4 relative card">
-                                            <div className="absolute top-2 right-2 flex space-x-2">
-                                                <button
-                                                    onClick={() => handleCopy(result.output)}
-                                                    className="bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-300 icon-button"
-                                                    title="Copy to clipboard"
-                                                    aria-label="Copy to clipboard"
-                                                >
-                                                    <i className="fas fa-copy"></i>
-                                                </button>
-                                                <button
-                                                    onClick={() => handleDeleteResult(idx)}
-                                                    className="bg-red-600 text-white rounded hover:bg-red-700 transition duration-300 icon-button"
-                                                    title="Delete result"
-                                                    aria-label="Delete result"
-                                                >
-                                                    <i className="fas fa-trash"></i>
-                                                </button>
-                                            </div>
-                                            <input
-                                                type="text"
-                                                value={result.desc}
-                                                onChange={(e) => handleResultEdit(idx, 'desc', e.target.value)}
-                                                className="w-full px-3 py-2 border rounded bg-gray-700 text-white mb-2"
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        {editedResults.map((result, index) => (
+                                            <ResultCard
+                                                key={index}
+                                                result={result}
+                                                index={index}
+                                                handleCopy={handleCopy}
+                                                handleDeleteResult={handleDeleteResult}
+                                                handleResultEdit={handleResultEdit}
                                             />
-                                            <textarea
-                                                value={result.output}
-                                                readOnly
-                                                className="w-full px-3 py-2 border rounded bg-gray-800 text-white"
-                                                rows="10"
-                                            />
+                                        ))}
+                                    </div>
+                                    {editedResults.length > 0 && (
+                                        <div className="mt-4">
+                                            <button
+                                                onClick={() => saveEditedCSV(editedResults)}
+                                                className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 cosmic-button"
+                                            >
+                                                <i className="fas fa-save mr-2"></i>Save Edited Results as CSV
+                                            </button>
                                         </div>
-                                    ))}
+                                    )}
                                 </section>
                             )}
 
