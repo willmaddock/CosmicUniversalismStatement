@@ -1302,10 +1302,11 @@ The CU and NASA Time Converters differ in their theoretical bases, constants, an
                     // Skip this line as it's a header for calculator results
                 } else if (line.startsWith('  - Human-Friendly:')) {
                     parsed.cuTime = line.replace('  - Human-Friendly:', '').trim();
-                } else if (line.startsWith('  - Full Numeric:')) {
-                    parsed.fullNumeric = line.replace('  - Full Numeric:', '').trim();
-                } else if (line.startsWith('  - Exponential:')) {
-                    parsed.exponential = line.replace('  - Exponential:', '').trim();
+                } else if (line.startsWith('Full Numeric:')) {
+                    // Extract the numeric value, removing any trailing "CU-Time"
+                    parsed.fullNumeric = line.replace('Full Numeric:', '').replace('CU-Time', '').trim();
+                } else if (line.startsWith('Exponential:')) {
+                    parsed.exponential = line.replace('Exponential:', '').trim();
                 } else if (line.startsWith('Gregorian Date:')) {
                     parsed.gregorianDate = line.replace('Gregorian Date:', '').trim();
                 } else if (line.startsWith('Epoch/Period:')) {
@@ -1355,37 +1356,48 @@ The CU and NASA Time Converters differ in their theoretical bases, constants, an
                     <h3 className="text-lg font-semibold text-white">{result.desc}</h3>
                     <p className="text-sm text-gray-300"><strong>DateTime:</strong> {dateTime}</p>
                     {parsed.input && <p className="text-sm text-gray-300"><strong>Input:</strong> {parsed.input}</p>}
-                    {parsed.cuTime &&
-                        <p className="text-sm text-gray-300"><strong>CU-Time:</strong> {parsed.cuTime}</p>}
-                    {parsed.fullNumeric &&
-                        <p className="text-xs text-gray-400"><strong>Full Numeric:</strong> {parsed.fullNumeric}</p>}
-                    {parsed.exponential &&
-                        <p className="text-xs text-gray-400"><strong>Exponential:</strong> {parsed.exponential}</p>}
-                    {parsed.gregorianDate &&
-                        <p className="text-sm text-gray-300"><strong>Gregorian Date:</strong> {parsed.gregorianDate}
-                        </p>}
-                    {parsed.epochPeriod &&
-                        <p className="text-sm text-gray-300"><strong>Epoch/Period:</strong> {parsed.epochPeriod}</p>}
-                    {parsed.geologicalEpoch &&
+                    {parsed.cuTime && (
+                        <p className="text-sm text-gray-300"><strong>CU-Time:</strong> {parsed.cuTime}</p>
+                    )}
+                    {parsed.fullNumeric && (
+                        <p className="text-xs text-gray-400"><strong>Full Numeric:</strong> {parsed.fullNumeric}</p>
+                    )}
+                    {parsed.exponential && (
+                        <p className="text-xs text-gray-400"><strong>Exponential:</strong> {parsed.exponential}</p>
+                    )}
+                    {parsed.gregorianDate && (
+                        <p className="text-sm text-gray-300"><strong>Gregorian Date:</strong> {parsed.gregorianDate}</p>
+                    )}
+                    {parsed.epochPeriod && (
+                        <p className="text-sm text-gray-300"><strong>Epoch/Period:</strong> {parsed.epochPeriod}</p>
+                    )}
+                    {parsed.geologicalEpoch && (
                         <p className="text-sm text-gray-300"><strong>Geological Epoch:</strong> {parsed.geologicalEpoch}
-                        </p>}
-                    {parsed.cosmicPhase &&
-                        <p className="text-sm text-gray-300"><strong>Cosmic Phase:</strong> {parsed.cosmicPhase}</p>}
-                    {parsed.dominantForces &&
+                        </p>
+                    )}
+                    {parsed.cosmicPhase && (
+                        <p className="text-sm text-gray-300"><strong>Cosmic Phase:</strong> {parsed.cosmicPhase}</p>
+                    )}
+                    {parsed.dominantForces && (
                         <p className="text-sm text-gray-300"><strong>Dominant Forces:</strong> {parsed.dominantForces}
-                        </p>}
-                    {parsed.leapYears && <p className="text-sm text-gray-300">
-                        <strong>{parsed.leapYears.split(':')[0]}:</strong> {parsed.leapYears.split(':').slice(1).join(':').trim()}
-                    </p>}
-                    {parsed.historicalEvent &&
+                        </p>
+                    )}
+                    {parsed.leapYears && (
+                        <p className="text-sm text-gray-300">
+                            <strong>{parsed.leapYears.split(':')[0]}:</strong> {parsed.leapYears.split(':').slice(1).join(':').trim()}
+                        </p>
+                    )}
+                    {parsed.historicalEvent && (
                         <p className="text-sm text-gray-300"><strong>Historical Event:</strong> {parsed.historicalEvent}
-                        </p>}
-                    {parsed.timeDifference &&
+                        </p>
+                    )}
+                    {parsed.timeDifference && (
                         <p className="text-sm text-gray-300"><strong>Time Difference:</strong> {parsed.timeDifference}
-                        </p>}
-                    {parsed.ethicalStatus &&
-                        <p className="text-sm text-gray-300"><strong>Ethical Status:</strong> {parsed.ethicalStatus}
-                        </p>}
+                        </p>
+                    )}
+                    {parsed.ethicalStatus && (
+                        <p className="text-sm text-gray-300"><strong>Ethical Status:</strong> {parsed.ethicalStatus}</p>
+                    )}
                     {parsed.note && <p className="text-sm text-gray-400"><strong>Note:</strong> {parsed.note}</p>}
                     <div className="flex space-x-2 mt-2">
                         <button
