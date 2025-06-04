@@ -80,7 +80,7 @@
             padding: 2rem;
             border-radius: 1rem;
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
-            border: 1px solid #4b5563; /* Corrected */
+            border: 1px solid #4b5563;
         }
 
         .icon-button {
@@ -183,6 +183,53 @@
     const OFFSET = new Decimal('71955051.076855435227077697491190');
 
     let conversionHistory = [];
+
+    // About tab content
+    const ABOUT_MARKDOWN = `
+# 🌌 About the NASA Time Converter
+
+## 👨‍💻 Developed by William Maddock
+The NASA Time Converter was created by **William Maddock**, a graduate with a BS in Computer Science from Metropolitan State University of Denver. With a background in software development and a passion for cosmology, William began building this tool in **2025** to connect human timekeeping with NASA’s data on the universe’s age. It’s part of his broader work on the *Cosmic Universalism (CU)* framework, which blends science, philosophy, and theology to explore time and the cosmos.
+
+## 🛠️ How It Came to Be
+In **2025**, William set out to create a tool that seamlessly converts between:
+- **Gregorian dates** (e.g., June 4, 2025, 09:37 UTC)
+- **CU-Time** (a custom time scale from the CU framework)
+- **NASA’s cosmological time** (years since the Big Bang, ~13.794 billion years as of 2025, per [Planck 2018 data](https://en.wikipedia.org/wiki/Age_of_the_universe))
+
+### Development Timeline
+The tool evolved through several key versions, each enhancing its precision and functionality:
+
+| **Version**       | **Release Year** | **Key Features**                                                                 |
+|-------------------|------------------|----------------------------------------------------------------------------------|
+| Early Versions    | 2025             | - Established core conversion logic with a 365.2425-day year.                    |
+| v3.0.0 (Current)  | 2025             | - 60-digit precision using Decimal.js <br> - Support for BCE dates <br> - NASA data integration |
+
+The result is a practical, science-based tool for exploring cosmological time, enriched by William’s unique vision.
+
+## 🔗 Part of the Cosmic Universalism Framework
+The converter is a key component of the *Cosmic Universalism (CU)* framework, a speculative system William developed to explore cosmic evolution. CU introduces concepts like the **Cosmic Breath**—a 3.108 trillion-year cycle—and **CU-Time**, which maps the Big Bang to the present and beyond. While the converter focuses on empirical conversions, CU delves into deeper philosophical questions about time and existence.
+
+Curious about the bigger picture? Explore the [Cosmic Universalism Statement GitHub repository](https://github.com/willmaddock/CosmicUniversalismStatement) for more.
+
+### Explore the Philosophy
+For a deeper dive into the philosophical ideas behind CU, including AI and "God's Free Will," see [AI, Philosophy, God's Free Will, and Cosmic Universalism](https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/Docs/AI%2C%20Philosophy%2C%20God's%20Free%20Will%2C%20and%20Cosmic%20Universalism.markdown).
+
+## 📚 Explore Further
+- Try the [CU Time Converter](https://willmaddock.github.io/CosmicUniversalismStatement/cosmic_converter/v3_0_0/cu_time_converter_stable_v3_0_0.html) to experience CU-Time firsthand.
+- Visit the [research tab](#) for the science behind this tool.
+- Learn more about the CU framework and its custom license at [GitHub](https://github.com/willmaddock/CosmicUniversalismStatement).
+
+The NASA Time Converter is free to use and licensed under a custom [CU License](https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/LICENSE/LICENSE.md).
+`;
+
+    marked.use({
+        renderer: {
+            link(href, title, text) {
+                return `<a href="${href}" target="_blank" rel="noopener noreferrer">${text}</a>`;
+            }
+        }
+    });
 
     function parseGregorianInput(yearStr, era, monthStr, dayStr, timeStr) {
         let year = parseInt(yearStr);
@@ -1127,6 +1174,14 @@ The CU framework’s *linear scale* bridges cosmological and human-readable time
                             </button>
                         </li>
                         <li>
+                            <button
+                                onClick={() => setTab('about')}
+                                className={`w-full text-left px-4 py-2 text-white rounded ${tab === 'about' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}
+                            >
+                                About
+                            </button>
+                        </li>
+                        <li>
                             <a
                                 href="./cu_time_converter_stable_v3_0_0.html"
                                 className="w-full text-left px-4 py-2 text-white rounded hover:bg-blue-700 cosmic-button"
@@ -1176,6 +1231,12 @@ The CU framework’s *linear scale* bridges cosmological and human-readable time
                                 className={`px-4 py-2 text-white rounded ${tab === 'cosmicTimeResearch' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}
                             >
                                 Research
+                            </button>
+                            <button
+                                onClick={() => setTab('about')}
+                                className={`px-4 py-2 text-white rounded ${tab === 'about' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}
+                            >
+                                About
                             </button>
                             <a
                                 href="./cu_time_converter_stable_v3_0_0.html"
@@ -1450,6 +1511,15 @@ The CU framework’s *linear scale* bridges cosmological and human-readable time
                                     Research</h2>
                                 <div className="markdown-content"
                                      dangerouslySetInnerHTML={{__html: marked.parse(RESEARCH_MARKDOWN)}}/>
+                            </section>
+                        )}
+
+                        {tab === 'about' && (
+                            <section className="mb-8 bg-gray-800 rounded-lg shadow-md p-6 card cosmic-breath-section">
+                                <h2 className="text-2xl font-semibold text-white mb-4">About the NASA Time
+                                    Converter</h2>
+                                <div className="markdown-content"
+                                     dangerouslySetInnerHTML={{__html: marked.parse(ABOUT_MARKDOWN)}}/>
                             </section>
                         )}
 
