@@ -361,6 +361,8 @@
         DARK_MATTER_DOMINANCE_START: new Decimal('3085334044923.509753564772922302508810')
     };
 
+    const OFFSET = new Decimal('71955051.076855435227077697491190');
+
     const CU_LEXICON = {
         "anti-dark-energy": "A theoretical counter-force opposing dark energy, potentially driving cosmic compression during specific phases",
         "anti-dark-matter": "427350 yr (Compression onset, anti-dark matter influence)",
@@ -1282,6 +1284,9 @@ The CU and NASA Time Converters differ in their theoretical bases, constants, an
                 cuTime: '',
                 fullNumeric: '',
                 exponential: '',
+                nasaCuTime: '',
+                nasaFullNumeric: '',
+                nasaExponential: '',
                 gregorianDate: '',
                 epochPeriod: '',
                 geologicalEpoch: '',
@@ -1296,17 +1301,24 @@ The CU and NASA Time Converters differ in their theoretical bases, constants, an
             lines.forEach(line => {
                 if (line.startsWith('Input:')) {
                     parsed.input = line.replace('Input:', '').trim();
-                } else if (line.startsWith('CU-Time:') && !line.includes('Resulting')) {
+                } else if (line.startsWith('CU-Time:') && !line.includes('NASA') && !line.includes('Resulting')) {
                     parsed.cuTime = line.replace('CU-Time:', '').trim();
+                } else if (line.startsWith('NASA CU-Time:')) {
+                    parsed.nasaCuTime = line.replace('NASA CU-Time:', '').trim();
+                } else if (line.startsWith('Resulting NASA CU-Time:')) {
+                    parsed.nasaCuTime = line.replace('Resulting NASA CU-Time:', '').trim();
                 } else if (line.startsWith('Resulting CU-Time:')) {
-                    // Skip this line as it's a header for calculator results
+                    // Skip this line as it’s a header for calculator results
                 } else if (line.startsWith('  - Human-Friendly:')) {
                     parsed.cuTime = line.replace('  - Human-Friendly:', '').trim();
-                } else if (line.startsWith('Full Numeric:')) {
-                    // Extract the numeric value, removing any trailing "CU-Time"
+                } else if (line.startsWith('Full Numeric:') && !line.includes('(NASA)')) {
                     parsed.fullNumeric = line.replace('Full Numeric:', '').replace('CU-Time', '').trim();
-                } else if (line.startsWith('Exponential:')) {
+                } else if (line.startsWith('Full Numeric (NASA):')) {
+                    parsed.nasaFullNumeric = line.replace('Full Numeric (NASA):', '').replace('CU-Time', '').trim();
+                } else if (line.startsWith('Exponential:') && !line.includes('(NASA)')) {
                     parsed.exponential = line.replace('Exponential:', '').trim();
+                } else if (line.startsWith('Exponential (NASA):')) {
+                    parsed.nasaExponential = line.replace('Exponential (NASA):', '').trim();
                 } else if (line.startsWith('Gregorian Date:')) {
                     parsed.gregorianDate = line.replace('Gregorian Date:', '').trim();
                 } else if (line.startsWith('Epoch/Period:')) {
@@ -1350,7 +1362,7 @@ The CU and NASA Time Converters differ in their theoretical bases, constants, an
             );
         } else {
             const parsed = parseOutput(result.output);
-            const dateTime = result.desc.replace(/^Date: |CU-Time: |Added |Subtracted \d+\.?\d* years to CU-Time /, '').trim();
+            const dateTime = result.desc.replace(/^Date: |CU-Time: |_Added |Subtracted \d+\.?\d* years to CU-Time /, '').trim();
             return (
                 <div className="bg-gray-800 p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
                     <h3 className="text-lg font-semibold text-white">{result.desc}</h3>
@@ -1359,11 +1371,22 @@ The CU and NASA Time Converters differ in their theoretical bases, constants, an
                     {parsed.cuTime && (
                         <p className="text-sm text-gray-300"><strong>CU-Time:</strong> {parsed.cuTime}</p>
                     )}
+                    {parsed.nasaCuTime && (
+                        <p className="text-sm text-gray-300"><strong>NASA CU-Time:</strong> {parsed.nasaCuTime}</p>
+                    )}
                     {parsed.fullNumeric && (
                         <p className="text-xs text-gray-400"><strong>Full Numeric:</strong> {parsed.fullNumeric}</p>
                     )}
+                    {parsed.nasaFullNumeric && (
+                        <p className="text-xs text-gray-400"><strong>Full Numeric
+                            (NASA):</strong> {parsed.nasaFullNumeric}</p>
+                    )}
                     {parsed.exponential && (
                         <p className="text-xs text-gray-400"><strong>Exponential:</strong> {parsed.exponential}</p>
+                    )}
+                    {parsed.nasaExponential && (
+                        <p className="text-xs text-gray-400"><strong>Exponential
+                            (NASA):</strong> {parsed.nasaExponential}</p>
                     )}
                     {parsed.gregorianDate && (
                         <p className="text-sm text-gray-300"><strong>Gregorian Date:</strong> {parsed.gregorianDate}</p>
@@ -1602,6 +1625,8 @@ The CU and NASA Time Converters differ in their theoretical bases, constants, an
                 }
 
                 const cuTime = computeCUTime(parsed.year, parsed.month, parsed.day, parsed.hour, parsed.minute, parsed.second, parsed.microsecond);
+                const nasaCUTime = cuTime.plus(OFFSET);
+                const formattedNasaCU = formatCUValue(nasaCUTime);
                 const formatted = formatCUValue(cuTime);
                 const cosmicPhase = getCosmicPhase(cuTime);
                 const dominantForces = getDominantForces(cuTime);
@@ -1619,8 +1644,11 @@ The CU and NASA Time Converters differ in their theoretical bases, constants, an
                 const output = [
                     `Input: ${fullInput}`,
                     `CU-Time: ${formatted.humanFriendly}`,
+                    `NASA CU-Time: ${formattedNasaCU.humanFriendly}`,
                     `Full Numeric: ${formatted.fullNumeric} CU-Time`,
+                    `Full Numeric (NASA): ${formattedNasaCU.fullNumeric} CU-Time`,
                     `Exponential: ${formatted.exponential}`,
+                    `Exponential (NASA): ${formattedNasaCU.exponential}`,
                     `Epoch/Period: ${cuTime.lt(CONSTANTS.BASE_CU) ? 'Past' : 'Future'}`,
                     `Geological Epoch: ${geologicalEpoch}`,
                     `Cosmic Phase: ${cosmicPhase}`,
@@ -1662,6 +1690,8 @@ The CU and NASA Time Converters differ in their theoretical bases, constants, an
                 }
 
                 const cuTime = new Decimal(cuTimeStr);
+                const nasaCUTime = cuTime.plus(OFFSET);
+                const formattedNasaCU = formatCUValue(nasaCUTime);
                 if (cuTime.lt(0)) throw new Error('CU-Time cannot be negative');
                 const deltaYears = cuTime.minus(CONSTANTS.BASE_CU);
                 const deltaJDN = deltaYears.times(CONSTANTS.DAYS_PER_YEAR).toDecimalPlaces(24, Decimal.ROUND_HALF_UP);
@@ -1677,6 +1707,9 @@ The CU and NASA Time Converters differ in their theoretical bases, constants, an
                 const yearsDiff = typeof date.year === 'string' ? timeDiff.toNumber() : Math.abs(date.year - 2025);
                 const output = [
                     `Input: ${cuTimeStr} CU-Time`,
+                    `NASA CU-Time: ${formattedNasaCU.humanFriendly}`,
+                    `Full Numeric (NASA): ${formattedNasaCU.fullNumeric} CU-Time`,
+                    `Exponential (NASA): ${formattedNasaCU.exponential}`,
                     `Gregorian Date: ${formattedDate}`,
                     `Epoch/Period: ${cuTime.lt(CONSTANTS.BASE_CU) ? 'Past' : 'Future'}`,
                     `Geological Epoch: ${geologicalEpoch}`,
@@ -1758,6 +1791,8 @@ The CU and NASA Time Converters differ in their theoretical bases, constants, an
                 const date = jdnToDate(jdn);
                 const formattedDate = typeof date.year === 'string' ? date.year :
                     `${date.month.toString().padStart(2, '0')}/${date.day.toString().padStart(2, '0')}/${Math.abs(date.year)}${date.year < 0 ? ' BCE' : ''} ${date.hour.toString().padStart(2, '0')}:${date.minute.toString().padStart(2, '0')}:${date.second.toString().padStart(2, '0')} UTC`;
+                const newNasaCU = newCU.plus(OFFSET);
+                const formattedNewNasaCU = formatCUValue(newNasaCU);
                 const formattedNewCU = formatCUValue(newCU);
                 const cosmicPhase = getCosmicPhase(newCU);
                 const dominantForces = getDominantForces(newCU);
@@ -1775,6 +1810,9 @@ The CU and NASA Time Converters differ in their theoretical bases, constants, an
                     `  - Human-Friendly: ${formattedNewCU.humanFriendly}`,
                     `  - Full Numeric: ${formattedNewCU.fullNumeric} CU-Time`,
                     `  - Exponential: ${formattedNewCU.exponential}`,
+                    `Resulting NASA CU-Time: ${formattedNewNasaCU.humanFriendly}`,
+                    `Full Numeric (NASA): ${formattedNewNasaCU.fullNumeric} CU-Time`,
+                    `Exponential (NASA): ${formattedNewNasaCU.exponential}`,
                     `Gregorian Date: ${formattedDate}`,
                     `Epoch/Period: ${newCU.lt(CONSTANTS.BASE_CU) ? 'Past' : 'Future'}`,
                     `Geological Epoch: ${geologicalEpoch}`,
@@ -1894,9 +1932,12 @@ The CU and NASA Time Converters differ in their theoretical bases, constants, an
                                 continue;
                             }
                             const cuTime = new Decimal(cuTimeStr);
+                            const nasaCUTime = cuTime.plus(OFFSET);
+                            const formattedNasaCU = formatCUValue(nasaCUTime);
+                            if (cuTime.lt(0)) throw new Error('CU-Time cannot be negative');
                             const deltaYears = cuTime.minus(CONSTANTS.BASE_CU);
-                            const deltaJDN = deltaYears.times(CONSTANTS.DAYS_PER_YEAR);
-                            const jdn = CONSTANTS.ANCHOR_JDN.plus(deltaJDN);
+                            const deltaJDN = deltaYears.times(CONSTANTS.DAYS_PER_YEAR).toDecimalPlaces(24, Decimal.ROUND_HALF_UP);
+                            const jdn = CONSTANTS.ANCHOR_JDN.plus(deltaJDN).toDecimalPlaces(24, Decimal.ROUND_HALF_UP);
                             const date = jdnToDate(jdn);
                             const formattedDate = typeof date.year === 'string' ? date.year :
                                 `${date.month.toString().padStart(2, '0')}/${date.day.toString().padStart(2, '0')}/${Math.abs(date.year)}${date.year < 0 ? ' BCE' : ''} ${date.hour.toString().padStart(2, '0')}:${date.minute.toString().padStart(2, '0')}:${date.second.toString().padStart(2, '0')} UTC`;
@@ -1906,8 +1947,11 @@ The CU and NASA Time Converters differ in their theoretical bases, constants, an
                             const refCuTime = computeCUTime(2025, 5, 26, 9, 48, 0);
                             const timeDiff = cuTime.minus(refCuTime).abs().toDecimalPlaces(24);
                             const yearsDiff = typeof date.year === 'string' ? timeDiff.toNumber() : Math.abs(date.year - 2025);
-                            const outputText = [
+                            const output = [
                                 `Input: ${cuTimeStr} CU-Time`,
+                                `NASA CU-Time: ${formattedNasaCU.humanFriendly}`,
+                                `Full Numeric (NASA): ${formattedNasaCU.fullNumeric} CU-Time`,
+                                `Exponential (NASA): ${formattedNasaCU.exponential}`,
                                 `Gregorian Date: ${formattedDate}`,
                                 `Epoch/Period: ${cuTime.lt(CONSTANTS.BASE_CU) ? 'Past' : 'Future'}`,
                                 `Geological Epoch: ${geologicalEpoch}`,
@@ -1916,7 +1960,7 @@ The CU and NASA Time Converters differ in their theoretical bases, constants, an
                                 `Time Difference from 2025-05-26T09:48:00+00:00: ${timeDiff} CU-Time (~${yearsDiff} years)`,
                                 `Ethical Status: ${message}`,
                                 note ? `Note: ${note}` : ''
-                            ].filter(line => line).join('\n');
+                            ].filter(line => line);
                             newResults.push({desc, date: dateTime, output: outputText});
                             HISTORY.saveConversion(desc, outputText, 'CU to Gregorian');
                         } catch (error) {
