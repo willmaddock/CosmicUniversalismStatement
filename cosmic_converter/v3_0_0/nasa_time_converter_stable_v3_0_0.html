@@ -170,13 +170,13 @@
 
     const CONSTANTS = {
         BASE_CU: new Decimal('3094205999974.586609'),
-        NASA_UNIVERSE_AGE: new Decimal('13793999974.586609'),
+        NASA_UNIVERSE_AGE: new Decimal('13786999981.453'),
         ANCHOR_YEAR: 2000,
         DAYS_PER_YEAR: new Decimal('365.2421897'),
         DARK_ENERGY_START: new Decimal('3094000000000'),
         DARK_ENERGY_END: new Decimal('3110000000000'),
         ANTI_DARK_ENERGY_END: new Decimal('3416000000000'),
-        MIN_CU_TIME: new Decimal('3094205999974.586609').minus(new Decimal('13793999974.586609')),
+        MIN_CU_TIME: new Decimal('3094205999974.586609').minus(new Decimal('13786999981.453')),
         CURRENT_CU_TIME: new Decimal('3094206000000') // June 1, 2025; retained for future date checks
     };
 
@@ -195,7 +195,7 @@ The NASA Time Converter was created by **William Maddock**, a graduate with a BS
 In **2025**, William set out to create a tool that seamlessly converts between:
 - **Gregorian dates** (e.g., June 4, 2025, 09:37 UTC)
 - **CU-Time** (a custom time scale from the CU framework)
-- **NASA’s cosmological time** (years since the Big Bang, ~13.794 billion years as of 2025, per [Planck 2018 data](https://en.wikipedia.org/wiki/Age_of_the_universe))
+- **NASA’s cosmological time** (years since the Big Bang, ~13.787 billion years as of 2025, per [Planck 2018 results. I. Overview and the cosmological legacy of Planck](https://ui.adsabs.harvard.edu/abs/2020A%26A...641A...1P/abstract))
 
 ### Development Timeline
 The tool evolved through several key versions, each enhancing its precision and functionality:
@@ -476,70 +476,152 @@ The NASA Time Converter is free to use and licensed under a custom [CU License](
 
 ## 📊 Overview
 
-The universe is approximately **[13.794 billion years](https://www.space.com/24054-how-old-is-the-universe.html)** old as of May 31, 2025, according to NASA’s [Planck 2018](https://en.wikipedia.org/wiki/Age_of_the_universe) data, adjusted for elapsed time. This estimate aligns the universe’s age with the Gregorian date of **May 31, 2025**, within an uncertainty of **±0.020 billion years**. The *Cosmic Universalism (CU)* framework maps this to approximately **3,094,206,000,000 CU-Time units**, providing a unified system for cosmological and terrestrial time.
+The universe is approximately **[13.787 billion years](https://ui.adsabs.harvard.edu/abs/2020A%26A...641A...6P/abstract)** old as of July 17, 2018, based on the [Planck 2018 results](https://ui.adsabs.harvard.edu/abs/2020A%26A...641A...1P/abstract), with an uncertainty of **±0.020 billion years**. In the *Cosmic Universalism (CU)* framework, this age is mapped to **3,094,206,000,000.014691 CU-Time units** in the NASA converter, providing a unified system for cosmological and terrestrial time. In contrast, the CU Time Converter maps the same NASA-aligned CU-Time to **May 12, 71,957,015 AD**, reflecting a stretched timeline unique to its framework.
 
 ## 🧑‍🔬 Calculating the Universe’s Age
 
-NASA uses *Coordinated Universal Time (UTC)* for timekeeping, but cosmology focuses on the universe’s age since the [Big Bang](https://imagine.gsfc.nasa.gov/science/featured_science/tenyear/age.html). The Planck mission estimated **13.787 billion years** in 2018.
+NASA uses *Coordinated Universal Time (UTC)* for timekeeping, as noted in [NASA Science](https://science.nasa.gov/solar-system/resources/faq/what-time-is-it-in-space/), but cosmology focuses on the universe’s age since the [Big Bang](https://science.nasa.gov/universe/the-big-bang/). The Planck 2018 results, released on July 17, 2018, estimated **13.787 billion years** ± 0.020 billion years.
 
-To update this to May 31, 2025:
+### Age Adjustment to June 1, 2025 (Without Converters)
+To determine the age of the universe as of June 1, 2025, based solely on the Planck 2018 results:
+- **Starting Point**: The Planck 2018 estimate of 13.787 billion years is as of July 17, 2018, with an uncertainty of ±0.020 billion years (ranging from 13.767 to 13.807 billion years).
+- **Time Elapsed**: Approximately 6.872 years have passed from July 17, 2018, to June 1, 2025 (2,509 days ÷ 365.2421897, accounting for leap years in 2020 and 2024).
+- **Calculation**:
+  - Original age: 13,787,000,000 years
+  - Add 6.872 years: 13,787,000,000 + 6.872 = 13,787,000,006.872 years
+  - In billions: 6.872 years ÷ 1,000,000,000 = 0.000000006872 billion years
+  - Adjusted age: 13.787 + 0.000000006872 = **13.787000006872 billion years**
+- **Impact of Uncertainty**: The uncertainty is ±20,000,000 years. Since 6.872 years is only 0.0000344% of 20 million years, it’s negligible, and the age remains effectively **13.787 billion years** ± 0.020 billion years.
+- **Final Age Estimate**: Even if written as 13.787000006872 billion years, this precision is unnecessary and falls well within the uncertainty range. Thus, the reported age stays 13.787 billion years.
 
-- From January 1, 2018, to May 31, 2025, approximately **7.413 years** have passed (7 years plus 151 days, accounting for leap years in 2020 and 2024).
-- Adding **7.413 years** to **13.787 billion years** yields **13.794 billion years**.
-- In the CU system, the Big Bang is set at **3,108,000,000,000 CU-Time units**, and May 31, 2025, corresponds to approximately **3,094,206,000,000 CU-Time units**.
+### NASA Converter Alignment
+In the NASA converter:
+- The Big Bang is set at **3,108,000,000,000 CU-Time units**.
+- June 1, 2025, corresponds to **3,094,206,000,000.014691 CU-Time units**, aligning with an age of 13.787 billion years.
+- Adding 6.872 years results in 13.787000006872 billion years, but this minute difference (0.000000006872 billion years) is far smaller than the ±0.020 billion years uncertainty. The NASA converter is calibrated to reflect the standard cosmological age of 13.787 billion years as of June 1, 2025, rounding to the measurement’s precision.
 
-This calculation aligns NASA’s estimate with the Gregorian calendar and CU-Time.
+### Why the NASA Converter Aligns with June 1, 2025
+The NASA converter aligns with June 1, 2025, because its CU-Time units are designed to match the Planck 2018 estimate of 13.787 billion years at that date. The difference between 3,108,000,000,000 (Big Bang) and 3,094,206,000,000.014691 (June 1, 2025) represents 13.787 billion years. The precise age of 13.787000006872 billion years, while technically accurate, is effectively indistinguishable from 13.787 billion years due to the uncertainty, ensuring the converter’s alignment remains consistent.
+
+The CU Time Converter, however, maps **3,094,206,000,000 CU-Time** to **May 12, 71,957,015 AD**, reflecting its distinct extended timeline.
 
 ## ⚖️ Uncertainties and Alternative Theories
 
-The **13.794 billion-year** estimate has an uncertainty of **±0.020 billion years**, based on Planck data.
-
-Alternative theories propose different ages:
-
-- A 2023 study using [JWST data](https://www.openaccessgovernment.org/age-of-universe-research-james-webb/163845/) suggests **26.7 billion years**, but this is *[controversial](https://penntoday.upenn.edu/news/could-age-universe-be-twice-old-current-estimates-suggest)* and lacks NASA endorsement.
-- The standard *[Lambda-CDM model](https://wmap.gsfc.nasa.gov/universe/uni_age.html)* remains the most reliable, supported by CMB observations.
-
-The following table compares these estimates:
+The **13.787 billion-year** estimate has an uncertainty of **±0.020 billion years**, based on Planck 2018 data. Alternative theories propose different ages:
+- A 2023 study using JWST data suggests **26.7 billion years**, but this is controversial and not endorsed by NASA, as discussed in [Penn Today](https://penntoday.upenn.edu/news/could-age-universe-be-twice-old-current-estimates-suggest).
+- The standard *[Lambda-CDM model](https://lambda.gsfc.nasa.gov/education/graphic_history/univ_evol.html)* remains the most reliable, supported by cosmic microwave background (CMB) observations.
 
 | **Source**                  | **Year of Estimate** | **Age (Billion Years)** | **Uncertainty (Billion Years)** | **Notes**                          |
 |-----------------------------|----------------------|-------------------------|----------------------------------|------------------------------------|
-| Planck 2018 (NASA)          | 2018                 | 13.787                  | ±0.020                          | Standard model, CMB data           |
-| Adjusted to May 31, 2025    | 2025                 | 13.794                  | ±0.020                          | Adds ~7.413 years to 2018          |
+| Planck 2018 (NASA/ESA)      | 2018                 | 13.787                  | ±0.020                          | Standard model, CMB data           |
+| Adjusted to June 1, 2025    | 2025                 | 13.787                  | ±0.020                          | Negligible adjustment; precise calc: 13.787000006872 billion years, within uncertainty |
 | Emerging JWST Model         | 2023                 | 26.7                    | Not specified                   | Controversial, not NASA-endorsed   |
 
 ### Future Predictions
 
-Dates beyond May 31, 2025, are considered predictable and based on extrapolation of current cosmological models. For very large years (e.g., up to 11 digits), the converter assumes the Gregorian calendar and universe expansion continue as modeled, though such distant futures remain speculative. The JWST model's suggestion of a 26.7 billion-year-old universe could imply different future timelines, but this tool adheres to the NASA Planck estimate for consistency.
+Dates beyond June 1, 2025, are considered predictable and based on extrapolation of current cosmological models. For very large years (e.g., up to 11 digits), the converter assumes the Gregorian calendar and universe expansion continue as modeled, though such distant futures remain speculative. The JWST model's suggestion of a 26.7 billion-year-old universe could imply different future timelines, but this tool adheres to the NASA Planck estimate for consistency.
 
 ## 🔗 The Cosmic Breath Framework
 
-The *Cosmic Universalism* framework introduces the **[Cosmic Breath](https://skyandtelescope.org/astronomy-resources/age-of-the-universe/)**, aligning CU-Time, NASA time, and Gregorian dates:
-
-- **Big Bang**: Defined as **3,108,000,000,000 CU-Time units**.
-- **Current Epoch**: May 31, 2025, maps to approximately **3,094,206,000,000 CU-Time units** or **13.794 billion years** (NASA estimate).
+The *Cosmic Universalism* framework introduces the **[Cosmic Breath](https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/ResearchFiles/Cosmic_Breath_Calculation.md)**, aligning CU-Time, NASA time, and Gregorian dates. It spans from sub-ztom (Planck time, 5.39e-44 seconds) to ztom (1 second, universal reset), covering:
+- **Big Bang**: Defined as **3,108,000,000,000 CU-Time units** in the NASA converter.
+- **Current Epoch**: June 1, 2025, maps to **3,094,206,000,000.014691 CU-Time units** (aligned with 13.787 billion years).
 - **Alignment Calculation**:
-
   \`\`\`
-  3,108,000,000,000 (Big Bang CU-Time) − 13,794,000,000 (NASA Years) = 3,094,206,000,000 (CU-Time)
+  3,108,000,000,000 (Big Bang CU-Time) − 13,787,000,000 (NASA Years) ≈ 3,094,206,000,000 (CU-Time)
   \`\`\`
 
-This enables seamless conversions:
+This enables conversions in the NASA converter:
+- **CU-Time to NASA Years**: **3,094,206,000,000.014691 CU-Time** corresponds to **13.787 billion years**.
+- **NASA Years to CU-Time**: **13.787 billion years** converts to **3,094,206,000,000.014691 CU-Time**.
+- **NASA Years to Gregorian**: Via CU-Time, **13.787 billion years** aligns with **June 1, 2025, 00:00:00 UTC**.
 
-- **CU-Time to NASA Years**: **3,094,206,000,000 CU-Time** equals **13.794 billion years**.
-- **NASA Years to CU-Time**: **13.794 billion years** converts to **3,094,206,000,000 CU-Time**.
-- **NASA Years to Gregorian**: Via CU-Time, **13.794 billion years** aligns with **May 31, 2025, 00:00:00 UTC**.
+The CU converter maps **3,094,206,000,000 CU-Time** to **May 12, 71,957,015 AD**, reflecting its extended timeline with an offset of **71,955,051.076855435227077697491190 CU-Time units** (~71,954,990 years).
 
-The CU framework’s *linear scale* bridges cosmological and human-readable time, enhancing precision and accessibility.
+### Cosmic Breath Duration
 
-## 📚 Citations
+The CU framework defines the Cosmic Breath as a **3.108 trillion-year theoretical cycle**:
+- **Expansion Phase (sub-ztom to atom)**: ~2.8 trillion years, from quantum core (5.39e-44 seconds) to supercluster formation (280 billion years).
+- **Compression Phase (btom to ztom)**: ~308 billion years, from galactic contraction to universal reset (1 second).
 
-- [NASA Planck mission age of universe estimate](https://en.wikipedia.org/wiki/Age_of_the_universe)
-- [New research on universe age from JWST](https://www.openaccessgovernment.org/age-of-universe-research-james-webb/163845/)
-- [Discussion on alternative universe age estimates](https://penntoday.upenn.edu/news/could-age-universe-be-twice-old-current-estimates-suggest)
-- [NASA Science on universe age](https://imagine.gsfc.nasa.gov/science/featured_science/tenyear/age.html)
-- [Space.com on universe age](https://www.space.com/24054-how-old-is-the-universe.html)
-- [Sky & Telescope on universe age](https://skyandtelescope.org/astronomy-resources/age-of-the-universe/)
-- [WMAP data on universe age](https://wmap.gsfc.nasa.gov/universe/uni_age.html)
+| **Phase**           | **Sub-Tom/Tom Level** | **Quantum States** | **Duration Estimate** | **CU Description**                     |
+|---------------------|-----------------------|--------------------|-----------------------|----------------------------------------|
+| Expansion (sub-ztom)| sub-ztom              | 2↑↑65,536          | 5.39e-44 sec          | Planck time, quantum core              |
+| Expansion (sub-btom)| sub-btom              | 2⁸                 | 280 billion yr        | Supercluster formation                 |
+| Compression (btom)  | btom                  | 2² = 4             | 280 billion yr        | Galactic evolution and contraction     |
+| Compression (ztom)  | ztom                  | ∞                  | 1 sec                 | Full universal reset                   |
+
+*Note*: Durations are theoretical and not directly in NASA CU-Time units.
+
+## 📚 Frameworks and Constants Comparison
+
+### NASA Time Converter Constants
+- **BASE_CU**: 3,094,205,999,974.586609
+- **NASA_UNIVERSE_AGE**: 13,787,000,000      // [(13786999981.453) is adj. to Jan. 1, 2000))]
+- **ANCHOR_YEAR**: 2000
+- **DAYS_PER_YEAR**: 365.2421897
+- **DARK_ENERGY_START**: 3,094,000,000,000
+- **DARK_ENERGY_END**: 3,110,000,000,000
+- **ANTI_DARK_ENERGY_END**: 3,416,000,000,000
+
+### CU Time Converter Constants
+- **BASE_CU**: 3,094,134,044,923.509753564772922302508810
+- **SUB_ZTOM_CU**: 3,094,133,911,800.949548
+- **ANCHOR_JDN**: 2,451,544.5
+- **DAYS_PER_YEAR**: 365.2421897
+- **SECONDS_PER_DAY**: 86,400
+- **SECONDS_PER_YEAR**: 31,556,952
+- **COSMIC_LIFESPAN**: 13.8e9
+- **CONVERGENCE_YEAR**: 2029
+- **CTOM_START**: 3.08e12
+- **ZTOM_PROXIMITY**: 3.107e12
+- **PLANIZCK_TIME**: 5.39e-44
+- **CESIUM_OSCILLATIONS_PER_SECOND**: 9,192,631,770
+- **SUB_ZTOM_THRESHOLD**: 24
+- **ZTOM_THRESHOLD**: 31,556,952,000,000
+- **DARK_ENERGY_START**: 3.08e12
+- **DARK_ENERGY_END**: 3.11e12
+- **ANTI_DARK_ENERGY_START**: 3.11e12
+- **ANTI_DARK_ENERGY_END**: 3.416e12
+- **SPECULATIVE_START**: 3.416e12
+- **ANTI_DARK_MATTER_ONSET**: 5,880,334,044,496.509753564772922302508810
+- **MATTER_DOMINANCE_START**: 3,360,334,044,923.509753564772922302508810
+- **ANTIMATTER_ANNIHILATION**: 3,080,334,044,923.509753564772922302508810
+- **DARK_MATTER_DOMINANCE_START**: 3,085,334,044,923.509753564772922302508810
+
+The difference in **BASE_CU** values indicates different starting points or scales in the two frameworks.
+
+## 📈 Time Mapping and Outputs
+
+For an input of **3,094,206,000,000 CU-Time (NASA-aligned)**:
+- **NASA Output**: June 1, 2025, ~00:00:00 UTC, corresponding to **13.787 billion years** since the Big Bang.
+- **CU Output**: May 12, 71,957,015 AD, 07:53:11 UTC, with an offset of **71,955,051.076855435227077697491190 CU-Time** (~71,954,990 years) from June 1, 2025.
+
+| **Converter**       | **Input CU-Time** | **Gregorian Date Output**       | **NASA Years Output** | **Cosmic Phase**                              |
+|---------------------|-------------------|---------------------------------|----------------------|-----------------------------------------------|
+| NASA Time Converter | 3,094,206,000,000 | June 1, 2025, 00:00:00 UTC      | 13.787               | Dark Energy Phase (Expansion)          |
+| CU Time Converter   | 3,094,206,000,000 | May 12, 71,957,015 AD, 07:53:11 UTC | ~71,954,990 years | Dark Energy Phase (Expansion, sub-ztom to atom) |
+
+## 🔍 Implications and NASA Credit
+
+The CU converter offers a novel perspective on cosmic evolution, diverging from NASA’s standard model. The NASA converter aligns with scientific consensus, suitable for practical applications.
+
+## 🗣️ Cosmic Universalism Statement
+
+The CU framework is guided by: *“We are sub z-tomically inclined, countably infinite, composed of foundational elements (the essence of conscious existence), grounded on b-tom (as vast as our shared worlds and their atmospheres), and looking up to c-tom (encompassing the entirety of the cosmos), guided by the uncountable infinite quantum states of intelligence and empowered by God’s Free Will.”*
+
+## 📝 Conclusion
+
+The CU and NASA Time Converters differ in their theoretical bases and time scales. The NASA converter maps **3,094,206,000,000.014691 CU-Time** to June 1, 2025, aligning with standard cosmology, while the CU converter maps **3,094,206,000,000 CU-Time** to **May 12, 71,957,015 AD**, reflecting an extended timeline with additional cosmic phases.
+
+## 📚 Key Citations
+- [Planck 2018 results. VI. Cosmological parameters](https://ui.adsabs.harvard.edu/abs/2020A%26A...641A...6P/abstract)
+- [Planck 2018 results. I. Overview and the cosmological legacy of Planck](https://ui.adsabs.harvard.edu/abs/2020A%26A...641A...1P/abstract)
+- [NASA Timekeeping](https://science.nasa.gov/solar-system/resources/faq/what-time-is-it-in-space/)
+- [Big Bang Overview](https://science.nasa.gov/universe/the-big-bang/)
+- [Lambda-CDM Model](https://lambda.gsfc.nasa.gov/education/graphic_history/univ_evol.html)
+- [Cosmic Breath](https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/ResearchFiles/Cosmic_Breath_Calculation.md)
+- [JWST Age Study](https://penntoday.upenn.edu/news/could-age-universe-be-twice-old-current-estimates-suggest)
 `;
 
     marked.use({
