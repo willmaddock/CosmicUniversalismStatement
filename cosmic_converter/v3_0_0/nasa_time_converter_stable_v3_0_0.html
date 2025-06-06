@@ -169,7 +169,7 @@
     Decimal.set({precision: 60, rounding: Decimal.ROUND_HALF_UP});
 
     const CONSTANTS = {
-        BASE_CU: new Decimal('3094205999974.586609'),
+        BASE_CU: new Decimal('3094213000000'),
         NASA_UNIVERSE_AGE: new Decimal('13786999981.453'),
         ANCHOR_YEAR: 2000,
         DAYS_PER_YEAR: new Decimal('365.2421897'),
@@ -177,10 +177,10 @@
         DARK_ENERGY_END: new Decimal('3110000000000'),
         ANTI_DARK_ENERGY_END: new Decimal('3416000000000'),
         MIN_CU_TIME: new Decimal('3094212999993.128').minus(new Decimal('13786999981.453')),
-        CURRENT_CU_TIME: new Decimal('3094213000000') // June 1, 2025; retained for future date checks
+        CURRENT_CU_TIME: new Decimal('4206000000.014691') // June 1, 2025; retained for future date checks
     };
 
-    const OFFSET = new Decimal('71955051.076855435227077697491190');
+    const OFFSET = new Decimal('78955076.49024643522707769749119');
 
     let conversionHistory = [];
 
@@ -497,13 +497,13 @@ To determine the age of the universe as of June 1, 2025, based solely on the Pla
 ### NASA Converter Alignment
 In the NASA converter:
 - The Big Bang is set at **3,108,000,000,000 CU-Time units**.
-- June 1, 2025, corresponds to **3,094,206,000,000.014691 CU-Time units**, aligning with an age of 13.787 billion years.
+- June 1, 2025, corresponds to **3,094,213,000,000.014691 CU-Time units**, aligning with an age of 13.787 billion years.
 - Adding 6.872 years results in 13.787000006872 billion years, but this minute difference (0.000000006872 billion years) is far smaller than the ±0.020 billion years uncertainty. The NASA converter is calibrated to reflect the standard cosmological age of 13.787 billion years as of June 1, 2025, rounding to the measurement’s precision.
 
 ### Why the NASA Converter Aligns with June 1, 2025
-The NASA converter aligns with June 1, 2025, because its CU-Time units are designed to match the Planck 2018 estimate of 13.787 billion years at that date. The difference between 3,108,000,000,000 (Big Bang) and 3,094,206,000,000.014691 (June 1, 2025) represents 13.787 billion years. The precise age of 13.787000006872 billion years, while technically accurate, is effectively indistinguishable from 13.787 billion years due to the uncertainty, ensuring the converter’s alignment remains consistent.
+The NASA converter aligns with June 1, 2025, because its CU-Time units are designed to match the Planck 2018 estimate of 13.787 billion years at that date. The difference between 3,108,000,000,000 (Big Bang) and 3,094,213,000,000.014691 (June 1, 2025) represents 13.787 billion years. The precise age of 13.787000006872 billion years, while technically accurate, is effectively indistinguishable from 13.787 billion years due to the uncertainty, ensuring the converter’s alignment remains consistent.
 
-The CU Time Converter, however, maps **3,094,206,000,000 CU-Time** to **May 12, 71,957,015 AD**, reflecting its distinct extended timeline.
+The CU Time Converter, however, maps **3,094,213,000,000 CU-Time** to **May 12, 78,955,076 AD**, reflecting its distinct extended timeline.
 
 ## ⚖️ Uncertainties and Alternative Theories
 
@@ -537,11 +537,11 @@ The *Cosmic Universalism* framework introduces the **[Cosmic Breath](https://git
   \`\`\`
 
 This enables conversions in the NASA converter:
-- **CU-Time to NASA Years**: **3,094,206,000,000.014691 CU-Time** corresponds to **13.787 billion years**.
-- **NASA Years to CU-Time**: **13.787 billion years** converts to **3,094,206,000,000.014691 CU-Time**.
+- **CU-Time to NASA Years**: **3,094,213,000,000.014691 CU-Time** corresponds to **13.787 billion years**.
+- **NASA Years to CU-Time**: **13.787 billion years** converts to **3,094,213,000,000.014691 CU-Time**.
 - **NASA Years to Gregorian**: Via CU-Time, **13.787 billion years** aligns with **June 1, 2025, 00:00:00 UTC**.
 
-The CU converter maps **3,094,206,000,000 CU-Time** to **May 12, 71,957,015 AD**, reflecting its extended timeline with an offset of **71,955,051.076855435227077697491190 CU-Time units** (~71,954,990 years).
+The CU converter maps **3,094,213,000,000 CU-Time** to **May 12, 78,955,076 AD**, reflecting its extended timeline with an offset of **78955076.49024643522707769749119 CU-Time units** (~78,955,076 years).
 
 ### Cosmic Breath Duration
 
@@ -561,7 +561,7 @@ The CU framework defines the Cosmic Breath as a **3.108 trillion-year theoretica
 ## 📚 Frameworks and Constants Comparison
 
 ### NASA Time Converter Constants
-- **BASE_CU**: 3,094,205,999,974.586609
+- **BASE_CU**: 3.094,213,000,000
 - **NASA_UNIVERSE_AGE**: 13,787,000,000    // [(13786999981.453) is adj. to Jan. 1, 2000))]
 - **ANCHOR_YEAR**: 2000
 - **DAYS_PER_YEAR**: 365.2421897
@@ -598,14 +598,14 @@ The difference in **BASE_CU** values indicates different starting points or scal
 
 ## 📈 Time Mapping and Outputs
 
-For an input of **3,094,206,000,000 CU-Time (NASA-aligned)**:
+For an input of **3,094,213,000,000 CU-Time (NASA-aligned)**:
 - **NASA Output**: June 1, 2025, ~00:00:00 UTC, corresponding to **13.787 billion years** since the Big Bang.
-- **CU Output**: May 12, 71,957,015 AD, 07:53:11 UTC, with an offset of **71,955,051.076855435227077697491190 CU-Time** (~71,954,990 years) from June 1, 2025.
+- **CU Output**: 3094134044923.509753564772922302508810 - 3,094,213,000,000 = 78955076.49024643522707769749119, with an offset of **78955076.49024643522707769749119 CU-Time** from June 1, 2025.
 
 | **Converter**       | **Input CU-Time** | **Gregorian Date Output**       | **NASA Years Output** | **Cosmic Phase**                              |
 |---------------------|-------------------|---------------------------------|----------------------|-----------------------------------------------|
-| NASA Time Converter | 3,094,206,000,000 | June 1, 2025, 00:00:00 UTC      | 13.787               | Dark Energy Phase (Expansion)          |
-| CU Time Converter   | 3,094,206,000,000 | May 12, 71,957,015 AD, 07:53:11 UTC | ~71,954,990 years | Dark Energy Phase (Expansion, sub-ztom to atom) |
+| NASA Time Converter | 3,094,213,000,000 | June 1, 2025, 00:00:00 UTC      | 13.787               | Dark Energy Phase (Expansion)          |
+| CU Time Converter   | 3,094,213,000,000 | May 12, 78,955,076 AD, 07:53:11 UTC | ~78,955,076 years | Dark Energy Phase (Expansion, sub-ztom to atom) |
 
 ## 🔍 Implications and NASA Credit
 
@@ -617,7 +617,7 @@ The CU framework is guided by: *“We are sub z-tomically inclined, countably in
 
 ## 📝 Conclusion
 
-The CU and NASA Time Converters differ in their theoretical bases and time scales. The NASA converter maps **3,094,206,000,000.014691 CU-Time** to June 1, 2025, aligning with standard cosmology, while the CU converter maps **3,094,206,000,000 CU-Time** to **May 12, 71,957,015 AD**, reflecting an extended timeline with additional cosmic phases.
+The CU and NASA Time Converters differ in their theoretical bases and time scales. The NASA converter maps **3,094,206,000,000.014691 CU-Time** to June 1, 2025, aligning with standard cosmology, while the CU converter maps **3,094,206,000,000 CU-Time** to **May 12, 78,955,076 AD**, reflecting an extended timeline with additional cosmic phases.
 
 ## 📚 Key Citations
 - [Planck 2018 results. VI. Cosmological parameters](https://ui.adsabs.harvard.edu/abs/2020A%26A...641A...6P/abstract)
