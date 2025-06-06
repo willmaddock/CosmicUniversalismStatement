@@ -177,7 +177,7 @@
         DARK_ENERGY_END: new Decimal('3110000000000'),
         ANTI_DARK_ENERGY_END: new Decimal('3416000000000'),
         MIN_CU_TIME: new Decimal('3094212999993.128').minus(new Decimal('13786999981.453')),
-        CURRENT_CU_TIME: new Decimal('4206000000.014691') // June 1, 2025; retained for future date checks
+        CURRENT_CU_TIME: new Decimal('3094213000000.014691') // June 1, 2025; retained for future date checks
     };
 
     const OFFSET = new Decimal('78955076.49024643522707769749119');
@@ -476,7 +476,7 @@ The NASA Time Converter is free to use and licensed under a custom [CU License](
 
 ## 📊 Overview
 
-The universe is approximately **[13.787 billion years](https://ui.adsabs.harvard.edu/abs/2020A%26A...641A...6P/abstract)** old as of July 17, 2018, based on the [Planck 2018 results](https://ui.adsabs.harvard.edu/abs/2020A%26A...641A...1P/abstract), with an uncertainty of **±0.020 billion years**. In the *Cosmic Universalism (CU)* framework, this age is mapped to **3,094,206,000,000.014691 CU-Time units** in the NASA converter, providing a unified system for cosmological and terrestrial time. In contrast, the CU Time Converter maps the same NASA-aligned CU-Time to **May 12, 71,957,015 AD**, reflecting a stretched timeline unique to its framework.
+The universe is approximately **[13.787 billion years](https://ui.adsabs.harvard.edu/abs/2020A%26A...641A...6P/abstract)** old as of July 17, 2018, based on the [Planck 2018 results](https://ui.adsabs.harvard.edu/abs/2020A%26A...641A...1P/abstract), with an uncertainty of **±0.020 billion years**. In the *Cosmic Universalism (CU)* framework, this age is mapped to **3,094,213,000,000.014691 CU-Time units** in the NASA converter, providing a unified system for cosmological and terrestrial time. In contrast, the CU Time Converter maps the same NASA-aligned CU-Time to **May 12, 78,955,076 AD**, reflecting a stretched timeline unique to its framework.
 
 ## 🧑‍🔬 Calculating the Universe’s Age
 
@@ -525,7 +525,7 @@ Dates beyond June 1, 2025, are considered predictable and based on extrapolation
 
 The *Cosmic Universalism* framework introduces the **[Cosmic Breath](https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/ResearchFiles/Cosmic_Breath_Calculation.md)**, aligning CU-Time, NASA time, and Gregorian dates. It spans from sub-ztom (Planck time, 5.39e-44 seconds) to ztom (1 second, universal reset), covering:
 - **Big Bang**: Defined as **3,108,000,000,000 CU-Time units** in the NASA converter.
-- **Current Epoch**: June 1, 2025, maps to **3,094,206,000,000.014691 CU-Time units** (aligned with 13.787 billion years).
+- **Current Epoch**: June 1, 2025, maps to **3,094,213,000,000.014691 CU-Time units** (aligned with 13.787 billion years).
 - **Alignment Calculation**:
   \`\`\`
   3,108,000,000,000 (Big Bang CU-Time) − 13,787,000,000 (NASA Years) ≈ 3,094,213,000,000 (CU-Time)
@@ -1511,7 +1511,7 @@ The CU and NASA Time Converters differ in their theoretical bases and time scale
                                             onChange={(e) => handleInputChange('cuTime')(e.target.value)}
                                             onKeyPress={(e) => e.key === 'Enter' && handleCUToNASASubmit()}
                                             className="w-full px-3 py-2 border rounded bg-gray-700 text-white"
-                                            placeholder="e.g., 3094206000000"
+                                            placeholder="e.g., 3094213000000"
                                             aria-label="Enter CU-Time value"
                                         />
                                     </div>
@@ -1543,7 +1543,7 @@ The CU and NASA Time Converters differ in their theoretical bases and time scale
                                             onChange={(e) => handleInputChange('calcValue1')(e.target.value)}
                                             onKeyPress={(e) => e.key === 'Enter' && handleCalcSubmit()}
                                             className="w-full px-3 py-2 border rounded bg-gray-700 text-white"
-                                            placeholder="e.g., 3094206000000"
+                                            placeholder="e.g., 3094213000000"
                                             aria-label="Enter first CU-Time value"
                                         />
                                     </div>
@@ -1622,7 +1622,7 @@ The CU and NASA Time Converters differ in their theoretical bases and time scale
                             />
                             <p className="text-sm text-gray-300 mt-2">
                                 CSV must have headers "Description,DateTime,Output". Examples: "Gregorian:
-                                01/01/13794000000 BCE 00:00:00", "NASA to CU: 13794000000", "CU to NASA: 3094206000000"
+                                01/01/13794000000 BCE 00:00:00", "NASA to CU: 13794000000", "CU to NASA: 3094213000000"
                             </p>
                         </section>
 
