@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Breath Time Converter</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.25.7/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/decimal.js@10.4.3/decimal.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked@5.1.2/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@400;600;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body);"></script>
+    <style>
+        :root {
+            --background-color: #ffffff;
+            --text-color: #000000;
+            --card-background: #f0f0f0;
+            --input-background: #e0e0e0;
+            --button-background: #3B82F6;
+            --button-text: #ffffff;
+            --gradient-header: linear-gradient(to right, #e0e0e0, #f0f0f0);
+        }
+
+        html.dark {
+            --background-color: #0a0a0a;
+            --text-color: #ffffff;
+            --card-background: #1f2937;
+            --input-background: #374151;
+            --button-background: linear-gradient(to right, #8B5CF6, #3B82F6);
+            --button-text: #ffffff;
+            --gradient-header: linear-gradient(to right, #8B5CF6, #3B82F6);
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564');
+            opacity: 0.2; /* Light theme default */
+            z-index: -1;
+        }
+
+        html.dark .overlay {
+            opacity: 0.5; /* Dark theme */
+        }
+
+        .gradient-header {
+            background: var(--gradient-header);
+        }
+
+        .cosmic-button {
+            background: var(--button-background);
+            color: var(--button-text);
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            transition: all 0.3s ease;
+        }
+
+        .cosmic-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            filter: brightness(1.1);
+        }
+
+        .card {
+            background: var(--card-background);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .card:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+            transition: all 0.3s ease;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        input, select {
+            background: var(--input-background);
+            color: var(--text-color);
+            border: none;
+            outline: none;
+        }
+
+        .error-message {
+            color: #f87171;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        .about-style h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .about-style h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .about-style p {
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .about-style table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+        }
+
+        .about-style th, .about-style td {
+            border: 1px solid var(--text-color);
+            padding: 0.5rem;
+            text-align: left;
+        }
+
+        .about-style th {
+            background: var(--input-background);
+        }
+
+        .about-style a {
+            color: #60a5fa;
+            text-decoration: underline;
+        }
+
+        .research-style h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .research-style h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .research-style p {
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .research-style table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+        }
+
+        .research-style th, .research-style td {
+            border: 1px solid var(--text-color);
+            padding: 0.5rem;
+            text-align: left;
+        }
+
+        .research-style th {
+            background: var(--input-background);
+        }
+
+        .research-style a {
+            color: #60a5fa;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            .card {
+                padding: 1rem;
+            }
+
+            input, select {
+                font-size: 1.2rem;
+                padding: 0.75rem;
+            }
+
+            .cosmic-button {
+                padding: 0.75rem;
+                font-size: 1.2rem;
+            }
+
+            .text-4xl {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div className="overlay"></div>
+<div id="root"></div>
+<script type="text/javascript">
+    var gk_isXlsx = false;
+    var gk_xlsxFileLookup = {};
+    var gk_fileData = {};
+
+    function filledCell(cell) {
+        return cell !== '' && cell != null;
+    }
+
+    function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], {type: 'base64'});
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, {header: 1, blankrows: false, defval: ''});
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                    row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                    headerRowIndex = 0;
+                }
+
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
+                csv = XLSX.utils.sheet_to_csv(csv, {header: 1});
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+    }
+</script>
+<script type="text/babel" data-presets="react,es2015">
+    const {useState, useEffect} = React;
+    Decimal.set({precision: 60, rounding: Decimal.ROUND_HALF_UP});
+
+    const CONSTANTS = {
+        ANCHOR_YEAR: new Decimal('2000'),
+        ANCHOR_JDN: new Decimal('2451544.5'),
+        DAYS_PER_YEAR: new Decimal('365.2421897'),
+        BASE_CU_NASA: new Decimal('3094213000000'),
+        OFFSET: new Decimal('78955076.49024643522707769749119'),
+        NASA_UNIVERSE_AGE: new Decimal('13786999981.453'),
+        CURRENT_DATE: new Date()
+    };
+    CONSTANTS.BIG_BANG_CU_NASA = CONSTANTS.BASE_CU_NASA.minus(CONSTANTS.NASA_UNIVERSE_AGE);
+
+    const ABOUT_MARKDOWN = `
+# 🌌 About the Cosmic Breath Time Converter
+
+## 👨‍💻 Developed by William Maddock
+The Cosmic Breath Time Converter was created by **William Maddock**, a graduate with a BS in Computer Science from Metropolitan State University of Denver. With a background in software development and a passion for cosmology, William began building this tool in **2025** to connect human timekeeping with NASA’s data on the universe’s age and the Cosmic Universalism (CU) framework. It’s part of his broader work on the *Cosmic Universalism (CU)* framework, which blends science, philosophy, and theology to explore time and the cosmos.
+
+## 🛠️ How It Came to Be
+In **2025**, William set out to create a tool that seamlessly converts between:
+- **Gregorian dates** (e.g., June 4, 2025, 09:37 UTC)
+- **CU-Time** (a custom time scale from the CU framework)
+- **NASA’s cosmological time** (years since the Big Bang, ~13.787 billion years as of 2025, per [Planck 2018 results. I. Overview and the cosmological legacy of Planck](https://ui.adsabs.harvard.edu/abs/2020A%26A...641A...1P/abstract))
+
+### Development Timeline
+The tool evolved through several key versions, each enhancing its precision and functionality:
+
+| **Version**       | **Release Year** | **Key Features**                                                                 |
+|-------------------|------------------|----------------------------------------------------------------------------------|
+| Early Versions    | 2025             | - Established core conversion logic with a 365.2425-day year.                    |
+| v3.0.0 (Current)  | 2025             | - 60-digit precision using Decimal.js <br> - Support for BCE dates <br> - NASA data integration |
+
+The result is a practical, science-based tool for exploring cosmological time, enriched by William’s unique vision.
+
+## 🔗 Part of the Cosmic Universalism Framework
+The converter is a key component of the *Cosmic Universalism (CU)* framework, a speculative system William developed to explore cosmic evolution. CU introduces concepts like the **Cosmic Breath**—a 3.108 trillion-year cycle—and **CU-Time**, which maps the Big Bang to the present and beyond. While the converter focuses on empirical conversions, CU delves into deeper philosophical questions about time and existence.
+
+Curious about the bigger picture? Explore the [Cosmic Universalism Statement GitHub repository](https://github.com/willmaddock/CosmicUniversalismStatement) for more.
+
+### Explore the Philosophy
+For a deeper dive into the philosophical ideas behind CU, including AI and "God's Free Will," see [AI, Philosophy, God's Free Will, and Cosmic Universalism](https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/Docs/AI%2C%20Philosophy%2C%20God's%20Free%20Will%2C%20and%20Cosmic%20Universalism.md).
+
+## 📚 Explore Further
+- Try the [CU Time Converter](https://willmaddock.github.io/CosmicUniversalismStatement/cosmic_converter/v3_0_0/cu_time_converter_stable_v3_0_0.html) to experience CU-Time firsthand.
+- Visit the [research tab](#) for the science behind this tool.
+- Learn more about the CU framework and its custom license at [GitHub](https://github.com/willmaddock/CosmicUniversalismStatement).
+
+The Cosmic Breath Time Converter is free to use and licensed under a custom [CU License](https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/LICENSE/LICENSE.md).
+`;
+
+    const RESEARCH_MARKDOWN = `
+# 🌌 Cosmic Time Alignment Research
+
+## 📊 Overview
+
+The universe is approximately **[13.787 billion years](https://ui.adsabs.harvard.edu/abs/2020A%26A...641A...6P/abstract)** old as of July 17, 2018, based on the [Planck 2018 results](https://ui.adsabs.harvard.edu/abs/2020A%26A...641A...1P/abstract), with an uncertainty of **±0.020 billion years**. In the *Cosmic Universalism (CU)* framework, this age is mapped to **3,094,213,000,000.014691 CU-Time units** in the NASA converter, providing a unified system for cosmological and terrestrial time. In contrast, the CU Time Converter maps the same NASA-aligned CU-Time to **May 12, 78,955,076 AD**, reflecting a stretched timeline unique to its framework.
+
+## 🧑‍🔬 Calculating the Universe’s Age
+
+NASA uses *Coordinated Universal Time (UTC)* for timekeeping, as noted in [NASA Science](https://science.nasa.gov/solar-system/resources/faq/what-time-is-it-in-space/), but cosmology focuses on the universe’s age since the [Big Bang](https://science.nasa.gov/universe/the-big-bang/). The Planck 2018 results, released on July 17, 2018, estimated **13.787 billion years** ± 0.020 billion years.
+
+### Age Adjustment to June 1, 2025 (Without Converters)
+To determine the age of the universe as of June 1, 2025, based solely on the Planck 2018 results:
+- **Starting Point**: The Planck 2018 estimate of 13.787 billion years is as of July 17, 2018, with an uncertainty of ±0.020 billion years (ranging from 13.767 to 13.807 billion years).
+- **Time Elapsed**: Approximately 6.872 years have passed from July 17, 2018, to June 1, 2025 (2,509 days ÷ 365.2421897, accounting for leap years in 2020 and 2024).
+- **Calculation**:
+  - Original age: 13,787,000,000 years
+  - Add 6.872 years: 13,787,000,000 + 6.872 = 13,787,000,006.872 years
+  - In billions: 6.872 years ÷ 1,000,000,000 = 0.000000006872 billion years
+  - Adjusted age: 13.787 + 0.000000006872 = **13.787000006872 billion years**
+- **Impact of Uncertainty**: The uncertainty is ±20,000,000 years. Since 6.872 years is only 0.0000344% of 20 million years, it’s negligible, and the age remains effectively **13.787 billion years** ± 0.020 billion years.
+- **Final Age Estimate**: Even if written as 13.787000006872 billion years, this precision is unnecessary and falls well within the uncertainty range. Thus, the reported age stays 13.787 billion years.
+
+### NASA Converter Alignment
+In the NASA converter:
+- The Big Bang is set at **3,108,000,000,000 CU-Time units**.
+- June 1, 2025, corresponds to **3,094,213,000,000.014691 CU-Time units**, aligning with an age of 13.787 billion years.
+- Adding 6.872 years results in 13.787000006872 billion years, but this minute difference (0.000000006872 billion years) is far smaller than the ±0.020 billion years uncertainty. The NASA converter is calibrated to reflect the standard cosmological age of 13.787 billion years as of June 1, 2025, rounding to the measurement’s precision.
+
+### Why the NASA Converter Aligns with June 1, 2025
+The NASA converter aligns with June 1, 2025, because its CU-Time units are designed to match the Planck 2018 estimate of 13.787 billion years at that date. The difference between 3,108,000,000,000 (Big Bang) and 3,094,213,000,000.014691 (June 1, 2025) represents 13.787 billion years. The precise age of 13.787000006872 billion years, while technically accurate, is effectively indistinguishable from 13.787 billion years due to the uncertainty, ensuring the converter’s alignment remains consistent.
+
+The CU Time Converter, however, maps **3,094,213,000,000 CU-Time** to **May 12, 78,955,076 AD**, reflecting its distinct extended timeline.
+
+## ⚖️ Uncertainties and Alternative Theories
+
+The **13.787 billion-year** estimate has an uncertainty of **±0.020 billion years**, based on Planck 2018 data. Alternative theories propose different ages:
+- A 2023 study using JWST data suggests **26.7 billion years**, but this is controversial and not endorsed by NASA, as discussed in [Penn Today](https://penntoday.upenn.edu/news/could-age-universe-be-twice-old-current-estimates-suggest).
+- The standard *[Lambda-CDM model](https://lambda.gsfc.nasa.gov/education/graphic_history/univ_evol.html)* remains the most reliable, supported by cosmic microwave background (CMB) observations.
+
+| **Source**                  | **Year of Estimate** | **Age (Billion Years)** | **Uncertainty (Billion Years)** | **Notes**                          |
+|-----------------------------|----------------------|-------------------------|----------------------------------|------------------------------------|
+| Planck 2018 (NASA/ESA)      | 2018                 | 13.787                  | ±0.020                          | Standard model, CMB data           |
+| Adjusted to June 1, 2025    | 2025                 | 13.787                  | ±0.020                          | Negligible adjustment; precise calc: 13.787000006872 billion years, within uncertainty |
+| Emerging JWST Model         | 2023                 | 26.7                    | Not specified                   | Controversial, not NASA-endorsed   |
+
+### Future Predictions
+
+Dates beyond June 1, 2025, are considered predictable and based on extrapolation of current cosmological models. For very large years (e.g., up to 11 digits), the converter assumes the Gregorian calendar and universe expansion continue as modeled, though such distant futures remain speculative. The JWST model's suggestion of a 26.7 billion-year-old universe could imply different future timelines, but this tool adheres to the NASA Planck estimate for consistency.
+
+## 🔗 The Cosmic Breath Framework
+
+The *Cosmic Universalism* framework introduces the **[Cosmic Breath](https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/ResearchFiles/Cosmic_Breath_Calculation.md)**, aligning CU-Time, NASA time, and Gregorian dates. It spans from sub-ztom (Planck time, 5.39e-44 seconds) to ztom (1 second, universal reset), covering:
+- **Big Bang**: Defined as **3,108,000,000,000 CU-Time units** in the NASA converter.
+- **Current Epoch**: June 1, 2025, maps to **3,094,213,000,000.014691 CU-Time units** (aligned with 13.787 billion years).
+- **Alignment Calculation**:
+  \`\`\`
+  3,108,000,000,000 (Big Bang CU-Time) − 13,787,000,000 (NASA Years) ≈ 3,094,213,000,000 (CU-Time)
+  \`\`\`
+- **Remaining Cosmic Breath Cycle**:
+  - The Cosmic Breath is a 3.108 trillion-year cycle. As of June 1, 2025, with the universe’s age at 13,787,000,006.872 years, the remaining time is:
+  \`\`\`
+  3,108,000,000,000 years − 13,787,000,006.872 years ≈ 3,094,212,999,993.128 years
+  \`\`\`
+
+This enables conversions in the NASA converter:
+- **CU-Time to NASA Years**: **3,094,213,000,000.014691 CU-Time** corresponds to **13.787 billion years**.
+- **NASA Years to CU-Time**: **13.787 billion years** converts to **3,094,213,000,000.014691 CU-Time**.
+- **NASA Years to Gregorian**: Via CU-Time, **13.787 billion years** aligns with **June 1, 2025, 00:00:00 UTC**.
+
+The CU converter maps **3,094,213,000,000 CU-Time** to **May 12, 78,955,076 AD**, reflecting its extended timeline with an offset of **78955076.49024643522707769749119 CU-Time units** (~78,955,076 years).
+
+### Cosmic Breath Duration
+
+The CU framework defines the Cosmic Breath as a **3.108 trillion-year theoretical cycle**:
+- **Expansion Phase (sub-ztom to atom)**: ~2.8 trillion years, from quantum core (5.39e-44 seconds) to supercluster formation (280 billion years).
+- **Compression Phase (btom to ztom)**: ~308 billion years, from galactic contraction to universal reset (1 second).
+
+| **Phase**           | **Sub-Tom/Tom Level** | **Quantum States** | **Duration Estimate** | **CU Description**                     |
+|---------------------|-----------------------|--------------------|-----------------------|----------------------------------------|
+| Expansion (sub-ztom)| sub-ztom              | 2↑↑65,536 Sensational| 5.39e-44 sec          | Planck time, quantum core              |
+| Expansion (sub-btom)| sub-btom              | 2⁸                 | 280 billion yr        | Supercluster formation                 |
+| Compression (btom)  | btom                  | 2² = 4             | 280 billion yr        | Galactic evolution and contraction     |
+| Compression (ztom)  | ztom                  | ∞                  | 1 sec                 | Full universal reset                   |
+
+*Note*: Durations are theoretical and not directly in NASA CU-Time units.
+
+## 📚 Frameworks and Constants Comparison
+
+### NASA Time Converter Constants
+- **BASE_CU**: 3.094,213,000,000
+- **NASA_UNIVERSE_AGE**: 13,787,000,000    // [(13786999981.453) is adj. to Jan. 1, 2000))]
+- **ANCHOR_YEAR**: 2000
+- **DAYS_PER_YEAR**: 365.2421897
+- **DARK_ENERGY_START**: 3,094,000,000,000
+- **DARK_ENERGY_END**: 3,110,000,000,000
+- **ANTI_DARK_ENERGY_END**: 3,416,000,000,000
+
+### CU Time Converter Constants
+- **BASE_CU**: 3,094,134,044,923.509753564772922302508810
+- **SUB_ZTOM_CU**: 3,094,133,911,800.949548
+- **ANCHOR_JDN**: 2,451,544.5
+- **DAYS_PER_YEAR**: 365.2421897
+- **SECONDS_PER_DAY**: 86,400
+- **SECONDS_PER_YEAR**: 31,556,952
+- **COSMIC_LIFESPAN**: 13.8e9
+- **CONVERGENCE_YEAR**: 2029
+- **CTOM_START**: 3.08e12
+- **ZTOM_PROXIMITY**: 3.107e12
+- **PLANIZCK_TIME**: 5.39e-44
+- **CESIUM_OSCILLATIONS_PER_SECOND**: 9,192,631,770
+- **SUB_ZTOM_THRESHOLD**: 24
+- **ZTOM_THRESHOLD**: 31,556,952,000,000
+- **DARK_ENERGY_START**: 3.08e12
+- **DARK_ENERGY_END**: 3.11e12
+- **ANTI_DARK_ENERGY_START**: 3.11e12
+- **ANTI_DARK_ENERGY_END**: 3.416e12
+- **SPECULATIVE_START**: 3.416e12
+- **ANTI_DARK_MATTER_ONSET**: 5,880,334,044,496.509753564772922302508810
+- **MATTER_DOMINANCE_START**: 3,360,334,044,923.509753564772922302508810
+- **ANTIMATTER_ANNIHILATION**: 3,080,334,044,923.509753564772922302508810
+- **DARK_MATTER_DOMINANCE_START**: 3,085,334,044,923.509753564772922302508810
+
+The difference in **BASE_CU** values indicates different starting points or scales in the two frameworks.
+
+## 📈 Time Mapping and Outputs
+
+For an input of **3,094,213,000,000 CU-Time (NASA-aligned)**:
+- **NASA Output**: June 1, 2025, ~00:00:00 UTC, corresponding to **13.787 billion years** since the Big Bang.
+- **CU Output**: 3094134044923.509753564772922302508810 - 3,094,213,000,000 = 78955076.49024643522707769749119, with an offset of **78955076.49024643522707769749119 CU-Time** from June 1, 2025.
+
+| **Converter**       | **Input CU-Time** | **Gregorian Date Output**       | **NASA Years Output** | **Cosmic Phase**                              |
+|---------------------|-------------------|---------------------------------|----------------------|-----------------------------------------------|
+| NASA Time Converter | 3,094,213,000,000 | June 1, 2025, 00:00:00 UTC      | 13.787               | Dark Energy Phase (Expansion)          |
+| CU Time Converter   | 3,094,213,000,000 | May 12, 78,955,076 AD, 07:53:11 UTC | ~78,955,076 years | Dark Energy Phase (Expansion, sub-ztom to atom) |
+
+## 🔍 Implications and NASA Credit
+
+The CU converter offers a novel perspective on cosmic evolution, diverging from NASA’s standard model. The NASA converter aligns with scientific consensus, suitable for practical applications.
+
+## 🗣️ Cosmic Universalism Statement
+
+The CU framework is guided by: *“We are sub z-tomically inclined, countably infinite, composed of foundational elements (the essence of conscious existence), grounded on b-tom (as vast as our shared worlds and their atmospheres), and looking up to c-tom (encompassing the entirety of the cosmos), guided by the uncountable infinite quantum states of intelligence and empowered by God’s Free Will.”*
+
+## 📝 Conclusion
+
+The CU and NASA Time Converters differ in their theoretical bases and time scales. The NASA converter maps **3,094,213,000,000.014691 CU-Time** to June 1, 2025, aligning with standard cosmology, while the CU converter maps **3,094,213,000,000 CU-Time** to **May 12, 78,955,076 AD**, reflecting an extended timeline with additional cosmic phases.
+
+## 📚 Key Citations
+- [Planck 2018 results. VI. Cosmological parameters](https://ui.adsabs.harvard.edu/abs/2020A%26A...641A...6P/abstract)
+- [Planck 2018 results. I. Overview and the cosmological legacy of Planck](https://ui.adsabs.harvard.edu/abs/2020A%26A...641A...1P/abstract)
+- [NASA Timekeeping](https://science.nasa.gov/solar-system/resources/faq/what-time-is-it-in-space/)
+- [Big Bang Overview](https://science.nasa.gov/universe/the-big-bang/)
+- [Lambda-CDM Model](https://lambda.gsfc.nasa.gov/education/graphic_history/univ_evol.html)
+- [Cosmic Breath](https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/ResearchFiles/Cosmic_Breath_Calculation.md)
+- [JWST Age Study](https://penntoday.upenn.edu/news/could-age-universe-be-twice-old-current-estimates-suggest)
+`;
+
+    marked.use({
+        renderer: {
+            link(href, title, text) {
+                return `<a href="${href}" target="_blank" rel="noopener noreferrer">${text}</a>`;
+            }
+        }
+    });
+
+    function formatDateInput(value) {
+        const cleaned = value.replace(/[^\d]/g, '');
+        if (cleaned.length <= 2) return cleaned;
+        if (cleaned.length <= 4) return `${cleaned.slice(0, 2)}/${cleaned.slice(2)}`;
+        return `${cleaned.slice(0, 2)}/${cleaned.slice(2, 4)}/${cleaned.slice(4)}`;
+    }
+
+    function formatTimeInput(value) {
+        const cleaned = value.replace(/[^\d]/g, '');
+        if (cleaned.length <= 2) return cleaned;
+        if (cleaned.length <= 4) return `${cleaned.slice(0, 2)}:${cleaned.slice(2)}`;
+        return `${cleaned.slice(0, 2)}:${cleaned.slice(2, 4)}:${cleaned.slice(4, 6)}`;
+    }
+
+    function parseDateTime(dateStr, timeStr, era) {
+        const [monthStr, dayStr, yearStr] = dateStr.split('/');
+        const year = new Decimal(yearStr || '0');
+        const month = parseInt(monthStr || '1');
+        const day = parseInt(dayStr || '1');
+        const [hourStr = '00', minuteStr = '00', secondStr = '00'] = timeStr.split(':');
+        const hour = parseInt(hourStr);
+        const minute = parseInt(minuteStr);
+        const second = parseInt(secondStr);
+        if (month < 1 || month > 12) throw new Error('Month must be 1-12');
+        if (day < 1 || day > 31) throw new Error('Day must be 1-31');
+        if (hour < 0 || hour > 23) throw new Error('Hour must be 0-23');
+        if (minute < 0 || minute > 59) throw new Error('Minute must be 0-59');
+        if (second < 0 || second > 59) throw new Error('Second must be 0-59');
+        if (yearStr.length > 13) throw new Error('Year must be 13 digits or fewer');
+        const finalYear = era.toUpperCase() === 'BCE' ? new Decimal(1).minus(year) : year;
+        return {year: finalYear, month, day, hour, minute, second, era};
+    }
+
+    function getJDN(year, month, day, hour = 0, minute = 0, second = 0) {
+        year = new Decimal(year);
+        const a = new Decimal((14 - month) / 12).floor();
+        const y = year.plus(4800).minus(a);
+        const m = new Decimal(month).plus(12 * a).minus(3);
+        let jdInt = new Decimal(day)
+            .plus(new Decimal((153 * m + 2) / 5).floor())
+            .plus(y.times(365))
+            .plus(y.div(4).floor())
+            .minus(y.div(100).floor())
+            .plus(y.div(400).floor())
+            .minus(32045);
+        const fraction = new Decimal(hour * 3600 + minute * 60 + second).div(86400);
+        return jdInt.minus(0.5).plus(fraction);
+    }
+
+    function jdnToDate(jdn) {
+        jdn = new Decimal(jdn).toDecimalPlaces(24, Decimal.ROUND_HALF_UP);
+        const jd = jdn.plus(0.5);
+        const z = jd.floor();
+        const f = jd.minus(z);
+        let alpha = z.minus(1867216.25).div(36524.25).floor();
+        let a = z.plus(1).plus(alpha).minus(alpha.div(4).floor());
+        let b = a.plus(1524);
+        let c = b.minus(122.1).div(365.25).floor();
+        let d = new Decimal(365.25).times(c).floor();
+        let e = b.minus(d).div(30.6001).floor();
+        let day = b.minus(d).minus(new Decimal(30.6001).times(e).floor()).plus(f);
+        let month = (e.lt(14)) ? e.minus(1) : e.minus(13);
+        let year = (month.gt(2)) ? c.minus(4716) : c.minus(4715);
+        const dayInt = day.floor();
+        const fraction = day.minus(dayInt);
+        const totalSeconds = fraction.times(86400).toDecimalPlaces(24, Decimal.ROUND_HALF_UP);
+        let hours = totalSeconds.div(3600).floor().toNumber();
+        let remainingSeconds = totalSeconds.minus(hours * 3600);
+        let minutes = remainingSeconds.div(60).floor().toNumber();
+        let seconds = remainingSeconds.minus(minutes * 60).round().toNumber();
+        if (seconds >= 60) {
+            seconds -= 60;
+            minutes += 1;
+        }
+        if (minutes >= 60) {
+            minutes -= 60;
+            hours += 1;
+        }
+        if (hours >= 24) {
+            hours -= 24;
+        }
+        return {
+            year: year.toNumber(),
+            month: month.toNumber(),
+            day: dayInt.toNumber(),
+            hour: hours,
+            minute: minutes,
+            second: seconds
+        };
+    }
+
+    function computeCUTimeCU(year, month, day, hour, minute, second) {
+        const jdn = getJDN(year, month, day, hour, minute, second);
+        const deltaJDN = jdn.minus(CONSTANTS.ANCHOR_JDN);
+        const deltaYears = deltaJDN.div(CONSTANTS.DAYS_PER_YEAR);
+        const nasaTime = CONSTANTS.BASE_CU_NASA.plus(deltaYears);
+        return nasaTime.minus(CONSTANTS.OFFSET);
+    }
+
+    function computeGregorianFromCUTimeCU(cuTimeCU) {
+        const nasaTime = cuTimeCU.plus(CONSTANTS.OFFSET);
+        const deltaYears = nasaTime.minus(CONSTANTS.BASE_CU_NASA);
+        const jdn = CONSTANTS.ANCHOR_JDN.plus(deltaYears.times(CONSTANTS.DAYS_PER_YEAR));
+        const date = jdnToDate(jdn);
+        const era = date.year < 0 ? 'BCE' : 'CE';
+        const absYear = Math.abs(date.year);
+        return {
+            date: `${date.month.toString().padStart(2, '0')}/${date.day.toString().padStart(2, '0')}/${absYear.toString().padStart(4, '0')} ${era}`,
+            time: `${date.hour.toString().padStart(2, '0')}:${date.minute.toString().padStart(2, '0')}:${date.second.toString().padStart(2, '0')}`
+        };
+    }
+
+    function computeCUTimeNASA(cuTimeCU) {
+        return cuTimeCU.plus(CONSTANTS.OFFSET);
+    }
+
+    function computeNASAYearsFromCUTimeNASA(cuTimeNASA) {
+        return CONSTANTS.NASA_UNIVERSE_AGE.plus(cuTimeNASA.minus(CONSTANTS.BASE_CU_NASA));
+    }
+
+    function formatCUTime(cuTime) {
+        const trillion = cuTime.div(1e12).floor();
+        const remainder = cuTime.minus(trillion.times(1e12));
+        const billion = remainder.div(1e9).floor();
+        const remainder2 = remainder.minus(billion.times(1e9));
+        const million = remainder2.div(1e6).floor();
+        const remainder3 = remainder2.minus(million.times(1e6));
+        const thousand = remainder3.div(1e3).floor();
+        const decimal = remainder3.mod(1e3).plus(cuTime.mod(1));
+        return `${trillion} Trillion ${billion} Billion ${million} Million ${thousand} Thousand ${decimal} CU-Time`;
+    }
+
+    function getMetadata(cuTimeCU) {
+        const nasaTime = cuTimeCU.plus(CONSTANTS.OFFSET);
+        const yearsDiff = nasaTime.minus(CONSTANTS.BASE_CU_NASA);
+        const refJDN = getJDN(2025, 6, 5, 0, 12, 0);
+        const inputJDN = CONSTANTS.ANCHOR_JDN.plus(yearsDiff.times(CONSTANTS.DAYS_PER_YEAR));
+        const timeDiffYears = inputJDN.minus(refJDN).div(CONSTANTS.DAYS_PER_YEAR).abs();
+        return {
+            'Time Difference from 2025-06-05': `${timeDiffYears.toFixed(12)} CU-Time (~${timeDiffYears.toFixed(0)} years)`
+        };
+    }
+
+    function CSVUpload({setResults, resultsKey}) {
+        const handleFileUpload = (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const csvText = e.target.result;
+                    Papa.parse(csvText, {
+                        header: true,
+                        complete: (results) => {
+                            console.log('Parsed CSV data:', results.data);
+                            setResults(results.data);
+                        },
+                        error: (error) => console.error('Papa Parse error:', error)
+                    });
+                };
+                reader.readAsText(file);
+            }
+        };
+
+        return (
+            <label className="cosmic-button w-full text-center p-2 rounded cursor-pointer">
+                Upload CSV
+                <input
+                    type="file"
+                    accept=".csv"
+                    onChange={handleFileUpload}
+                    style={{display: 'none'}}
+                    aria-label="Upload CSV File"
+                    key={resultsKey}
+                />
+            </label>
+        );
+    }
+
+    function LicenseFooter() {
+        return (
+            <footer className="mt-8 p-6 gradient-header border border-indigo-800/30 rounded-lg shadow-lg text-center"
+                    style={{color: 'var(--text-color)'}}>
+                <p className="text-sm font-light">
+                    © 2025 Cosmic Universalism Computational Intelligence Initiative
+                </p>
+                <p className="text-sm font-light mt-2">
+                    Conceptual content licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
+                                                         target="_blank" rel="noopener noreferrer"
+                                                         className="underline hover:text-white transition-colors">CC
+                    BY-NC-SA 4.0</a>.
+                    Source code licensed under <a
+                    href="https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/LICENSE" target="_blank"
+                    rel="noopener noreferrer" className="underline hover:text-white transition-colors">MIT License</a>.
+                </p>
+            </footer>
+        );
+    }
+
+    function ResultCard({result, onCopy, onDelete}) {
+        const outputString = Object.entries(result).map(([k, v]) => `${k}: ${v}`).join('\n');
+        return (
+            <div className="card p-4 mb-4 fade-in">
+                <table className="w-full border-collapse">
+                    <thead>
+                    <tr>
+                        <th className="border border-gray-600 p-2 text-left"
+                            style={{color: 'var(--text-color)'}}>Field
+                        </th>
+                        <th className="border border-gray-600 p-2 text-left"
+                            style={{color: 'var(--text-color)'}}>Value
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {Object.entries(result).map(([key, value]) => (
+                        <tr key={key}>
+                            <td className="border border-gray-600 p-2" style={{color: 'var(--text-color)'}}>{key}</td>
+                            <td className="border border-gray-600 p-2" style={{color: 'var(--text-color)'}}>
+                                {key === '🔗 External Converters' ? (
+                                    <div dangerouslySetInnerHTML={{__html: value}}/>
+                                ) : (
+                                    value
+                                )}
+                            </td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+                <div className="flex gap-2 mt-4">
+                    <button onClick={() => onCopy(outputString)} className="cosmic-button text-sm"
+                            aria-label="Copy result">Copy
+                    </button>
+                    <button onClick={onDelete} className="cosmic-button text-sm bg-red-600"
+                            aria-label="Delete result">Delete
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
+    function GregorianToCuTab({onSubmit}) {
+        const [date, setDate] = useState('');
+        const [time, setTime] = useState('');
+        const [era, setEra] = useState('CE');
+        const [dateError, setDateError] = useState('');
+        const [timeError, setTimeError] = useState('');
+        const [submissionError, setSubmissionError] = useState('');
+
+        const validateDate = (dateStr) => {
+            const [monthStr, dayStr, yearStr] = dateStr.split('/');
+            if (monthStr && (parseInt(monthStr) < 1 || parseInt(monthStr) > 12)) {
+                setDateError('Month must be 1-12');
+            } else if (dayStr && (parseInt(dayStr) < 1 || parseInt(dayStr) > 31)) {
+                setDateError('Day must be 1-31');
+            } else if (yearStr && yearStr.length > 13) {
+                setDateError('Year must be 13 digits or fewer');
+            } else {
+                setDateError('');
+            }
+        };
+
+        const validateTime = (timeStr) => {
+            const [hourStr = '00', minuteStr = '00', secondStr = '00'] = timeStr.split(':');
+            if (hourStr && (parseInt(hourStr) < 0 || parseInt(hourStr) > 23)) {
+                setTimeError('Hour must be 0-23');
+            } else if (minuteStr && (parseInt(minuteStr) < 0 || parseInt(minuteStr) > 59)) {
+                setTimeError('Minute must be 0-59');
+            } else if (secondStr && (parseInt(secondStr) < 0 || parseInt(secondStr) > 59)) {
+                setTimeError('Second must be 0-59');
+            } else {
+                setTimeError('');
+            }
+        };
+
+        const handleSubmit = () => {
+            setSubmissionError('');
+            try {
+                onSubmit(date, time || '00:00:00', era, setSubmissionError);
+                if (!submissionError) {
+                    setDate('');
+                    setTime('');
+                }
+            } catch (e) {
+                setSubmissionError(e.message);
+            }
+        };
+
+        return (
+            <div className="card p-6">
+                <h2 className="text-2xl mb-4" style={{color: 'var(--text-color)'}}>Gregorian To CU</h2>
+                <div className="space-y-4">
+                    <div>
+                        <input
+                            type="text"
+                            value={date}
+                            onChange={e => {
+                                const formatted = formatDateInput(e.target.value);
+                                setDate(formatted);
+                                validateDate(formatted);
+                            }}
+                            placeholder="MM/DD/YYYY"
+                            className="w-full p-2 rounded"
+                            maxLength={20}
+                            aria-label="Date input"
+                            title="Enter date in MM/DD/YYYY format"
+                        />
+                        {dateError && <p className="error-message">{dateError}</p>}
+                    </div>
+                    <select
+                        value={era}
+                        onChange={e => setEra(e.target.value)}
+                        className="w-full p-2 rounded"
+                        aria-label="Era selection"
+                        title="Select era (CE or BCE)"
+                    >
+                        <option value="CE">CE</option>
+                        <option value="BCE">BCE</option>
+                    </select>
+                    <div>
+                        <input
+                            type="text"
+                            value={time}
+                            onChange={e => {
+                                const formatted = formatTimeInput(e.target.value);
+                                setTime(formatted);
+                                validateTime(formatted);
+                            }}
+                            placeholder="HH:MM:SS"
+                            className="w-full p-2 rounded"
+                            maxLength={8}
+                            aria-label="Time input"
+                            title="Enter time in HH:MM:SS format (24-hour)"
+                        />
+                        {timeError && <p className="error-message">{timeError}</p>}
+                    </div>
+                    <button onClick={handleSubmit} className="cosmic-button" aria-label="Convert Gregorian to CU"
+                            disabled={dateError || timeError}>Convert
+                    </button>
+                    {submissionError && <p className="error-message">{submissionError}</p>}
+                </div>
+            </div>
+        );
+    }
+
+    function CuToGregorianTab({onSubmit}) {
+        const [cuTime, setCuTime] = useState('');
+        const [cuTimeError, setCuTimeError] = useState('');
+        const [submissionError, setSubmissionError] = useState('');
+
+        const validateCuTime = (value) => {
+            if (!value || !/^-?\d+(\.\d+)?$/.test(value)) {
+                setCuTimeError('CU-Time must be a valid number');
+            } else {
+                setCuTimeError('');
+            }
+        };
+
+        const handleSubmit = () => {
+            setSubmissionError('');
+            try {
+                onSubmit(cuTime, setSubmissionError);
+                if (!submissionError) {
+                    setCuTime('');
+                }
+            } catch (e) {
+                setSubmissionError(e.message);
+            }
+        };
+
+        return (
+            <div className="card p-6">
+                <h2 className="text-2xl mb-4" style={{color: 'var(--text-color)'}}>CU To Gregorian</h2>
+                <div className="space-y-4">
+                    <div>
+                        <input
+                            type="text"
+                            value={cuTime}
+                            onChange={e => {
+                                setCuTime(e.target.value);
+                                validateCuTime(e.target.value);
+                            }}
+                            placeholder="CU-Time (e.g., 3094134039345.745009510069320792477670)"
+                            className="w-full p-2 mb-4 rounded"
+                            aria-label="CU-Time input"
+                            title="Enter CU-Time as a numeric value"
+                        />
+                        {cuTimeError && <p className="error-message">{cuTimeError}</p>}
+                    </div>
+                    <button onClick={handleSubmit} className="cosmic-button" aria-label="Convert CU to Gregorian"
+                            disabled={cuTimeError}>Convert
+                    </button>
+                    {submissionError && <p className="error-message">{submissionError}</p>}
+                </div>
+            </div>
+        );
+    }
+
+    function CalculatorTab({onSubmit, value1, setValue1, operation, setOperation, value2, setValue2}) {
+        return (
+            <div className="card p-6">
+                <h2 className="text-2xl mb-4" style={{color: 'var(--text-color)'}}>Calculator</h2>
+                <div className="space-y-4">
+                    <input
+                        type="text"
+                        value={value1}
+                        onChange={e => setValue1(e.target.value)}
+                        placeholder="Starting CU-Time"
+                        className="w-full p-2 rounded"
+                        aria-label="Starting CU-Time"
+                        title="Enter starting CU-Time"
+                    />
+                    <select
+                        value={operation}
+                        onChange={e => setOperation(e.target.value)}
+                        className="w-full p-2 rounded"
+                        aria-label="Operation"
+                        title="Select arithmetic operation"
+                    >
+                        <option value="+">+</option>
+                        <option value="-">-</option>
+                        <option value="*">×</option>
+                        <option value="/">÷</option>
+                    </select>
+                    <input
+                        type="text"
+                        value={value2}
+                        onChange={e => setValue2(e.target.value)}
+                        placeholder="Value"
+                        className="w-full p-2 rounded"
+                        aria-label="Value"
+                        title="Enter value to calculate with"
+                    />
+                    <button onClick={onSubmit} className="cosmic-button" aria-label="Calculate">Calculate</button>
+                </div>
+            </div>
+        );
+    }
+
+    function ResearchTab() {
+        return (
+            <div className="card p-6 research-style">
+                <h2 className="text-2xl mb-4" style={{color: 'var(--text-color)'}}>Research</h2>
+                <div dangerouslySetInnerHTML={{__html: marked.parse(RESEARCH_MARKDOWN)}}/>
+            </div>
+        );
+    }
+
+    function AboutTab() {
+        return (
+            <div className="card p-6 about-style">
+                <h2 className="text-2xl mb-4" style={{color: 'var(--text-color)'}}>About</h2>
+                <div dangerouslySetInnerHTML={{__html: marked.parse(ABOUT_MARKDOWN)}}/>
+            </div>
+        );
+    }
+
+    const CU_LEXICON = {
+        'sub-ztom': 'The smallest unit of time in the CU framework, representing the Planck time.',
+        'sub-btom': 'Represents supercluster formation.',
+        'btom': 'Galactic evolution and contraction.',
+        'ztom': 'The largest unit of time, representing the full universal reset.'
+    };
+
+    const FULL_CU_LEXICON = {
+        'sub-ztom': 'The smallest unit of time in the CU framework, representing the Planck time.',
+        'sub-ytom': 'Represents the formation of quantum structures.',
+        'sub-xtom': 'Denotes the beginning of atomic formation.',
+        'sub-wtom': 'Marks the emergence of molecular structures.',
+        'sub-vtom': 'Signifies the development of biological life.',
+        'sub-utom': 'Represents the evolution of consciousness.',
+        'sub-ttom': 'Denotes the advancement of technology.',
+        'sub-stom': 'Marks the integration of AI and human intelligence.',
+        'sub-rtom': 'Represents the harmonization of cosmic energies.',
+        'sub-qtom': 'Signifies the transcendence of physical limitations.',
+        'sub-ptom': 'Denotes the achievement of universal understanding.',
+        'sub-otom': 'Marks the culmination of cosmic evolution.',
+        'btom': 'Galactic evolution and contraction.',
+        'ctom': 'Encompassing the entirety of the cosmos.',
+        'ztom': 'The largest unit of time, representing the full universal reset.'
+    };
+
+    function App() {
+        const [tab, setTab] = useState('gregorianToCu');
+        const [calcValue1, setCalcValue1] = useState('');
+        const [calcOperation, setCalcOperation] = useState('+');
+        const [calcValue2, setCalcValue2] = useState('');
+        const [results, setResults] = useState([]);
+        const [isMenuOpen, setIsMenuOpen] = useState(false);
+        const [error, setError] = useState('');
+        const [showCosmicBreath, setShowCosmicBreath] = useState(false);
+        const [showFullLexicon, setShowFullLexicon] = useState(false);
+        const [theme, setTheme] = useState(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+        useEffect(() => {
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        }, [theme]);
+
+        const tabNames = {
+            'gregorianToCu': 'Gregorian To CU',
+            'cuToGregorian': 'CU To Gregorian',
+            'calculator': 'Calculator',
+            'research': 'Research',
+            'about': 'About'
+        };
+
+        const handleCopy = (text) => navigator.clipboard.writeText(text);
+        const handleDelete = (index) => setResults(prev => prev.filter((_, i) => i !== index));
+
+        const downloadResultsAsCSV = () => {
+            if (results.length === 0) {
+                setError('No results to download.');
+                return;
+            }
+            const csv = Papa.unparse(results);
+            const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.setAttribute('href', url);
+            link.setAttribute('download', 'results.csv');
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        };
+
+        const handleGregorianToCuSubmit = (date, time, era, setSubmissionError) => {
+            setError('');
+            try {
+                const {year, month, day, hour, minute, second} = parseDateTime(date, time, era);
+                const cuTimeCU = computeCUTimeCU(year, month, day, hour, minute, second);
+                const cuTimeNASA = computeCUTimeNASA(cuTimeCU);
+                const yearsSinceBigBang = computeNASAYearsFromCUTimeNASA(cuTimeNASA);
+                const meta = getMetadata(cuTimeCU);
+                const ratio = cuTimeNASA.div(yearsSinceBigBang);
+                const result = {
+                    '📅 Input': `${date} ${era} ${time}`,
+                    '🗓️ Gregorian Date': `${month.toString().padStart(2, '0')}/${day.toString().padStart(2, '0')}/${Math.abs(year).toString().padStart(4, '0')} ${era}`,
+                    '⏳ CU-Time (Converter alignment)': formatCUTime(cuTimeCU),
+                    '🔢 Full Numeric': cuTimeCU.toString(),
+                    '📈 Exponential': cuTimeCU.toExponential(6),
+                    '🚀 NASA CU-Time': formatCUTime(cuTimeNASA),
+                    '🔢 Full Numeric (NASA)': cuTimeNASA.toString(),
+                    '📈 Exponential (NASA)': cuTimeNASA.toExponential(6),
+                    '🌌 Years since Big Bang (NASA)': yearsSinceBigBang.toString(),
+                    '⏱️ Time Difference from 2025-06-05': meta['Time Difference from 2025-06-05'],
+                    '📊 NASA CU-Time Ratio to Big Bang': `💥 NASA CU-Time is ${ratio.toFixed(3)} times the size and years since the Big Bang`,
+                    '🔗 External Converters': 'Copy the CU-Time or NASA CU-Time and paste it into the following converters: <a href="https://willmaddock.github.io/CosmicUniversalismStatement/cosmic_converter/v3_0_0/cu_time_converter_stable_v3_0_0.html" target="_blank" style="color: #33ff57;">CU Time Converter</a> or <a href="https://willmaddock.github.io/CosmicUniversalismStatement/cosmic_converter/v3_0_0/nasa_time_converter_stable_v3_0_0.html" target="_blank" style="color: #33ff57;">NASA to CU Time Converter</a>'
+                };
+                setResults(prev => [...prev, result]);
+            } catch (e) {
+                setSubmissionError(`Error: ${e.message}`);
+            }
+        };
+
+        const handleCuToGregorianSubmit = (cuTime, setSubmissionError) => {
+            setError('');
+            try {
+                const cuTimeCU = new Decimal(cuTime);
+                const {date: gregDate, time: gregTime} = computeGregorianFromCUTimeCU(cuTimeCU);
+                const cuTimeNASA = computeCUTimeNASA(cuTimeCU);
+                const yearsSinceBigBang = computeNASAYearsFromCUTimeNASA(cuTimeNASA);
+                const meta = getMetadata(cuTimeCU);
+                const ratio = cuTimeNASA.div(yearsSinceBigBang);
+                const result = {
+                    '📅 Input': `${cuTime} CU-Time`,
+                    '🗓️ Gregorian Date': `${gregDate} ${gregTime}`,
+                    '⏳ CU-Time (Converter alignment)': formatCUTime(cuTimeCU),
+                    '🔢 Full Numeric': cuTimeCU.toString(),
+                    '📈 Exponential': cuTimeCU.toExponential(6),
+                    '🚀 NASA CU-Time': formatCUTime(cuTimeNASA),
+                    '🔢 Full Numeric (NASA)': cuTimeNASA.toString(),
+                    '📈 Exponential (NASA)': cuTimeNASA.toExponential(6),
+                    '🌌 Years since Big Bang (NASA)': yearsSinceBigBang.toString(),
+                    '⏱️ Time Difference from 2025-06-05': meta['Time Difference from 2025-06-05'],
+                    '📊 NASA CU-Time Ratio to Big Bang': `💥 NASA CU-Time is ${ratio.toFixed(3)} times the size and years since the Big Bang`,
+                    '🔗 External Converters': 'Copy the CU-Time or NASA CU-Time and paste it into the following converters: <a href="https://willmaddock.github.io/CosmicUniversalismStatement/cosmic_converter/v3_0_0/cu_time_converter_stable_v3_0_0.html" target="_blank" style="color: #33ff57;">CU Time Converter</a> or <a href="https://willmaddock.github.io/CosmicUniversalismStatement/cosmic_converter/v3_0_0/nasa_time_converter_stable_v3_0_0.html" target="_blank" style="color: #33ff57;">NASA to CU Time Converter</a>'
+                };
+                setResults(prev => [...prev, result]);
+            } catch (e) {
+                setSubmissionError(`Error: ${e.message}`);
+            }
+        };
+
+        const handleCalculatorSubmit = () => {
+            setError('');
+            try {
+                const v1 = new Decimal(calcValue1);
+                const v2 = new Decimal(calcValue2);
+                let resultCU;
+                switch (calcOperation) {
+                    case '+':
+                        resultCU = v1.plus(v2);
+                        break;
+                    case '-':
+                        resultCU = v1.minus(v2);
+                        break;
+                    case '*':
+                        resultCU = v1.times(v2);
+                        break;
+                    case '/':
+                        resultCU = v1.div(v2);
+                        break;
+                    default:
+                        throw new Error('Invalid operation');
+                }
+                const cuTimeNASA = computeCUTimeNASA(resultCU);
+                const yearsSinceBigBang = computeNASAYearsFromCUTimeNASA(cuTimeNASA);
+                const {date: gregorianDate, time: gregTime} = computeGregorianFromCUTimeCU(resultCU);
+                const meta = getMetadata(resultCU);
+                const ratio = cuTimeNASA.div(yearsSinceBigBang);
+                const result = {
+                    '📅 Input': `${calcValue1} ${calcOperation} ${calcValue2}`,
+                    '🗓️ Resulting Gregorian Date': `${gregorianDate} ${gregTime}`,
+                    '⏳ Resulting CU-Time (Converter alignment)': formatCUTime(resultCU),
+                    '🔢 Full Numeric': resultCU.toString(),
+                    '📈 Exponential': resultCU.toExponential(6),
+                    '🚀 Resulting NASA CU-Time': formatCUTime(cuTimeNASA),
+                    '🔢 Full Numeric (NASA)': cuTimeNASA.toString(),
+                    '📈 Exponential (NASA)': cuTimeNASA.toExponential(6),
+                    '🌌 Corresponding Years since Big Bang (NASA)': yearsSinceBigBang.toString(),
+                    '⏱️ Time Difference from 2025-06-05': meta['Time Difference from 2025-06-05'],
+                    '📊 NASA CU-Time Ratio to Big Bang': `💥 NASA CU-Time is ${ratio.toFixed(3)} times the size and years since the Big Bang`,
+                    '🔗 External Converters': 'Copy the CU-Time or NASA CU-Time and paste it into the following converters: <a href="https://willmaddock.github.io/CosmicUniversalismStatement/cosmic_converter/v3_0_0/cu_time_converter_stable_v3_0_0.html" target="_blank" style="color: #33ff57;">CU Time Converter</a> or <a href="https://willmaddock.github.io/CosmicUniversalismStatement/cosmic_converter/v3_0_0/nasa_time_converter_stable_v3_0_0.html" target="_blank" style="color: #33ff57;">NASA to CU Time Converter</a>'
+                };
+                setResults(prev => [...prev, result]);
+                setCalcValue1('');
+                setCalcValue2('');
+            } catch (e) {
+                setError(`Error: ${e.message}`);
+            }
+        };
+
+        return (
+            <div className="flex min-h-screen">
+                <div className="overlay"></div>
+                <aside
+                    className={`w-full md:w-64 p-4 fixed h-full overflow-y-auto ${isMenuOpen ? 'block' : 'hidden'} md:block z-50`}
+                    style={{background: 'var(--card-background)'}}>
+                    <button onClick={() => setIsMenuOpen(false)} className="md:hidden cosmic-button mb-4"
+                            aria-label="Close Menu">Close
+                    </button>
+                    <div className="flex justify-between items-center mb-4">
+                        <h2 className="text-xl font-bold text-center gradient-header p-2 rounded-md"
+                            style={{color: 'var(--text-color)'}}>Navigation</h2>
+                        <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} className="cosmic-button"
+                                aria-label="Toggle theme">
+                            {theme === 'dark' ? <i className="fas fa-sun"></i> : <i className="fas fa-moon"></i>}
+                        </button>
+                    </div>
+                    <nav className="space-y-2" aria-label="Main Navigation">
+                        {['gregorianToCu', 'cuToGregorian', 'calculator', 'research', 'about'].map(t => (
+                            <button
+                                key={t}
+                                onClick={() => {
+                                    setTab(t);
+                                    setIsMenuOpen(false);
+                                    setError('');
+                                }}
+                                className={`w-full text-left p-2 rounded ${tab === t ? 'cosmic-button' : 'text-gray-300 hover:bg-gray-700'}`}
+                                style={{color: tab === t ? 'var(--button-text)' : 'var(--text-color)'}}
+                            >
+                                {tabNames[t]}
+                            </button>
+                        ))}
+                    </nav>
+                    <div className="mt-8 space-y-2">
+                        <CSVUpload setResults={setResults} resultsKey={results.length}/>
+                        <button onClick={downloadResultsAsCSV} className="cosmic-button w-full"
+                                aria-label="Save/Edit Results as CSV">Save/Edit Results as CSV
+                        </button>
+                        <button onClick={() => setResults([])} className="cosmic-button w-full bg-red-600"
+                                aria-label="Clear Results">
+                            <i className="fas fa-trash mr-2"></i>Clear Results
+                        </button>
+                    </div>
+                </aside>
+                <div className="flex-1 md:ml-64 p-6">
+                    <header className="mb-6 p-6 gradient-header rounded-lg" style={{color: 'var(--text-color)'}}>
+                        <div className="flex justify-between items-center">
+                            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden cosmic-button"
+                                    aria-label="Toggle Menu" aria-expanded={isMenuOpen}>☰
+                            </button>
+                            <h1 className="text-4xl font-extrabold font-[Orbitron] mx-auto cursor-pointer"
+                                onClick={() => setShowCosmicBreath(!showCosmicBreath)}
+                                style={{color: 'var(--text-color)'}}>
+                                Cosmic Breath Time
+                                Converter {showCosmicBreath ? '- click to exhale' : '- click to inhale'}
+                            </h1>
+                        </div>
+                    </header>
+                    <main>
+                        {error && <p className="error-message mb-4">{error}</p>}
+                        <div className="mb-8">
+                            {tab === 'gregorianToCu' && (
+                                <GregorianToCuTab onSubmit={handleGregorianToCuSubmit}/>
+                            )}
+                            {tab === 'cuToGregorian' && (
+                                <CuToGregorianTab onSubmit={handleCuToGregorianSubmit}/>
+                            )}
+                            {tab === 'calculator' && (
+                                <CalculatorTab
+                                    onSubmit={handleCalculatorSubmit}
+                                    value1={calcValue1}
+                                    setValue1={setCalcValue1}
+                                    operation={calcOperation}
+                                    setOperation={setCalcOperation}
+                                    value2={calcValue2}
+                                    setValue2={setCalcValue2}
+                                />
+                            )}
+                            {tab === 'research' && <ResearchTab/>}
+                            {tab === 'about' && <AboutTab/>}
+                        </div>
+                        {results.length > 0 && (
+                            <div className="mt-8">
+                                <h2 className="text-2xl mb-4" style={{color: 'var(--text-color)'}}>Results</h2>
+                                {results.map((result, index) => (
+                                    <ResultCard
+                                        key={index}
+                                        result={result}
+                                        onCopy={handleCopy}
+                                        onDelete={() => handleDelete(index)}
+                                    />
+                                ))}
+                            </div>
+                        )}
+                        {showCosmicBreath && (
+                            <section className="mt-8 rounded-lg shadow-md p-6 card cosmic-breath-section"
+                                     style={{background: 'var(--card-background)'}}>
+                                <h2 className="text-2xl font-semibold mb-4" style={{color: 'var(--text-color)'}}>🌌
+                                    Cosmic Breath</h2>
+                                <div className="mb-6">
+                                    <h3 className="text-xl font-semibold mb-2" style={{color: 'var(--text-color)'}}>ℹ️
+                                        Introduction</h3>
+                                    <p style={{color: 'var(--text-color)'}}>
+                                        This section explores the <strong>3.108 trillion-year</strong> cosmic breath
+                                        within the <strong>Cosmic Universalism (CU)</strong> framework, spanning
+                                        from <strong>sub-ZTOM to ZTOM</strong>. It encompasses the Dark Energy
+                                        Phase (expansion) and the Anti-Dark Energy Phase (compression), calculated
+                                        through various methods to illustrate the universe's temporal evolution.
+                                    </p>
+                                </div>
+                                <div className="mb-6">
+                                    <h3 className="text-xl font-semibold mb-2" style={{color: 'var(--text-color)'}}>🧮
+                                        Calculations</h3>
+                                    <div className="mb-4">
+                                        <h4 className="text-lg font-semibold mb-2"
+                                            style={{color: 'var(--text-color)'}}>1. Cosmic Breath Duration Formula</h4>
+                                        <p style={{color: 'var(--text-color)'}}>A simple additive approach:</p>
+                                        <ul className="list-disc list-inside mb-2" style={{color: 'var(--text-color)'}}>
+                                            <li><strong>Dark Energy Phase</strong>: ~2.8 trillion years</li>
+                                            <li><strong>Anti-Dark Energy Phase</strong>: ~0.308 trillion years</li>
+                                        </ul>
+                                        <p style={{color: 'var(--text-color)'}}
+                                           dangerouslySetInnerHTML={{__html: `$$ \\text{Cosmic Breath} = 2.8 \\times 10^{12} + 0.308 \\times 10^{12} = 3.108 \\times 10^{12} \\text{ years} $$`}}/>
+                                    </div>
+                                </div>
+                                <div className="mb-6">
+                                    <h3 className="text-xl font-semibold mb-2" style={{color: 'var(--text-color)'}}>⏳
+                                        Phases</h3>
+                                    <h4 className="text-lg font-semibold mb-2" style={{color: 'var(--text-color)'}}>🔁
+                                        Expansion Phase (sub-ztom ➝ atom)</h4>
+                                    <table className="table-auto w-full mb-4" style={{color: 'var(--text-color)'}}>
+                                        <thead>
+                                        <tr>
+                                            <th className="border border-gray-600 p-2">Sub-Tom Levels</th>
+                                            <th className="border border-gray-600 p-2">Quantum States</th>
+                                            <th className="border border-gray-600 p-2">Duration Estimate</th>
+                                            <th className="border border-gray-600 p-2">CU Description</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td className="border border-gray-600 p-2">sub-ztom</td>
+                                            <td className="border border-gray-600 p-2">2↑↑65,536</td>
+                                            <td className="border border-gray-600 p-2">5.39e-44 sec</td>
+                                            <td className="border border-gray-600 p-2">Planck time, quantum core</td>
+                                        </tr>
+                                        <tr>
+                                            <td className="border border-gray-600 p-2">sub-btom</td>
+                                            <td className="border border-gray-600 p-2">2⁸</td>
+                                            <td className="border border-gray-600 p-2">280 billion yr</td>
+                                            <td className="border border-gray-600 p-2">Supercluster formation</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <h4 className="text-lg font-semibold mb-2" style={{color: 'var(--text-color)'}}>🌱
+                                        Compression Phase (btom ➝ ztom)</h4>
+                                    <table className="table-auto w-full mb-4" style={{color: 'var(--text-color)'}}>
+                                        <thead>
+                                        <tr>
+                                            <th className="border border-gray-600 p-2">Tom Levels</th>
+                                            <th className="border border-gray-600 p-2">Quantum States</th>
+                                            <th className="border border-gray-600 p-2">Duration Estimate</th>
+                                            <th className="border border-gray-600 p-2">CU Description</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td className="border border-gray-600 p-2">btom</td>
+                                            <td className="border border-gray-600 p-2">2² = 4</td>
+                                            <td className="border border-gray-600 p-2">280 billion yr</td>
+                                            <td className="border border-gray-600 p-2">Galactic evolution and
+                                                contraction
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="border border-gray-600 p-2">ztom</td>
+                                            <td className="border border-gray-600 p-2">∞</td>
+                                            <td className="border border-gray-600 p-2">1 sec</td>
+                                            <td className="border border-gray-600 p-2">Full universal reset</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div className="mb-6 p-4 rounded-lg" style={{background: 'var(--input-background)'}}>
+                                    <h3 className="text-xl font-semibold mb-2" style={{color: 'var(--text-color)'}}>🌀
+                                        Total Duration</h3>
+                                    <p style={{color: 'var(--text-color)'}}><strong>≈ 3.108 trillion years</strong></p>
+                                    <ul className="list-disc list-inside" style={{color: 'var(--text-color)'}}>
+                                        <li><strong>Expansion Phase</strong>: 2.8 trillion years</li>
+                                        <li><strong>Compression Phase</strong>: 308 billion years</li>
+                                    </ul>
+                                </div>
+                                <div className="mb-6">
+                                    <h3 className="text-xl font-semibold mb-2" style={{color: 'var(--text-color)'}}>📜
+                                        Cosmic Universalism Statement</h3>
+                                    <blockquote className="italic border-l-4 pl-4"
+                                                style={{color: 'var(--text-color)', borderColor: 'var(--text-color)'}}>
+                                        We are sub z-tomically inclined, countably infinite, composed of
+                                        foundational elements (the essence of conscious existence), grounded on
+                                        b-tom (as vast as our shared worlds and their atmospheres), and looking up
+                                        to c-tom (encompassing the entirety of the cosmos), guided by the
+                                        uncountable infinite quantum states of intelligence and empowered by God’s
+                                        Free Will.
+                                    </blockquote>
+                                </div>
+                                <div className="mb-6">
+                                    <h3 className="text-xl font-semibold mb-2" style={{color: 'var(--text-color)'}}>📖 CU
+                                        Lexicon</h3>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        {Object.entries(CU_LEXICON).map(([tom, desc]) => (
+                                            <div key={tom} className="p-4 rounded-lg"
+                                                 style={{background: 'var(--input-background)'}}>
+                                                <p className="text-sm" style={{color: 'var(--text-color)'}}>
+                                                    <span className="font-semibold">{tom}:</span> {desc}
+                                                </p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <p className="mb-2" style={{color: 'var(--text-color)'}}>Click below to see the full
+                                        CU Lexicon.</p>
+                                    <button onClick={() => setShowFullLexicon(!showFullLexicon)}
+                                            className="cosmic-button mt-4">
+                                        {showFullLexicon ? 'Hide Full Lexicon' : 'Show Full Lexicon'}
+                                    </button>
+                                    {showFullLexicon && (
+                                        <div className="mt-4">
+                                            <h3 className="text-xl font-semibold mb-2"
+                                                style={{color: 'var(--text-color)'}}>Full CU Lexicon</h3>
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                {Object.entries(FULL_CU_LEXICON).map(([tom, desc]) => (
+                                                    <div key={tom} className="p-4 rounded-lg"
+                                                         style={{background: 'var(--input-background)'}}>
+                                                        <p className="text-sm" style={{color: 'var(--text-color)'}}>
+                                                            <span className="font-semibold">{tom}:</span> {desc}
+                                                        </p>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                            <div className="mt-4">
+                                                <p className="mb-2" style={{color: 'var(--text-color)'}}>For more
+                                                    detailed information on the Cosmic Breath, see the following
+                                                    documents:</p>
+                                                <ul className="list-disc list-inside"
+                                                    style={{color: 'var(--text-color)'}}>
+                                                    <li><a
+                                                        href="https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/ResearchFiles/Cosmic_Breath_Calculation.md"
+                                                        target="_blank" rel="noopener noreferrer"
+                                                        className="underline hover:text-white">Cosmic Breath
+                                                        Calculation</a></li>
+                                                    <li><a
+                                                        href="https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/ResearchFiles/Cosmic_Breathing_Cycle.md"
+                                                        target="_blank" rel="noopener noreferrer"
+                                                        className="underline hover:text-white">Cosmic Breathing
+                                                        Cycle</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </section>
+                        )}
+                        <LicenseFooter/>
+                    </main>
+                </div>
+            </div>
+        );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

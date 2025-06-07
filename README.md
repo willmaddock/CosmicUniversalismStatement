@@ -7,42 +7,45 @@
 ```
     .:·*·:.     .:·*·:.
  .·*·:   🌟 Cosmic GUI Evolution! 🌟   :·*·.
-    .·*·:     v3.0.0        :·*·.
-           Try the NASA Demo
+    .·*·:     v3.0.1        :·*·.
+           Try the Cosmic Breath Demo
        .:·*·:.     .:·*·:.
 ```
 
-### 🌟 Cosmic Universalism Time Converter v3.0.0
-The **Cosmic Universalism Time Converter v3.0.0** delivers a precise, intuitive, and modern platform for exploring cosmic timelines. Discover its features and resources below:
+### 🌌 Cosmic Breath Time Converter v3.0.1
+The **Cosmic Breath Time Converter v3.0.1**, released in **June 2025**, is a divine leap forward, blending empirical precision with the awe-inspiring *Cosmic Universalism (CU)* framework. This update introduces a celestial light/dark theme toggle, a cosmos-inspired background, and refined navigation, all while maintaining 60-digit accuracy for cosmic time conversions. Explore the universe’s 13.787 billion-year timeline (per [Planck 2018](https://ui.adsabs.harvard.edu/abs/2020A%26A...641A...1P/abstract)) with a tool that’s as scientific as it is spiritual! 🌠
 
-- **Release Notes**: [v3.0.0 Stable Release Notes](cosmic_converter/v3_0_0/v3_Guides/Cosmic%20Universalism%20Time%20Converter%20Release%20Notes%20v3.0.md)  
-- **Instructions**: [v3.0.0 User Guide](cosmic_converter/v3_0_0/v3_Guides/Cosmic%20Universalism%20Time%20Converter%20Instrucitons%20v3.0.md)  
-- **Live Demo**: [Try CU Time Converter](https://willmaddock.github.io/CosmicUniversalismStatement/cosmic_converter/v3_0_0/cu_time_converter_stable_v3_0_0.html) – Click to explore!  
-- **NASA Demo**: [Try NASA Cosmic Time Converter](https://willmaddock.github.io/CosmicUniversalismStatement/cosmic_converter/v3_0_0/nasa_time_converter_stable_v3_0_0.html) – Accessible via CU Time Converter tab!
-- **Download**: [Get the App (Offline Use)](cosmic_converter/v3_0_0/cu_time_converter_stable_v3_0_0.html)  
-- **AI Integration**: For most AI platforms, use the Python script [cu_time_converter_ai.py](cosmic_converter/v3_0_0/cu_time_converter_ai.py). For Copilot, upload the text file [cu_time_converter_ai.txt](cosmic_converter/v3_0_0/cu_time_converter_ai.txt).  
-  **How to Use**: Copy `cu_time_converter_ai.py` into an AI environment (e.g., DeepSeek, Grok) or upload it as a file. Run with inputs like `"January 1st, 2023 BCE"` or `{"year": 2029, "month": 1, "day": 1}` to perform CU-Time conversions. You can also import results or CSV files from the v3.0.0 GUI into the AI after integration.
+- **Release Notes**: [v3.0.1 Stable Release Notes](cosmic_converter/v3_0_0/v3_Guides/Release%20Notes%20v3.0.1.md) 
+- **Live Demo**: [Try Cosmic Breath Time Converter v3.0.1](https://willmaddock.github.io/CosmicUniversalismStatement/cosmic_converter/v3_0_0/cosmic_breath_time_converter_v3_0_1.html) – Inhale the cosmos!  
+- **CU Demo**: [Try CU Time Converter v3.0.0](https://willmaddock.github.io/CosmicUniversalismStatement/cosmic_converter/v3_0_0/cu_time_converter_stable_v3_0_0.html) – Accessible via external links!  
+- **NASA Demo**: [Try NASA Cosmic Time Converter v3.0.0](https://willmaddock.github.io/CosmicUniversalismStatement/cosmic_converter/v3_0_0/nasa_time_converter_stable_v3_0_0.html) – Linked in results!  
+- **Download**: [Get the App (Offline Use)](cosmic_converter/v3_0_0/cosmic_breath_time_converter_v3_0_1.html)  
+- **AI Integration**: Use the Python script [cu_time_converter_ai.py](cosmic_converter/v3_0_0/cu_time_converter_ai.py) for most AI platforms, or the text file [cu_time_converter_ai.txt](cosmic_converter/v3_0_0/cu_time_converter_ai.txt) for Copilot.  
+  **How to Use**: Copy `cu_time_converter_ai.py` into an AI environment (e.g., DeepSeek, Grok) or upload it. Run with inputs like `"January 1st, 2023 BCE"` or `{"year": 2029, "month": 1, "day": 1}` for CU-Time conversions. Import results or CSV files from the v3.0.1 GUI into the AI post-integration.
 
 ---
 
-### ✨ Key Features of v3.0.0
-- **Unmatched Precision**: Recalibrated `BASE_CU` (`3094134044923.509753564772922302508810`) ensures 60-digit accurate CU-Time calculations, aligned with NASA’s estimate of 13.79441474 billion years as of June 1, 2025.
-- **NASA Alignment**: Integrated NASA Cosmic Time Converter as a tab, mapping 3,094,206,000,000.014691 CU-Time to June 1, 2025, with a 71,954,990-year offset in the CU framework (May 12, 71,957,015 AD).
-- **Research Tabs**: New tabs in both converters provide cosmic time alignment research, including Planck 2018 data, CU framework’s extended timeline, and phase mappings (sub-ztom to ztom).
-- **Modern Interface**: Built with **React + Tailwind CSS**, featuring a fixed sidebar (desktop) and top bar (mobile) for seamless navigation.
-- **Robust Functionality**: Supports **Gregorian/CU-Time conversions**, **tom durations**, **CSV import/export** (with `HH:MM[:SS]` support), **history**, and **favorites**, with reliable error handling.
-- **Vast Timescales**: Handles speculative dates up to **~322 billion years** into the past or future.
-- **Bug Fixes**: Corrected NASA converter’s sidebar link and added CSV parsing for `HH:MM` formats.
-- **Core Philosophy**: Embodies the *Cosmic Universalism Statement*—sub z-tomically inclined, countably infinite, and empowered by God’s Free Will.
+### ✨ Key Features of v3.0.1
+- **Celestial Themes**: Toggle between *Light* and *Dark* themes with a sun/moon button (Font Awesome icons). A cosmos background ([Unsplash](https://images.unsplash.com/photo-1462331940025-496dfbfc7564)) shifts opacity (0.2 light, 0.5 dark) for immersive visuals, synced with browser preferences.
+- **Refined Navigation**: A fixed sidebar (desktop) or toggleable menu (mobile) guides you through five tabs: *Gregorian to CU*, *CU to Gregorian*, *Calculator*, *Research*, and *About*. Active tabs glow with cosmic-button styling.
+- **Cosmic Breath Section**: Click the *Orbitron*-font header to reveal the 3.108 trillion-year *Cosmic Breath* cycle, detailing *sub-ztom* (Planck time) to *ztom* (universal reset), with KaTeX-rendered equations and a full CU lexicon.
+- **Enhanced UI**: Cosmic buttons with gradients, hover effects, and fade-in animations; interactive cards with 3D lift; and CSS variables for seamless theme switches.
+- **Unmatched Precision**: `BASE_CU` (`3,094,213,000,000`) ensures 60-digit accuracy via Decimal.js, aligning with NASA’s 13.787 billion-year estimate for June 1, 2025.
+- **NASA Alignment**: Maps `3,094,213,000,000.014691` CU-Time to June 1, 2025, with a 78,955,076-year offset in the CU framework (May 12, 78,955,076 AD).
+- **Research Tabs**: Dive into Planck 2018 data, CU’s extended timeline, and phase mappings (*sub-ztom* to *ztom*), with links to [Cosmic Breath Calculation](https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/ResearchFiles/Cosmic_Breath_Calculation.md).
+- **Robust Functionality**: Supports **Gregorian/CU-Time conversions**, **tom durations**, **CSV import/export** (with `HH:MM[:SS]` support via PapaParse/XLSX), **history**, and **favorites**, with robust error handling.
+- **Vast Timescales**: Handles speculative dates up to **~322 billion years** past or future, including BCE dates.
+- **Bug Fixes**: Improved sidebar links, CSV parsing for `HH:MM`, and mobile responsiveness.
+- **Core Philosophy**: Embodies the *Cosmic Universalism Statement*—*sub z-tomically inclined, countably infinite, empowered by God’s Free Will*.
 
 ---
 
 ### Why Upgrade?
-Replacing v2.2.0, v3.0.0 offers a **smoother interface**, enhanced stability, NASA alignment, and advanced features like Research tabs for deeper cosmic exploration.
+Replacing v3.0.0, v3.0.1 introduces a **divine interface** with themes, smoother navigation, and the *Cosmic Breath* section for deeper exploration. It’s a celestial upgrade for cosmic enthusiasts and researchers alike.
 
-**Get Started**: Download for offline use or try the live demo to unlock cosmic insights! 🌠
+**Get Started**: Download for offline use or try the live demo to unlock the universe’s secrets! 🌠
 
-**Current Date and Time**: 08:46 AM MDT, Sunday, June 1, 2025
+**Current Date and Time**: 07:46 PM MDT, Friday, June 6, 2025
 
 ---
 
