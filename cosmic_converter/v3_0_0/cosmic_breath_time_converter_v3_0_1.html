@@ -684,43 +684,45 @@ The CU and NASA Time Converters differ in their theoretical bases and time scale
         );
     }
 
-    function LicenseFooter() {
-        return (
-            <footer className="mt-8 p-6 gradient-header border border-indigo-800/30 rounded-lg shadow-lg text-center"
-                    style={{color: 'var(--text-color)'}}>
-                <div>
-                    <p className="text-sm font-light flex items-center justify-center">
-                        <a href="https://www.linkedin.com/in/willmaddockcs/" target="_blank" rel="noopener noreferrer">
-                            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg"
-                                 alt="LinkedIn" width="24" className="mx-2"/>
-                        </a>
-                        © 2025 Cosmic Universalism Computational Intelligence Initiative
-                        <a href="https://www.linkedin.com/in/willmaddockcs/" target="_blank" rel="noopener noreferrer">
-                            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg"
-                                 alt="LinkedIn" width="24" className="mx-2"/>
-                        </a>
-                    </p>
-                    <p className="text-sm font-light mt-2">
-                        Conceptual content licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
-                                                             target="_blank" rel="noopener noreferrer"
-                                                             className="underline hover:text-white transition-colors">CC
-                        BY-NC-SA 4.0</a>.
-                        Source code licensed under <a
-                        href="https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/LICENSE"
-                        target="_blank"
-                        rel="noopener noreferrer" className="underline hover:text-white transition-colors">MIT
-                        License</a>.
-                    </p>
-                    <p className="text-sm font-light mt-2">
-                        CU integrates cloud-based learning tools using resources from <a
-                        href="https://aws.amazon.com/education/awseducate" target="_blank" rel="noopener noreferrer"
-                        className="underline hover:text-white transition-colors">AWS Educate</a>, as recommended by AWS
-                        Academy Support.
-                    </p>
-                </div>
-            </footer>
-        );
-    }
+function LicenseFooter() {
+    return (
+        <footer className="mt-8 p-6 gradient-header border border-indigo-800/30 rounded-lg shadow-lg text-center"
+                style={{color: 'var(--text-color)'}}>
+            <div>
+                <p className="text-sm font-light flex items-center justify-center">
+                    <a href="https://www.linkedin.com/in/willmaddockcs/" target="_blank" rel="noopener noreferrer">
+                        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg"
+                             alt="LinkedIn" width="24" className="mx-2"/>
+                    </a>
+                    © 2025 Cosmic Universalism Computational Intelligence Initiative
+                    <a href="https://www.linkedin.com/in/willmaddockcs/" target="_blank" rel="noopener noreferrer">
+                        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg"
+                             alt="LinkedIn" width="24" className="mx-2"/>
+                    </a>
+                </p>
+                <p className="text-sm font-light mt-2">
+                    Conceptual content licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
+                                                         target="_blank" rel="noopener noreferrer"
+                                                         className="underline hover:text-white transition-colors">CC
+                    BY-NC-SA 4.0</a>.
+                    Source code licensed under <a
+                    href="https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/LICENSE"
+                    target="_blank"
+                    rel="noopener noreferrer" className="underline hover:text-white transition-colors">MIT
+                    License</a>.
+                </p>
+                <p className="text-sm font-light mt-2">
+                    CU integrates cloud-based learning tools using resources from <a
+                    href="https://aws.amazon.com/education/awseducate" target="_blank" rel="noopener noreferrer"
+                    className="underline hover:text-white transition-colors">AWS Educate</a>, as recommended by <a
+                    href="https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/Docs/aws_emails.md"
+                    target="_blank" rel="noopener noreferrer"
+                    className="underline hover:text-white transition-colors">AWS Academy Support</a>.
+                </p>
+            </div>
+        </footer>
+    );
+}
 
     function ResultCard({result, onCopy, onDelete}) {
         const outputString = Object.entries(result).map(([k, v]) => `${k}: ${v}`).join('\n');
