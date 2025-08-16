@@ -715,11 +715,11 @@ This framework is licensed under the
 [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
 > 🔒 This license applies only to the **conceptual content, documentation, and statements**.  
-> 💻 **Source code** is separately licensed under the MIT License (see [`LICENSE`](./LICENSE)).
+> 💻 **Source code** is separately licensed under the MIT License (see [`LICENSE`](lic)).
  
 ---
 
 ## 🔗 Learn More
 
 - [License Details (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-- [MIT License for Codebase](./LICENSE)
+- [MIT License for Codebase](lic)
