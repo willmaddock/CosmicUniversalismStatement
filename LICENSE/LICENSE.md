@@ -34,4 +34,4 @@ Under the following terms:
 ---
 
 > 🔒 This license applies **only to the conceptual content, documentation, and statements** of the Cosmic Universalism Framework.  
-> 💻 **Source code** within this project is licensed separately under the **MIT License** (see [`LICENSE`]()).
+> 💻 **Source code** within this project is licensed separately under the **MIT License** (see [LICENSE](LICENSE)).
