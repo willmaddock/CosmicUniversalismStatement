@@ -110,7 +110,7 @@ The [Cosmic Universalism Statement GitHub repository](https://github.com/willmad
 - 📚 **Documentation**: Detailed explanations of CU’s philosophical and scientific underpinnings, including the Cosmic Breath cycle and the role of "God's Free Will."
 - 💻 **Code and Tools**: Source code for the CU Time Converter and NASA Time Converter, enabling users to perform precise time calculations within the CU framework.
 - 📜 **Release Notes**: Track the evolution of the framework, from early versions like v1.0.9 to the current v3.0.0, which introduced NASA integration and high-precision arithmetic.
-- 📄 **License**: A custom license governing the use and distribution of the framework’s code and documentation ([CU License](https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/LICENSE/LICENSE.md)).
+- 📄 **License**: A custom license governing the use and distribution of the framework’s code and documentation ([CU License](https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/LICENSE.md)).
 
 ### 🛠️ CU Time Converter
 The [CU Time Converter](https://willmaddock.github.io/CosmicUniversalismStatement/cosmic_converter/v3_0_0/cu_time_converter_stable_v3_0_0.html) is a web-based tool that allows users to convert between Gregorian dates and CU-Time, a linear time scale central to the CU framework.
