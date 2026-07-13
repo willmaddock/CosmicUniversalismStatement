@@ -1,5 +1,13 @@
 # 🌌 Cosmic Universalism Framework
 
+<p align="center">
+  <img src="media/Cosmic_Breath_12_5s.gif"
+       alt="Cosmic Breath Animation"
+       width="100%">
+</p>
+
+---
+
 ## 📑 Table of Contents
 
 ## 🚀 New Stable Releases
