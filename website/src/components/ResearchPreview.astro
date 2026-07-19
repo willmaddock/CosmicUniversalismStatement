@@ -23,7 +23,9 @@ import ClassificationBadge from './ClassificationBadge.astro';
         <p>Framework-specific interpretations and hypotheses that require independent evaluation.</p>
       </article>
     </div>
-    <a class="research-preview__link" href="/research">Explore the research index</a>
+    <a class="research-preview__link" href={import.meta.env.BASE_URL + "research"}>
+      Explore the research index
+    </a>
   </div>
 </section>
 
