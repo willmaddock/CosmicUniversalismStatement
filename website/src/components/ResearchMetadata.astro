@@ -37,7 +37,11 @@ const { metadata } = Astro.props;
       <dd>
         {
           metadata.originalSource.url ? (
-            <a href={metadata.originalSource.url} rel="external">
+            <a
+              href={metadata.originalSource.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               {metadata.originalSource.label}
             </a>
           ) : (

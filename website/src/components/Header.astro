@@ -28,7 +28,8 @@ const currentPathname = Astro.url.pathname;
               <li>
                 <a
                   href={href}
-                  rel={external ? 'external' : undefined}
+                  target={external ? '_blank' : undefined}
+                  rel={external ? 'noopener noreferrer' : undefined}
                   aria-current={isCurrentPath(currentPathname, href) ? 'page' : undefined}
                 >
                   {label}
