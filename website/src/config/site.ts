@@ -1,3 +1,5 @@
+const basePath = import.meta.env.BASE_URL;
+
 export const siteMetadata = {
   name: 'Cosmic Universalism',
   defaultDescription: 'Explore the principles and research of Cosmic Universalism.',
@@ -11,18 +13,18 @@ export interface NavigationItem {
 }
 
 export const primaryNavigation: readonly NavigationItem[] = [
-  { label: 'Framework', href: '/framework' },
-  { label: 'Cosmic Breath', href: '/cosmic-breath' },
-  { label: 'CU-Time', href: '/cu-time' },
-  { label: 'Research', href: '/research' },
-  { label: 'Media', href: '/media' },
-  { label: 'About', href: '/about' },
+  { label: 'Framework', href: `${basePath}framework/` },
+  { label: 'Cosmic Breath', href: `${basePath}cosmic-breath/` },
+  { label: 'CU-Time', href: `${basePath}cu-time/` },
+  { label: 'Research', href: `${basePath}research/` },
+  { label: 'Media', href: `${basePath}media/` },
+  { label: 'About', href: `${basePath}about/` },
   { label: 'GitHub', href: siteMetadata.repositoryUrl, external: true },
 ];
 
 export const primaryAction: NavigationItem = {
   label: 'Explore CU-Time',
-  href: '/cu-time',
+  href: `${basePath}cu-time/`,
 };
 
 export function normalizePathname(pathname: string): string {
