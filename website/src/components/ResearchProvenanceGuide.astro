@@ -1,0 +1,51 @@
+---
+import { researchProvenanceFields } from '../data/research-content';
+---
+
+<dl class="research-provenance-guide">
+  {
+    researchProvenanceFields.map(({ key, label, description }) => (
+      <div class="research-provenance-guide__field" data-provenance-field={key}>
+        <dt>{label}</dt>
+        <dd>{description}</dd>
+      </div>
+    ))
+  }
+</dl>
+
+<style>
+  .research-provenance-guide {
+    display: grid;
+    margin: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  .research-provenance-guide__field {
+    padding: var(--space-6);
+    border: 1px solid var(--color-translucent-blue);
+    background: var(--color-surface-translucent);
+  }
+
+  dt {
+    color: var(--color-white-gold);
+    font-weight: 700;
+  }
+
+  dd {
+    margin: var(--space-3) 0 0;
+    color: var(--color-text-muted);
+  }
+
+  @media (max-width: 48rem) {
+    .research-provenance-guide {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 36rem) {
+    .research-provenance-guide__field {
+      padding: var(--space-4);
+    }
+  }
+</style>

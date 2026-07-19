@@ -1,0 +1,114 @@
+---
+import ClassificationBadge from './ClassificationBadge.astro';
+import ResearchStatusBadge from './ResearchStatusBadge.astro';
+import type { ResearchArticleMetadata } from '../data/research-content';
+
+interface Props {
+  metadata: ResearchArticleMetadata;
+}
+
+const { metadata } = Astro.props;
+---
+
+<aside class="research-metadata" aria-labelledby="research-metadata-title">
+  <h2 id="research-metadata-title">Research record</h2>
+
+  <div class="research-metadata__classifications" aria-label="Content classifications">
+    {
+      metadata.classifications.map((classification) => (
+        <ClassificationBadge classification={classification} />
+      ))
+    }
+  </div>
+
+  <ResearchStatusBadge status={metadata.lifecycle.status} />
+
+  <dl>
+    <div>
+      <dt>Version</dt>
+      <dd>{metadata.version}</dd>
+    </div>
+    <div>
+      <dt>Last reviewed</dt>
+      <dd><time datetime={metadata.lastReviewed}>{metadata.lastReviewed}</time></dd>
+    </div>
+    <div>
+      <dt>Original CU repository file</dt>
+      <dd>
+        {
+          metadata.originalSource.url ? (
+            <a href={metadata.originalSource.url} rel="external">
+              {metadata.originalSource.label}
+            </a>
+          ) : (
+            metadata.originalSource.label
+          )
+        }
+        <code>{metadata.originalSource.repositoryPath}</code>
+      </dd>
+    </div>
+  </dl>
+</aside>
+
+<style>
+  .research-metadata {
+    padding: var(--space-6);
+    border: 1px solid var(--color-translucent-blue);
+    background: var(--color-surface-translucent);
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 1.375rem;
+  }
+
+  .research-metadata__classifications {
+    display: flex;
+    margin-block: var(--space-4);
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  dl {
+    display: grid;
+    margin: var(--space-6) 0 0;
+    gap: var(--space-4);
+  }
+
+  dl div {
+    display: grid;
+    grid-template-columns: minmax(8rem, 0.4fr) minmax(0, 1fr);
+    gap: var(--space-4);
+  }
+
+  dt {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+
+  dd {
+    min-width: 0;
+    margin: 0;
+  }
+
+  code {
+    display: block;
+    margin-top: var(--space-1);
+    overflow-wrap: anywhere;
+    color: var(--color-text-muted);
+    font-size: 0.8125rem;
+  }
+
+  @media (max-width: 36rem) {
+    .research-metadata {
+      padding: var(--space-4);
+    }
+
+    dl div {
+      grid-template-columns: 1fr;
+      gap: var(--space-1);
+    }
+  }
+</style>

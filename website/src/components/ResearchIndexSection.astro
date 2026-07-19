@@ -1,0 +1,62 @@
+---
+import ClassificationBadge from './ClassificationBadge.astro';
+import type { ResearchClassification } from '../data/research-taxonomy';
+
+interface Props {
+  id: string;
+  title: string;
+  description?: string;
+  classification?: ResearchClassification;
+}
+
+const {
+  id,
+  title,
+  description,
+  classification,
+} = Astro.props;
+const headingId = `${id}-title`;
+---
+
+<section class="research-index-section" id={id} aria-labelledby={headingId}>
+  <header class="research-index-section__header">
+    {classification && <ClassificationBadge classification={classification} />}
+    <h2 id={headingId}>{title}</h2>
+    {description && <p>{description}</p>}
+  </header>
+
+  {
+    Astro.slots.has('default') && (
+      <div class="research-index-section__content">
+        <slot />
+      </div>
+    )
+  }
+</section>
+
+<style>
+  .research-index-section {
+    margin-top: var(--space-12);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--color-translucent-blue);
+    scroll-margin-top: var(--space-6);
+  }
+
+  .research-index-section__header {
+    max-width: var(--measure-readable);
+  }
+
+  h2 {
+    margin: var(--space-4) 0 0;
+    color: var(--color-white-gold);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+  }
+
+  .research-index-section__header > p {
+    margin-block: var(--space-4) 0;
+  }
+
+  .research-index-section__content {
+    margin-top: var(--space-8);
+  }
+</style>

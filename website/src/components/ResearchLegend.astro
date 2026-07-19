@@ -9,9 +9,15 @@ import {
 
 interface Props {
   variant?: 'compact' | 'complete';
+  classificationHeadingId?: string;
+  statusHeadingId?: string;
 }
 
-const { variant = 'compact' } = Astro.props;
+const {
+  variant = 'compact',
+  classificationHeadingId = 'research-classifications',
+  statusHeadingId = 'research-statuses',
+} = Astro.props;
 const classifications =
   variant === 'complete' ? allResearchClassifications : coreResearchClassifications;
 ---
@@ -22,7 +28,9 @@ const classifications =
 >
   {
     variant === 'complete' && (
-      <h2 class="research-legend__heading">Research classification vocabulary</h2>
+      <h2 class="research-legend__heading" id={classificationHeadingId}>
+        Research classification vocabulary
+      </h2>
     )
   }
 
@@ -42,7 +50,9 @@ const classifications =
   {
     variant === 'complete' && (
       <div class="research-legend__statuses">
-        <h2 class="research-legend__heading">Research status vocabulary</h2>
+        <h2 class="research-legend__heading" id={statusHeadingId}>
+          Research status vocabulary
+        </h2>
         <p class="research-legend__status-note">
           Status describes a research lifecycle and does not change a material’s
           classification or establish scientific validity.
