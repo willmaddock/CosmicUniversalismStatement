@@ -2,6 +2,7 @@
 import ClassificationBadge from '../components/ClassificationBadge.astro';
 import ContentSection from '../components/ContentSection.astro';
 import ContentPageLayout from '../layouts/ContentPageLayout.astro';
+import CUTimeConverter from '../components/CUTimeConverter.astro';
 ---
 
 <ContentPageLayout
@@ -11,12 +12,17 @@ import ContentPageLayout from '../layouts/ContentPageLayout.astro';
   title="A coordinate system for the Cosmic Breath"
   description="CU-Time is the framework’s proposed notation for locating dates and events within its deep-time model."
 >
-  <ContentSection id="cu-time-context" title="This page establishes context only" variant="notice">
+  <ContentSection
+    id="cu-time-context"
+    title="This page establishes context only"
+    variant="notice"
+  >
     <p>
       CU-Time connects familiar chronology with the framework’s larger sequence of
       cosmic phases. Its calculations and conversion methods are not reproduced or
       modified in this phase of the website.
     </p>
+
     <p>
       Future documentation can explain inputs, outputs, calibration, uncertainty,
       and mathematical assumptions before any interactive converter is introduced.
@@ -25,7 +31,11 @@ import ContentPageLayout from '../layouts/ContentPageLayout.astro';
 
   <div class="cu-time-details">
     <ContentSection id="cu-time-purpose-limits" title="Purpose and limits">
-      <ClassificationBadge slot="context" classification="cu-mathematical-model" />
+      <ClassificationBadge
+        slot="context"
+        classification="cu-mathematical-model"
+      />
+
       <p>
         CU-Time is intended to provide consistent notation for positions within the
         Cosmic Breath framework. It is a CU-specific mathematical construction, and its
@@ -42,6 +52,8 @@ import ContentPageLayout from '../layouts/ContentPageLayout.astro';
       </p>
     </ContentSection>
   </div>
+
+  <CUTimeConverter />
 </ContentPageLayout>
 
 <style>
