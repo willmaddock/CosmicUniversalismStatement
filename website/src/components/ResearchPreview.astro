@@ -1,29 +1,46 @@
 ---
 import ClassificationBadge from './ClassificationBadge.astro';
+import { sitePath } from '../config/site';
 ---
 
 <section class="research-preview" aria-labelledby="research-preview-title">
   <div class="research-preview__inner">
     <p class="research-preview__eyebrow">Research orientation</p>
-    <h2 id="research-preview-title">Evidence and ideas remain visibly separate</h2>
+
+    <h2 id="research-preview-title">
+      Evidence and ideas remain visibly separate
+    </h2>
+
     <p class="research-preview__introduction">
       Research materials are organized by the kind of claim they make, so readers can
       distinguish outside scientific references from the framework’s mathematical
       models, theoretical propositions, and unanswered questions.
     </p>
+
     <div class="research-preview__grid">
       <article>
         <ClassificationBadge classification="empirical-reference" />
         <h3>Scientific references</h3>
-        <p>Published observations and established scientific context used as points of comparison.</p>
+        <p>
+          Published observations and established scientific context used as points
+          of comparison.
+        </p>
       </article>
+
       <article>
         <ClassificationBadge classification="cu-theoretical-proposition" />
         <h3>CU propositions</h3>
-        <p>Framework-specific interpretations and hypotheses that require independent evaluation.</p>
+        <p>
+          Framework-specific interpretations and hypotheses that require independent
+          evaluation.
+        </p>
       </article>
     </div>
-    <a class="research-preview__link" href={import.meta.env.BASE_URL + "research"}>
+
+    <a
+      class="research-preview__link"
+      href={sitePath("research")}
+    >
       Explore the research index
     </a>
   </div>
@@ -73,8 +90,13 @@ import ClassificationBadge from './ClassificationBadge.astro';
     background: var(--color-background);
   }
 
-  h3 { margin: var(--space-4) 0 0; }
-  article p:last-child { margin-block: var(--space-3) 0; }
+  h3 {
+    margin: var(--space-4) 0 0;
+  }
+
+  article p:last-child {
+    margin-block: var(--space-3) 0;
+  }
 
   .research-preview__link {
     display: inline-flex;
@@ -85,7 +107,9 @@ import ClassificationBadge from './ClassificationBadge.astro';
   }
 
   @media (max-width: 48rem) {
-    .research-preview__grid { grid-template-columns: 1fr; }
+    .research-preview__grid {
+      grid-template-columns: 1fr;
+    }
   }
 
   @media (max-width: 36rem) {
@@ -93,6 +117,8 @@ import ClassificationBadge from './ClassificationBadge.astro';
       width: min(100% - (2 * var(--space-4)), 90rem);
     }
 
-    article { padding: var(--space-4); }
+    article {
+      padding: var(--space-4);
+    }
   }
 </style>

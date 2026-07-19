@@ -3,6 +3,7 @@ import {
   isCurrentPath,
   primaryAction,
   primaryNavigation,
+  sitePath,
 } from '../config/site';
 
 const currentPathname = Astro.url.pathname;
@@ -12,7 +13,7 @@ const currentPathname = Astro.url.pathname;
   <div class="site-header__inner">
     <a
       class="site-identity"
-      href={import.meta.env.BASE_URL}
+      href={sitePath('')}
       aria-label="Cosmic Universalism home"
       aria-current={isCurrentPath(currentPathname, '/') ? 'page' : undefined}
     >

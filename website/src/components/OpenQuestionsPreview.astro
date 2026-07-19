@@ -1,15 +1,33 @@
+---
+import { sitePath } from '../config/site';
+---
+
 <section class="open-questions" aria-labelledby="open-questions-title">
   <div class="open-questions__inner">
     <p class="open-questions__eyebrow">Open questions</p>
-    <h2 id="open-questions-title">Questions the framework does not claim to settle</h2>
+
+    <h2 id="open-questions-title">
+      Questions the framework does not claim to settle
+    </h2>
+
     <ul class="open-questions__list">
-      <li>Which CU propositions can be translated into testable or falsifiable claims?</li>
-      <li>How should computational models represent uncertainty across deep-time scales?</li>
-      <li>Where do philosophical interpretation and empirical cosmology meaningfully meet?</li>
+      <li>
+        Which CU propositions can be translated into testable or falsifiable claims?
+      </li>
+
+      <li>
+        How should computational models represent uncertainty across deep-time scales?
+      </li>
+
+      <li>
+        Where do philosophical interpretation and empirical cosmology meaningfully
+        meet?
+      </li>
     </ul>
+
     <a
       class="open-questions__link"
-      href={import.meta.env.BASE_URL + "research#open-questions"}
+      href={sitePath("research#open-questions")}
     >
       Follow the open questions
     </a>
@@ -37,7 +55,11 @@
     text-transform: uppercase;
   }
 
-  h2 { max-width: 19ch; margin: 0; font-size: clamp(2rem, 5vw, 3.5rem); }
+  h2 {
+    max-width: 19ch;
+    margin: 0;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+  }
 
   .open-questions__list {
     display: grid;
@@ -73,7 +95,9 @@
   }
 
   @media (max-width: 48rem) {
-    .open-questions__list { grid-template-columns: 1fr; }
+    .open-questions__list {
+      grid-template-columns: 1fr;
+    }
   }
 
   @media (max-width: 36rem) {
@@ -81,6 +105,8 @@
       width: min(100% - (2 * var(--space-4)), 90rem);
     }
 
-    li { padding: var(--space-4); }
+    li {
+      padding: var(--space-4);
+    }
   }
 </style>

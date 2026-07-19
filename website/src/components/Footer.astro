@@ -3,6 +3,7 @@ import {
   isCurrentPath,
   primaryNavigation,
   siteMetadata,
+  sitePath,
 } from '../config/site';
 
 const currentPathname = Astro.url.pathname;
@@ -14,7 +15,7 @@ const currentYear = new Date().getUTCFullYear();
     <div class="site-footer__identity">
       <a
         class="site-footer__home"
-        href={import.meta.env.BASE_URL}
+        href={sitePath('')}
         aria-current={isCurrentPath(currentPathname, '/') ? 'page' : undefined}
       >
         {siteMetadata.name}

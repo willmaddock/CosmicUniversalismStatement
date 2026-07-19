@@ -1,18 +1,26 @@
+---
+import { sitePath } from '../config/site';
+---
+
 <section class="cu-time-invitation" aria-labelledby="cu-time-invitation-title">
   <div class="cu-time-invitation__inner">
     <div>
       <p class="cu-time-invitation__eyebrow">CU-Time</p>
-      <h2 id="cu-time-invitation-title">Encounter deep time as a structured scale</h2>
+      <h2 id="cu-time-invitation-title">
+        Encounter deep time as a structured scale
+      </h2>
     </div>
+
     <div>
       <p>
         CU-Time is the framework’s proposed system for locating events within the
         Cosmic Breath. This phase introduces its purpose and terminology without
         adding conversion tools or changing the underlying mathematics.
       </p>
+
       <a
         class="cu-time-invitation__link"
-        href={import.meta.env.BASE_URL + "cu-time"}
+        href={sitePath("cu-time")}
       >
         Learn what CU-Time describes
       </a>
@@ -43,8 +51,14 @@
     text-transform: uppercase;
   }
 
-  h2 { margin: 0; font-size: clamp(2rem, 5vw, 3.5rem); }
-  p { margin-block: 0 var(--space-6); }
+  h2 {
+    margin: 0;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  p {
+    margin-block: 0 var(--space-6);
+  }
 
   .cu-time-invitation__link {
     display: inline-flex;
