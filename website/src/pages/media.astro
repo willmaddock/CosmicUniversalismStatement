@@ -1,4 +1,5 @@
 ---
+import ContentSection from '../components/ContentSection.astro';
 import ContentPageLayout from '../layouts/ContentPageLayout.astro';
 ---
 
@@ -9,28 +10,11 @@ import ContentPageLayout from '../layouts/ContentPageLayout.astro';
   title="Different ways into a large framework"
   description="The media library will gather accessible explanations, visual narratives, and conversations about Cosmic Universalism."
 >
-  <div class="media-introduction">
-    <h2>Clarity before volume</h2>
+  <ContentSection id="media-clarity" title="Clarity before volume" variant="panel">
     <p>
       Future media will identify whether it explains source science, CU mathematics,
       a theoretical proposition, or an open question. This foundation keeps those
       categories visible before the library grows.
     </p>
-  </div>
+  </ContentSection>
 </ContentPageLayout>
-
-<style>
-  .media-introduction {
-    max-width: var(--measure-readable);
-    padding: var(--space-8);
-    border: 1px solid var(--color-translucent-blue);
-    background: var(--color-surface-translucent);
-  }
-
-  h2 { margin: 0; font-size: clamp(1.75rem, 4vw, 2.5rem); }
-  p { margin-block: var(--space-4) 0; }
-
-  @media (max-width: 36rem) {
-    .media-introduction { padding: var(--space-6); }
-  }
-</style>

@@ -11,12 +11,16 @@ import ContentPageLayout from '../layouts/ContentPageLayout.astro';
   title="A proposed cycle of expansion and compression"
   description="The Cosmic Breath is CU’s organizing model for a 3.108 trillion-year cycle: 2.8 trillion years of expansion followed by 308 billion years of compression."
 >
-  <div class="breath-overview">
+  <section
+    id="cosmic-breath-structure"
+    class="breath-overview"
+    aria-labelledby="cosmic-breath-structure-title"
+  >
     <div class="breath-overview__diagram">
       <CosmicBreathDiagram />
     </div>
     <div class="breath-overview__content">
-      <h2>Structural scales remain distinct</h2>
+      <h2 id="cosmic-breath-structure-title">Structural scales remain distinct</h2>
       <p>
         The framework uses named tom scales as separate structural positions. In
         particular, <strong>sub-ctom</strong> is not interchangeable with
@@ -30,7 +34,7 @@ import ContentPageLayout from '../layouts/ContentPageLayout.astro';
         structural proposition, not an empirical measurement of the universe’s location.
       </p>
     </div>
-  </div>
+  </section>
 </ContentPageLayout>
 
 <style>
@@ -39,6 +43,7 @@ import ContentPageLayout from '../layouts/ContentPageLayout.astro';
     grid-template-columns: minmax(0, 1.1fr) minmax(16rem, 0.9fr);
     align-items: center;
     gap: var(--space-12);
+    scroll-margin-top: var(--space-6);
   }
 
   .breath-overview__diagram { min-width: 0; }

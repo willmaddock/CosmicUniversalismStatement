@@ -1,4 +1,5 @@
 ---
+import ContentSection from '../components/ContentSection.astro';
 import ContentPageLayout from '../layouts/ContentPageLayout.astro';
 ---
 
@@ -9,8 +10,7 @@ import ContentPageLayout from '../layouts/ContentPageLayout.astro';
   title="A coordinate system for the Cosmic Breath"
   description="CU-Time is the framework’s proposed notation for locating dates and events within its deep-time model."
 >
-  <div class="cu-time-note">
-    <h2>This page establishes context only</h2>
+  <ContentSection id="cu-time-context" title="This page establishes context only" variant="notice">
     <p>
       CU-Time connects familiar chronology with the framework’s larger sequence of
       cosmic phases. Its calculations and conversion methods are not reproduced or
@@ -20,21 +20,5 @@ import ContentPageLayout from '../layouts/ContentPageLayout.astro';
       Future documentation can explain inputs, outputs, calibration, uncertainty,
       and mathematical assumptions before any interactive converter is introduced.
     </p>
-  </div>
+  </ContentSection>
 </ContentPageLayout>
-
-<style>
-  .cu-time-note {
-    max-width: var(--measure-readable);
-    padding: var(--space-8);
-    border-left: 0.25rem solid var(--color-amber);
-    background: var(--color-surface-translucent);
-  }
-
-  h2 { margin: 0; font-size: clamp(1.75rem, 4vw, 2.5rem); }
-  p { margin-block: var(--space-4) 0; }
-
-  @media (max-width: 36rem) {
-    .cu-time-note { padding: var(--space-6); }
-  }
-</style>

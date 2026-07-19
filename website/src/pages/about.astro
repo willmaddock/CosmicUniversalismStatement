@@ -1,4 +1,5 @@
 ---
+import ContentSection from '../components/ContentSection.astro';
 import ContentPageLayout from '../layouts/ContentPageLayout.astro';
 ---
 
@@ -9,8 +10,7 @@ import ContentPageLayout from '../layouts/ContentPageLayout.astro';
   title="An open framework built for examination"
   description="The Cosmic Universalism Computational Intelligence Initiative develops and documents the framework in public, inviting careful reading, critique, and continued research."
 >
-  <div class="about-introduction">
-    <h2>Purpose</h2>
+  <ContentSection id="about-purpose" title="Purpose">
     <p>
       The project explores how philosophical ideas, computational formalisms, and
       cosmological questions can be expressed together without obscuring the
@@ -20,14 +20,5 @@ import ContentPageLayout from '../layouts/ContentPageLayout.astro';
       The website is a guide to that work: what the framework proposes, what it
       references, how its models are described, and which questions remain open.
     </p>
-  </div>
+  </ContentSection>
 </ContentPageLayout>
-
-<style>
-  .about-introduction {
-    max-width: var(--measure-readable);
-  }
-
-  h2 { margin: 0; font-size: clamp(1.75rem, 4vw, 2.5rem); }
-  p { margin-block: var(--space-4) 0; }
-</style>
