@@ -1,0 +1,132 @@
+<figure class="cosmic-breath-diagram">
+  <svg
+    class="cosmic-breath-diagram__svg"
+    viewBox="0 0 600 620"
+    role="img"
+    aria-labelledby="cosmic-breath-structural-title cosmic-breath-structural-description"
+    focusable="false"
+  >
+    <title id="cosmic-breath-structural-title">Cosmic Breath structural levels</title>
+    <desc id="cosmic-breath-structural-description">
+      Concentric structural placeholder showing sub-ztom at the center, surrounded in
+      order by atom, btom, ctom, and ztom. A cyan crosshair marks the Observable
+      Universe within ctom, away from the central sub-ztom seed.
+    </desc>
+
+    <g class="cosmic-breath-diagram__geometry" aria-hidden="true">
+      <circle cx="300" cy="285" r="235" />
+      <circle cx="300" cy="285" r="185" />
+      <circle cx="300" cy="285" r="132" />
+      <circle cx="300" cy="285" r="82" />
+      <circle class="cosmic-breath-diagram__seed" cx="300" cy="285" r="26" />
+    </g>
+
+    <g class="cosmic-breath-diagram__labels">
+      <text x="300" y="40" text-anchor="middle">ztom</text>
+      <text x="300" y="90" text-anchor="middle">ctom</text>
+      <text x="300" y="143" text-anchor="middle">btom</text>
+      <text x="300" y="193" text-anchor="middle">atom</text>
+      <text x="300" y="291" text-anchor="middle">sub-ztom</text>
+    </g>
+
+    <g class="cosmic-breath-diagram__observable-marker">
+      <circle cx="440" cy="330" r="10" />
+      <path d="M 440 310 V 320 M 440 340 V 350 M 420 330 H 430 M 450 330 H 460" />
+      <path class="cosmic-breath-diagram__marker-leader" d="M 433 339 L 410 365" />
+      <text x="405" y="390" text-anchor="middle">
+        <tspan x="405" dy="0">You Are Here</tspan>
+        <tspan x="405" dy="25">Observable Universe</tspan>
+      </text>
+    </g>
+  </svg>
+</figure>
+
+<style>
+  .cosmic-breath-diagram {
+    width: min(100%, 40rem);
+    margin: 0;
+  }
+
+  .cosmic-breath-diagram__svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    color: var(--color-text);
+    overflow: visible;
+  }
+
+  .cosmic-breath-diagram__geometry circle {
+    fill: none;
+    stroke: var(--color-translucent-blue);
+    stroke-width: 3;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .cosmic-breath-diagram__geometry .cosmic-breath-diagram__seed {
+    fill: var(--color-surface-translucent);
+    stroke: var(--color-amber);
+  }
+
+  .cosmic-breath-diagram__labels {
+    fill: var(--color-white-gold);
+    font-family: var(--font-family-sans);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    paint-order: stroke;
+    stroke: var(--color-background);
+    stroke-linejoin: round;
+    stroke-width: 6px;
+  }
+
+  .cosmic-breath-diagram__labels text:last-child {
+    fill: var(--color-white-gold);
+    font-size: 16px;
+    letter-spacing: 0;
+  }
+
+  .cosmic-breath-diagram__observable-marker {
+    fill: var(--color-cyan);
+    stroke: var(--color-cyan);
+    stroke-width: 3;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .cosmic-breath-diagram__observable-marker circle {
+    fill: var(--color-background);
+  }
+
+  .cosmic-breath-diagram__observable-marker path {
+    fill: none;
+  }
+
+  .cosmic-breath-diagram__observable-marker .cosmic-breath-diagram__marker-leader {
+    stroke-width: 2;
+  }
+
+  .cosmic-breath-diagram__observable-marker text {
+    fill: var(--color-white-gold);
+    paint-order: stroke;
+    stroke: var(--color-background);
+    stroke-linejoin: round;
+    stroke-width: 6px;
+    font-family: var(--font-family-sans);
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  @media (max-width: 36rem) {
+    .cosmic-breath-diagram__labels {
+      font-size: 26px;
+    }
+
+    .cosmic-breath-diagram__labels text:last-child {
+      font-size: 24px;
+    }
+
+    .cosmic-breath-diagram__observable-marker text {
+      font-size: 24px;
+    }
+  }
+</style>

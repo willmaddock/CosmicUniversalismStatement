@@ -1,0 +1,187 @@
+---
+import BreathSummary from './BreathSummary.astro';
+import CosmicBreathDiagram from './CosmicBreathDiagram.astro';
+import ResearchLegend from './ResearchLegend.astro';
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero__inner">
+    <div class="hero__content">
+      <h1 id="hero-title">
+        <span class="hero__title-line">COSMIC</span>
+        <span class="hero__title-line">UNIVERSALISM</span>
+      </h1>
+
+      <p class="hero__description">
+        A philosophical and computational framework exploring consciousness, time,
+        existence, and the full Cosmic Breath.
+      </p>
+
+      <div class="hero__actions" aria-label="Introduction links">
+        <a class="hero__link hero__link--primary" href="/#framework">
+          Explore the Framework
+        </a>
+        <a
+          class="hero__link hero__link--secondary"
+          href="https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/README.md"
+        >
+          Open the CU Statement
+        </a>
+      </div>
+
+      <p class="hero__research-status">
+        <span class="hero__status-marker" aria-hidden="true"></span>
+        Scientific references distinguished from CU theoretical propositions.
+      </p>
+    </div>
+
+    <div class="hero__diagram">
+      <CosmicBreathDiagram />
+    </div>
+
+    <div class="hero__summary">
+      <BreathSummary />
+    </div>
+
+    <div class="hero__research-legend">
+      <ResearchLegend />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    width: 100%;
+    padding-block: clamp(var(--space-12), 10vw, 8rem);
+    background:
+      radial-gradient(
+        circle at 82% 22%,
+        var(--color-surface-translucent),
+        transparent 34rem
+      ),
+      var(--color-background);
+  }
+
+  .hero__inner {
+    width: min(100% - (2 * var(--space-6)), 90rem);
+    margin-inline: auto;
+  }
+
+  .hero__content {
+    width: min(100%, 54rem);
+  }
+
+  .hero__diagram {
+    margin-top: var(--space-12);
+  }
+
+  .hero__summary {
+    margin-top: var(--space-8);
+  }
+
+  .hero__research-legend {
+    margin-top: var(--space-8);
+  }
+
+  .hero h1 {
+    margin: 0;
+    color: var(--color-white-gold);
+    font-size: clamp(1.75rem, 8vw, 6rem);
+    letter-spacing: 0.035em;
+  }
+
+  .hero__title-line {
+    display: block;
+    white-space: nowrap;
+  }
+
+  .hero__description {
+    margin-block: var(--space-6) 0;
+    color: var(--color-text);
+    font-size: clamp(1.125rem, 2.25vw, 1.5rem);
+    line-height: 1.6;
+  }
+
+  .hero__actions {
+    display: flex;
+    margin-top: var(--space-8);
+    align-items: stretch;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+
+  .hero__link {
+    display: inline-flex;
+    min-height: 2.75rem;
+    padding: var(--space-3) var(--space-6);
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .hero__link--primary {
+    border-color: var(--color-cyan);
+    background: var(--color-cyan);
+    color: var(--color-deep-navy-black);
+  }
+
+  .hero__link--primary:hover {
+    border-color: var(--color-white-gold);
+    background: var(--color-white-gold);
+  }
+
+  .hero__link--secondary {
+    border-color: var(--color-amber);
+    background: var(--color-surface-translucent);
+    color: var(--color-white-gold);
+  }
+
+  .hero__link--secondary:hover {
+    background: var(--color-amber);
+    color: var(--color-deep-navy-black);
+  }
+
+  .hero__link:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-cyan);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .hero__research-status {
+    display: flex;
+    margin-block: var(--space-8) 0;
+    align-items: baseline;
+    gap: var(--space-2);
+    color: var(--color-text-muted);
+    font-size: 0.9375rem;
+  }
+
+  .hero__status-marker {
+    width: 0.5rem;
+    height: 0.5rem;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background: var(--color-amber);
+  }
+
+  @media (max-width: 36rem) {
+    .hero {
+      padding-block: var(--space-12);
+    }
+
+    .hero__inner {
+      width: min(100% - (2 * var(--space-4)), 90rem);
+    }
+
+    .hero__actions {
+      flex-direction: column;
+    }
+
+    .hero__link {
+      width: 100%;
+    }
+  }
+</style>

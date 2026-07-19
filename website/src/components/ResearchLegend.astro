@@ -1,0 +1,100 @@
+<section class="research-legend" aria-label="Research classification legend">
+  <ul class="research-legend__list" role="list">
+    <li>
+      <span
+        class="research-legend__marker research-legend__marker--empirical"
+        aria-hidden="true"
+      >●</span>
+      <span>Empirical Reference</span>
+    </li>
+    <li>
+      <span
+        class="research-legend__marker research-legend__marker--mathematical"
+        aria-hidden="true"
+      >■</span>
+      <span>CU Mathematical Model</span>
+    </li>
+    <li>
+      <span
+        class="research-legend__marker research-legend__marker--theoretical"
+        aria-hidden="true"
+      >◆</span>
+      <span>CU Theoretical Proposition</span>
+    </li>
+    <li>
+      <span
+        class="research-legend__marker research-legend__marker--open"
+        aria-hidden="true"
+      >?</span>
+      <span>Open Question</span>
+    </li>
+  </ul>
+</section>
+
+<style>
+  .research-legend {
+    width: 100%;
+  }
+
+  .research-legend__list {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-4) var(--space-6);
+    list-style: none;
+  }
+
+  .research-legend__list li {
+    display: flex;
+    min-width: 0;
+    padding-block: var(--space-3);
+    align-items: center;
+    gap: var(--space-3);
+    border-block: 1px solid var(--color-translucent-blue);
+    color: var(--color-white-gold);
+    font-weight: 500;
+  }
+
+  .research-legend__marker {
+    display: inline-flex;
+    width: 1.75rem;
+    height: 1.75rem;
+    flex: 0 0 1.75rem;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-family-sans);
+    line-height: 1;
+  }
+
+  .research-legend__marker--empirical {
+    color: var(--color-cyan);
+  }
+
+  .research-legend__marker--mathematical {
+    color: var(--color-white-gold);
+  }
+
+  .research-legend__marker--theoretical {
+    color: var(--color-amber);
+  }
+
+  .research-legend__marker--open {
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    color: var(--color-muted-gray);
+  }
+
+  @media (max-width: 64rem) {
+    .research-legend__list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 36rem) {
+    .research-legend__list {
+      grid-template-columns: 1fr;
+      gap: var(--space-2);
+    }
+  }
+</style>
