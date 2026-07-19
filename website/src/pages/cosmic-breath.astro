@@ -1,5 +1,6 @@
 ---
 import ClassificationBadge from '../components/ClassificationBadge.astro';
+import ContentSection from '../components/ContentSection.astro';
 import CosmicBreathDiagram from '../components/CosmicBreathDiagram.astro';
 import ContentPageLayout from '../layouts/ContentPageLayout.astro';
 ---
@@ -35,6 +36,40 @@ import ContentPageLayout from '../layouts/ContentPageLayout.astro';
       </p>
     </div>
   </section>
+
+  <div class="breath-details">
+    <ContentSection id="reading-the-diagram" title="Reading the diagram">
+      <ClassificationBadge slot="context" classification="cu-theoretical-proposition" />
+      <p>
+        The nested shells represent relationships within the CU framework. They should
+        be read as a structural diagram of CU terminology, not as a scale drawing or an
+        observational map.
+      </p>
+      <p>
+        The labels sub-ztom, atom, btom, ctom, and ztom identify distinct positions in
+        that structure. The central sub-ztom seed remains separate from the larger shells.
+      </p>
+    </ContentSection>
+
+    <ContentSection id="ctom-observable-universe" title="ctom and the Observable Universe">
+      <ClassificationBadge slot="context" classification="cu-theoretical-proposition" />
+      <p>
+        sub-ctom and ctom remain separate terms within the framework. The Observable
+        Universe marker belongs within ctom and must not be interpreted as occupying
+        sub-ctom.
+      </p>
+    </ContentSection>
+
+    <ContentSection id="scope-of-the-model" title="Scope of the model">
+      <ClassificationBadge slot="context" classification="cu-theoretical-proposition" />
+      <p>
+        The Cosmic Breath is presented as a CU model of expansion and compression across
+        the framework’s full cycle. The durations stated in the page introduction are CU
+        framework values; this page does not present them as established cosmological
+        measurements.
+      </p>
+    </ContentSection>
+  </div>
 </ContentPageLayout>
 
 <style>
@@ -48,6 +83,11 @@ import ContentPageLayout from '../layouts/ContentPageLayout.astro';
 
   .breath-overview__diagram { min-width: 0; }
   .breath-overview__classification { margin-top: var(--space-6); }
+  .breath-details {
+    display: grid;
+    margin-top: var(--space-12);
+    gap: var(--space-12);
+  }
   h2 { margin: 0; font-size: clamp(1.75rem, 4vw, 2.5rem); }
   p { margin-block: var(--space-4) 0; }
   strong { color: var(--color-cyan); }

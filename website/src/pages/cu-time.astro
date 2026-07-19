@@ -1,4 +1,5 @@
 ---
+import ClassificationBadge from '../components/ClassificationBadge.astro';
 import ContentSection from '../components/ContentSection.astro';
 import ContentPageLayout from '../layouts/ContentPageLayout.astro';
 ---
@@ -21,4 +22,32 @@ import ContentPageLayout from '../layouts/ContentPageLayout.astro';
       and mathematical assumptions before any interactive converter is introduced.
     </p>
   </ContentSection>
+
+  <div class="cu-time-details">
+    <ContentSection id="cu-time-purpose-limits" title="Purpose and limits">
+      <ClassificationBadge slot="context" classification="cu-mathematical-model" />
+      <p>
+        CU-Time is intended to provide consistent notation for positions within the
+        Cosmic Breath framework. It is a CU-specific mathematical construction, and its
+        usefulness depends on clearly documented definitions, assumptions, and conversion
+        rules.
+      </p>
+    </ContentSection>
+
+    <ContentSection id="cu-time-documentation" title="Documentation before conversion">
+      <p>
+        Before an interactive converter is introduced, its inputs, outputs, calibration,
+        uncertainty, and relationship to conventional chronology should be documented for
+        review. Until then, this page should remain explanatory rather than calculational.
+      </p>
+    </ContentSection>
+  </div>
 </ContentPageLayout>
+
+<style>
+  .cu-time-details {
+    display: grid;
+    margin-top: var(--space-12);
+    gap: var(--space-12);
+  }
+</style>

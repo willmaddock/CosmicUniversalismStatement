@@ -21,4 +21,30 @@ import ContentPageLayout from '../layouts/ContentPageLayout.astro';
       references, how its models are described, and which questions remain open.
     </p>
   </ContentSection>
+
+  <div class="about-details">
+    <ContentSection id="about-public-documentation" title="Public documentation">
+      <p>
+        The initiative presents the framework for examination rather than as a completed
+        scientific account. Public pages should make assumptions, classifications,
+        limitations, and unresolved questions easier to locate.
+      </p>
+    </ContentSection>
+
+    <ContentSection id="about-revision-critique" title="Revision and critique">
+      <p>
+        Critique is part of the documentation process. When an interpretation changes,
+        the project should preserve enough provenance to show what changed, why it changed,
+        and whether earlier material is historical, superseded, or archived.
+      </p>
+    </ContentSection>
+  </div>
 </ContentPageLayout>
+
+<style>
+  .about-details {
+    display: grid;
+    margin-top: var(--space-12);
+    gap: var(--space-12);
+  }
+</style>

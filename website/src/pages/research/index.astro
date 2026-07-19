@@ -48,6 +48,19 @@ import ContentPageLayout from '../../layouts/ContentPageLayout.astro';
           own classifications and evaluated on their stated assumptions.
         </p>
       </article>
+      <article>
+        <div class="research-groups__classifications">
+          <ClassificationBadge classification="philosophical-interpretation" />
+          <ClassificationBadge classification="open-question" />
+        </div>
+        <h3>Interpretive and unresolved work</h3>
+        <p>
+          Philosophical interpretations address questions of meaning and significance
+          without being presented as empirical conclusions. Open questions identify
+          unresolved definitions, contradictions, or research problems that require
+          further work.
+        </p>
+      </article>
     </div>
   </ResearchIndexSection>
 
@@ -70,6 +83,12 @@ import ContentPageLayout from '../../layouts/ContentPageLayout.astro';
     description="Future research entries will identify their original CU repository file separately from external empirical references, together with version, last-reviewed date, and revision history."
   >
     <ResearchProvenanceGuide />
+    <p class="research-provenance-note">
+      Where empirical material is cited, the external reference should remain distinct
+      from the CU claim that interprets or uses it. A reader should be able to identify
+      which source supports the empirical context and which statements originate within
+      the CU framework.
+    </p>
   </ResearchIndexSection>
 </ContentPageLayout>
 
@@ -126,6 +145,11 @@ import ContentPageLayout from '../../layouts/ContentPageLayout.astro';
     align-items: flex-start;
     flex-wrap: wrap;
     gap: var(--space-2);
+  }
+
+  .research-provenance-note {
+    max-width: var(--measure-readable);
+    margin-top: var(--space-8);
   }
 
   h3 { margin: var(--space-4) 0 0; font-size: 1.375rem; }

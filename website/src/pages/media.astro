@@ -17,4 +17,32 @@ import ContentPageLayout from '../layouts/ContentPageLayout.astro';
       categories visible before the library grows.
     </p>
   </ContentSection>
+
+  <div class="media-details">
+    <ContentSection id="media-planned-formats" title="Planned formats">
+      <p>
+        Future entries may include written explainers, diagram walkthroughs, recorded
+        conversations, and other educational formats. Each entry should state its subject,
+        classification, and source basis before asking the audience to evaluate its
+        conclusions.
+      </p>
+    </ContentSection>
+
+    <ContentSection id="media-publication-standard" title="Publication standard">
+      <p>
+        Media that discusses established scientific material should identify the external
+        source separately from any CU interpretation. Media that presents CU mathematics
+        or theoretical propositions should name that classification directly. Unresolved
+        issues should remain visibly labeled as open questions.
+      </p>
+    </ContentSection>
+  </div>
 </ContentPageLayout>
+
+<style>
+  .media-details {
+    display: grid;
+    margin-top: var(--space-12);
+    gap: var(--space-12);
+  }
+</style>
