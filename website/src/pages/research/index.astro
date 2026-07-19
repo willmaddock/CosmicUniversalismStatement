@@ -1,46 +1,40 @@
 ---
-import Header from '../../components/Header.astro';
-import PageIntroduction from '../../components/PageIntroduction.astro';
 import ResearchLegend from '../../components/ResearchLegend.astro';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContentPageLayout from '../../layouts/ContentPageLayout.astro';
 ---
 
-<BaseLayout
-  title="Research | Cosmic Universalism"
-  description="The Cosmic Universalism research index and claim classification approach."
+<ContentPageLayout
+  metaTitle="Research | Cosmic Universalism"
+  metaDescription="The Cosmic Universalism research index and claim classification approach."
+  eyebrow="Research"
+  title="Trace each claim to the kind of support it has"
+  description="The research index separates established sources from CU-authored models and propositions, making the framework easier to examine, question, and revise."
 >
-  <Header slot="header" />
-  <PageIntroduction
-    eyebrow="Research"
-    title="Trace each claim to the kind of support it has"
-    description="The research index separates established sources from CU-authored models and propositions, making the framework easier to examine, question, and revise."
-  >
-    <ResearchLegend />
-    <div class="research-groups">
-      <article>
-        <h2>Scientific context</h2>
-        <p>
-          Observations, measurements, and published research belong here as external
-          references. Their inclusion does not make a CU interpretation empirical.
-        </p>
-      </article>
-      <article>
-        <h2>Framework work</h2>
-        <p>
-          CU mathematical models and theoretical propositions are identified by their
-          own classifications and evaluated on their stated assumptions.
-        </p>
-      </article>
-      <article id="open-questions">
-        <h2>Open questions</h2>
-        <p>
-          Unresolved problems are retained as questions to encourage falsifiability,
-          clearer definitions, and productive criticism.
-        </p>
-      </article>
-    </div>
-  </PageIntroduction>
-</BaseLayout>
+  <ResearchLegend />
+  <div class="research-groups">
+    <article>
+      <h2>Scientific context</h2>
+      <p>
+        Observations, measurements, and published research belong here as external
+        references. Their inclusion does not make a CU interpretation empirical.
+      </p>
+    </article>
+    <article>
+      <h2>Framework work</h2>
+      <p>
+        CU mathematical models and theoretical propositions are identified by their
+        own classifications and evaluated on their stated assumptions.
+      </p>
+    </article>
+    <article id="open-questions">
+      <h2>Open questions</h2>
+      <p>
+        Unresolved problems are retained as questions to encourage falsifiability,
+        clearer definitions, and productive criticism.
+      </p>
+    </article>
+  </div>
+</ContentPageLayout>
 
 <style>
   .research-groups {

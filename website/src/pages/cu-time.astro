@@ -1,33 +1,27 @@
 ---
-import Header from '../components/Header.astro';
-import PageIntroduction from '../components/PageIntroduction.astro';
-import BaseLayout from '../layouts/BaseLayout.astro';
+import ContentPageLayout from '../layouts/ContentPageLayout.astro';
 ---
 
-<BaseLayout
-  title="CU-Time | Cosmic Universalism"
-  description="An introduction to CU-Time as a proposed deep-time coordinate system."
+<ContentPageLayout
+  metaTitle="CU-Time | Cosmic Universalism"
+  metaDescription="An introduction to CU-Time as a proposed deep-time coordinate system."
+  eyebrow="CU-Time"
+  title="A coordinate system for the Cosmic Breath"
+  description="CU-Time is the framework’s proposed notation for locating dates and events within its deep-time model."
 >
-  <Header slot="header" />
-  <PageIntroduction
-    eyebrow="CU-Time"
-    title="A coordinate system for the Cosmic Breath"
-    description="CU-Time is the framework’s proposed notation for locating dates and events within its deep-time model."
-  >
-    <div class="cu-time-note">
-      <h2>This page establishes context only</h2>
-      <p>
-        CU-Time connects familiar chronology with the framework’s larger sequence of
-        cosmic phases. Its calculations and conversion methods are not reproduced or
-        modified in this phase of the website.
-      </p>
-      <p>
-        Future documentation can explain inputs, outputs, calibration, uncertainty,
-        and mathematical assumptions before any interactive converter is introduced.
-      </p>
-    </div>
-  </PageIntroduction>
-</BaseLayout>
+  <div class="cu-time-note">
+    <h2>This page establishes context only</h2>
+    <p>
+      CU-Time connects familiar chronology with the framework’s larger sequence of
+      cosmic phases. Its calculations and conversion methods are not reproduced or
+      modified in this phase of the website.
+    </p>
+    <p>
+      Future documentation can explain inputs, outputs, calibration, uncertainty,
+      and mathematical assumptions before any interactive converter is introduced.
+    </p>
+  </div>
+</ContentPageLayout>
 
 <style>
   .cu-time-note {

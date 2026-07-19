@@ -1,33 +1,27 @@
 ---
-import Header from '../components/Header.astro';
-import PageIntroduction from '../components/PageIntroduction.astro';
-import BaseLayout from '../layouts/BaseLayout.astro';
+import ContentPageLayout from '../layouts/ContentPageLayout.astro';
 ---
 
-<BaseLayout
-  title="About | Cosmic Universalism"
-  description="About the Cosmic Universalism Computational Intelligence Initiative."
+<ContentPageLayout
+  metaTitle="About | Cosmic Universalism"
+  metaDescription="About the Cosmic Universalism Computational Intelligence Initiative."
+  eyebrow="About"
+  title="An open framework built for examination"
+  description="The Cosmic Universalism Computational Intelligence Initiative develops and documents the framework in public, inviting careful reading, critique, and continued research."
 >
-  <Header slot="header" />
-  <PageIntroduction
-    eyebrow="About"
-    title="An open framework built for examination"
-    description="The Cosmic Universalism Computational Intelligence Initiative develops and documents the framework in public, inviting careful reading, critique, and continued research."
-  >
-    <div class="about-introduction">
-      <h2>Purpose</h2>
-      <p>
-        The project explores how philosophical ideas, computational formalisms, and
-        cosmological questions can be expressed together without obscuring the
-        difference between evidence and speculation.
-      </p>
-      <p>
-        The website is a guide to that work: what the framework proposes, what it
-        references, how its models are described, and which questions remain open.
-      </p>
-    </div>
-  </PageIntroduction>
-</BaseLayout>
+  <div class="about-introduction">
+    <h2>Purpose</h2>
+    <p>
+      The project explores how philosophical ideas, computational formalisms, and
+      cosmological questions can be expressed together without obscuring the
+      difference between evidence and speculation.
+    </p>
+    <p>
+      The website is a guide to that work: what the framework proposes, what it
+      references, how its models are described, and which questions remain open.
+    </p>
+  </div>
+</ContentPageLayout>
 
 <style>
   .about-introduction {

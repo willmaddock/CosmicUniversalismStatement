@@ -1,0 +1,63 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  description: string;
+  titleId?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  description,
+  titleId = 'page-title',
+} = Astro.props;
+---
+
+<header class="page-intro" aria-labelledby={titleId}>
+  <div class="page-intro__inner">
+    <p class="page-intro__eyebrow">{eyebrow}</p>
+    <h1 id={titleId}>{title}</h1>
+    <p class="page-intro__description">{description}</p>
+  </div>
+</header>
+
+<style>
+  .page-intro {
+    padding-top: clamp(var(--space-12), 8vw, 7rem);
+  }
+
+  .page-intro__inner {
+    width: min(100% - (2 * var(--space-6)), 72rem);
+    margin-inline: auto;
+  }
+
+  .page-intro__eyebrow {
+    margin: 0 0 var(--space-3);
+    color: var(--color-amber);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    max-width: 18ch;
+    margin: 0;
+    color: var(--color-white-gold);
+    font-size: clamp(2.5rem, 7vw, 5rem);
+  }
+
+  .page-intro__description {
+    max-width: var(--measure-readable);
+    margin-block: var(--space-6) 0;
+    color: var(--color-text);
+    font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+  }
+
+  @media (max-width: 36rem) {
+    .page-intro__inner {
+      width: min(100% - (2 * var(--space-4)), 72rem);
+    }
+  }
+</style>

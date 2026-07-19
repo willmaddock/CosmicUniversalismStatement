@@ -1,19 +1,29 @@
 ---
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import {
+  formatPageTitle,
+  siteMetadata,
+} from '../config/site';
 import '../styles/global.css';
 
 interface Props {
   title?: string;
   description?: string;
+  canonical?: string | URL;
 }
 
 const {
-  title = 'Cosmic Universalism',
-  description = 'Explore the principles and research of Cosmic Universalism.',
+  title,
+  description = siteMetadata.defaultDescription,
+  canonical,
 } = Astro.props;
 
-const canonicalUrl = Astro.site
-  ? new URL(Astro.url.pathname, Astro.site)
-  : Astro.url;
+const resolvedTitle = formatPageTitle(title);
+const canonicalBase = Astro.site ?? Astro.url.origin;
+const canonicalUrl = canonical
+  ? new URL(canonical.toString(), canonicalBase)
+  : new URL(Astro.url.pathname, canonicalBase);
 ---
 
 <!doctype html>
@@ -23,15 +33,36 @@ const canonicalUrl = Astro.site
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonicalUrl} />
-    <title>{title}</title>
+    <link rel="canonical" href={canonicalUrl.href} />
+    <meta property="og:site_name" content={siteMetadata.name} />
+    <meta property="og:title" content={resolvedTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl.href} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={resolvedTitle} />
+    <meta name="twitter:description" content={description} />
+    <title>{resolvedTitle}</title>
     <slot name="head" />
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
-    <slot name="header" />
+    <Header />
     <main id="main-content" tabindex="-1">
       <slot />
     </main>
+    <Footer />
   </body>
 </html>
+
+<style is:global>
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #main-content {
+    width: 100%;
+    flex: 1 0 auto;
+  }
+</style>

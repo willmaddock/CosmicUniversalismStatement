@@ -1,0 +1,56 @@
+---
+import PageIntro from '../components/PageIntro.astro';
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  metaTitle: string;
+  metaDescription: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  canonical?: string | URL;
+  titleId?: string;
+}
+
+const {
+  metaTitle,
+  metaDescription,
+  eyebrow,
+  title,
+  description,
+  canonical,
+  titleId = 'page-title',
+} = Astro.props;
+---
+
+<BaseLayout title={metaTitle} description={metaDescription} canonical={canonical}>
+  <Fragment slot="head">
+    <slot name="head" />
+  </Fragment>
+
+  <PageIntro
+    eyebrow={eyebrow}
+    title={title}
+    description={description}
+    titleId={titleId}
+  />
+
+  <div class="content-page-layout__content">
+    <slot />
+  </div>
+</BaseLayout>
+
+<style>
+  .content-page-layout__content {
+    width: min(100% - (2 * var(--space-6)), 72rem);
+    margin: var(--space-12) auto 0;
+    padding-block: var(--space-8) clamp(var(--space-12), 8vw, 7rem);
+    border-top: 1px solid var(--color-translucent-blue);
+  }
+
+  @media (max-width: 36rem) {
+    .content-page-layout__content {
+      width: min(100% - (2 * var(--space-4)), 72rem);
+    }
+  }
+</style>

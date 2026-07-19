@@ -1,0 +1,155 @@
+---
+import {
+  isCurrentPath,
+  primaryNavigation,
+  siteMetadata,
+} from '../config/site';
+
+const currentPathname = Astro.url.pathname;
+const currentYear = new Date().getUTCFullYear();
+---
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__identity">
+      <a
+        class="site-footer__home"
+        href="/"
+        aria-current={isCurrentPath(currentPathname, '/') ? 'page' : undefined}
+      >
+        {siteMetadata.name}
+      </a>
+      <p>
+        A philosophical and computational framework exploring consciousness, time,
+        existence, and the full Cosmic Breath.
+      </p>
+    </div>
+
+    <nav class="site-footer__navigation" aria-label="Footer navigation">
+      <ul>
+        {
+          primaryNavigation.map(({ label, href, external }) => (
+            <li>
+              <a
+                href={href}
+                rel={external ? 'external' : undefined}
+                aria-current={isCurrentPath(currentPathname, href) ? 'page' : undefined}
+              >
+                {label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="site-footer__status">
+      <p>Scientific references remain distinct from CU theoretical propositions.</p>
+      <p>&copy; {currentYear} {siteMetadata.name}</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    width: 100%;
+    border-top: 1px solid var(--color-translucent-blue);
+    background: var(--color-background);
+  }
+
+  .site-footer__inner {
+    display: grid;
+    width: min(100% - (2 * var(--space-6)), 90rem);
+    margin-inline: auto;
+    padding-block: var(--space-12);
+    grid-template-columns: minmax(15rem, 1.2fr) minmax(18rem, 1fr);
+    gap: var(--space-8) var(--space-12);
+  }
+
+  .site-footer__identity {
+    max-width: var(--measure-readable);
+  }
+
+  .site-footer__home {
+    color: var(--color-white-gold);
+    font-family: var(--font-family-serif);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .site-footer__identity p,
+  .site-footer__status p {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+
+  .site-footer__identity p {
+    margin-top: var(--space-3);
+  }
+
+  .site-footer__navigation ul {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2) var(--space-6);
+    list-style: none;
+  }
+
+  .site-footer__navigation a {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    color: var(--color-text);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .site-footer__navigation a:hover,
+  .site-footer__navigation a[aria-current='page'] {
+    color: var(--color-cyan);
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
+
+  .site-footer__status {
+    display: flex;
+    padding-top: var(--space-6);
+    grid-column: 1 / -1;
+    justify-content: space-between;
+    gap: var(--space-4);
+    border-top: 1px solid var(--color-translucent-blue);
+  }
+
+  .site-footer__home:focus-visible,
+  .site-footer__navigation a:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-cyan);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  @media (max-width: 48rem) {
+    .site-footer__inner {
+      grid-template-columns: 1fr;
+    }
+
+    .site-footer__status {
+      grid-column: 1;
+      flex-direction: column;
+    }
+  }
+
+  @media (max-width: 36rem) {
+    .site-footer__inner {
+      width: min(100% - (2 * var(--space-4)), 90rem);
+    }
+
+    .site-footer__navigation ul {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+  }
+</style>

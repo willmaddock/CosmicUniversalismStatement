@@ -1,21 +1,21 @@
 ---
-const navigationItems = [
-  { label: 'Framework', href: '/framework' },
-  { label: 'Cosmic Breath', href: '/cosmic-breath' },
-  { label: 'CU-Time', href: '/cu-time' },
-  { label: 'Research', href: '/research' },
-  { label: 'Media', href: '/media' },
-  { label: 'About', href: '/about' },
-  {
-    label: 'GitHub',
-    href: 'https://github.com/willmaddock/CosmicUniversalismStatement',
-  },
-];
+import {
+  isCurrentPath,
+  primaryAction,
+  primaryNavigation,
+} from '../config/site';
+
+const currentPathname = Astro.url.pathname;
 ---
 
 <header class="site-header">
   <div class="site-header__inner">
-    <a class="site-identity" href="/" aria-label="Cosmic Universalism home">
+    <a
+      class="site-identity"
+      href="/"
+      aria-label="Cosmic Universalism home"
+      aria-current={isCurrentPath(currentPathname, '/') ? 'page' : undefined}
+    >
       <span class="site-identity__name">COSMIC UNIVERSALISM</span>
       <span class="site-identity__initiative">Computational Intelligence Initiative</span>
     </a>
@@ -24,17 +24,29 @@ const navigationItems = [
       <nav class="primary-navigation" aria-label="Primary navigation">
         <ul class="primary-navigation__list">
           {
-            navigationItems.map(({ label, href }) => (
+            primaryNavigation.map(({ label, href, external }) => (
               <li>
-                <a href={href}>{label}</a>
+                <a
+                  href={href}
+                  rel={external ? 'external' : undefined}
+                  aria-current={isCurrentPath(currentPathname, href) ? 'page' : undefined}
+                >
+                  {label}
+                </a>
               </li>
             ))
           }
         </ul>
       </nav>
 
-      <a class="site-header__action" href="/cu-time">
-        Explore CU-Time
+      <a
+        class="site-header__action"
+        href={primaryAction.href}
+        aria-current={
+          isCurrentPath(currentPathname, primaryAction.href) ? 'page' : undefined
+        }
+      >
+        {primaryAction.label}
       </a>
     </div>
   </div>
@@ -125,6 +137,13 @@ const navigationItems = [
     text-underline-offset: 0.25em;
   }
 
+  .primary-navigation a[aria-current='page'] {
+    color: var(--color-cyan);
+    text-decoration: underline;
+    text-decoration-thickness: 0.125rem;
+    text-underline-offset: 0.35em;
+  }
+
   .site-header__action {
     flex: 0 0 auto;
     padding-inline: var(--space-4);
@@ -136,6 +155,11 @@ const navigationItems = [
   .site-header__action:hover {
     background: var(--color-amber);
     color: var(--color-deep-navy-black);
+  }
+
+  .site-header__action[aria-current='page'] {
+    border-color: var(--color-cyan);
+    color: var(--color-cyan);
   }
 
   .site-identity:focus-visible,
@@ -165,6 +189,11 @@ const navigationItems = [
   @media (max-width: 36rem) {
     .site-header__inner {
       width: min(100% - (2 * var(--space-4)), 90rem);
+    }
+
+    .primary-navigation,
+    .primary-navigation__list {
+      width: 100%;
     }
 
     .primary-navigation__list {

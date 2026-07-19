@@ -1,29 +1,23 @@
 ---
-import Header from '../components/Header.astro';
-import PageIntroduction from '../components/PageIntroduction.astro';
-import BaseLayout from '../layouts/BaseLayout.astro';
+import ContentPageLayout from '../layouts/ContentPageLayout.astro';
 ---
 
-<BaseLayout
-  title="Media | Cosmic Universalism"
-  description="An introduction to future Cosmic Universalism media and explanatory resources."
+<ContentPageLayout
+  metaTitle="Media | Cosmic Universalism"
+  metaDescription="An introduction to future Cosmic Universalism media and explanatory resources."
+  eyebrow="Media"
+  title="Different ways into a large framework"
+  description="The media library will gather accessible explanations, visual narratives, and conversations about Cosmic Universalism."
 >
-  <Header slot="header" />
-  <PageIntroduction
-    eyebrow="Media"
-    title="Different ways into a large framework"
-    description="The media library will gather accessible explanations, visual narratives, and conversations about Cosmic Universalism."
-  >
-    <div class="media-introduction">
-      <h2>Clarity before volume</h2>
-      <p>
-        Future media will identify whether it explains source science, CU mathematics,
-        a theoretical proposition, or an open question. This foundation keeps those
-        categories visible before the library grows.
-      </p>
-    </div>
-  </PageIntroduction>
-</BaseLayout>
+  <div class="media-introduction">
+    <h2>Clarity before volume</h2>
+    <p>
+      Future media will identify whether it explains source science, CU mathematics,
+      a theoretical proposition, or an open question. This foundation keeps those
+      categories visible before the library grows.
+    </p>
+  </div>
+</ContentPageLayout>
 
 <style>
   .media-introduction {
