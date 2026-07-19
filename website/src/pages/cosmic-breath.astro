@@ -1,4 +1,5 @@
 ---
+import ClassificationBadge from '../components/ClassificationBadge.astro';
 import CosmicBreathDiagram from '../components/CosmicBreathDiagram.astro';
 import ContentPageLayout from '../layouts/ContentPageLayout.astro';
 ---
@@ -21,6 +22,9 @@ import ContentPageLayout from '../layouts/ContentPageLayout.astro';
         particular, <strong>sub-ctom</strong> is not interchangeable with
         <strong>ctom</strong>.
       </p>
+      <div class="breath-overview__classification">
+        <ClassificationBadge classification="cu-theoretical-proposition" />
+      </div>
       <p>
         The diagram places the Observable Universe marker within ctom. This is a CU
         structural proposition, not an empirical measurement of the universe’s location.
@@ -38,6 +42,7 @@ import ContentPageLayout from '../layouts/ContentPageLayout.astro';
   }
 
   .breath-overview__diagram { min-width: 0; }
+  .breath-overview__classification { margin-top: var(--space-6); }
   h2 { margin: 0; font-size: clamp(1.75rem, 4vw, 2.5rem); }
   p { margin-block: var(--space-4) 0; }
   strong { color: var(--color-cyan); }

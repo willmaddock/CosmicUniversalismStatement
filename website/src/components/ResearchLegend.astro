@@ -1,34 +1,62 @@
-<section class="research-legend" aria-label="Research classification legend">
+---
+import ClassificationBadge from './ClassificationBadge.astro';
+import ResearchStatusBadge from './ResearchStatusBadge.astro';
+import {
+  allResearchClassifications,
+  allResearchStatuses,
+  coreResearchClassifications,
+} from '../data/research-taxonomy';
+
+interface Props {
+  variant?: 'compact' | 'complete';
+}
+
+const { variant = 'compact' } = Astro.props;
+const classifications =
+  variant === 'complete' ? allResearchClassifications : coreResearchClassifications;
+---
+
+<section
+  class:list={['research-legend', `research-legend--${variant}`]}
+  aria-label="Research classification legend"
+>
+  {
+    variant === 'complete' && (
+      <h2 class="research-legend__heading">Research classification vocabulary</h2>
+    )
+  }
+
   <ul class="research-legend__list" role="list">
-    <li>
-      <span
-        class="research-legend__marker research-legend__marker--empirical"
-        aria-hidden="true"
-      >●</span>
-      <span>Empirical Reference</span>
-    </li>
-    <li>
-      <span
-        class="research-legend__marker research-legend__marker--mathematical"
-        aria-hidden="true"
-      >■</span>
-      <span>CU Mathematical Model</span>
-    </li>
-    <li>
-      <span
-        class="research-legend__marker research-legend__marker--theoretical"
-        aria-hidden="true"
-      >◆</span>
-      <span>CU Theoretical Proposition</span>
-    </li>
-    <li>
-      <span
-        class="research-legend__marker research-legend__marker--open"
-        aria-hidden="true"
-      >?</span>
-      <span>Open Question</span>
-    </li>
+    {
+      classifications.map((classification) => (
+        <li>
+          <ClassificationBadge
+            classification={classification}
+            showDescription={variant === 'complete'}
+          />
+        </li>
+      ))
+    }
   </ul>
+
+  {
+    variant === 'complete' && (
+      <div class="research-legend__statuses">
+        <h2 class="research-legend__heading">Research status vocabulary</h2>
+        <p class="research-legend__status-note">
+          Status describes a research lifecycle and does not change a material’s
+          classification or establish scientific validity.
+        </p>
+        <ul class="research-legend__status-list" role="list">
+          {allResearchStatuses.map((status) => (
+            <li>
+              <ResearchStatusBadge status={status} showDescription={true} />
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
 </section>
 
 <style>
@@ -45,54 +73,52 @@
     list-style: none;
   }
 
-  .research-legend__list li {
-    display: flex;
+  .research-legend__list li,
+  .research-legend__status-list li {
     min-width: 0;
-    padding-block: var(--space-3);
-    align-items: center;
-    gap: var(--space-3);
-    border-block: 1px solid var(--color-translucent-blue);
+  }
+
+  .research-legend__heading {
+    margin: 0 0 var(--space-4);
     color: var(--color-white-gold);
-    font-weight: 500;
+    font-size: 1.375rem;
   }
 
-  .research-legend__marker {
-    display: inline-flex;
-    width: 1.75rem;
-    height: 1.75rem;
-    flex: 0 0 1.75rem;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-family-sans);
-    line-height: 1;
+  .research-legend--complete .research-legend__list,
+  .research-legend__status-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .research-legend__marker--empirical {
-    color: var(--color-cyan);
+  .research-legend__statuses {
+    margin-top: var(--space-12);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--color-translucent-blue);
   }
 
-  .research-legend__marker--mathematical {
-    color: var(--color-white-gold);
+  .research-legend__status-note {
+    max-width: var(--measure-readable);
+    margin-block: 0 var(--space-6);
+    color: var(--color-text-muted);
   }
 
-  .research-legend__marker--theoretical {
-    color: var(--color-amber);
-  }
-
-  .research-legend__marker--open {
-    border: 1px solid currentColor;
-    border-radius: 50%;
-    color: var(--color-muted-gray);
+  .research-legend__status-list {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    gap: var(--space-4);
+    list-style: none;
   }
 
   @media (max-width: 64rem) {
-    .research-legend__list {
+    .research-legend__list,
+    .research-legend__status-list {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
   @media (max-width: 36rem) {
-    .research-legend__list {
+    .research-legend__list,
+    .research-legend__status-list {
       grid-template-columns: 1fr;
       gap: var(--space-2);
     }

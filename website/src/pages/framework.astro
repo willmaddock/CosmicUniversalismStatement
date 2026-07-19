@@ -1,4 +1,5 @@
 ---
+import ClassificationBadge from '../components/ClassificationBadge.astro';
 import ContentPageLayout from '../layouts/ContentPageLayout.astro';
 ---
 
@@ -11,6 +12,7 @@ import ContentPageLayout from '../layouts/ContentPageLayout.astro';
 >
   <div class="content-grid">
     <article>
+      <ClassificationBadge classification="philosophical-interpretation" />
       <h2>Philosophical inquiry</h2>
       <p>
         The framework asks how meaning, consciousness, and responsibility might be
@@ -18,6 +20,7 @@ import ContentPageLayout from '../layouts/ContentPageLayout.astro';
       </p>
     </article>
     <article>
+      <ClassificationBadge classification="cu-mathematical-model" />
       <h2>Computational expression</h2>
       <p>
         Formal models provide a language for exploring the framework’s internal
@@ -47,7 +50,7 @@ import ContentPageLayout from '../layouts/ContentPageLayout.astro';
     background: var(--color-surface-translucent);
   }
 
-  h2 { margin: 0; font-size: 1.375rem; }
+  h2 { margin: var(--space-4) 0 0; font-size: 1.375rem; }
   p { margin-block: var(--space-4) 0; }
 
   @media (max-width: 48rem) {

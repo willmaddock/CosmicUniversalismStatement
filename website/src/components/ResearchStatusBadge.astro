@@ -1,0 +1,98 @@
+---
+import {
+  researchStatuses,
+  type ResearchStatus,
+} from '../data/research-taxonomy';
+
+interface Props {
+  status: ResearchStatus;
+  showDescription?: boolean;
+}
+
+const {
+  status,
+  showDescription = false,
+} = Astro.props;
+const definition = researchStatuses[status];
+---
+
+<span
+  class:list={[
+    'research-status-badge',
+    `research-status-badge--${definition.tone}`,
+    { 'research-status-badge--descriptive': showDescription },
+  ]}
+  data-research-status={status}
+>
+  <span class="research-status-badge__content">
+    <span class="research-status-badge__label">
+      <span class="research-status-badge__context">Research status:</span>
+      {definition.label}
+    </span>
+    {
+      showDescription && (
+        <span class="research-status-badge__description">{definition.description}</span>
+      )
+    }
+  </span>
+</span>
+
+<style>
+  .research-status-badge {
+    --status-color: var(--color-white-gold);
+
+    display: inline-flex;
+    max-width: 100%;
+    min-height: 2rem;
+    padding: var(--space-1) var(--space-3);
+    align-items: center;
+    border: 1px dashed color-mix(in srgb, var(--status-color) 62%, transparent);
+    border-radius: 0.25rem;
+    background: var(--color-background);
+    color: var(--status-color);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .research-status-badge--descriptive {
+    width: 100%;
+    min-height: 100%;
+    padding: var(--space-3);
+    align-items: flex-start;
+  }
+
+  .research-status-badge--active {
+    --status-color: var(--color-cyan);
+  }
+
+  .research-status-badge--open,
+  .research-status-badge--review,
+  .research-status-badge--provisional {
+    --status-color: var(--color-amber);
+  }
+
+  .research-status-badge--superseded,
+  .research-status-badge--archived {
+    --status-color: var(--color-muted-gray);
+  }
+
+  .research-status-badge__content {
+    display: inline-flex;
+    min-width: 0;
+    flex-direction: column;
+  }
+
+  .research-status-badge__context {
+    margin-right: var(--space-1);
+    color: var(--color-text-muted);
+    font-weight: 500;
+  }
+
+  .research-status-badge__description {
+    margin-top: var(--space-1);
+    color: var(--color-text-muted);
+    font-weight: 400;
+    line-height: 1.5;
+  }
+</style>

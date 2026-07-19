@@ -1,3 +1,7 @@
+---
+import ClassificationBadge from './ClassificationBadge.astro';
+---
+
 <section class="research-preview" aria-labelledby="research-preview-title">
   <div class="research-preview__inner">
     <p class="research-preview__eyebrow">Research orientation</p>
@@ -9,12 +13,12 @@
     </p>
     <div class="research-preview__grid">
       <article>
-        <p class="research-preview__marker research-preview__marker--reference" aria-hidden="true">●</p>
+        <ClassificationBadge classification="empirical-reference" />
         <h3>Scientific references</h3>
         <p>Published observations and established scientific context used as points of comparison.</p>
       </article>
       <article>
-        <p class="research-preview__marker research-preview__marker--proposition" aria-hidden="true">◆</p>
+        <ClassificationBadge classification="cu-theoretical-proposition" />
         <h3>CU propositions</h3>
         <p>Framework-specific interpretations and hypotheses that require independent evaluation.</p>
       </article>
@@ -67,15 +71,7 @@
     background: var(--color-background);
   }
 
-  .research-preview__marker {
-    margin: 0 0 var(--space-3);
-    font-size: 1.25rem;
-  }
-
-  .research-preview__marker--reference { color: var(--color-cyan); }
-  .research-preview__marker--proposition { color: var(--color-amber); }
-
-  h3 { margin: 0; }
+  h3 { margin: var(--space-4) 0 0; }
   article p:last-child { margin-block: var(--space-3) 0; }
 
   .research-preview__link {
