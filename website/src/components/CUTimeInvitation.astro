@@ -1,0 +1,63 @@
+<section class="cu-time-invitation" aria-labelledby="cu-time-invitation-title">
+  <div class="cu-time-invitation__inner">
+    <div>
+      <p class="cu-time-invitation__eyebrow">CU-Time</p>
+      <h2 id="cu-time-invitation-title">Encounter deep time as a structured scale</h2>
+    </div>
+    <div>
+      <p>
+        CU-Time is the framework’s proposed system for locating events within the
+        Cosmic Breath. This phase introduces its purpose and terminology without
+        adding conversion tools or changing the underlying mathematics.
+      </p>
+      <a class="cu-time-invitation__link" href="/cu-time">Learn what CU-Time describes</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cu-time-invitation {
+    padding-block: clamp(var(--space-12), 8vw, 7rem);
+    border-top: 1px solid var(--color-translucent-blue);
+  }
+
+  .cu-time-invitation__inner {
+    display: grid;
+    width: min(100% - (2 * var(--space-6)), 90rem);
+    margin-inline: auto;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: var(--space-12);
+  }
+
+  .cu-time-invitation__eyebrow {
+    margin: 0 0 var(--space-3);
+    color: var(--color-amber);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  h2 { margin: 0; font-size: clamp(2rem, 5vw, 3.5rem); }
+  p { margin-block: 0 var(--space-6); }
+
+  .cu-time-invitation__link {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    font-weight: 700;
+  }
+
+  @media (max-width: 48rem) {
+    .cu-time-invitation__inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+  }
+
+  @media (max-width: 36rem) {
+    .cu-time-invitation__inner {
+      width: min(100% - (2 * var(--space-4)), 90rem);
+    }
+  }
+</style>

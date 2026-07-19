@@ -1,0 +1,100 @@
+<section class="research-preview" aria-labelledby="research-preview-title">
+  <div class="research-preview__inner">
+    <p class="research-preview__eyebrow">Research orientation</p>
+    <h2 id="research-preview-title">Evidence and ideas remain visibly separate</h2>
+    <p class="research-preview__introduction">
+      Research materials are organized by the kind of claim they make, so readers can
+      distinguish outside scientific references from the framework’s mathematical
+      models, theoretical propositions, and unanswered questions.
+    </p>
+    <div class="research-preview__grid">
+      <article>
+        <p class="research-preview__marker research-preview__marker--reference" aria-hidden="true">●</p>
+        <h3>Scientific references</h3>
+        <p>Published observations and established scientific context used as points of comparison.</p>
+      </article>
+      <article>
+        <p class="research-preview__marker research-preview__marker--proposition" aria-hidden="true">◆</p>
+        <h3>CU propositions</h3>
+        <p>Framework-specific interpretations and hypotheses that require independent evaluation.</p>
+      </article>
+    </div>
+    <a class="research-preview__link" href="/research">Explore the research index</a>
+  </div>
+</section>
+
+<style>
+  .research-preview {
+    padding-block: clamp(var(--space-12), 8vw, 7rem);
+    border-top: 1px solid var(--color-translucent-blue);
+    background: var(--color-surface-translucent);
+  }
+
+  .research-preview__inner {
+    width: min(100% - (2 * var(--space-6)), 90rem);
+    margin-inline: auto;
+  }
+
+  .research-preview__eyebrow {
+    margin: 0 0 var(--space-3);
+    color: var(--color-cyan);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    max-width: 18ch;
+    margin: 0;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .research-preview__introduction {
+    margin-block: var(--space-6) 0;
+  }
+
+  .research-preview__grid {
+    display: grid;
+    margin-top: var(--space-8);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  article {
+    padding: var(--space-6);
+    border: 1px solid var(--color-translucent-blue);
+    background: var(--color-background);
+  }
+
+  .research-preview__marker {
+    margin: 0 0 var(--space-3);
+    font-size: 1.25rem;
+  }
+
+  .research-preview__marker--reference { color: var(--color-cyan); }
+  .research-preview__marker--proposition { color: var(--color-amber); }
+
+  h3 { margin: 0; }
+  article p:last-child { margin-block: var(--space-3) 0; }
+
+  .research-preview__link {
+    display: inline-flex;
+    min-height: 2.75rem;
+    margin-top: var(--space-8);
+    align-items: center;
+    font-weight: 700;
+  }
+
+  @media (max-width: 48rem) {
+    .research-preview__grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 36rem) {
+    .research-preview__inner {
+      width: min(100% - (2 * var(--space-4)), 90rem);
+    }
+
+    article { padding: var(--space-4); }
+  }
+</style>

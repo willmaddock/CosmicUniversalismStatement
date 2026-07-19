@@ -1,0 +1,54 @@
+---
+import CosmicBreathDiagram from '../components/CosmicBreathDiagram.astro';
+import Header from '../components/Header.astro';
+import PageIntroduction from '../components/PageIntroduction.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Cosmic Breath | Cosmic Universalism"
+  description="An introduction to the Cosmic Breath and its distinct structural scales."
+>
+  <Header slot="header" />
+  <PageIntroduction
+    eyebrow="Cosmic Breath"
+    title="A proposed cycle of expansion and compression"
+    description="The Cosmic Breath is CU’s organizing model for a 3.108 trillion-year cycle: 2.8 trillion years of expansion followed by 308 billion years of compression."
+  >
+    <div class="breath-overview">
+      <div class="breath-overview__diagram">
+        <CosmicBreathDiagram />
+      </div>
+      <div class="breath-overview__content">
+        <h2>Structural scales remain distinct</h2>
+        <p>
+          The framework uses named tom scales as separate structural positions. In
+          particular, <strong>sub-ctom</strong> is not interchangeable with
+          <strong>ctom</strong>.
+        </p>
+        <p>
+          The diagram places the Observable Universe marker within ctom. This is a CU
+          structural proposition, not an empirical measurement of the universe’s location.
+        </p>
+      </div>
+    </div>
+  </PageIntroduction>
+</BaseLayout>
+
+<style>
+  .breath-overview {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(16rem, 0.9fr);
+    align-items: center;
+    gap: var(--space-12);
+  }
+
+  .breath-overview__diagram { min-width: 0; }
+  h2 { margin: 0; font-size: clamp(1.75rem, 4vw, 2.5rem); }
+  p { margin-block: var(--space-4) 0; }
+  strong { color: var(--color-cyan); }
+
+  @media (max-width: 48rem) {
+    .breath-overview { grid-template-columns: 1fr; gap: var(--space-8); }
+  }
+</style>

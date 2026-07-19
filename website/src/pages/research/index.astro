@@ -1,0 +1,70 @@
+---
+import Header from '../../components/Header.astro';
+import PageIntroduction from '../../components/PageIntroduction.astro';
+import ResearchLegend from '../../components/ResearchLegend.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Research | Cosmic Universalism"
+  description="The Cosmic Universalism research index and claim classification approach."
+>
+  <Header slot="header" />
+  <PageIntroduction
+    eyebrow="Research"
+    title="Trace each claim to the kind of support it has"
+    description="The research index separates established sources from CU-authored models and propositions, making the framework easier to examine, question, and revise."
+  >
+    <ResearchLegend />
+    <div class="research-groups">
+      <article>
+        <h2>Scientific context</h2>
+        <p>
+          Observations, measurements, and published research belong here as external
+          references. Their inclusion does not make a CU interpretation empirical.
+        </p>
+      </article>
+      <article>
+        <h2>Framework work</h2>
+        <p>
+          CU mathematical models and theoretical propositions are identified by their
+          own classifications and evaluated on their stated assumptions.
+        </p>
+      </article>
+      <article id="open-questions">
+        <h2>Open questions</h2>
+        <p>
+          Unresolved problems are retained as questions to encourage falsifiability,
+          clearer definitions, and productive criticism.
+        </p>
+      </article>
+    </div>
+  </PageIntroduction>
+</BaseLayout>
+
+<style>
+  .research-groups {
+    display: grid;
+    margin-top: var(--space-8);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  article {
+    padding: var(--space-6);
+    border: 1px solid var(--color-translucent-blue);
+    background: var(--color-surface-translucent);
+    scroll-margin-top: var(--space-6);
+  }
+
+  h2 { margin: 0; font-size: 1.375rem; }
+  p { margin-block: var(--space-4) 0; }
+
+  @media (max-width: 48rem) {
+    .research-groups { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 36rem) {
+    article { padding: var(--space-4); }
+  }
+</style>

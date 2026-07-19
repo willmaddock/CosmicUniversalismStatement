@@ -1,0 +1,81 @@
+<section class="open-questions" aria-labelledby="open-questions-title">
+  <div class="open-questions__inner">
+    <p class="open-questions__eyebrow">Open questions</p>
+    <h2 id="open-questions-title">Questions the framework does not claim to settle</h2>
+    <ul class="open-questions__list">
+      <li>Which CU propositions can be translated into testable or falsifiable claims?</li>
+      <li>How should computational models represent uncertainty across deep-time scales?</li>
+      <li>Where do philosophical interpretation and empirical cosmology meaningfully meet?</li>
+    </ul>
+    <a class="open-questions__link" href="/research#open-questions">Follow the open questions</a>
+  </div>
+</section>
+
+<style>
+  .open-questions {
+    padding-block: clamp(var(--space-12), 8vw, 7rem);
+    border-block: 1px solid var(--color-translucent-blue);
+    background: var(--color-surface-translucent);
+  }
+
+  .open-questions__inner {
+    width: min(100% - (2 * var(--space-6)), 90rem);
+    margin-inline: auto;
+  }
+
+  .open-questions__eyebrow {
+    margin: 0 0 var(--space-3);
+    color: var(--color-amber);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  h2 { max-width: 19ch; margin: 0; font-size: clamp(2rem, 5vw, 3.5rem); }
+
+  .open-questions__list {
+    display: grid;
+    margin: var(--space-8) 0 0;
+    padding: 0;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+    list-style: none;
+    counter-reset: questions;
+  }
+
+  li {
+    padding: var(--space-6);
+    border: 1px solid var(--color-translucent-blue);
+    background: var(--color-background);
+    counter-increment: questions;
+  }
+
+  li::before {
+    display: block;
+    margin-bottom: var(--space-3);
+    color: var(--color-muted-gray);
+    content: "0" counter(questions);
+    font-weight: 700;
+  }
+
+  .open-questions__link {
+    display: inline-flex;
+    min-height: 2.75rem;
+    margin-top: var(--space-8);
+    align-items: center;
+    font-weight: 700;
+  }
+
+  @media (max-width: 48rem) {
+    .open-questions__list { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 36rem) {
+    .open-questions__inner {
+      width: min(100% - (2 * var(--space-4)), 90rem);
+    }
+
+    li { padding: var(--space-4); }
+  }
+</style>

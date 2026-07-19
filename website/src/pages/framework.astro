@@ -1,0 +1,66 @@
+---
+import Header from '../components/Header.astro';
+import PageIntroduction from '../components/PageIntroduction.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Framework | Cosmic Universalism"
+  description="An introduction to the philosophical, computational, and cosmological structure of Cosmic Universalism."
+>
+  <Header slot="header" />
+  <PageIntroduction
+    eyebrow="Framework"
+    title="A map for inquiry, not a claim of completion"
+    description="Cosmic Universalism is an evolving philosophical and computational framework for examining consciousness, existence, time, and cosmic-scale structure."
+  >
+    <div class="content-grid">
+      <article>
+        <h2>Philosophical inquiry</h2>
+        <p>
+          The framework asks how meaning, consciousness, and responsibility might be
+          understood across scales larger than an individual life or civilization.
+        </p>
+      </article>
+      <article>
+        <h2>Computational expression</h2>
+        <p>
+          Formal models provide a language for exploring the framework’s internal
+          relationships. They remain CU models unless independently validated.
+        </p>
+      </article>
+      <article>
+        <h2>Research discipline</h2>
+        <p>
+          Empirical references, mathematical models, theoretical propositions, and
+          open questions are labeled separately so their evidentiary roles stay clear.
+        </p>
+      </article>
+    </div>
+  </PageIntroduction>
+</BaseLayout>
+
+<style>
+  .content-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  article {
+    padding: var(--space-6);
+    border: 1px solid var(--color-translucent-blue);
+    background: var(--color-surface-translucent);
+  }
+
+  h2 { margin: 0; font-size: 1.375rem; }
+  p { margin-block: var(--space-4) 0; }
+
+  @media (max-width: 48rem) {
+    .content-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 36rem) {
+    article { padding: var(--space-4); }
+  }
+</style>
