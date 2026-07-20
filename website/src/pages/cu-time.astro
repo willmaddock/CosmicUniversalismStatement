@@ -14,18 +14,18 @@ import CUTimeConverter from '../components/CUTimeConverter.astro';
 >
   <ContentSection
     id="cu-time-context"
-    title="This page establishes context only"
+    title="About this converter"
     variant="notice"
   >
     <p>
       CU-Time connects familiar chronology with the framework’s larger sequence of
-      cosmic phases. Its calculations and conversion methods are not reproduced or
-      modified in this phase of the website.
+      cosmic phases. The converter below translates a converter-aligned CU-Time value
+      into a corresponding proleptic Gregorian date and UTC time.
     </p>
 
     <p>
-      Future documentation can explain inputs, outputs, calibration, uncertainty,
-      and mathematical assumptions before any interactive converter is introduced.
+      This tool implements the documented mathematical constants and calendar rules.
+      It does not generate phase classifications or empirical cosmology claims.
     </p>
   </ContentSection>
 
@@ -44,11 +44,11 @@ import CUTimeConverter from '../components/CUTimeConverter.astro';
       </p>
     </ContentSection>
 
-    <ContentSection id="cu-time-documentation" title="Documentation before conversion">
+    <ContentSection id="cu-time-documentation" title="Conversion boundaries">
       <p>
-        Before an interactive converter is introduced, its inputs, outputs, calibration,
-        uncertainty, and relationship to conventional chronology should be documented for
-        review. Until then, this page should remain explanatory rather than calculational.
+        Inputs use plain decimal notation. Results use UTC, a proleptic Gregorian calendar,
+        and civil CE/BCE years without a public year zero. The original reference converter
+        remains unchanged as historical implementation evidence.
       </p>
     </ContentSection>
   </div>

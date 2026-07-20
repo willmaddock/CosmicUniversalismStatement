@@ -2,52 +2,124 @@
 import ClassificationBadge from './ClassificationBadge.astro';
 ---
 
-<section
-  class="cu-time-converter"
-  aria-labelledby="cu-time-converter-title"
->
+<section class="cu-time-converter" aria-labelledby="cu-time-converter-title">
   <div class="cu-time-converter__header">
     <p class="cu-time-converter__eyebrow">CU-Time Tool</p>
-
-    <h2 id="cu-time-converter-title">
-      CU-Time Converter
-    </h2>
-
-    <ClassificationBadge
-      classification="cu-mathematical-model"
-    />
+    <h2 id="cu-time-converter-title">CU-Time to Gregorian UTC</h2>
+    <ClassificationBadge classification="cu-mathematical-model" />
   </div>
 
-  <div class="cu-time-converter__content">
-    <p>
-      Interactive converter under development.
-    </p>
+  <p class="cu-time-converter__intro">
+    Enter a converter-aligned CU-Time value to locate its corresponding
+    proleptic Gregorian date and time. Results use UTC and civil CE/BCE years.
+  </p>
 
-    <p>
-      The computational implementation will follow documented definitions,
-      constants, assumptions, and validation criteria.
-    </p>
+  <form class="cu-time-form" data-cu-time-form novalidate>
+    <div class="cu-time-form__field">
+      <label for="cu-time-input">CU-Time</label>
+      <p id="cu-time-input-hint" class="cu-time-form__hint">
+        Use a plain decimal number, such as 3094134044923.50975356477292230250881.
+        Scientific notation is not accepted.
+      </p>
+      <input
+        id="cu-time-input"
+        name="cuTime"
+        type="text"
+        inputmode="decimal"
+        autocomplete="off"
+        spellcheck="false"
+        aria-describedby="cu-time-input-hint cu-time-error"
+        aria-invalid="false"
+        required
+        data-cu-time-input
+      />
+    </div>
 
-    <p>
-      Future versions will describe inputs, outputs, conversion methods,
-      uncertainty handling, and the relationship between CU-Time notation
-      and conventional chronology.
-    </p>
-  </div>
+    <p
+      id="cu-time-error"
+      class="cu-time-form__error"
+      role="alert"
+      aria-live="assertive"
+      hidden
+      data-cu-time-error
+    ></p>
 
-  <div
-    class="cu-time-converter__status"
-    aria-label="Converter development status"
+    <button type="submit">Convert CU-Time</button>
+  </form>
+
+  <section
+    class="cu-time-result"
+    aria-labelledby="cu-time-result-title"
+    aria-live="polite"
+    tabindex="-1"
+    hidden
+    data-cu-time-result
   >
-    <span class="cu-time-converter__status-marker" aria-hidden="true">
-      ◇
-    </span>
+    <h3 id="cu-time-result-title">Conversion result</h3>
+    <dl>
+      <div>
+        <dt>CU-Time</dt>
+        <dd data-cu-time-result-input></dd>
+      </div>
+      <div>
+        <dt>Gregorian date and time</dt>
+        <dd data-cu-time-result-gregorian></dd>
+      </div>
+    </dl>
+  </section>
 
-    <span>
-      Research status: Active development
-    </span>
-  </div>
+  <p class="cu-time-converter__methodology">
+    This converter uses a proleptic Gregorian calendar with no reform cutover.
+    Public civil year zero is not used; astronomical year zero is displayed as 1 BCE.
+  </p>
 </section>
+
+<script>
+  import { convertCuTimeForDisplay } from '../lib/cuTime';
+
+  const form = document.querySelector<HTMLFormElement>('[data-cu-time-form]');
+  const input = document.querySelector<HTMLInputElement>('[data-cu-time-input]');
+  const error = document.querySelector<HTMLElement>('[data-cu-time-error]');
+  const result = document.querySelector<HTMLElement>('[data-cu-time-result]');
+  const resultInput = document.querySelector<HTMLElement>('[data-cu-time-result-input]');
+  const resultGregorian = document.querySelector<HTMLElement>('[data-cu-time-result-gregorian]');
+
+  if (form && input && error && result && resultInput && resultGregorian) {
+    const clearError = () => {
+      error.hidden = true;
+      error.textContent = '';
+      input.setAttribute('aria-invalid', 'false');
+    };
+
+    input.addEventListener('input', clearError);
+    input.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        form.requestSubmit();
+      }
+    });
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      clearError();
+
+      const converted = convertCuTimeForDisplay(input.value);
+      if (!converted.ok) {
+        input.setAttribute('aria-invalid', 'true');
+        error.textContent = converted.error.message;
+        error.hidden = false;
+        result.hidden = true;
+        input.focus();
+        return;
+      }
+
+      resultInput.textContent = converted.value.inputCuTime;
+      resultGregorian.textContent = converted.value.gregorianUtc;
+      result.hidden = false;
+      result.focus();
+    });
+  }
+</script>
 
 <style>
   .cu-time-converter {
@@ -59,13 +131,27 @@ import ClassificationBadge from './ClassificationBadge.astro';
     background: var(--color-surface-translucent);
   }
 
-  .cu-time-converter__header {
+  .cu-time-converter__header,
+  .cu-time-form,
+  .cu-time-form__field,
+  .cu-time-result,
+  .cu-time-result dl {
     display: grid;
     gap: var(--space-4);
   }
 
-  .cu-time-converter__eyebrow {
+  .cu-time-converter__eyebrow,
+  .cu-time-converter__intro,
+  .cu-time-converter__methodology,
+  .cu-time-form__hint,
+  .cu-time-form__error,
+  .cu-time-result h3,
+  .cu-time-result dl,
+  .cu-time-result dd {
     margin: 0;
+  }
+
+  .cu-time-converter__eyebrow {
     color: var(--color-cyan);
     font-size: 0.75rem;
     font-weight: 700;
@@ -73,37 +159,104 @@ import ClassificationBadge from './ClassificationBadge.astro';
     text-transform: uppercase;
   }
 
-  h2 {
-    margin: 0;
+  h2,
+  h3 {
     color: var(--color-white-gold);
     font-family: var(--font-family-serif);
+  }
+
+  h2 {
+    margin: 0;
     font-size: clamp(1.75rem, 4vw, 2.75rem);
   }
 
-  .cu-time-converter__content {
-    display: grid;
-    gap: var(--space-4);
+  h3 {
+    font-size: 1.35rem;
+  }
+
+  .cu-time-converter__intro,
+  .cu-time-converter__methodology,
+  .cu-time-form {
     max-width: var(--measure-readable);
   }
 
-  .cu-time-converter__content p {
-    margin: 0;
-    color: var(--color-text);
+  .cu-time-form label,
+  .cu-time-result dt {
+    color: var(--color-white-gold);
+    font-weight: 700;
   }
 
-  .cu-time-converter__status {
-    display: inline-flex;
-    width: fit-content;
-    align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-2) var(--space-4);
-    border: 1px solid var(--color-amber);
+  .cu-time-form__hint,
+  .cu-time-converter__methodology {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+
+  .cu-time-form input {
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-translucent-blue);
+    border-radius: 0;
+    background: var(--color-background);
+    color: var(--color-text);
+    font: inherit;
+  }
+
+  .cu-time-form input:focus-visible,
+  .cu-time-form button:focus-visible,
+  .cu-time-result:focus-visible {
+    outline: 3px solid var(--color-cyan);
+    outline-offset: 3px;
+  }
+
+  .cu-time-form input[aria-invalid='true'] {
+    border-color: var(--color-amber);
+  }
+
+  .cu-time-form__error {
     color: var(--color-amber);
-    font-size: 0.875rem;
     font-weight: 600;
   }
 
-  .cu-time-converter__status-marker {
-    color: var(--color-amber);
+  .cu-time-form button {
+    width: fit-content;
+    padding: var(--space-3) var(--space-5);
+    border: 1px solid var(--color-cyan);
+    background: transparent;
+    color: var(--color-cyan);
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+  }
+
+  .cu-time-form button:hover {
+    background: var(--color-translucent-blue);
+  }
+
+  .cu-time-result {
+    padding: var(--space-6);
+    border-left: 3px solid var(--color-cyan);
+    background: var(--color-background);
+  }
+
+  .cu-time-result dl > div {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .cu-time-result dd {
+    overflow-wrap: anywhere;
+    color: var(--color-text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cu-time-form button {
+      transition: none;
+    }
   }
 </style>
