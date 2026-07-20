@@ -36,13 +36,19 @@ export function convertGregorianUtcToCuTime(
   }
 }
 
-export function convertCivilGregorianToCuTime(
+export function convertGregorianToCuTime(
   input: CivilGregorianInput,
 ): CuTimeResult<ForwardConversionResult> {
   const validated = validateCivilGregorianInput(input);
   if (!validated.ok) return validated;
   return convertGregorianUtcToCuTime(validated.value);
 }
+
+/**
+ * Backward-compatible name retained for existing callers.
+ * New public integrations should use convertGregorianToCuTime.
+ */
+export const convertCivilGregorianToCuTime = convertGregorianToCuTime;
 
 export function convertCuTimeToGregorian(
   inputCuTime: Decimal,
