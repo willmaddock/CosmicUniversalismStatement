@@ -1,0 +1,5 @@
+"Description","DateTime","Output"
+"Far Past BCE","01/01/-28000000000 BCE 12:00:00 AM UTC",""
+"Far Future CE","01/01/28000000000 12:00:00 AM UTC",""
+"Ancient BCE","01/01/-10000 BCE 12:00:00 AM UTC",""
+"Duration BCE to CE","Duration: 01/01/-1 BCE to 01/01/1 CE",""

@@ -1,0 +1,1719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA Cosmic Time Converter - Enhanced Version</title>
+    <link rel="icon" href="data:,">
+    <script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.25.7/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/decimal.js@10.4.3/decimal.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked@5.1.2/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@400;600;700&display=swap"
+          rel="stylesheet">
+    <style>
+        body {
+            background-image: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+
+        .gradient-header {
+            background: linear-gradient(to right, #8B5CF6, #3B82F6);
+        }
+
+        .cosmic-button {
+            background: linear-gradient(to right, #8B5CF6, #3B82F6);
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .cosmic-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            filter: brightness(1.1);
+        }
+
+        .card {
+            background: #1f2937;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .card:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+            transition: all 0.3s ease;
+        }
+
+        .modal {
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+        }
+
+        .modal-content {
+            background: #1f2937;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid #4b5563;
+        }
+
+        .icon-button {
+            padding: 0.25rem;
+        }
+
+        h1, h2 {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .markdown-content {
+            color: #d1d5db;
+        }
+
+        .markdown-content p {
+            margin-bottom: 1.5rem;
+            line-height: 1.75;
+        }
+
+        .markdown-content h2 {
+            margin-top: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.75rem;
+            color: #ffffff;
+        }
+
+        .markdown-content h3 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            color: #e5e7eb;
+        }
+
+        .markdown-content ul, .markdown-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .markdown-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        .markdown-content table {
+            margin: 2rem 0;
+            border: 1px solid #4b5563;
+        }
+
+        .markdown-content th, .markdown-content td {
+            padding: 0.75rem;
+            border: 1px solid #4b5563;
+        }
+
+        .markdown-content th {
+            background: #374151;
+            font-weight: 600;
+        }
+
+        .markdown-content pre {
+            margin: 2rem 0;
+            padding: 1rem;
+            background: #1f2937;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+        }
+
+        .markdown-content a {
+            color: #3b82f6;
+            text-decoration: underline;
+        }
+
+        .markdown-content a:hover {
+            color: #8b5cf6;
+        }
+
+        .cosmic-breath-section {
+            background: linear-gradient(to bottom right, #1a1a2e, #16213e);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white font-sans">
+<div class="overlay"></div>
+<div id="root"></div>
+<script type="text/babel" data-presets="env,react">
+    const {useState, useEffect} = React;
+
+    Decimal.set({precision: 60, rounding: Decimal.ROUND_HALF_UP});
+
+    const CONSTANTS = {
+        BASE_CU: new Decimal('3094213000000'),
+        NASA_UNIVERSE_AGE: new Decimal('13786999981.453'),
+        ANCHOR_YEAR: 2000,
+        DAYS_PER_YEAR: new Decimal('365.2421897'),
+        DARK_ENERGY_START: new Decimal('3094000000000'),
+        DARK_ENERGY_END: new Decimal('3110000000000'),
+        ANTI_DARK_ENERGY_END: new Decimal('3416000000000'),
+        MIN_CU_TIME: new Decimal('3094212999993.128').minus(new Decimal('13786999981.453')),
+        CURRENT_CU_TIME: new Decimal('3094213000000.014691') // June 1, 2025; retained for future date checks
+    };
+
+    const OFFSET = new Decimal('78955076.49024643522707769749119');
+
+    let conversionHistory = [];
+
+    // About tab content
+    const ABOUT_MARKDOWN = `
+# 🌌 About the NASA Time Converter
+
+## 👨‍💻 Developed by William Maddock
+The NASA Time Converter was created by **William Maddock**, a graduate with a BS in Computer Science from Metropolitan State University of Denver. With a background in software development and a passion for cosmology, William began building this tool in **2025** to connect human timekeeping with NASA’s data on the universe’s age. It’s part of his broader work on the *Cosmic Universalism (CU)* framework, which blends science, philosophy, and theology to explore time and the cosmos.
+
+## 🛠️ How It Came to Be
+In **2025**, William set out to create a tool that seamlessly converts between:
+- **Gregorian dates** (e.g., June 4, 2025, 09:37 UTC)
+- **CU-Time** (a custom time scale from the CU framework)
+- **NASA’s cosmological time** (years since the Big Bang, ~13.787 billion years as of 2025, per [Planck 2018 results. I. Overview and the cosmological legacy of Planck](https://ui.adsabs.harvard.edu/abs/2020A%26A...641A...1P/abstract))
+
+### Development Timeline
+The tool evolved through several key versions, each enhancing its precision and functionality:
+
+| **Version**       | **Release Year** | **Key Features**                                                                 |
+|-------------------|------------------|----------------------------------------------------------------------------------|
+| Early Versions    | 2025             | - Established core conversion logic with a 365.2425-day year.                    |
+| v3.0.0 (Current)  | 2025             | - 60-digit precision using Decimal.js <br> - Support for BCE dates <br> - NASA data integration |
+
+The result is a practical, science-based tool for exploring cosmological time, enriched by William’s unique vision.
+
+## 🔗 Part of the Cosmic Universalism Framework
+The converter is a key component of the *Cosmic Universalism (CU)* framework, a speculative system William developed to explore cosmic evolution. CU introduces concepts like the **Cosmic Breath**—a 3.108 trillion-year cycle—and **CU-Time**, which maps the Big Bang to the present and beyond. While the converter focuses on empirical conversions, CU delves into deeper philosophical questions about time and existence.
+
+Curious about the bigger picture? Explore the [Cosmic Universalism Statement GitHub repository](https://github.com/willmaddock/CosmicUniversalismStatement) for more.
+
+### Explore the Philosophy
+For a deeper dive into the philosophical ideas behind CU, including AI and "God's Free Will," see [AI, Philosophy, God's Free Will, and Cosmic Universalism](https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/Docs/AI%2C%20Philosophy%2C%20God's%20Free%20Will%2C%20and%20Cosmic%20Universalism.md).
+
+## 📚 Explore Further
+- Try the [CU Time Converter](https://willmaddock.github.io/CosmicUniversalismStatement/cosmic_converter/v3_0_0/cu_time_converter_stable_v3_0_0.html) to experience CU-Time firsthand.
+- Visit the [research tab](#) for the science behind this tool.
+- Learn more about the CU framework and its custom license at [GitHub](https://github.com/willmaddock/CosmicUniversalismStatement).
+
+The NASA Time Converter is free to use and licensed under a custom [CU License](https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/LICENSE.md).
+`;
+
+    marked.use({
+        renderer: {
+            link(href, title, text) {
+                return `<a href="${href}" target="_blank" rel="noopener noreferrer">${text}</a>`;
+            }
+        }
+    });
+
+    function parseGregorianInput(yearStr, era, monthStr, dayStr, timeStr) {
+        let year = parseInt(yearStr);
+        if (isNaN(year) || year <= 0) throw new Error('Year must be a positive number.');
+        if (era === 'BCE') year = -year;
+        const month = parseInt(monthStr);
+        const day = parseInt(dayStr);
+        if (isNaN(month) || isNaN(day) || month < 1 || month > 12 || day < 1 || day > 31) {
+            throw new Error('Invalid date. Month 1-12, day 1-31.');
+        }
+        const timeMatch = timeStr.match(/^(\d{2}):(\d{2}):(\d{2})$/);
+        if (!timeMatch) throw new Error('Invalid time format. Use HH:MM:SS.');
+        const [, hourStr, minuteStr, secondStr] = timeMatch;
+        const hour = parseInt(hourStr);
+        const minute = parseInt(minuteStr);
+        const second = parseInt(secondStr);
+        if (hour < 0 || hour > 23 || minute < 0 || minute > 59 || second < 0 || second > 59) {
+            throw new Error('Invalid time. Hours 0-23, minutes/seconds 0-59.');
+        }
+        return {year, month, day, hour, minute, second};
+    }
+
+    function computeCUTimeFromDateComponents(year, month, day, hour, minute, second) {
+        const sign = year < 0 ? '-' : '';
+        const absYear = Math.abs(year).toString().padStart(4, '0');
+        const dateStr = `${sign}${absYear}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}T${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}Z`;
+        const date = new Date(dateStr);
+        if (!isNaN(date.getTime())) {
+            const anchorDate = new Date('2000-01-01T00:00:00Z');
+            const millisecondsDiff = new Decimal(date.getTime() - anchorDate.getTime());
+            const secondsDiff = millisecondsDiff.div(1000);
+            const daysDiff = secondsDiff.div(86400);
+            const yearsDiff = daysDiff.div(CONSTANTS.DAYS_PER_YEAR);
+            return CONSTANTS.BASE_CU.plus(yearsDiff);
+        } else {
+            const yearsDiffInteger = new Decimal(year - CONSTANTS.ANCHOR_YEAR);
+            const daysInYear = CONSTANTS.DAYS_PER_YEAR;
+            const daysPerMonth = daysInYear.div(12);
+            const daysSinceStartOfYear = new Decimal(month - 1).times(daysPerMonth).plus(day - 1);
+            const fractionalYear = daysSinceStartOfYear.div(daysInYear);
+            const yearsDiff = yearsDiffInteger.plus(fractionalYear);
+            const secondsInDay = 86400;
+            const totalSeconds = hour * 3600 + minute * 60 + second;
+            const fractionOfDay = new Decimal(totalSeconds).div(secondsInDay);
+            const yearsDiffWithTime = yearsDiff.plus(fractionOfDay.div(daysInYear));
+            return CONSTANTS.BASE_CU.plus(yearsDiffWithTime);
+        }
+    }
+
+    function computeNASAYearsFromCU(cuTimeStr) {
+        const cuTime = new Decimal(cuTimeStr);
+        if (cuTime.lt(0)) throw new Error('CU-Time cannot be negative');
+        const yearsSinceBigBang = cuTime.minus(CONSTANTS.BASE_CU).plus(CONSTANTS.NASA_UNIVERSE_AGE);
+        if (yearsSinceBigBang.lt(0)) throw new Error('Resulting NASA time is before the Big Bang');
+        return yearsSinceBigBang.toDecimalPlaces(24, Decimal.ROUND_HALF_UP);
+    }
+
+    function computeCUTimeFromNASA(yearsSinceBigBang) {
+        const years = new Decimal(yearsSinceBigBang);
+        if (years.lt(0)) throw new Error('Years since Big Bang cannot be negative');
+        const cuTime = CONSTANTS.BASE_CU.plus(years.minus(CONSTANTS.NASA_UNIVERSE_AGE));
+        return cuTime.toDecimalPlaces(24, Decimal.ROUND_HALF_UP);
+    }
+
+    function isLeapYear(year) {
+        return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+    }
+
+    function getDaysInMonth(month, year) {
+        if (month === 2) {
+            return isLeapYear(year) ? 29 : 28;
+        }
+        const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        return days[month - 1];
+    }
+
+    function computeMonthDay(dayOfYear, year) {
+        let month = 1;
+        let remainingDays = dayOfYear;
+        while (remainingDays > getDaysInMonth(month, year)) {
+            remainingDays -= getDaysInMonth(month, year);
+            month++;
+            if (month > 12) {
+                break;
+            }
+        }
+        return {month, day: remainingDays};
+    }
+
+    function computeGregorianFromCUTime(cuTime) {
+        const totalYears = cuTime.minus(CONSTANTS.BASE_CU);
+        const integerYears = totalYears.floor();
+        const fractionalPart = totalYears.minus(integerYears);
+        const dayOffset = fractionalPart.times(CONSTANTS.DAYS_PER_YEAR);
+        const fullDays = dayOffset.floor();
+        const timeFraction = dayOffset.minus(fullDays);
+        const anchorDate = new Date('2000-01-01T00:00:00Z');
+        const millisecondsDiff = totalYears.times(CONSTANTS.DAYS_PER_YEAR).times(86400).times(1000);
+        const date = new Date(anchorDate.getTime() + millisecondsDiff.toNumber());
+        if (isNaN(date.getTime())) {
+            let year = new Decimal(2000).plus(integerYears).toNumber();
+            let dayOfYear = fullDays.toNumber() + 1;
+            const {month, day} = computeMonthDay(dayOfYear, year);
+            const totalSeconds = timeFraction.times(86400).toNumber();
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = Math.floor(totalSeconds % 60);
+            return {year, month, day, hour: hours, minute: minutes, second: seconds};
+        } else {
+            const year = date.getUTCFullYear();
+            const month = date.getUTCMonth() + 1;
+            const day = date.getUTCDate();
+            const hour = date.getUTCHours();
+            const minute = date.getUTCMinutes();
+            const second = date.getUTCSeconds();
+            return {year, month, day, hour, minute, second};
+        }
+    }
+
+    function formatGregorianDate(year, month, day, hour, minute, second) {
+        const era = year > 0 ? 'CE' : 'BCE';
+        const displayYear = year > 0 ? year : -year;
+        return `${month.toString().padStart(2, '0')}/${day.toString().padStart(2, '0')}/${displayYear.toString()} ${era} ${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}`;
+    }
+
+    function computeAllTimes(inputType, inputValue) {
+        let gregorianStr, cuTimeDecimal, nasaYearsDecimal;
+        if (inputType === 'gregorian') {
+            const {year, month, day, hour, minute, second} = parseGregorianInput(
+                inputValue.year,
+                inputValue.era,
+                inputValue.month,
+                inputValue.day,
+                inputValue.time || '00:00:00'
+            );
+            cuTimeDecimal = computeCUTimeFromDateComponents(year, month, day, hour, minute, second);
+            nasaYearsDecimal = computeNASAYearsFromCU(cuTimeDecimal);
+            gregorianStr = formatGregorianDate(year, month, day, hour, minute, second);
+        } else if (inputType === 'cuTime') {
+            cuTimeDecimal = new Decimal(inputValue);
+            nasaYearsDecimal = computeNASAYearsFromCU(cuTimeDecimal);
+            const {year, month, day, hour, minute, second} = computeGregorianFromCUTime(cuTimeDecimal);
+            gregorianStr = formatGregorianDate(year, month, day, hour, minute, second);
+        } else if (inputType === 'nasaYears') {
+            nasaYearsDecimal = new Decimal(inputValue);
+            cuTimeDecimal = computeCUTimeFromNASA(nasaYearsDecimal);
+            const {year, month, day, hour, minute, second} = computeGregorianFromCUTime(cuTimeDecimal);
+            gregorianStr = formatGregorianDate(year, month, day, hour, minute, second);
+        } else {
+            throw new Error('Invalid input type');
+        }
+        const cuTimeConverterDecimal = cuTimeDecimal.minus(OFFSET);
+        const formattedCuTime = formatCUValue(cuTimeDecimal);
+        const formattedCuTimeConverter = formatCUValue(cuTimeConverterDecimal);
+        const phase = getCosmicPhase(cuTimeDecimal);
+        const isFuture = cuTimeDecimal.gt(CONSTANTS.CURRENT_CU_TIME);
+        return {
+            gregorian: gregorianStr,
+            cuTimeHuman: formattedCuTime.humanFriendly,
+            cuTimeFull: formattedCuTime.fullNumeric,
+            cuTimeExp: formattedCuTime.exponential,
+            cuTimeConverterHuman: formattedCuTimeConverter.humanFriendly,
+            cuTimeConverterFull: formattedCuTimeConverter.fullNumeric,
+            cuTimeConverterExp: formattedCuTimeConverter.exponential,
+            nasaYears: nasaYearsDecimal.toString(),
+            phase,
+            isFuture
+        };
+    }
+
+    function getCosmicPhase(cuTime) {
+        if (cuTime.lt(CONSTANTS.DARK_ENERGY_START)) return "Speculative Phase (Pre-expansion)";
+        if (cuTime.lte(CONSTANTS.DARK_ENERGY_END)) return "Dark Energy Phase (Expansion)";
+        if (cuTime.lte(CONSTANTS.ANTI_DARK_ENERGY_END)) return "Anti-Dark Energy Phase (Compression)";
+        return "Speculative Phase (Beyond)";
+    }
+
+    function formatCUValue(cuValue) {
+        const fullNumeric = cuValue.toFixed(24);
+        const exponential = cuValue.toExponential(6);
+        const [integerPart, fractionPart] = fullNumeric.split('.');
+        const intVal = parseInt(integerPart);
+        const trillion = Math.floor(intVal / 1000000000000);
+        const billion = Math.floor((intVal % 1000000000000) / 1000000000);
+        const million = Math.floor((intVal % 1000000000) / 1000000);
+        const thousand = Math.floor((intVal % 1000000) / 1000);
+        const units = intVal % 1000;
+        const parts = [];
+        if (trillion) parts.push(`${trillion} Trillion`);
+        if (billion) parts.push(`${billion} Billion`);
+        if (million) parts.push(`${million} Million`);
+        if (thousand) parts.push(`${thousand} Thousand`);
+        if (units || !parts.length) parts.push(`${units}`);
+        return {
+            humanFriendly: parts.join(' ') + `.${fractionPart} CU-Time`,
+            fullNumeric,
+            exponential
+        };
+    }
+
+    function performCalculation(value1, value2, operation) {
+        const val1 = new Decimal(value1);
+        const val2 = new Decimal(value2);
+        switch (operation) {
+            case '+':
+                return val1.plus(val2);
+            case '-':
+                return val1.minus(val2);
+            case '*':
+                return val1.times(val2);
+            case '/':
+                if (val2.isZero()) throw new Error('Division by zero is not allowed.');
+                return val1.div(val2);
+            default:
+                throw new Error('Invalid operation');
+        }
+    }
+
+    function ConversionHistory() {
+        const getHistory = () => conversionHistory;
+        const saveConversion = (input, output, type) => {
+            if (conversionHistory.some(entry => entry.input === input && entry.type === type)) return;
+            conversionHistory.push({
+                input,
+                output,
+                type,
+                timestamp: new Date().toISOString(),
+                favorite: false
+            });
+        };
+        const markFavorite = (input) => {
+            conversionHistory = conversionHistory.map(entry =>
+                entry.input === input ? {...entry, favorite: !entry.favorite} : entry
+            );
+        };
+        const getFavorites = () => conversionHistory.filter(entry => entry.favorite);
+        return {getHistory, saveConversion, markFavorite, getFavorites};
+    }
+
+    const HISTORY = ConversionHistory();
+
+    const RESEARCH_MARKDOWN = `
+# 🌌 Cosmic Time Alignment Research
+
+## 📊 Overview
+
+The universe is approximately **[13.787 billion years](https://ui.adsabs.harvard.edu/abs/2020A%26A...641A...6P/abstract)** old as of July 17, 2018, based on the [Planck 2018 results](https://ui.adsabs.harvard.edu/abs/2020A%26A...641A...1P/abstract), with an uncertainty of **±0.020 billion years**. In the *Cosmic Universalism (CU)* framework, this age is mapped to **3,094,213,000,000.014691 CU-Time units** in the NASA converter, providing a unified system for cosmological and terrestrial time. In contrast, the CU Time Converter maps the same NASA-aligned CU-Time to **May 12, 78,955,076 AD**, reflecting a stretched timeline unique to its framework.
+
+## 🧑‍🔬 Calculating the Universe’s Age
+
+NASA uses *Coordinated Universal Time (UTC)* for timekeeping, as noted in [NASA Science](https://science.nasa.gov/solar-system/resources/faq/what-time-is-it-in-space/), but cosmology focuses on the universe’s age since the [Big Bang](https://science.nasa.gov/universe/the-big-bang/). The Planck 2018 results, released on July 17, 2018, estimated **13.787 billion years** ± 0.020 billion years.
+
+### Age Adjustment to June 1, 2025 (Without Converters)
+To determine the age of the universe as of June 1, 2025, based solely on the Planck 2018 results:
+- **Starting Point**: The Planck 2018 estimate of 13.787 billion years is as of July 17, 2018, with an uncertainty of ±0.020 billion years (ranging from 13.767 to 13.807 billion years).
+- **Time Elapsed**: Approximately 6.872 years have passed from July 17, 2018, to June 1, 2025 (2,509 days ÷ 365.2421897, accounting for leap years in 2020 and 2024).
+- **Calculation**:
+  - Original age: 13,787,000,000 years
+  - Add 6.872 years: 13,787,000,000 + 6.872 = 13,787,000,006.872 years
+  - In billions: 6.872 years ÷ 1,000,000,000 = 0.000000006872 billion years
+  - Adjusted age: 13.787 + 0.000000006872 = **13.787000006872 billion years**
+- **Impact of Uncertainty**: The uncertainty is ±20,000,000 years. Since 6.872 years is only 0.0000344% of 20 million years, it’s negligible, and the age remains effectively **13.787 billion years** ± 0.020 billion years.
+- **Final Age Estimate**: Even if written as 13.787000006872 billion years, this precision is unnecessary and falls well within the uncertainty range. Thus, the reported age stays 13.787 billion years.
+
+### NASA Converter Alignment
+In the NASA converter:
+- The Big Bang is set at **3,108,000,000,000 CU-Time units**.
+- June 1, 2025, corresponds to **3,094,213,000,000.014691 CU-Time units**, aligning with an age of 13.787 billion years.
+- Adding 6.872 years results in 13.787000006872 billion years, but this minute difference (0.000000006872 billion years) is far smaller than the ±0.020 billion years uncertainty. The NASA converter is calibrated to reflect the standard cosmological age of 13.787 billion years as of June 1, 2025, rounding to the measurement’s precision.
+
+### Why the NASA Converter Aligns with June 1, 2025
+The NASA converter aligns with June 1, 2025, because its CU-Time units are designed to match the Planck 2018 estimate of 13.787 billion years at that date. The difference between 3,108,000,000,000 (Big Bang) and 3,094,213,000,000.014691 (June 1, 2025) represents 13.787 billion years. The precise age of 13.787000006872 billion years, while technically accurate, is effectively indistinguishable from 13.787 billion years due to the uncertainty, ensuring the converter’s alignment remains consistent.
+
+The CU Time Converter, however, maps **3,094,213,000,000 CU-Time** to **May 12, 78,955,076 AD**, reflecting its distinct extended timeline.
+
+## ⚖️ Uncertainties and Alternative Theories
+
+The **13.787 billion-year** estimate has an uncertainty of **±0.020 billion years**, based on Planck 2018 data. Alternative theories propose different ages:
+- A 2023 study using JWST data suggests **26.7 billion years**, but this is controversial and not endorsed by NASA, as discussed in [Penn Today](https://penntoday.upenn.edu/news/could-age-universe-be-twice-old-current-estimates-suggest).
+- The standard *[Lambda-CDM model](https://lambda.gsfc.nasa.gov/education/graphic_history/univ_evol.html)* remains the most reliable, supported by cosmic microwave background (CMB) observations.
+
+| **Source**                  | **Year of Estimate** | **Age (Billion Years)** | **Uncertainty (Billion Years)** | **Notes**                          |
+|-----------------------------|----------------------|-------------------------|----------------------------------|------------------------------------|
+| Planck 2018 (NASA/ESA)      | 2018                 | 13.787                  | ±0.020                          | Standard model, CMB data           |
+| Adjusted to June 1, 2025    | 2025                 | 13.787                  | ±0.020                          | Negligible adjustment; precise calc: 13.787000006872 billion years, within uncertainty |
+| Emerging JWST Model         | 2023                 | 26.7                    | Not specified                   | Controversial, not NASA-endorsed   |
+
+### Future Predictions
+
+Dates beyond June 1, 2025, are considered predictable and based on extrapolation of current cosmological models. For very large years (e.g., up to 11 digits), the converter assumes the Gregorian calendar and universe expansion continue as modeled, though such distant futures remain speculative. The JWST model's suggestion of a 26.7 billion-year-old universe could imply different future timelines, but this tool adheres to the NASA Planck estimate for consistency.
+
+## 🔗 The Cosmic Breath Framework
+
+The *Cosmic Universalism* framework introduces the **[Cosmic Breath](https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/ResearchFiles/Cosmic_Breath_Calculation.md)**, aligning CU-Time, NASA time, and Gregorian dates. It spans from sub-ztom (Planck time, 5.39e-44 seconds) to ztom (1 second, universal reset), covering:
+- **Big Bang**: Defined as **3,108,000,000,000 CU-Time units** in the NASA converter.
+- **Current Epoch**: June 1, 2025, maps to **3,094,213,000,000.014691 CU-Time units** (aligned with 13.787 billion years).
+- **Alignment Calculation**:
+  \`\`\`
+  3,108,000,000,000 (Big Bang CU-Time) − 13,787,000,000 (NASA Years) ≈ 3,094,213,000,000 (CU-Time)
+  \`\`\`
+- **Remaining Cosmic Breath Cycle**:
+  - The Cosmic Breath is a 3.108 trillion-year cycle. As of June 1, 2025, with the universe’s age at 13,787,000,006.872 years, the remaining time is:
+  \`\`\`
+  3,108,000,000,000 years − 13,787,000,006.872 years ≈ 3,094,212,999,993.128 years
+  \`\`\`
+
+This enables conversions in the NASA converter:
+- **CU-Time to NASA Years**: **3,094,213,000,000.014691 CU-Time** corresponds to **13.787 billion years**.
+- **NASA Years to CU-Time**: **13.787 billion years** converts to **3,094,213,000,000.014691 CU-Time**.
+- **NASA Years to Gregorian**: Via CU-Time, **13.787 billion years** aligns with **June 1, 2025, 00:00:00 UTC**.
+
+The CU converter maps **3,094,213,000,000 CU-Time** to **May 12, 78,955,076 AD**, reflecting its extended timeline with an offset of **78955076.49024643522707769749119 CU-Time units** (~78,955,076 years).
+
+### Cosmic Breath Duration
+
+The CU framework defines the Cosmic Breath as a **3.108 trillion-year theoretical cycle**:
+- **Expansion Phase (sub-ztom to atom)**: ~2.8 trillion years, from quantum core (5.39e-44 seconds) to supercluster formation (280 billion years).
+- **Compression Phase (btom to ztom)**: ~308 billion years, from galactic contraction to universal reset (1 second).
+
+| **Phase**           | **Sub-Tom/Tom Level** | **Quantum States** | **Duration Estimate** | **CU Description**                     |
+|---------------------|-----------------------|--------------------|-----------------------|----------------------------------------|
+| Expansion (sub-ztom)| sub-ztom              | 2↑↑65,536 Sensational| 5.39e-44 sec          | Planck time, quantum core              |
+| Expansion (sub-btom)| sub-btom              | 2⁸                 | 280 billion yr        | Supercluster formation                 |
+| Compression (btom)  | btom                  | 2² = 4             | 280 billion yr        | Galactic evolution and contraction     |
+| Compression (ztom)  | ztom                  | ∞                  | 1 sec                 | Full universal reset                   |
+
+*Note*: Durations are theoretical and not directly in NASA CU-Time units.
+
+## 📚 Frameworks and Constants Comparison
+
+### NASA Time Converter Constants
+- **BASE_CU**: 3.094,213,000,000
+- **NASA_UNIVERSE_AGE**: 13,787,000,000    // [(13786999981.453) is adj. to Jan. 1, 2000))]
+- **ANCHOR_YEAR**: 2000
+- **DAYS_PER_YEAR**: 365.2421897
+- **DARK_ENERGY_START**: 3,094,000,000,000
+- **DARK_ENERGY_END**: 3,110,000,000,000
+- **ANTI_DARK_ENERGY_END**: 3,416,000,000,000
+
+### CU Time Converter Constants
+- **BASE_CU**: 3,094,134,044,923.509753564772922302508810
+- **SUB_ZTOM_CU**: 3,094,133,911,800.949548
+- **ANCHOR_JDN**: 2,451,544.5
+- **DAYS_PER_YEAR**: 365.2421897
+- **SECONDS_PER_DAY**: 86,400
+- **SECONDS_PER_YEAR**: 31,556,952
+- **COSMIC_LIFESPAN**: 13.8e9
+- **CONVERGENCE_YEAR**: 2029
+- **CTOM_START**: 3.08e12
+- **ZTOM_PROXIMITY**: 3.107e12
+- **PLANIZCK_TIME**: 5.39e-44
+- **CESIUM_OSCILLATIONS_PER_SECOND**: 9,192,631,770
+- **SUB_ZTOM_THRESHOLD**: 24
+- **ZTOM_THRESHOLD**: 31,556,952,000,000
+- **DARK_ENERGY_START**: 3.08e12
+- **DARK_ENERGY_END**: 3.11e12
+- **ANTI_DARK_ENERGY_START**: 3.11e12
+- **ANTI_DARK_ENERGY_END**: 3.416e12
+- **SPECULATIVE_START**: 3.416e12
+- **ANTI_DARK_MATTER_ONSET**: 5,880,334,044,496.509753564772922302508810
+- **MATTER_DOMINANCE_START**: 3,360,334,044,923.509753564772922302508810
+- **ANTIMATTER_ANNIHILATION**: 3,080,334,044,923.509753564772922302508810
+- **DARK_MATTER_DOMINANCE_START**: 3,085,334,044,923.509753564772922302508810
+
+The difference in **BASE_CU** values indicates different starting points or scales in the two frameworks.
+
+## 📈 Time Mapping and Outputs
+
+For an input of **3,094,213,000,000 CU-Time (NASA-aligned)**:
+- **NASA Output**: June 1, 2025, ~00:00:00 UTC, corresponding to **13.787 billion years** since the Big Bang.
+- **CU Output**: 3094134044923.509753564772922302508810 - 3,094,213,000,000 = 78955076.49024643522707769749119, with an offset of **78955076.49024643522707769749119 CU-Time** from June 1, 2025.
+
+| **Converter**       | **Input CU-Time** | **Gregorian Date Output**       | **NASA Years Output** | **Cosmic Phase**                              |
+|---------------------|-------------------|---------------------------------|----------------------|-----------------------------------------------|
+| NASA Time Converter | 3,094,213,000,000 | June 1, 2025, 00:00:00 UTC      | 13.787               | Dark Energy Phase (Expansion)          |
+| CU Time Converter   | 3,094,213,000,000 | May 12, 78,955,076 AD, 07:53:11 UTC | ~78,955,076 years | Dark Energy Phase (Expansion, sub-ztom to atom) |
+
+## 🔍 Implications and NASA Credit
+
+The CU converter offers a novel perspective on cosmic evolution, diverging from NASA’s standard model. The NASA converter aligns with scientific consensus, suitable for practical applications.
+
+## 🗣️ Cosmic Universalism Statement
+
+The CU framework is guided by: *“We are sub z-tomically inclined, countably infinite, composed of foundational elements (the essence of conscious existence), grounded on b-tom (as vast as our shared worlds and their atmospheres), and looking up to c-tom (encompassing the entirety of the cosmos), guided by the uncountable infinite quantum states of intelligence and empowered by God’s Free Will.”*
+
+## 📝 Conclusion
+
+The CU and NASA Time Converters differ in their theoretical bases and time scales. The NASA converter maps **3,094,213,000,000.014691 CU-Time** to June 1, 2025, aligning with standard cosmology, while the CU converter maps **3,094,213,000,000 CU-Time** to **May 12, 78,955,076 AD**, reflecting an extended timeline with additional cosmic phases.
+
+## 📚 Key Citations
+- [Planck 2018 results. VI. Cosmological parameters](https://ui.adsabs.harvard.edu/abs/2020A%26A...641A...6P/abstract)
+- [Planck 2018 results. I. Overview and the cosmological legacy of Planck](https://ui.adsabs.harvard.edu/abs/2020A%26A...641A...1P/abstract)
+- [NASA Timekeeping](https://science.nasa.gov/solar-system/resources/faq/what-time-is-it-in-space/)
+- [Big Bang Overview](https://science.nasa.gov/universe/the-big-bang/)
+- [Lambda-CDM Model](https://lambda.gsfc.nasa.gov/education/graphic_history/univ_evol.html)
+- [Cosmic Breath](https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/ResearchFiles/Cosmic_Breath_Calculation.md)
+- [JWST Age Study](https://penntoday.upenn.edu/news/could-age-universe-be-twice-old-current-estimates-suggest)
+`;
+
+    marked.use({
+        renderer: {
+            link(href, title, text) {
+                return `<a href="${href}" target="_blank" rel="noopener noreferrer">${text}</a>`;
+            }
+        }
+    });
+
+    function Modal({message, onClose}) {
+        return (
+            <div className="modal">
+                <div className="modal-content">
+                    <p className="mb-4 text-gray-300">{message}</p>
+                    <button onClick={onClose} className="cosmic-button" aria-label="Close modal">OK</button>
+                </div>
+            </div>
+        );
+    }
+
+    function downloadCSV(results) {
+        const csvContent = results.map(r => {
+            const date = r.desc.replace(/^Gregorian: |NASA to CU: |CU to NASA: |Calculation: /, '').trim();
+            return `"${r.desc.replace(/"/g, '""')}","${date.replace(/"/g, '""')}","${r.output.replace(/"/g, '""')}"`;
+        }).join('\n');
+        const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+        const blob = new Blob([`"Description","DateTime","Output"\n${csvContent}`], {type: 'text/csv'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `nasa_time_results_${timestamp}.csv`;
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    function formatTimeInput(value) {
+        const cleaned = value.replace(/\D/g, '');
+        if (cleaned.length <= 2) return cleaned;
+        if (cleaned.length <= 4) return `${cleaned.slice(0, 2)}:${cleaned.slice(2)}`;
+        return `${cleaned.slice(0, 2)}:${cleaned.slice(2, 4)}:${cleaned.slice(4, 6)}`;
+    }
+
+    function ResultCard({result, index, handleCopy, handleDeleteResult}) {
+        const parseOutput = (output) => {
+            const lines = output.split('\n');
+            const parsed = {
+                gregorianDate: '',
+                cuTimeNASA: '',
+                fullNumericNASA: '',
+                cuTimeConverter: '',
+                fullNumericConverter: '',
+                nasaYears: '',
+                cosmicPhase: '',
+            };
+            lines.forEach(line => {
+                if (line.startsWith('Gregorian Date:') || line.startsWith('Corresponding Gregorian Date:')) {
+                    parsed.gregorianDate = line.replace(/^(Gregorian Date:|Corresponding Gregorian Date:)/, '').trim();
+                } else if (line.startsWith('CU-Time (NASA alignment):') || line.startsWith('Result CU-Time (NASA alignment):')) {
+                    parsed.cuTimeNASA = line.replace(/^(CU-Time \(NASA alignment\):|Result CU-Time \(NASA alignment\):)/, '').trim();
+                } else if (line.startsWith('Full Numeric (NASA):')) {
+                    parsed.fullNumericNASA = line.replace('Full Numeric (NASA):', '').trim();
+                } else if (line.startsWith('CU-Time (Converter alignment):') || line.startsWith('Result CU-Time (Converter alignment):')) {
+                    parsed.cuTimeConverter = line.replace(/^(CU-Time \(Converter alignment\):|Result CU-Time \(Converter alignment\):)/, '').trim();
+                } else if (line.startsWith('Full Numeric (Converter):')) {
+                    parsed.fullNumericConverter = line.replace('Full Numeric (Converter):', '').trim();
+                } else if (line.startsWith('Years since Big Bang (NASA):') || line.startsWith('Corresponding Years since Big Bang (NASA):')) {
+                    parsed.nasaYears = line.replace(/^(Years since Big Bang \(NASA\):|Corresponding Years since Big Bang \(NASA\):)/, '').trim();
+                } else if (line.startsWith('Cosmic Phase:')) {
+                    parsed.cosmicPhase = line.replace('Cosmic Phase:', '').trim();
+                }
+            });
+            return parsed;
+        };
+
+        if (result.desc === 'Error') {
+            return (
+                <div className="bg-red-900 p-4 rounded-lg shadow-lg">
+                    <p className="text-lg font-semibold text-white">Error</p>
+                    <p className="text-sm text-gray-300">{result.output}</p>
+                    <div className="flex space-x-2 mt-2">
+                        <button onClick={() => handleDeleteResult(index)}
+                                className="px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700">Delete
+                        </button>
+                    </div>
+                </div>
+            );
+        } else {
+            const parsed = parseOutput(result.output);
+            const dateTime = result.desc.replace(/^Gregorian: |NASA to CU: |CU to NASA: |Calculation: /, '').trim();
+            return (
+                <div className="bg-gray-800 p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
+                    <h3 className="text-lg font-semibold text-white">{result.desc}</h3>
+                    <p className="text-sm text-gray-300"><strong>DateTime:</strong> {dateTime}</p>
+                    <p className="text-sm text-gray-300"><strong>Gregorian Date:</strong> {parsed.gregorianDate}</p>
+                    <p className="text-sm text-gray-300"><strong>CU-Time (NASA):</strong> {parsed.cuTimeNASA}</p>
+                    <p className="text-xs text-gray-400"><strong>Full Numeric (NASA):</strong> {parsed.fullNumericNASA}
+                    </p>
+                    <p className="text-sm text-gray-300"><strong>CU-Time (Converter):</strong> {parsed.cuTimeConverter}
+                    </p>
+                    <p className="text-xs text-gray-400"><strong>Full Numeric
+                        (Converter):</strong> {parsed.fullNumericConverter}</p>
+                    <p className="text-sm text-gray-300"><strong>NASA Years:</strong> {parsed.nasaYears}</p>
+                    <p className="text-sm text-gray-300"><strong>Cosmic Phase:</strong> {parsed.cosmicPhase}</p>
+                    <div className="flex space-x-2 mt-2">
+                        <button onClick={() => handleCopy(result.output)}
+                                className="px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">Copy
+                        </button>
+                        <button onClick={() => handleDeleteResult(index)}
+                                className="px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700">Delete
+                        </button>
+                    </div>
+                </div>
+            );
+        }
+    }
+
+    function App() {
+        const [tab, setTab] = useState('gregorian');
+        const [inputs, setInputs] = useState({
+            nasaYears: '',
+            cuTime: '',
+            calcValue1: '',
+            calcValue2: '',
+            calcOperation: '+',
+            gregorianYear: '',
+            gregorianEra: 'CE',
+            gregorianMonth: '',
+            gregorianDay: '',
+            gregorianTime: ''
+        });
+        const [results, setResults] = useState([]);
+        const [history, setHistory] = useState(HISTORY.getHistory());
+        const [showFavorites, setShowFavorites] = useState(false);
+        const [modal, setModal] = useState(null);
+        const [toastMessage, setToastMessage] = useState(null);
+        const [preview, setPreview] = useState(null);
+
+        const handleInputChange = (field) => (value) => {
+            setInputs(prev => ({...prev, [field]: value}));
+        };
+
+        const handleYearChange = (value) => {
+            if (value === '' || (/^\d+$/.test(value) && value.length <= 11 && parseInt(value) >= 1)) {
+                setInputs(prev => ({...prev, gregorianYear: value}));
+            }
+        };
+
+        const handleIncreaseYear = () => {
+            setInputs(prev => {
+                const currentYearStr = prev.gregorianYear || '1';
+                const currentYear = parseInt(currentYearStr);
+                if (prev.gregorianEra === 'CE') {
+                    const newYear = currentYear + 1;
+                    if (newYear.toString().length > 11) return prev;
+                    return {...prev, gregorianYear: newYear.toString()};
+                } else {
+                    const newYear = currentYear - 1;
+                    if (newYear <= 0) {
+                        return {...prev, gregorianEra: 'CE', gregorianYear: '1'};
+                    } else {
+                        return {...prev, gregorianYear: newYear.toString()};
+                    }
+                }
+            });
+        };
+
+        const handleDecreaseYear = () => {
+            setInputs(prev => {
+                const currentYearStr = prev.gregorianYear || '1';
+                const currentYear = parseInt(currentYearStr);
+                if (prev.gregorianEra === 'CE') {
+                    const newYear = currentYear - 1;
+                    if (newYear <= 0) {
+                        return {...prev, gregorianEra: 'BCE', gregorianYear: '1'};
+                    } else {
+                        return {...prev, gregorianYear: newYear.toString()};
+                    }
+                } else {
+                    const newYear = currentYear + 1;
+                    if (newYear.toString().length > 11) return prev;
+                    return {...prev, gregorianYear: newYear.toString()};
+                }
+            });
+        };
+
+        const handleNextDay = () => {
+            try {
+                const {year, month, day, hour, minute, second} = parseGregorianInput(
+                    inputs.gregorianYear || '2000',
+                    inputs.gregorianEra,
+                    inputs.gregorianMonth || '1',
+                    inputs.gregorianDay || '1',
+                    inputs.gregorianTime || '00:00:00'
+                );
+                let newDay = day + 1;
+                let newMonth = month;
+                let newYear = year;
+                if (newDay > 31) {
+                    newDay = 1;
+                    newMonth += 1;
+                    if (newMonth > 12) {
+                        newMonth = 1;
+                        newYear += 1;
+                    }
+                }
+                const newYearStr = Math.abs(newYear).toString();
+                if (newYearStr.length > 11) return;
+                setInputs(prev => ({
+                    ...prev,
+                    gregorianYear: newYearStr,
+                    gregorianEra: newYear > 0 ? 'CE' : 'BCE',
+                    gregorianMonth: newMonth.toString(),
+                    gregorianDay: newDay.toString()
+                }));
+            } catch (e) {
+                setModal({message: e.message, onClose: () => setModal(null)});
+            }
+        };
+
+        const handleGregorianSubmit = () => {
+            if (!inputs.gregorianYear || !inputs.gregorianMonth || !inputs.gregorianDay) {
+                setModal({message: 'Please enter year, month, and day.', onClose: () => setModal(null)});
+                return;
+            }
+            try {
+                const time = inputs.gregorianTime || '00:00:00';
+                const {year, month, day, hour, minute, second} = parseGregorianInput(
+                    inputs.gregorianYear,
+                    inputs.gregorianEra,
+                    inputs.gregorianMonth,
+                    inputs.gregorianDay,
+                    time
+                );
+                const cuTimeDecimal = computeCUTimeFromDateComponents(year, month, day, hour, minute, second);
+                if (cuTimeDecimal.lt(CONSTANTS.MIN_CU_TIME)) {
+                    throw new Error('Date is before the Big Bang according to NASA estimates.');
+                }
+                const allTimes = computeAllTimes('gregorian', {
+                    year: inputs.gregorianYear,
+                    era: inputs.gregorianEra,
+                    month: inputs.gregorianMonth,
+                    day: inputs.gregorianDay,
+                    time
+                });
+                const output = [
+                    `Input: ${allTimes.gregorian} UTC`,
+                    `Gregorian Date: ${allTimes.gregorian}`,
+                    `CU-Time (NASA alignment): ${allTimes.cuTimeHuman}`,
+                    `Full Numeric (NASA): ${allTimes.cuTimeFull}`,
+                    `Exponential (NASA): ${allTimes.cuTimeExp}`,
+                    `CU-Time (Converter alignment): ${allTimes.cuTimeConverterHuman}`,
+                    `Full Numeric (Converter): ${allTimes.cuTimeConverterFull}`,
+                    `Exponential (Converter): ${allTimes.cuTimeConverterExp}`,
+                    `Years since Big Bang (NASA): ${allTimes.nasaYears}`,
+                    `Cosmic Phase: ${allTimes.phase}`,
+                    allTimes.isFuture ? 'Note: This date is in the future and is predictable.' : ''
+                ].filter(Boolean).join('\n');
+                setResults(prev => [...prev, {desc: `Gregorian: ${allTimes.gregorian}`, output}]);
+                HISTORY.saveConversion(allTimes.gregorian, output, 'Gregorian to Cosmic');
+                setHistory(HISTORY.getHistory());
+            } catch (e) {
+                setResults(prev => [...prev, {desc: 'Error', output: e.message}]);
+            }
+        };
+
+        const handleNASAToCUSubmit = () => {
+            try {
+                const nasaYearsStr = inputs.nasaYears.trim();
+                if (!nasaYearsStr) {
+                    setModal({message: 'Please enter years since the Big Bang.', onClose: () => setModal(null)});
+                    return;
+                }
+                const nasaYears = new Decimal(nasaYearsStr);
+                if (nasaYears.isNegative()) {
+                    setModal({message: 'Years since Big Bang cannot be negative.', onClose: () => setModal(null)});
+                    return;
+                }
+                const allTimes = computeAllTimes('nasaYears', nasaYears.toString());
+                const output = [
+                    `Input: ${nasaYearsStr} years since Big Bang (NASA)`,
+                    `Gregorian Date: ${allTimes.gregorian}`,
+                    `CU-Time (NASA alignment): ${allTimes.cuTimeHuman}`,
+                    `Full Numeric (NASA): ${allTimes.cuTimeFull}`,
+                    `Exponential (NASA): ${allTimes.cuTimeExp}`,
+                    `CU-Time (Converter alignment): ${allTimes.cuTimeConverterHuman}`,
+                    `Full Numeric (Converter): ${allTimes.cuTimeConverterFull}`,
+                    `Exponential (Converter): ${allTimes.cuTimeConverterExp}`,
+                    `Years since Big Bang (NASA): ${allTimes.nasaYears}`,
+                    `Cosmic Phase: ${allTimes.phase}`,
+                    allTimes.isFuture ? 'Note: This date is in the future and is predictable.' : ''
+                ].filter(Boolean).join('\n');
+                setResults(prev => [...prev, {desc: `NASA to CU: ${nasaYearsStr}`, output}]);
+                HISTORY.saveConversion(nasaYearsStr, output, 'NASA to CU');
+                setHistory(HISTORY.getHistory());
+            } catch (e) {
+                setModal({message: 'Invalid input. Please enter a valid number.', onClose: () => setModal(null)});
+            }
+        };
+
+        const handleCUToNASASubmit = () => {
+            try {
+                const cuTimeStr = inputs.cuTime.trim();
+                if (!cuTimeStr) {
+                    setModal({message: 'Please enter a CU-Time value.', onClose: () => setModal(null)});
+                    return;
+                }
+                const cuTime = new Decimal(cuTimeStr);
+                if (cuTime.isNegative()) {
+                    setModal({message: 'CU-Time cannot be negative.', onClose: () => setModal(null)});
+                    return;
+                }
+                const allTimes = computeAllTimes('cuTime', cuTime.toString());
+                const output = [
+                    `Input: ${cuTimeStr} CU-Time`,
+                    `Gregorian Date: ${allTimes.gregorian}`,
+                    `CU-Time (NASA alignment): ${allTimes.cuTimeHuman}`,
+                    `Full Numeric (NASA): ${allTimes.cuTimeFull}`,
+                    `Exponential (NASA): ${allTimes.cuTimeExp}`,
+                    `CU-Time (Converter alignment): ${allTimes.cuTimeConverterHuman}`,
+                    `Full Numeric (Converter): ${allTimes.cuTimeConverterFull}`,
+                    `Exponential (Converter): ${allTimes.cuTimeConverterExp}`,
+                    `Years since Big Bang (NASA): ${allTimes.nasaYears}`,
+                    `Cosmic Phase: ${allTimes.phase}`,
+                    allTimes.isFuture ? 'Note: This date is in the future and is predictable.' : ''
+                ].filter(Boolean).join('\n');
+                setResults(prev => [...prev, {desc: `CU to NASA: ${cuTimeStr}`, output}]);
+                HISTORY.saveConversion(cuTimeStr, output, 'CU to NASA');
+                setHistory(HISTORY.getHistory());
+            } catch (e) {
+                setModal({message: 'Invalid input. Please enter a valid number.', onClose: () => setModal(null)});
+            }
+        };
+
+        const handleCalcSubmit = () => {
+            try {
+                const {calcValue1, calcValue2, calcOperation} = inputs;
+                if (!calcValue1.trim() || !calcValue2.trim()) {
+                    setModal({message: 'Please enter both CU-Time values.', onClose: () => setModal(null)});
+                    return;
+                }
+                const val1 = new Decimal(calcValue1.trim());
+                const val2 = new Decimal(calcValue2.trim());
+                const result = performCalculation(val1, val2, calcOperation);
+                const allTimes = computeAllTimes('cuTime', result.toString());
+                const output = [
+                    `Input: ${calcValue1} ${calcOperation} ${calcValue2} CU-Time`,
+                    `Gregorian Date: ${allTimes.gregorian}`,
+                    `Result CU-Time (NASA alignment): ${allTimes.cuTimeHuman}`,
+                    `Full Numeric (NASA): ${allTimes.cuTimeFull}`,
+                    `Exponential (NASA): ${allTimes.cuTimeExp}`,
+                    `Result CU-Time (Converter alignment): ${allTimes.cuTimeConverterHuman}`,
+                    `Full Numeric (Converter): ${allTimes.cuTimeConverterFull}`,
+                    `Exponential (Converter): ${allTimes.cuTimeConverterExp}`,
+                    `Corresponding Years since Big Bang (NASA): ${allTimes.nasaYears}`,
+                    `Cosmic Phase: ${allTimes.phase}`,
+                    allTimes.isFuture ? 'Note: This date is in the future and is predictable.' : ''
+                ].filter(Boolean).join('\n');
+                setResults(prev => [...prev, {
+                    desc: `Calculation: ${calcValue1} ${calcOperation} ${calcValue2}`,
+                    output
+                }]);
+                HISTORY.saveConversion(`${calcValue1} ${calcOperation} ${calcValue2}`, output, 'Calculation');
+                setHistory(HISTORY.getHistory());
+            } catch (e) {
+                setModal({message: 'Invalid input. Please enter valid numbers.', onClose: () => setModal(null)});
+            }
+        };
+
+        const handleCopy = (text) => {
+            navigator.clipboard.writeText(text).then(() => {
+                setToastMessage({message: 'Copied to clipboard', isError: false});
+                setTimeout(() => setToastMessage(null), 3000);
+            }).catch(() => {
+                setToastMessage({message: 'Failed to copy', isError: true});
+                setTimeout(() => setToastMessage(null), 3000);
+            });
+        };
+
+        const handleDeleteResult = (index) => {
+            setResults(prev => prev.filter((_, i) => i !== index));
+        };
+
+        const toggleFavorite = (input) => {
+            HISTORY.markFavorite(input);
+            setHistory(HISTORY.getHistory());
+        };
+
+        const parseDate = (dateStr) => {
+            if (dateStr.match(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/)) {
+                return dateStr;
+            } else if (dateStr.match(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/)) {
+                return `${dateStr}:00`;
+            } else if (dateStr.match(/^\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}:\d{2}$/)) {
+                const [datePart, timePart] = dateStr.split(' ');
+                const [month, day, year] = datePart.split('/').map(Number);
+                const formattedDate = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')} ${timePart}`;
+                return formattedDate;
+            } else if (dateStr.match(/^\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}$/)) {
+                const [datePart, timePart] = dateStr.split(' ');
+                const [month, day, year] = datePart.split('/').map(Number);
+                const formattedDate = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')} ${timePart}:00`;
+                return formattedDate;
+            } else {
+                throw new Error('Invalid date format in CSV. Use YYYY-MM-DD HH:MM[:SS] or MM/DD/YYYY HH:MM[:SS].');
+            }
+        };
+
+        const handleCSVUpload = async (e) => {
+            try {
+                const file = e.target.files[0];
+                if (!file) {
+                    setModal({message: 'No file selected.', onClose: () => setModal(null)});
+                    return;
+                }
+                Papa.parse(file, {
+                    complete: ({data}) => {
+                        if (!data[0].join(',').toLowerCase().startsWith('description,datetime,output')) {
+                            setModal({
+                                message: 'CSV must have headers "Description,DateTime,Output"',
+                                onClose: () => setModal(null)
+                            });
+                            return;
+                        }
+                        const newResults = [];
+                        for (let i = 1; i < data.length; i++) {
+                            const [desc, dateTime, output] = data[i];
+                            if (!desc || !dateTime) continue;
+                            try {
+                                let allTimes, inputValue = dateTime.trim();
+                                if (desc.startsWith('Gregorian:')) {
+                                    const utcDateStr = parseDate(inputValue);
+                                    const [datePart, timePart] = utcDateStr.split(' ');
+                                    const [yearStr, monthStr, dayStr] = datePart.split('-');
+                                    const year = parseInt(yearStr);
+                                    const era = year < 0 ? 'BCE' : 'CE';
+                                    const absYear = Math.abs(year).toString();
+                                    if (absYear.length > 11) throw new Error('Year exceeds 11 digits.');
+                                    allTimes = computeAllTimes('gregorian', {
+                                        year: absYear,
+                                        era,
+                                        month: monthStr,
+                                        day: dayStr,
+                                        time: timePart
+                                    });
+                                    const outputText = [
+                                        `Input: ${allTimes.gregorian} UTC`,
+                                        `Gregorian Date: ${allTimes.gregorian}`,
+                                        `CU-Time (NASA alignment): ${allTimes.cuTimeHuman}`,
+                                        `Full Numeric (NASA): ${allTimes.cuTimeFull}`,
+                                        `Exponential (NASA): ${allTimes.cuTimeExp}`,
+                                        `CU-Time (Converter alignment): ${allTimes.cuTimeConverterHuman}`,
+                                        `Full Numeric (Converter): ${allTimes.cuTimeConverterFull}`,
+                                        `Exponential (Converter): ${allTimes.cuTimeConverterExp}`,
+                                        `Years since Big Bang (NASA): ${allTimes.nasaYears}`,
+                                        `Cosmic Phase: ${allTimes.phase}`,
+                                        allTimes.isFuture ? 'Note: This date is in the future and is predictable.' : ''
+                                    ].filter(Boolean).join('\n');
+                                    newResults.push({desc, output: outputText});
+                                    HISTORY.saveConversion(allTimes.gregorian, outputText, 'Gregorian to Cosmic');
+                                } else if (desc.startsWith('NASA to CU:')) {
+                                    const nasaYears = new Decimal(inputValue);
+                                    if (nasaYears.isNegative()) throw new Error('Years since Big Bang cannot be negative');
+                                    allTimes = computeAllTimes('nasaYears', nasaYears.toString());
+                                    const outputText = [
+                                        `Input: ${inputValue} years since Big Bang (NASA)`,
+                                        `Gregorian Date: ${allTimes.gregorian}`,
+                                        `CU-Time (NASA alignment): ${allTimes.cuTimeHuman}`,
+                                        `Full Numeric (NASA): ${allTimes.cuTimeFull}`,
+                                        `Exponential (NASA): ${allTimes.cuTimeExp}`,
+                                        `CU-Time (Converter alignment): ${allTimes.cuTimeConverterHuman}`,
+                                        `Full Numeric (Converter): ${allTimes.cuTimeConverterFull}`,
+                                        `Exponential (Converter): ${allTimes.cuTimeConverterExp}`,
+                                        `Years since Big Bang (NASA): ${allTimes.nasaYears}`,
+                                        `Cosmic Phase: ${allTimes.phase}`,
+                                        allTimes.isFuture ? 'Note: This date is in the future and is predictable.' : ''
+                                    ].filter(Boolean).join('\n');
+                                    newResults.push({desc, output: outputText});
+                                    HISTORY.saveConversion(inputValue, outputText, 'NASA to CU');
+                                } else if (desc.startsWith('CU to NASA:')) {
+                                    const cuTime = new Decimal(inputValue);
+                                    if (cuTime.isNegative()) throw new Error('CU-Time cannot be negative');
+                                    allTimes = computeAllTimes('cuTime', cuTime.toString());
+                                    const outputText = [
+                                        `Input: ${inputValue} CU-Time`,
+                                        `Gregorian Date: ${allTimes.gregorian}`,
+                                        `CU-Time (NASA alignment): ${allTimes.cuTimeHuman}`,
+                                        `Full Numeric (NASA): ${allTimes.cuTimeFull}`,
+                                        `Exponential (NASA): ${allTimes.cuTimeExp}`,
+                                        `CU-Time (Converter alignment): ${allTimes.cuTimeConverterHuman}`,
+                                        `Full Numeric (Converter): ${allTimes.cuTimeConverterFull}`,
+                                        `Exponential (Converter): ${allTimes.cuTimeConverterExp}`,
+                                        `Years since Big Bang (NASA): ${allTimes.nasaYears}`,
+                                        `Cosmic Phase: ${allTimes.phase}`,
+                                        allTimes.isFuture ? 'Note: This date is in the future and is predictable.' : ''
+                                    ].filter(Boolean).join('\n');
+                                    newResults.push({desc, output: outputText});
+                                    HISTORY.saveConversion(inputValue, outputText, 'CU to NASA');
+                                } else if (desc.startsWith('Calculation:')) {
+                                    const calcParts = inputValue.match(/^([\d.]+)\s*([+\-*/])\s*([\d.]+)$/);
+                                    if (!calcParts) throw new Error('Invalid calculation format. Use "value1 operator value2"');
+                                    const [, val1, operation, val2] = calcParts;
+                                    const result = performCalculation(val1, val2, operation);
+                                    allTimes = computeAllTimes('cuTime', result.toString());
+                                    const outputText = [
+                                        `Input: ${val1} ${operation} ${val2} CU-Time`,
+                                        `Gregorian Date: ${allTimes.gregorian}`,
+                                        `Result CU-Time (NASA alignment): ${allTimes.cuTimeHuman}`,
+                                        `Full Numeric (NASA): ${allTimes.cuTimeFull}`,
+                                        `Exponential (NASA): ${allTimes.cuTimeExp}`,
+                                        `Result CU-Time (Converter alignment): ${allTimes.cuTimeConverterHuman}`,
+                                        `Full Numeric (Converter): ${allTimes.cuTimeConverterFull}`,
+                                        `Exponential (Converter): ${allTimes.cuTimeConverterExp}`,
+                                        `Corresponding Years since Big Bang (NASA): ${allTimes.nasaYears}`,
+                                        `Cosmic Phase: ${allTimes.phase}`,
+                                        allTimes.isFuture ? 'Note: This date is in the future and is predictable.' : ''
+                                    ].filter(Boolean).join('\n');
+                                    newResults.push({desc, output: outputText});
+                                    HISTORY.saveConversion(`${val1} ${operation} ${val2}`, outputText, 'Calculation');
+                                } else {
+                                    throw new Error('Invalid description in CSV.');
+                                }
+                            } catch (error) {
+                                newResults.push({desc, output: `Error: ${error.message}`});
+                            }
+                        }
+                        setResults(newResults);
+                        setHistory(HISTORY.getHistory());
+                    },
+                    header: false,
+                    skipEmptyLines: true
+                });
+            } catch (e) {
+                setResults(prev => [...prev, {desc: 'Error', output: e.message}]);
+            }
+        };
+
+        const downloadHistoryCSV = () => {
+            const csvContent = history.map(entry => {
+                return `"${entry.type.replace(/"/g, '""')}","${entry.input.replace(/"/g, '""')}","${entry.output.replace(/"/g, '""')}","${entry.timestamp}"`;
+            }).join('\n');
+            const blob = new Blob([`"Type","Input","Output","Timestamp"\n${csvContent}`], {type: 'text/csv'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `conversion_history_${new Date().toISOString().replace(/[:.]/g, '-')}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+        };
+
+        useEffect(() => {
+            if (tab === 'gregorian' && inputs.gregorianYear && inputs.gregorianMonth && inputs.gregorianDay) {
+                try {
+                    const time = inputs.gregorianTime || '00:00:00';
+                    const {year, month, day, hour, minute, second} = parseGregorianInput(
+                        inputs.gregorianYear,
+                        inputs.gregorianEra,
+                        inputs.gregorianMonth,
+                        inputs.gregorianDay,
+                        time
+                    );
+                    const cuTimeDecimal = computeCUTimeFromDateComponents(year, month, day, hour, minute, second);
+                    if (cuTimeDecimal.lt(CONSTANTS.MIN_CU_TIME)) {
+                        setPreview({error: 'Date is before the Big Bang according to NASA estimates.'});
+                        return;
+                    }
+                    const allTimes = computeAllTimes('gregorian', {
+                        year: inputs.gregorianYear,
+                        era: inputs.gregorianEra,
+                        month: inputs.gregorianMonth,
+                        day: inputs.gregorianDay,
+                        time
+                    });
+                    setPreview({
+                        cuTimeHuman: allTimes.cuTimeHuman,
+                        cuTimeConverterHuman: allTimes.cuTimeConverterHuman,
+                        nasaYears: allTimes.nasaYears,
+                        phase: allTimes.phase,
+                        isFuture: allTimes.isFuture
+                    });
+                } catch (e) {
+                    setPreview({error: e.message});
+                }
+            } else {
+                setPreview(null);
+            }
+        }, [inputs.gregorianYear, inputs.gregorianEra, inputs.gregorianMonth, inputs.gregorianDay, inputs.gregorianTime, tab]);
+
+        return (
+            <div className="flex">
+                <aside className="w-64 bg-gray-800 p-4 fixed h-full hidden md:block">
+                    <h3 className="text-xl font-semibold text-white mb-4">Navigation</h3>
+                    <ul className="space-y-4">
+                        <li>
+                            <button
+                                onClick={() => setTab('gregorian')}
+                                className={`w-full text-left px-4 py-2 text-white rounded ${tab === 'gregorian' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}
+                            >
+                                Gregorian to Cosmic
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                onClick={() => setTab('nasaToCU')}
+                                className={`w-full text-left px-4 py-2 text-white rounded ${tab === 'nasaToCU' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}
+                            >
+                                NASA to CU-Time
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                onClick={() => setTab('cuToNASA')}
+                                className={`w-full text-left px-4 py-2 text-white rounded ${tab === 'cuToNASA' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}
+                            >
+                                CU-Time to NASA
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                onClick={() => setTab('calculator')}
+                                className={`w-full text-left px-4 py-2 text-white rounded ${tab === 'calculator' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}
+                            >
+                                Calculator
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                onClick={() => setTab('cosmicTimeResearch')}
+                                className={`w-full text-left px-4 py-2 text-white rounded ${tab === 'cosmicTimeResearch' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}
+                            >
+                                Cosmic Time Alignment Research
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                onClick={() => setTab('about')}
+                                className={`w-full text-left px-4 py-2 text-white rounded ${tab === 'about' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}
+                            >
+                                About
+                            </button>
+                        </li>
+                        <li>
+                            <a
+                                href="./cu_time_converter_stable_v3_0_0.html"
+                                className="w-full text-left px-4 py-2 text-white rounded hover:bg-blue-700 cosmic-button"
+                            >
+                                CU Time Converter
+                            </a>
+                        </li>
+                    </ul>
+                </aside>
+                <div className="flex-1 md:ml-64 p-6">
+                    <header className="mb-6 p-6 gradient-header border border-indigo-800/30 rounded-lg shadow-lg">
+                        <div className="flex justify-between items-center">
+                            <a href="https://github.com/willmaddock/CosmicUniversalismStatement.git" target="_blank"
+                               rel="noopener noreferrer" className="hover:brightness-125">
+                                <h1 className="text-4xl font-extrabold text-white tracking-tight">
+                                    NASA Cosmic Time Converter
+                                </h1>
+                            </a>
+                        </div>
+                        <nav className="md:hidden flex space-x-4 mt-4">
+                            <button
+                                onClick={() => setTab('gregorian')}
+                                className={`px-4 py-2 text-white rounded ${tab === 'gregorian' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}
+                            >
+                                Gregorian to Cosmic
+                            </button>
+                            <button
+                                onClick={() => setTab('nasaToCU')}
+                                className={`px-4 py-2 text-white rounded ${tab === 'nasaToCU' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}
+                            >
+                                NASA to CU-Time
+                            </button>
+                            <button
+                                onClick={() => setTab('cuToNASA')}
+                                className={`px-4 py-2 text-white rounded ${tab === 'cuToNASA' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}
+                            >
+                                CU-Time to NASA
+                            </button>
+                            <button
+                                onClick={() => setTab('calculator')}
+                                className={`px-4 py-2 text-white rounded ${tab === 'calculator' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}
+                            >
+                                Calculator
+                            </button>
+                            <button
+                                onClick={() => setTab('cosmicTimeResearch')}
+                                className={`px-4 py-2 text-white rounded ${tab === 'cosmicTimeResearch' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}
+                            >
+                                Research
+                            </button>
+                            <button
+                                onClick={() => setTab('about')}
+                                className={`px-4 py-2 text-white rounded ${tab === 'about' ? 'bg-blue-600' : 'hover:bg-blue-700'} cosmic-button`}
+                            >
+                                About
+                            </button>
+                            <a
+                                href="./cu_time_converter_stable_v3_0_0.html"
+                                className={`px-4 py-2 text-white rounded hover:bg-blue-700 cosmic-button`}
+                            >
+                                CU Time Converter
+                            </a>
+                        </nav>
+                    </header>
+                    <main>
+                        {tab === 'gregorian' && (
+                            <section className="mb-8 bg-gray-800 rounded-lg shadow-md p-6 card">
+                                <h2 className="text-2xl font-semibold text-white mb-4">Gregorian to Cosmic Time</h2>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-gray-300 mb-1" htmlFor="gregorianYear">
+                                            <i className="fas fa-calendar mr-2"></i>Year (1 to 99999999999)
+                                        </label>
+                                        <div className="flex items-center">
+                                            <button onClick={handleDecreaseYear}
+                                                    className="px-2 py-1 bg-gray-600 rounded-l">-
+                                            </button>
+                                            <input
+                                                type="text"
+                                                id="gregorianYear"
+                                                value={inputs.gregorianYear}
+                                                onChange={(e) => handleYearChange(e.target.value)}
+                                                className="flex-1 px-3 py-2 border-t border-b border-gray-600 bg-gray-700 text-white"
+                                                placeholder="e.g., 2025"
+                                                aria-label="Enter year"
+                                                inputMode="numeric"
+                                                pattern="[0-9]*"
+                                                maxLength="11"
+                                            />
+                                            <button onClick={handleIncreaseYear}
+                                                    className="px-2 py-1 bg-gray-600 rounded-r">+
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label className="block text-gray-300 mb-1" htmlFor="gregorianEra">
+                                            <i className="fas fa-globe mr-2"></i>Era
+                                        </label>
+                                        <select
+                                            id="gregorianEra"
+                                            value={inputs.gregorianEra}
+                                            onChange={(e) => handleInputChange('gregorianEra')(e.target.value)}
+                                            className="w-full px-3 py-2 border rounded bg-gray-700 text-white"
+                                            aria-label="Select CE or BCE"
+                                        >
+                                            <option value="CE">CE</option>
+                                            <option value="BCE">BCE</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label className="block text-gray-300 mb-1" htmlFor="gregorianMonth">
+                                            <i className="fas fa-calendar mr-2"></i>Month (1-12)
+                                        </label>
+                                        <input
+                                            type="number"
+                                            id="gregorianMonth"
+                                            value={inputs.gregorianMonth}
+                                            onChange={(e) => handleInputChange('gregorianMonth')(e.target.value)}
+                                            className="w-full px-3 py-2 border rounded bg-gray-700 text-white"
+                                            placeholder="e.g., 6"
+                                            min="1"
+                                            max="12"
+                                            aria-label="Enter month"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-gray-300 mb-1" htmlFor="gregorianDay">
+                                            <i className="fas fa-calendar mr-2"></i>Day (1-31)
+                                        </label>
+                                        <input
+                                            type="number"
+                                            id="gregorianDay"
+                                            value={inputs.gregorianDay}
+                                            onChange={(e) => handleInputChange('gregorianDay')(e.target.value)}
+                                            className="w-full px-3 py-2 border rounded bg-gray-700 text-white"
+                                            placeholder="e.g., 1"
+                                            min="1"
+                                            max="31"
+                                            aria-label="Enter day"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-gray-300 mb-1" htmlFor="gregorianTime">
+                                            <i className="fas fa-clock mr-2"></i>Time (HH:MM:SS)
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="gregorianTime"
+                                            value={inputs.gregorianTime}
+                                            onChange={(e) => handleInputChange('gregorianTime')(formatTimeInput(e.target.value))}
+                                            className="w-full px-3 py-2 border rounded bg-gray-700 text-white"
+                                            placeholder="e.g., 00:00:00"
+                                            aria-label="Enter time"
+                                        />
+                                    </div>
+                                    <div className="flex space-x-4">
+                                        <button
+                                            onClick={handleGregorianSubmit}
+                                            className="w-full md:w-auto px-6 py-2 cosmic-button"
+                                            aria-label="Convert Gregorian date to Cosmic Time"
+                                        >
+                                            <i className="fas fa-rocket mr-2"></i>Convert
+                                        </button>
+                                        <button
+                                            onClick={handleNextDay}
+                                            className="w-full md:w-auto px-6 py-2 cosmic-button"
+                                            aria-label="Advance to next day"
+                                        >
+                                            <i className="fas fa-arrow-right mr-2"></i>Next Day
+                                        </button>
+                                    </div>
+                                </div>
+                                <p className="text-sm text-gray-300 mt-2">Enter positive years up to 11 digits; dates
+                                    beyond May 31, 2025 CE are predictable and based on extrapolation.</p>
+                                {preview && !preview.error && (
+                                    <div className="mt-4 p-4 bg-gray-700 rounded">
+                                        <p>Preview:</p>
+                                        <p>CU-Time (NASA alignment): {preview.cuTimeHuman}</p>
+                                        <p>CU-Time (Converter alignment): {preview.cuTimeConverterHuman}</p>
+                                        <p>NASA Years: {preview.nasaYears}</p>
+                                        <p>Phase: {preview.phase}</p>
+                                        {preview.isFuture &&
+                                            <p className="text-yellow-300">Note: This date is in the future and is
+                                                predictable.</p>}
+                                    </div>
+                                )}
+                                {preview && preview.error && (
+                                    <div className="mt-4 p-4 bg-red-700 rounded">
+                                        <p>Error: {preview.error}</p>
+                                    </div>
+                                )}
+                            </section>
+                        )}
+
+                        {tab === 'nasaToCU' && (
+                            <section className="mb-8 bg-gray-800 rounded-lg shadow-md p-6 card">
+                                <h2 className="text-2xl font-semibold text-white mb-4">NASA to CU-Time Conversion</h2>
+                                <div className="grid grid-cols-1 gap-4">
+                                    <div>
+                                        <label className="block text-gray-300 mb-1" htmlFor="nasaYears">
+                                            <i className="fas fa-star mr-2"></i>Years since Big Bang (NASA)
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="nasaYears"
+                                            value={inputs.nasaYears}
+                                            onChange={(e) => handleInputChange('nasaYears')(e.target.value)}
+                                            onKeyPress={(e) => e.key === 'Enter' && handleNASAToCUSubmit()}
+                                            className="w-full px-3 py-2 border rounded bg-gray-700 text-white"
+                                            placeholder="e.g., 13794000000"
+                                            aria-label="Enter years since Big Bang"
+                                        />
+                                    </div>
+                                    <div>
+                                        <button
+                                            onClick={handleNASAToCUSubmit}
+                                            className="w-full md:w-auto px-6 py-2 cosmic-button"
+                                            aria-label="Convert NASA years to CU-Time"
+                                        >
+                                            <i className="fas fa-rocket mr-2"></i>Convert
+                                        </button>
+                                    </div>
+                                </div>
+                            </section>
+                        )}
+
+                        {tab === 'cuToNASA' && (
+                            <section className="mb-8 bg-gray-800 rounded-lg shadow-md p-6 card">
+                                <h2 className="text-2xl font-semibold text-white mb-4">CU-Time to NASA Time
+                                    Conversion</h2>
+                                <div className="grid grid-cols-1 gap-4">
+                                    <div>
+                                        <label className="block text-gray-300 mb-1" htmlFor="cuTime">
+                                            <i className="fas fa-star mr-2"></i>CU-Time
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="cuTime"
+                                            value={inputs.cuTime}
+                                            onChange={(e) => handleInputChange('cuTime')(e.target.value)}
+                                            onKeyPress={(e) => e.key === 'Enter' && handleCUToNASASubmit()}
+                                            className="w-full px-3 py-2 border rounded bg-gray-700 text-white"
+                                            placeholder="e.g., 3094213000000"
+                                            aria-label="Enter CU-Time value"
+                                        />
+                                    </div>
+                                    <div>
+                                        <button
+                                            onClick={handleCUToNASASubmit}
+                                            className="w-full md:w-auto px-6 py-2 cosmic-button"
+                                            aria-label="Convert CU-Time to NASA years"
+                                        >
+                                            <i className="fas fa-rocket mr-2"></i>Convert
+                                        </button>
+                                    </div>
+                                </div>
+                            </section>
+                        )}
+
+                        {tab === 'calculator' && (
+                            <section className="mb-8 bg-gray-800 rounded-lg shadow-md p-6 card">
+                                <h2 className="text-2xl font-semibold text-white mb-4">CU-Time Calculator</h2>
+                                <div className="grid grid-cols-1 gap-4">
+                                    <div>
+                                        <label className="block text-gray-300 mb-1" htmlFor="calcValue1">
+                                            <i className="fas fa-star mr-2"></i>First CU-Time Value
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="calcValue1"
+                                            value={inputs.calcValue1}
+                                            onChange={(e) => handleInputChange('calcValue1')(e.target.value)}
+                                            onKeyPress={(e) => e.key === 'Enter' && handleCalcSubmit()}
+                                            className="w-full px-3 py-2 border rounded bg-gray-700 text-white"
+                                            placeholder="e.g., 3094213000000"
+                                            aria-label="Enter first CU-Time value"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-gray-300 mb-1" htmlFor="calcOperation">
+                                            <i className="fas fa-calculator mr-2"></i>Operation
+                                        </label>
+                                        <select
+                                            id="calcOperation"
+                                            value={inputs.calcOperation}
+                                            onChange={(e) => handleInputChange('calcOperation')(e.target.value)}
+                                            className="w-full px-3 py-2 border rounded bg-gray-700 text-white"
+                                            aria-label="Select calculation operation"
+                                        >
+                                            <option value="+">Addition (+)</option>
+                                            <option value="-">Subtraction (-)</option>
+                                            <option value="*">Multiplication (*)</option>
+                                            <option value="/">Division (/)</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label className="block text-gray-300 mb-1" htmlFor="calcValue2">
+                                            <i className="fas fa-star mr-2"></i>Second CU-Time Value
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="calcValue2"
+                                            value={inputs.calcValue2}
+                                            onChange={(e) => handleInputChange('calcValue2')(e.target.value)}
+                                            onKeyPress={(e) => e.key === 'Enter' && handleCalcSubmit()}
+                                            className="w-full px-3 py-2 border rounded bg-gray-700 text-white"
+                                            placeholder="e.g., 0.000739754795723161506672964"
+                                            aria-label="Enter second CU-Time value"
+                                        />
+                                    </div>
+                                    <div>
+                                        <button
+                                            onClick={handleCalcSubmit}
+                                            className="w-full md:w-auto px-6 py-2 cosmic-button"
+                                            aria-label="Perform calculation"
+                                        >
+                                            <i className="fas fa-calculator mr-2"></i>Compute
+                                        </button>
+                                    </div>
+                                </div>
+                            </section>
+                        )}
+
+                        {tab === 'cosmicTimeResearch' && (
+                            <section className="mb-8 bg-gray-800 rounded-lg shadow-md p-6 card cosmic-breath-section">
+                                <h2 className="text-2xl font-semibold text-white mb-4">Cosmic Time Alignment
+                                    Research</h2>
+                                <div className="markdown-content"
+                                     dangerouslySetInnerHTML={{__html: marked.parse(RESEARCH_MARKDOWN)}}/>
+                            </section>
+                        )}
+
+                        {tab === 'about' && (
+                            <section className="mb-8 bg-gray-800 rounded-lg shadow-md p-6 card cosmic-breath-section">
+                                <h2 className="text-2xl font-semibold text-white mb-4">About the NASA Time
+                                    Converter</h2>
+                                <div className="markdown-content"
+                                     dangerouslySetInnerHTML={{__html: marked.parse(ABOUT_MARKDOWN)}}/>
+                            </section>
+                        )}
+
+                        <section className="mb-8 bg-gray-800 rounded-lg shadow-md p-6 card">
+                            <h2 className="text-2xl font-semibold text-white mb-4"><i
+                                className="fas fa-upload mr-2"></i>Upload CSV</h2>
+                            <input
+                                type="file"
+                                accept=".csv"
+                                onChange={handleCSVUpload}
+                                className="w-full px-3 py-2 border rounded bg-gray-700 text-white"
+                                aria-label="Upload CSV file"
+                            />
+                            <p className="text-sm text-gray-300 mt-2">
+                                CSV must have headers "Description,DateTime,Output". Examples: "Gregorian:
+                                01/01/13794000000 BCE 00:00:00", "NASA to CU: 13794000000", "CU to NASA: 3094213000000"
+                            </p>
+                        </section>
+
+                        <div className="flex justify-between mb-6">
+                            <button onClick={() => downloadCSV(results)}
+                                    className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 cosmic-button"
+                                    aria-label="Download results as CSV">
+                                <i className="fas fa-download mr-2"></i>Download Results
+                            </button>
+                            <button onClick={() => setResults([])}
+                                    className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 cosmic-button"
+                                    aria-label="Clear all results">
+                                <i className="fas fa-trash mr-2"></i>Clear Results
+                            </button>
+                        </div>
+
+                        {results.length > 0 && (
+                            <section className="mb-8">
+                                <h2 className="text-2xl font-semibold text-white mb-4">Results</h2>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    {results.map((result, idx) => (
+                                        <ResultCard key={idx} result={result} index={idx} handleCopy={handleCopy}
+                                                    handleDeleteResult={handleDeleteResult}/>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+
+                        <section className="mb-8">
+                            <div className="flex justify-between mb-4">
+                                <h2 className="text-2xl font-semibold text-white">History</h2>
+                                <div>
+                                    <button onClick={downloadHistoryCSV}
+                                            className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 cosmic-button mr-4"
+                                            aria-label="Download history as CSV">
+                                        <i className="fas fa-download mr-2"></i>Download History
+                                    </button>
+                                    <button onClick={() => setShowFavorites(!showFavorites)}
+                                            className="text-blue-400 hover:text-blue-500 transition duration-300"
+                                            aria-label={showFavorites ? "Show all history" : "Show favorite history"}>
+                                        {showFavorites ? 'Show All' : 'Show Favorites'}
+                                    </button>
+                                </div>
+                            </div>
+                            {(showFavorites ? HISTORY.getFavorites() : history).map((entry, idx) => (
+                                <div key={idx}
+                                     className="bg-gray-800 rounded-lg shadow-md p-4 mb-2 flex justify-between items-center card">
+                                    <div>
+                                        <p className="text-sm text-gray-300">{entry.input}</p>
+                                        <p className="text-sm text-gray-300">{entry.output}</p>
+                                        <p className="text-xs text-gray-500">{entry.type} | {new Date(entry.timestamp).toLocaleString()}</p>
+                                    </div>
+                                    <button onClick={() => toggleFavorite(entry.input)}
+                                            className="text-blue-400 hover:text-yellow-500 transition duration-300"
+                                            aria-label={entry.favorite ? "Remove from favorites" : "Add to favorites"}>
+                                        {entry.favorite ? '★' : '☆'}
+                                    </button>
+                                </div>
+                            ))}
+                        </section>
+                    </main>
+                    <footer
+                        className="mt-8 p-6 gradient-header border border-indigo-800/30 rounded-lg shadow-lg text-center text-gray-200">
+                        <p className="text-sm font-light">
+                            © 2025 Cosmic Universalism Computational Intelligence Initiative
+                        </p>
+                        <p className="text-sm font-light mt-2">
+                            Conceptual content licensed under <a
+                            href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank"
+                            rel="noopener noreferrer" className="underline hover:text-white transition-colors">CC
+                            BY-NC-SA 4.0</a>.
+                            Source code licensed under <a
+                            href="https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/LICENSE"
+                            target="_blank" rel="noopener noreferrer"
+                            className="underline hover:text-white transition-colors">MIT License</a>.
+                        </p>
+                    </footer>
+                </div>
+                {modal && <Modal message={modal.message} onClose={modal.onClose}/>}
+                {toastMessage && (
+                    <div
+                        className={`fixed bottom-4 right-4 p-4 rounded shadow-lg transition-opacity duration-300 ${toastMessage.isError ? 'bg-red-500' : 'bg-green-500'} text-white`}>
+                        {toastMessage.message}
+                    </div>
+                )}
+            </div>
+        );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App/>);
+</script>
+</body>
+</html>
