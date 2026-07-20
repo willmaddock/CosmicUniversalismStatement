@@ -5,16 +5,89 @@ import ClassificationBadge from './ClassificationBadge.astro';
 <section class="cu-time-converter" aria-labelledby="cu-time-converter-title">
   <div class="cu-time-converter__header">
     <p class="cu-time-converter__eyebrow">CU-Time Tool</p>
-    <h2 id="cu-time-converter-title">CU-Time to Gregorian UTC</h2>
+    <h2 id="cu-time-converter-title">Gregorian UTC and CU-Time converter</h2>
     <ClassificationBadge classification="cu-mathematical-model" />
   </div>
 
   <p class="cu-time-converter__intro">
-    Enter a converter-aligned CU-Time value to locate its corresponding
-    proleptic Gregorian date and time. Results use UTC and civil CE/BCE years.
+    Convert a validated proleptic Gregorian UTC date to CU-Time, or locate the
+    civil CE/BCE date corresponding to a converter-aligned CU-Time value.
   </p>
 
-  <form class="cu-time-form" data-cu-time-form novalidate>
+  <section class="cu-time-direction" aria-labelledby="gregorian-to-cu-title">
+    <h3 id="gregorian-to-cu-title">Gregorian UTC to CU-Time</h3>
+    <form class="cu-time-form" data-gregorian-form novalidate>
+      <fieldset>
+        <legend>Date</legend>
+        <div class="cu-time-form__date-grid">
+          <div class="cu-time-form__field">
+            <label for="gregorian-month">Month</label>
+            <input id="gregorian-month" name="month" type="text" inputmode="numeric" autocomplete="off" aria-describedby="gregorian-date-hint gregorian-error" aria-invalid="false" required data-gregorian-field />
+          </div>
+          <div class="cu-time-form__field">
+            <label for="gregorian-day">Day</label>
+            <input id="gregorian-day" name="day" type="text" inputmode="numeric" autocomplete="off" aria-describedby="gregorian-date-hint gregorian-error" aria-invalid="false" required data-gregorian-field />
+          </div>
+          <div class="cu-time-form__field cu-time-form__field--year">
+            <label for="gregorian-year">Civil year</label>
+            <input id="gregorian-year" name="civilYear" type="text" inputmode="numeric" autocomplete="off" aria-describedby="gregorian-date-hint gregorian-error" aria-invalid="false" required data-gregorian-field />
+          </div>
+          <div class="cu-time-form__field">
+            <label for="gregorian-era">Era</label>
+            <select id="gregorian-era" name="era" aria-describedby="gregorian-date-hint gregorian-error" aria-invalid="false" data-gregorian-field>
+              <option value="CE">CE</option>
+              <option value="BCE">BCE</option>
+            </select>
+          </div>
+        </div>
+        <p id="gregorian-date-hint" class="cu-time-form__hint">
+          Enter month, day, and a civil year from 1 through 9999999999999.
+        </p>
+      </fieldset>
+
+      <fieldset>
+        <legend>Time (UTC)</legend>
+        <div class="cu-time-form__time-grid">
+          <div class="cu-time-form__field">
+            <label for="gregorian-hour">Hour</label>
+            <input id="gregorian-hour" name="hour" type="text" inputmode="numeric" autocomplete="off" aria-describedby="gregorian-time-hint gregorian-error" aria-invalid="false" data-gregorian-field />
+          </div>
+          <div class="cu-time-form__field">
+            <label for="gregorian-minute">Minute</label>
+            <input id="gregorian-minute" name="minute" type="text" inputmode="numeric" autocomplete="off" aria-describedby="gregorian-time-hint gregorian-error" aria-invalid="false" data-gregorian-field />
+          </div>
+          <div class="cu-time-form__field">
+            <label for="gregorian-second">Second</label>
+            <input id="gregorian-second" name="second" type="text" inputmode="numeric" autocomplete="off" aria-describedby="gregorian-time-hint gregorian-error" aria-invalid="false" data-gregorian-field />
+          </div>
+        </div>
+        <p id="gregorian-time-hint" class="cu-time-form__hint">
+          Leave all three fields empty for midnight, or supply all three together.
+        </p>
+      </fieldset>
+
+      <p id="gregorian-error" class="cu-time-form__error" role="alert" aria-live="assertive" hidden data-gregorian-error></p>
+      <button type="submit">Convert Gregorian UTC</button>
+    </form>
+
+    <section class="cu-time-result" aria-labelledby="gregorian-result-title" aria-live="polite" tabindex="-1" hidden data-gregorian-result>
+      <h3 id="gregorian-result-title">Conversion result</h3>
+      <dl>
+        <div>
+          <dt>Gregorian date and time</dt>
+          <dd data-gregorian-result-input></dd>
+        </div>
+        <div>
+          <dt>CU-Time</dt>
+          <dd data-gregorian-result-cu-time></dd>
+        </div>
+      </dl>
+    </section>
+  </section>
+
+  <section class="cu-time-direction" aria-labelledby="cu-to-gregorian-title">
+    <h3 id="cu-to-gregorian-title">CU-Time to Gregorian UTC</h3>
+    <form class="cu-time-form" data-cu-time-form novalidate>
     <div class="cu-time-form__field">
       <label for="cu-time-input">CU-Time</label>
       <p id="cu-time-input-hint" class="cu-time-form__hint">
@@ -45,27 +118,28 @@ import ClassificationBadge from './ClassificationBadge.astro';
     ></p>
 
     <button type="submit">Convert CU-Time</button>
-  </form>
+    </form>
 
-  <section
-    class="cu-time-result"
-    aria-labelledby="cu-time-result-title"
-    aria-live="polite"
-    tabindex="-1"
-    hidden
-    data-cu-time-result
-  >
-    <h3 id="cu-time-result-title">Conversion result</h3>
-    <dl>
-      <div>
-        <dt>CU-Time</dt>
-        <dd data-cu-time-result-input></dd>
-      </div>
-      <div>
-        <dt>Gregorian date and time</dt>
-        <dd data-cu-time-result-gregorian></dd>
-      </div>
-    </dl>
+    <section
+      class="cu-time-result"
+      aria-labelledby="cu-time-result-title"
+      aria-live="polite"
+      tabindex="-1"
+      hidden
+      data-cu-time-result
+    >
+      <h3 id="cu-time-result-title">Conversion result</h3>
+      <dl>
+        <div>
+          <dt>CU-Time</dt>
+          <dd data-cu-time-result-input></dd>
+        </div>
+        <div>
+          <dt>Gregorian date and time</dt>
+          <dd data-cu-time-result-gregorian></dd>
+        </div>
+      </dl>
+    </section>
   </section>
 
   <p class="cu-time-converter__methodology">
@@ -75,7 +149,58 @@ import ClassificationBadge from './ClassificationBadge.astro';
 </section>
 
 <script>
-  import { convertCuTimeForDisplay } from '../lib/cuTime';
+  import { convertCuTimeForDisplay, convertGregorianForDisplay } from '../lib/cuTime';
+
+  const gregorianForm = document.querySelector<HTMLFormElement>('[data-gregorian-form]');
+  const gregorianFields = Array.from(document.querySelectorAll<HTMLInputElement | HTMLSelectElement>('[data-gregorian-field]'));
+  const gregorianError = document.querySelector<HTMLElement>('[data-gregorian-error]');
+  const gregorianResult = document.querySelector<HTMLElement>('[data-gregorian-result]');
+  const gregorianResultInput = document.querySelector<HTMLElement>('[data-gregorian-result-input]');
+  const gregorianResultCuTime = document.querySelector<HTMLElement>('[data-gregorian-result-cu-time]');
+
+  if (gregorianForm && gregorianError && gregorianResult && gregorianResultInput && gregorianResultCuTime) {
+    const clearGregorianError = () => {
+      gregorianError.hidden = true;
+      gregorianError.textContent = '';
+      gregorianFields.forEach((field) => field.setAttribute('aria-invalid', 'false'));
+    };
+
+    gregorianFields.forEach((field) => {
+      field.addEventListener('input', clearGregorianError);
+      field.addEventListener('change', clearGregorianError);
+    });
+    gregorianForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      clearGregorianError();
+
+      const data = new FormData(gregorianForm);
+      const converted = convertGregorianForDisplay({
+        civilYear: String(data.get('civilYear') ?? ''),
+        era: String(data.get('era') ?? ''),
+        month: String(data.get('month') ?? ''),
+        day: String(data.get('day') ?? ''),
+        hour: String(data.get('hour') ?? ''),
+        minute: String(data.get('minute') ?? ''),
+        second: String(data.get('second') ?? ''),
+      });
+
+      if (!converted.ok) {
+        const requestedField = converted.error.field === 'time' ? 'hour' : converted.error.field;
+        const field = gregorianFields.find((candidate) => candidate.name === requestedField) ?? gregorianFields[0];
+        field?.setAttribute('aria-invalid', 'true');
+        gregorianError.textContent = converted.error.message;
+        gregorianError.hidden = false;
+        gregorianResult.hidden = true;
+        field?.focus();
+        return;
+      }
+
+      gregorianResultInput.textContent = converted.value.gregorianUtc;
+      gregorianResultCuTime.textContent = converted.value.cuTime;
+      gregorianResult.hidden = false;
+      gregorianResult.focus();
+    });
+  }
 
   const form = document.querySelector<HTMLFormElement>('[data-cu-time-form]');
   const input = document.querySelector<HTMLInputElement>('[data-cu-time-input]');
@@ -132,6 +257,7 @@ import ClassificationBadge from './ClassificationBadge.astro';
   }
 
   .cu-time-converter__header,
+  .cu-time-direction,
   .cu-time-form,
   .cu-time-form__field,
   .cu-time-result,
@@ -181,6 +307,7 @@ import ClassificationBadge from './ClassificationBadge.astro';
   }
 
   .cu-time-form label,
+  .cu-time-form legend,
   .cu-time-result dt {
     color: var(--color-white-gold);
     font-weight: 700;
@@ -192,7 +319,27 @@ import ClassificationBadge from './ClassificationBadge.astro';
     font-size: 0.9rem;
   }
 
-  .cu-time-form input {
+  .cu-time-form fieldset {
+    display: grid;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .cu-time-form__date-grid,
+  .cu-time-form__time-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+
+  .cu-time-form__date-grid {
+    grid-template-columns: minmax(5rem, 0.7fr) minmax(5rem, 0.7fr) minmax(10rem, 1.6fr) minmax(5rem, 0.7fr);
+  }
+
+  .cu-time-form input,
+  .cu-time-form select {
     width: 100%;
     padding: var(--space-3) var(--space-4);
     border: 1px solid var(--color-translucent-blue);
@@ -203,6 +350,7 @@ import ClassificationBadge from './ClassificationBadge.astro';
   }
 
   .cu-time-form input:focus-visible,
+  .cu-time-form select:focus-visible,
   .cu-time-form button:focus-visible,
   .cu-time-result:focus-visible {
     outline: 3px solid var(--color-cyan);
@@ -210,6 +358,10 @@ import ClassificationBadge from './ClassificationBadge.astro';
   }
 
   .cu-time-form input[aria-invalid='true'] {
+    border-color: var(--color-amber);
+  }
+
+  .cu-time-form select[aria-invalid='true'] {
     border-color: var(--color-amber);
   }
 
@@ -257,6 +409,17 @@ import ClassificationBadge from './ClassificationBadge.astro';
   @media (prefers-reduced-motion: reduce) {
     .cu-time-form button {
       transition: none;
+    }
+  }
+
+  @media (max-width: 42rem) {
+    .cu-time-form__date-grid,
+    .cu-time-form__time-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .cu-time-form__field--year {
+      grid-column: 1 / -1;
     }
   }
 </style>

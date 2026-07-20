@@ -19,8 +19,8 @@ import CUTimeConverter from '../components/CUTimeConverter.astro';
   >
     <p>
       CU-Time connects familiar chronology with the framework’s larger sequence of
-      cosmic phases. The converter below translates a converter-aligned CU-Time value
-      into a corresponding proleptic Gregorian date and UTC time.
+      cosmic phases. The converter below translates between a proleptic Gregorian UTC
+      date and a converter-aligned CU-Time value.
     </p>
 
     <p>
@@ -46,9 +46,9 @@ import CUTimeConverter from '../components/CUTimeConverter.astro';
 
     <ContentSection id="cu-time-documentation" title="Conversion boundaries">
       <p>
-        Inputs use plain decimal notation. Results use UTC, a proleptic Gregorian calendar,
-        and civil CE/BCE years without a public year zero. The original reference converter
-        remains unchanged as historical implementation evidence.
+        Gregorian inputs use explicit civil CE/BCE years and UTC. CU-Time inputs use plain
+        decimal notation. The proleptic Gregorian calendar has no public civil year zero,
+        and the original reference converter remains unchanged as historical evidence.
       </p>
     </ContentSection>
   </div>
