@@ -13,6 +13,7 @@ describe('CU-Time interface adapter', () => {
       ok: true,
       value: {
         inputCuTime: ANCHOR_CU_TIME,
+        inputCuTimeExponential: '3.094134e+12',
         gregorianUtc: '01/01/2000 CE 00:00:00 UTC',
       },
     });
@@ -67,6 +68,7 @@ describe('Gregorian interface adapter', () => {
       value: {
         gregorianUtc: '01/01/2000 CE 00:00:00 UTC',
         cuTime: ANCHOR_CU_TIME,
+        cuTimeExponential: '3.094134e+12',
       },
     });
   });

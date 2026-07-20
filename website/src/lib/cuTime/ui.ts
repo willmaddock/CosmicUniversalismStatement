@@ -8,6 +8,7 @@ import type { CivilGregorianInput, CivilGregorianUtc, Era } from './types';
 
 export interface CuTimeDisplayResult {
   inputCuTime: string;
+  inputCuTimeExponential: string;
   gregorianUtc: string;
 }
 
@@ -28,6 +29,7 @@ export interface GregorianDisplayInput {
 export interface GregorianToCuTimeDisplayResult {
   gregorianUtc: string;
   cuTime: string;
+  cuTimeExponential: string;
 }
 
 export type GregorianToCuTimeDisplayOutcome =
@@ -54,6 +56,7 @@ export function convertCuTimeForDisplay(raw: string): CuTimeDisplayOutcome {
     ok: true,
     value: {
       inputCuTime: converted.value.inputCuTime.toString(),
+      inputCuTimeExponential: converted.value.inputCuTime.toExponential(6),
       gregorianUtc: formatCivilGregorianUtc(converted.value),
     },
   };
@@ -143,6 +146,7 @@ export function convertGregorianForDisplay(
         ...validatedTime,
       }),
       cuTime: converted.value.cuTime.toFixed(),
+      cuTimeExponential: converted.value.cuTime.toExponential(6),
     },
   };
 }

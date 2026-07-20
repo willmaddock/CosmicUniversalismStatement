@@ -67,4 +67,16 @@ describe('UI adapter regression coverage', () => {
     expect(negativeZero.value.inputCuTime).toBe('0');
     expect(negativeZero.value).toEqual(positiveZero.value);
   });
+
+  it('adds a six-place scientific companion without changing the exact value', () => {
+    const result = convertGregorianForDisplay(VALID_INPUT);
+
+    expect(result).toMatchObject({
+      ok: true,
+      value: {
+        cuTime: '3094134044923.50975356477292230250881',
+        cuTimeExponential: '3.094134e+12',
+      },
+    });
+  });
 });
