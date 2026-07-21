@@ -1,6 +1,7 @@
 export const purposePresets = [
   { id: 'framework', label: 'CU Framework Exploration', description: 'Explore a selected CU principle with definitions, evidence boundaries, and open questions.' },
   { id: 'free-will', label: "God's Free Will Exploration", description: 'Examine free will as a philosophical or explicitly marked in-world topic.' },
+  { id: 'aurelius-novel-continuation', label: 'Aurelius Novel Continuation', description: 'Continue the Aurelius philosophical novel inside the Cosmic Universalism universe with continuity-first role-play.' },
   { id: 'ltx', label: 'LTX Video Concept Creation', description: 'Develop a cinematic visual concept, scene progression, and production-ready prompt.' },
   { id: 'research', label: 'Scientific Research Assistant', description: 'Review evidence, sources, assumptions, contradictions, and limitations.' },
   { id: 'ethical', label: 'Ethical Anomaly Detection', description: 'Analyze ethical tensions, risks, competing values, and corrective pathways.' },
@@ -46,7 +47,7 @@ export const alignmentPrinciples = [
 ] as const;
 
 export const responseStyles = ['Clear and concise', 'Research notebook', 'Socratic questions', 'Cinematic but restrained', 'Step-by-step'] as const;
-export const outputFormats = ['Organized sections', 'Short answer with sources', 'Detailed analysis', 'Scene and shot list', 'Dialogue with annotations'] as const;
+export const outputFormats = ['Organized sections', 'Continuity-first', 'Short answer with sources', 'Detailed analysis', 'Scene and shot list', 'Dialogue with annotations'] as const;
 
 export const provenConfigurationPresets = [
   {
@@ -67,6 +68,16 @@ export const provenConfigurationPresets = [
     description: 'Begins with the complete eight-path Cosmic Universalism Explorer menu and helps visitors choose where to start.',
     config: {
       platform: 'neutral', promptDepth: 'full-research', purposePreset: 'framework', mode: 'role-play', persona: 'gods-free-will', menuMode: 'preset', menuPreset: 'native-cu', sourcePack: 'complete', affirmationProtocol: true, outputFormat: 'Organized sections', userContext: '', constraints: '', returnToMenu: true,
+    },
+  },
+  {
+    id: 'aurelius-claude-proven',
+    name: 'Aurelius — Claude-Proven Continuation',
+    label: 'Recommended for the compact Aurelius novel continuation',
+    buttonLabel: 'Generate Aurelius Prompt',
+    description: 'Continue the Aurelius philosophical novel using the compact, continuity-first structure proven to work with Claude.',
+    config: {
+      platform: 'neutral', promptDepth: 'quick', purposePreset: 'aurelius-novel-continuation', mode: 'role-play', persona: 'aurelius', menuMode: 'none', menuPreset: '', sourcePack: 'complete', affirmationProtocol: true, outputFormat: 'Continuity-first', userContext: '', constraints: '', returnToMenu: false,
     },
   },
 ] as const;

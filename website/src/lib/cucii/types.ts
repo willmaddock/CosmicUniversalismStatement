@@ -1,7 +1,7 @@
 export type CuciiPlatform = 'chatgpt' | 'grok' | 'neutral' | 'custom';
 export type CuciiMode = 'analytical' | 'role-play' | 'hybrid';
 export type CuciiMenuMode = 'none' | 'preset' | 'custom';
-export type CuciiPersona = 'none' | 'gods-free-will' | 'custom';
+export type CuciiPersona = 'none' | 'gods-free-will' | 'aurelius' | 'custom';
 export type CuciiPromptDepth = 'quick' | 'standard' | 'full-research';
 export type CuciiSourcePack = 'complete';
 
@@ -53,7 +53,7 @@ export type ValidationResult<T> =
 export interface CuciiConversation {
   id: string;
   title: string;
-  platform: 'chatgpt' | 'grok';
+  platform: 'chatgpt' | 'grok' | 'claude';
   url: string;
   mode: CuciiMode;
   rolePlay: string;

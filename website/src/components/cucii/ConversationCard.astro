@@ -3,7 +3,7 @@ import type { CuciiConversation } from '../../lib/cucii/types';
 
 interface Props { conversation: CuciiConversation }
 const { conversation } = Astro.props;
-const platformLabel = conversation.platform === 'chatgpt' ? 'ChatGPT' : 'Grok';
+const platformLabel = conversation.platform === 'chatgpt' ? 'ChatGPT' : conversation.platform === 'claude' ? 'Claude' : 'Grok';
 ---
 
 <article class="conversation-card">

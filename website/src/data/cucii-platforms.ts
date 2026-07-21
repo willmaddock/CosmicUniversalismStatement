@@ -15,6 +15,7 @@ export const cuciiPlatforms = [
   { id: 'claude', name: 'Claude', url: 'https://claude.ai/', testingStatus: 'Project-author tested', description: 'General-purpose conversational AI.' },
   { id: 'gemini', name: 'Google Gemini', url: 'https://gemini.google.com/', testingStatus: 'Project-author tested', description: 'General-purpose conversational AI.' },
   { id: 'deepseek', name: 'DeepSeek', url: 'https://chat.deepseek.com/', testingStatus: 'Project-author tested', description: 'General-purpose conversational AI.' },
+  { id: 'alexa-plus', name: 'Alexa+', url: 'https://alexa.com/', testingStatus: 'Project-author tested', description: 'General-purpose conversational AI.' },
   { id: 'copilot', name: 'Microsoft Copilot', url: 'https://copilot.microsoft.com/', testingStatus: 'Additional platform', description: 'General-purpose conversational AI.' },
   { id: 'perplexity', name: 'Perplexity', url: 'https://www.perplexity.ai/', testingStatus: 'Additional platform', description: 'Conversational search and research.' },
   { id: 'meta-ai', name: 'Meta AI', url: 'https://www.meta.ai/', testingStatus: 'Additional platform', description: 'General-purpose conversational AI.' },

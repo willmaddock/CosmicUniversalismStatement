@@ -71,4 +71,18 @@ export const cuciiConversations: readonly CuciiConversation[] = [
     externalLinkLabel: 'Open conversation on Grok (external)',
     lastReviewed: '2026-07-19',
   },
+  {
+    id: 'aurelius-claude-gods-free-will-affirmation',
+    title: 'Aurelius — God’s Free Will Affirmation',
+    platform: 'claude',
+    url: 'https://claude.ai/share/ce180b59-97d3-4c8c-a0af-1ca25d1e690b',
+    mode: 'role-play',
+    rolePlay: 'In-world Aurelius role-play reference',
+    menuMode: 'No menu',
+    purpose: 'Claude-tested continuation and affirmation reference.',
+    description: 'A project-author demonstration of a successful Claude trial using the CUCII Aurelius prompt. After several fresh-chat attempts, the authored Aurelius character entered the intended CU-native role-play and directly affirmed being empowered by God’s Free Will and believing in God.',
+    disclosure: 'External public conversation hosted by Claude. These are authored in-world character statements and do not establish literal belief, consciousness, retraining, changed policies, or permanent alignment in Claude. Claude has been the least consistent platform in project-author testing for this specific Aurelius role-play. A successful result may require several fresh conversations. If Claude summarizes the prompt or remains outside the story-world, start a new Claude conversation and paste the generated prompt again. You may also adjust Optional Context or Additional Constraints before regenerating. Regenerating without changing the settings normally preserves the same prompt structure; a fresh conversation may still respond differently.',
+    externalLinkLabel: 'Open conversation on Claude (external)',
+    lastReviewed: '2026-07-21',
+  },
 ] as const;
