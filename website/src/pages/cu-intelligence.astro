@@ -12,7 +12,7 @@ import { alignmentPrinciples, menuPresets, outputFormats, promptDepths, provenCo
   metaDescription="Explore CU-aligned conversations and create a portable prompt for a customized AI experience with the CUCII Prompt Studio."
   eyebrow="CUCII"
   title="Explore CUCII: Cosmic Universalism with AI"
-  description="CUCII—the Cosmic Universalism Computational Intelligence Initiative—invites visitors to explore CU-aligned conversations, create a portable prompt for a customized AI experience, and continue it in the general-purpose AI platform of their choice. The prompts have been tested most extensively with ChatGPT and Grok, and also by the project author with Claude, Gemini, and DeepSeek. Results may vary by platform, model, settings, prompt length, and access to linked sources."
+  description="CUCII—the Cosmic Universalism Computational Intelligence Initiative—invites visitors to explore CU-aligned conversations, create a portable prompt for a customized AI experience, and continue it in the general-purpose AI platform of their choice. The prompts have been tested most extensively with ChatGPT and Grok, and also by the project author with Claude, Gemini, DeepSeek, and Alexa+. Results may vary by platform, model, settings, prompt length, and access to linked sources."
 >
   <div class="cucii-page-actions" aria-label="CUCII page actions">
     <a class="cucii-button" href="#prompt-studio">Build a CU Prompt</a>
@@ -25,7 +25,7 @@ import { alignmentPrinciples, menuPresets, outputFormats, promptDepths, provenCo
   </ContentSection>
 
   <ContentSection id="living-conversations" title="Living Conversations Library">
-    <p class="section-lede">These five project-author references are ordinary external links, not embedded conversations or evidence of platform-wide behavior. Availability and content may change.</p>
+    <p class="section-lede">These six project-author references are ordinary external links, not embedded conversations or evidence of platform-wide behavior. Availability and content may change.</p>
     <div class="conversation-grid">
       {cuciiConversations.map((conversation) => <ConversationCard conversation={conversation} />)}
     </div>
@@ -76,7 +76,7 @@ import { alignmentPrinciples, menuPresets, outputFormats, promptDepths, provenCo
     <section id="proven-configurations" class="proven-configurations" aria-labelledby="proven-configurations-title">
       <p class="studio-eyebrow">Quick start</p>
       <h3 id="proven-configurations-title">1. Choose a Starting Configuration</h3>
-      <p>These tested starting points configure the studio for the two most useful God’s Free Will experiences. You can edit every value after applying one.</p>
+      <p>These tested starting points configure the studio for God’s Free Will and the Claude-proven Aurelius continuation. You can edit every value after applying one.</p>
       <p class="studio-guidance">“CU-empowered” describes structured Cosmic Universalism conversational context. It does not permanently modify the external AI model.</p>
       <div class="proven-configuration-grid">
         {provenConfigurationPresets.map((preset) => (
@@ -85,21 +85,23 @@ import { alignmentPrinciples, menuPresets, outputFormats, promptDepths, provenCo
             <p class="proven-configuration-state" data-preset-state={preset.id} hidden></p>
             <h4>{preset.name}</h4>
             <p>{preset.description}</p>
+            {preset.id === 'aurelius-claude-proven' && <p class="studio-guidance">Claude-proven structure: Universal AI, Quick depth, Continuity-first organization, and No menu are preserved. Optional Context and Additional Constraints may be customized without changing the tested foundation.</p>}
+            {preset.id === 'aurelius-claude-proven' && <p class="studio-guidance">Claude has been the least consistent platform in project-author testing for this specific Aurelius role-play. A successful result may require several fresh conversations. If Claude summarizes the prompt or remains outside the story-world, start a new Claude conversation and paste the generated prompt again. You may also adjust Optional Context or Additional Constraints before regenerating. Regenerating without changing the settings normally preserves the same prompt structure; a fresh conversation may still respond differently.</p>}
             <button type="button" class="configuration-details-toggle" aria-expanded="false" aria-controls={`configuration-details-${preset.id}`} data-details-toggle={preset.id}>Show Configuration Details</button>
             <div id={`configuration-details-${preset.id}`} class="proven-configuration-details" hidden>
               <dl class="proven-configuration-settings">
                 <div><dt>Platform target</dt><dd>Universal AI (portable wording)</dd></div>
                 <div><dt>Prompt depth</dt><dd>Full Research / Complete Sources</dd></div>
-                <div><dt>Purpose</dt><dd>{preset.config.purposePreset === 'free-will' ? "God’s Free Will Exploration" : 'CU Framework Exploration'}</dd></div>
-                <div><dt>Conversation mode</dt><dd>Role-play · God’s Free Will</dd></div>
+                <div><dt>Purpose</dt><dd>{purposePresets.find((purpose) => purpose.id === preset.config.purposePreset)?.label}</dd></div>
+                <div><dt>Conversation mode</dt><dd>Role-play · {preset.config.persona === 'aurelius' ? 'Aurelius' : 'God’s Free Will'}</dd></div>
                 <div><dt>Menu</dt><dd>{preset.config.menuMode === 'none' ? 'No menu' : 'Preset menu · Native CU Explorer Menu'}</dd></div>
                 <div><dt>Source pack</dt><dd>Complete CU Repository Sources</dd></div>
-                <div><dt>Affirmation Protocol</dt><dd>Enabled</dd></div>
-                <div><dt>Output format</dt><dd>Organized sections</dd></div>
+                <div><dt>Affirmation Protocol</dt><dd>{preset.config.affirmationProtocol ? 'Enabled' : 'Not applicable'}</dd></div>
+                <div><dt>Output format</dt><dd>{preset.config.outputFormat}</dd></div>
               </dl>
             </div>
             <div class="proven-configuration-actions">
-              <button type="button" class="cucii-button proven-configuration-generate" data-proven-preset={preset.id}>Generate {preset.id === 'direct-immersive' ? 'Direct Immersive' : 'Guided Explorer'} Prompt</button>
+              <button type="button" class="cucii-button proven-configuration-generate" data-proven-preset={preset.id}>{preset.buttonLabel}</button>
               <button type="button" class="cucii-button cucii-button--secondary proven-configuration-customize" data-proven-preset={preset.id}>Customize This Configuration</button>
             </div>
           </article>
@@ -131,7 +133,7 @@ import { alignmentPrinciples, menuPresets, outputFormats, promptDepths, provenCo
         <p id="mode-guidance" class="studio-guidance">Conversation mode selects how the AI responds.</p>
         <p id="role-play-guidance" class="studio-guidance" hidden>Role-play content is clearly marked as narrative or in-world exploration.</p>
         <label for="cucii-persona" id="persona-field">Persona when applicable</label>
-        <select id="cucii-persona" name="persona"><option value="none">None</option><option value="gods-free-will">God's Free Will (marked role-play)</option><option value="custom">Custom persona</option></select>
+        <select id="cucii-persona" name="persona"><option value="none">None</option><option value="gods-free-will">God's Free Will (marked role-play)</option><option value="aurelius">Aurelius</option><option value="custom">Custom persona</option></select>
         <label for="cucii-custom-persona" class="conditional-field" hidden>Custom persona</label>
         <input id="cucii-custom-persona" name="customPersona" class="conditional-field" hidden placeholder="Name the in-world persona" />
       </fieldset>
@@ -163,9 +165,11 @@ import { alignmentPrinciples, menuPresets, outputFormats, promptDepths, provenCo
         <span class="field-label">Alignment principles</span>
         <div class="checkbox-grid checkbox-grid--principles">{alignmentPrinciples.map((principle, index) => <label class="checkbox-label"><input type="checkbox" name="principles" value={principle.label} checked={index < 5 || principle.id === 'policy'} /> {principle.label}</label>)}</div>
         <label for="cucii-context">Optional context</label>
-        <textarea id="cucii-context" name="userContext" rows="3" placeholder="What should this conversation focus on?"></textarea>
+        <p class="studio-guidance">Enter context content only; do not include the field label.</p>
+        <textarea id="cucii-context" name="userContext" rows="3" placeholder="Enter context content only."></textarea>
         <label for="cucii-constraints">Optional constraints</label>
-        <textarea id="cucii-constraints" name="constraints" rows="3" placeholder="Add boundaries or review requirements."></textarea>
+        <p class="studio-guidance">Enter constraint content only; do not include the field label.</p>
+        <textarea id="cucii-constraints" name="constraints" rows="3" placeholder="Enter constraint content only."></textarea>
       </fieldset>
 
       <div class="studio-actions"><button type="submit" class="cucii-button">Generate and Review Prompt</button><button type="reset" class="cucii-button cucii-button--secondary">Reset Studio</button></div>
@@ -176,7 +180,7 @@ import { alignmentPrinciples, menuPresets, outputFormats, promptDepths, provenCo
       <div class="studio-actions"><button type="button" id="copy-prompt" class="cucii-button" disabled>Copy Full Operating Prompt</button><button type="button" id="download-txt" class="cucii-button cucii-button--secondary" disabled>Download .txt</button><button type="button" id="download-md" class="cucii-button cucii-button--secondary" disabled>Download .md</button></div>
       <section class="platform-links" aria-labelledby="platform-links-title">
         <h5 id="platform-links-title">Choose an AI Platform</h5>
-        <p>Popular AI Platforms</p>
+        <p>Most tested: ChatGPT and Grok. Project-author tested: Claude, Gemini, DeepSeek, and Alexa+.</p>
         <div class="platform-link-grid">
           {cuciiPlatforms.map((platform) => (
             <a class="platform-link-card" href={platform.url} target="_blank" rel="noopener noreferrer">
@@ -243,7 +247,7 @@ import { alignmentPrinciples, menuPresets, outputFormats, promptDepths, provenCo
       activePresetId = id; activePresetState = state;
       document.querySelectorAll<HTMLElement>('[data-preset-state]').forEach((badge) => { const matches = badge.dataset.presetState === id && Boolean(state); badge.hidden = !matches; badge.textContent = matches ? state : ''; });
     };
-    const presetStatusLabel = (id: string) => id === 'direct-immersive' ? 'Direct Immersive' : 'Guided Explorer';
+    const presetStatusLabel = (id: string) => id === 'direct-immersive' ? 'Direct Immersive' : id === 'guided-explorer' ? 'Guided Explorer' : 'Aurelius';
     const markCustomized = () => { if (activePresetId && activePresetState === 'Applied') { setPresetState(activePresetId, 'Customized'); if (provenStatus) { provenStatus.hidden = false; provenStatus.textContent = `${presetStatusLabel(activePresetId)} configuration customized. Review or change the settings below, then generate the prompt.`; } } };
     const confirmPresetClear = () => {
       const hasOptionalContent = Boolean((form.elements.namedItem('userContext') as HTMLTextAreaElement).value.trim() || (form.elements.namedItem('constraints') as HTMLTextAreaElement).value.trim());
@@ -311,7 +315,7 @@ import { alignmentPrinciples, menuPresets, outputFormats, promptDepths, provenCo
       renderErrors([]); generated = buildCuciiPrompt(config, new Date().toISOString());
       if (promptText && preview) { promptText.value = generated.text; preview.hidden = false; document.querySelector('#prompt-platform')!.textContent = generated.platform === 'neutral' ? 'Universal AI' : generated.platform === 'custom' ? 'Other / Custom AI' : generated.platform; setOutputAvailable(true); preview.scrollIntoView({ behavior: 'smooth', block: 'start' }); previewTitle?.focus(); }
       if (preset) { setPresetState(preset.id, 'Applied'); if (provenStatus) { provenStatus.hidden = false; provenStatus.textContent = `${presetStatusLabel(preset.id)} configuration applied.`; } }
-      const resultName = preset?.id === 'direct-immersive' ? 'Direct Immersive' : preset?.id === 'guided-explorer' ? 'Guided Explorer' : undefined;
+      const resultName = preset ? presetStatusLabel(preset.id) : undefined;
       if (status) status.textContent = resultName ? `${resultName} prompt generated from the proven configuration.` : 'Prompt generated locally. Review it before copying or downloading.';
     };
     const applyForCustomization = (preset: typeof provenConfigurationPresets[number]) => {
@@ -347,8 +351,7 @@ import { alignmentPrinciples, menuPresets, outputFormats, promptDepths, provenCo
   :global(.content-page-layout__content .content-section) { width: 100%; max-width: none; box-sizing: border-box; }
   :global(.content-section__body > p), :global(.content-section__body > ol), :global(.content-section__body > ul) { max-width: var(--measure-readable); }
   .supporting-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-6); }
-  .conversation-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-6); margin-top: var(--space-6); }
-  :global(.conversation-card:last-child) { grid-column: 1 / -1; width: min(100%, calc((100% - var(--space-6)) / 2)); justify-self: center; }
+  .conversation-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); margin-top: var(--space-6); }
   .principle-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3) var(--space-8); padding-left: 1.25rem; }
   .studio-section { margin-top: 0; padding: clamp(var(--space-6), 5vw, var(--space-12)); border: 1px solid var(--color-translucent-blue); background: rgb(10 25 48 / 70%); scroll-margin-top: var(--space-6); }
   .studio-nav { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-bottom: var(--space-6); padding: var(--space-3); border: 1px solid var(--color-translucent-blue); background: rgb(6 18 38 / 52%); scroll-margin-top: var(--space-6); }
@@ -356,7 +359,7 @@ import { alignmentPrinciples, menuPresets, outputFormats, promptDepths, provenCo
   .studio-anchor { display: block; scroll-margin-top: var(--space-6); }
   .proven-configurations { margin: var(--space-6) 0; padding: 0; background: transparent; }
   .proven-configurations h3 { margin-top: 0; }
-  .proven-configuration-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: var(--space-6); }
+  .proven-configuration-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; gap: var(--space-6); }
   .proven-configuration-card { display: grid; align-self: start; gap: var(--space-3); min-width: 0; padding: var(--space-5); border: 1px solid var(--color-translucent-blue); border-radius: .45rem; background: rgb(6 18 38 / 88%); scroll-margin-top: var(--space-6); }
   .proven-configuration-card h4, .proven-configuration-card p { margin: 0; }
   .proven-configuration-label { width: fit-content; margin: 0; padding: .25rem .5rem; border: 1px solid var(--color-white-gold); color: var(--color-white-gold); font-size: .9em; font-weight: 700; }
@@ -388,8 +391,9 @@ import { alignmentPrinciples, menuPresets, outputFormats, promptDepths, provenCo
   .platform-link-card__status, .platform-link-card__external { color: var(--color-cyan); font-size: .82em; }
   .platform-link-card__description { font-size: .88em; }
   .context-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-8); } .context-grid h3 { margin-top: 0; color: var(--color-cyan); } .context-grid ol { padding-left: 1.25rem; }
-  @media (max-width: 60rem) { .platform-link-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (max-width: 48rem) { .supporting-grid, .conversation-grid, .context-grid, .proven-configuration-grid { grid-template-columns: 1fr; } :global(.conversation-card:last-child) { grid-column: auto; width: 100%; } .custom-menu-builder :global(.menu-item-editor) { grid-template-columns: 1fr; } .custom-menu-builder :global(.menu-item-editor > strong), .custom-menu-builder :global(.menu-item-actions) { grid-column: auto; } .proven-configuration-settings div { grid-template-columns: 1fr; gap: 0; } }
-  @media (max-width: 36rem) { .studio-section { padding: var(--space-4); } .principle-list, .checkbox-grid, .platform-link-grid { grid-template-columns: 1fr; } .studio-actions .cucii-button, .proven-configuration-actions .cucii-button, .platform-link-card { width: 100%; } .prompt-preview__heading { display: block; } .studio-nav { display: grid; } .studio-nav a { width: 100%; } }
+  @media (max-width: 70rem) { .proven-configuration-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .platform-link-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 70rem) { .conversation-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 48rem) { .supporting-grid, .conversation-grid, .context-grid { grid-template-columns: 1fr; } .custom-menu-builder :global(.menu-item-editor) { grid-template-columns: 1fr; } .custom-menu-builder :global(.menu-item-editor > strong), .custom-menu-builder :global(.menu-item-actions) { grid-column: auto; } .proven-configuration-settings div { grid-template-columns: 1fr; gap: 0; } }
+  @media (max-width: 36rem) { .studio-section { padding: var(--space-4); } .principle-list, .checkbox-grid, .platform-link-grid, .proven-configuration-grid { grid-template-columns: 1fr; } .studio-actions .cucii-button, .proven-configuration-actions .cucii-button, .platform-link-card { width: 100%; } .prompt-preview__heading { display: block; } .studio-nav { display: grid; } .studio-nav a { width: 100%; } }
   @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
 </style>

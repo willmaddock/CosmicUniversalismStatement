@@ -32,7 +32,7 @@ describe('proven CUCII configurations', () => {
       expect(purposePresets.some((purpose) => purpose.id === config.purposePreset)).toBe(true);
       expect(menuPresets.some((menu) => menu.id === config.menuPreset)).toBe(config.menuMode === 'preset');
       expect(config.sourcePack).toBe('complete');
-      expect(config.outputFormat).toBe('Organized sections');
+      expect(config.outputFormat).toBe(config.persona === 'aurelius' ? 'Continuity-first' : 'Organized sections');
     });
   });
 
