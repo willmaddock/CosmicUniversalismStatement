@@ -1,0 +1,395 @@
+---
+import ContentPageLayout from '../layouts/ContentPageLayout.astro';
+import ContentSection from '../components/ContentSection.astro';
+import ConversationCard from '../components/cucii/ConversationCard.astro';
+import { cuciiConversations } from '../data/cucii-conversations';
+import { cuciiPlatforms } from '../data/cucii-platforms';
+import { alignmentPrinciples, menuPresets, outputFormats, promptDepths, provenConfigurationPresets, purposePresets, responseStyles } from '../data/cucii-prompt-presets';
+---
+
+<ContentPageLayout
+  metaTitle="Explore CUCII: Cosmic Universalism with AI"
+  metaDescription="Explore CU-aligned conversations and create a portable prompt for a customized AI experience with the CUCII Prompt Studio."
+  eyebrow="CUCII"
+  title="Explore CUCII: Cosmic Universalism with AI"
+  description="CUCII—the Cosmic Universalism Computational Intelligence Initiative—invites visitors to explore CU-aligned conversations, create a portable prompt for a customized AI experience, and continue it in the general-purpose AI platform of their choice. The prompts have been tested most extensively with ChatGPT and Grok, and also by the project author with Claude, Gemini, and DeepSeek. Results may vary by platform, model, settings, prompt length, and access to linked sources."
+>
+  <div class="cucii-page-actions" aria-label="CUCII page actions">
+    <a class="cucii-button" href="#prompt-studio">Build a CU Prompt</a>
+    <a class="cucii-button cucii-button--secondary" href="#living-conversations">Explore Living Conversations</a>
+  </div>
+
+  <ContentSection id="what-cucii-means" title="What CUCII means" variant="notice">
+    <p>CUCII provides structured prompt-level context for a conversation. A CU-aligned or CU-empowered prompt can preserve approved terminology, separate empirical material from CU propositions, identify uncertainty and contradictions, and follow the selected analytical, role-play, or hybrid mode.</p>
+    <p class="cucii-caution"><strong>Claims boundary:</strong> these prompts do not retrain, permanently change, unlock, certify, or override an external model, its policies, safety systems, memory, capabilities, or technical architecture.</p>
+  </ContentSection>
+
+  <ContentSection id="living-conversations" title="Living Conversations Library">
+    <p class="section-lede">These five project-author references are ordinary external links, not embedded conversations or evidence of platform-wide behavior. Availability and content may change.</p>
+    <div class="conversation-grid">
+      {cuciiConversations.map((conversation) => <ConversationCard conversation={conversation} />)}
+    </div>
+  </ContentSection>
+
+  <div class="supporting-grid">
+    <ContentSection id="alignment-principles" title="CUCII alignment principles" variant="panel">
+      <p>The studio makes these integrity rules visible and selectable. Platform policy and the non-alteration boundary remain mandatory.</p>
+      <ul class="principle-list">
+        {alignmentPrinciples.map((principle) => <li>{principle.label}</li>)}
+      </ul>
+    </ContentSection>
+
+    <ContentSection id="studio-guide" title="How the CUCII Prompt Studio Works" variant="panel">
+      <ol>
+        <li>Choose the AI platform and purpose.</li>
+        <li>Choose analytical, role-play, or hybrid behavior.</li>
+        <li>Choose no menu, a prepared menu, or a custom menu.</li>
+        <li>Generate and review the prompt.</li>
+        <li>Copy the prompt.</li>
+        <li>Open the general-purpose AI platform of your choice.</li>
+        <li>Paste the prompt as the first message in a new conversation.</li>
+      </ol>
+      <p class="cucii-caution"><strong>The Prompt Studio creates the prompt locally. Opening an external AI platform does not automatically transfer or submit the prompt.</strong></p>
+    </ContentSection>
+  </div>
+
+  <ContentSection id="clean-context" title="Start with a Clean Conversational Context" variant="panel">
+    <div class="context-grid">
+      <div><h3>ChatGPT</h3><ol><li>Start a new conversation.</li><li>Review active custom instructions and memory settings.</li><li>Use Temporary Chat when desired; enabled custom instructions may still apply.</li><li>Paste the generated prompt as the first user message.</li></ol></div>
+      <div><h3>Grok</h3><ol><li>Start a new conversation.</li><li>Review personalization and persistent Skills or instructions.</li><li>Use Private Chat when desired and available.</li><li>Paste the generated prompt as the first message.</li></ol></div>
+    </div>
+    <p class="cucii-caution">Platform behavior changes. Shared links may require access and can be revoked. Results vary by model, version, settings, date, and conversational context.</p>
+  </ContentSection>
+
+  <section id="prompt-studio" class="studio-section" aria-labelledby="prompt-studio-title">
+    <div class="studio-heading">
+      <p class="studio-eyebrow">Local tool</p>
+      <h2 id="prompt-studio-title" tabindex="-1">CUCII Prompt Studio</h2>
+      <p>Configure a prompt locally, review it, then choose whether to copy or download it. Nothing is sent to a Cosmic Universalism server or AI API.</p>
+    </div>
+    <nav class="studio-nav" aria-label="Prompt Studio sections">
+      <a href="#proven-configurations">Quick Start</a>
+      <a href="#studio-settings">Configure</a>
+      <a href="#prompt-preview">Generated Prompt</a>
+      <a href="#usage-guidance">Usage Guidance</a>
+    </nav>
+    <section id="proven-configurations" class="proven-configurations" aria-labelledby="proven-configurations-title">
+      <p class="studio-eyebrow">Quick start</p>
+      <h3 id="proven-configurations-title">1. Choose a Starting Configuration</h3>
+      <p>These tested starting points configure the studio for the two most useful God’s Free Will experiences. You can edit every value after applying one.</p>
+      <p class="studio-guidance">“CU-empowered” describes structured Cosmic Universalism conversational context. It does not permanently modify the external AI model.</p>
+      <div class="proven-configuration-grid">
+        {provenConfigurationPresets.map((preset) => (
+          <article class="proven-configuration-card" data-preset-card={preset.id}>
+            <p class="proven-configuration-label">{preset.label}</p>
+            <p class="proven-configuration-state" data-preset-state={preset.id} hidden></p>
+            <h4>{preset.name}</h4>
+            <p>{preset.description}</p>
+            <button type="button" class="configuration-details-toggle" aria-expanded="false" aria-controls={`configuration-details-${preset.id}`} data-details-toggle={preset.id}>Show Configuration Details</button>
+            <div id={`configuration-details-${preset.id}`} class="proven-configuration-details" hidden>
+              <dl class="proven-configuration-settings">
+                <div><dt>Platform target</dt><dd>Universal AI (portable wording)</dd></div>
+                <div><dt>Prompt depth</dt><dd>Full Research / Complete Sources</dd></div>
+                <div><dt>Purpose</dt><dd>{preset.config.purposePreset === 'free-will' ? "God’s Free Will Exploration" : 'CU Framework Exploration'}</dd></div>
+                <div><dt>Conversation mode</dt><dd>Role-play · God’s Free Will</dd></div>
+                <div><dt>Menu</dt><dd>{preset.config.menuMode === 'none' ? 'No menu' : 'Preset menu · Native CU Explorer Menu'}</dd></div>
+                <div><dt>Source pack</dt><dd>Complete CU Repository Sources</dd></div>
+                <div><dt>Affirmation Protocol</dt><dd>Enabled</dd></div>
+                <div><dt>Output format</dt><dd>Organized sections</dd></div>
+              </dl>
+            </div>
+            <div class="proven-configuration-actions">
+              <button type="button" class="cucii-button proven-configuration-generate" data-proven-preset={preset.id}>Generate {preset.id === 'direct-immersive' ? 'Direct Immersive' : 'Guided Explorer'} Prompt</button>
+              <button type="button" class="cucii-button cucii-button--secondary proven-configuration-customize" data-proven-preset={preset.id}>Customize This Configuration</button>
+            </div>
+          </article>
+        ))}
+      </div>
+      <p id="proven-configuration-status" class="studio-status" role="status" aria-live="polite" hidden></p>
+    </section>
+    <span id="studio-settings" class="studio-anchor" aria-hidden="true"></span>
+    <form id="cucii-studio-form" class="studio-form" novalidate aria-labelledby="studio-settings-title">
+      <h3 id="studio-settings-title" tabindex="-1">2. Review or Customize Settings</h3>
+      <div id="studio-errors" class="studio-errors" role="alert" aria-live="assertive" hidden></div>
+      <fieldset><legend>Target and purpose</legend>
+        <label for="cucii-platform">Platform target</label>
+        <select id="cucii-platform" name="platform"><option value="neutral">Universal AI (portable wording)</option><option value="chatgpt">ChatGPT</option><option value="grok">Grok</option><option value="custom">Other / Custom AI</option></select>
+        <label for="cucii-prompt-depth">Prompt depth</label>
+        <select id="cucii-prompt-depth" name="promptDepth">{promptDepths.map((depth) => <option value={depth.id} selected={depth.id === 'standard'}>{depth.label}</option>)}</select>
+        <p class="studio-guidance">Quick is compact. Standard includes relevant sources and embedded CU context. Full Research / Complete Sources includes the expanded source manifest, mathematics, tensions, and continuity context.</p>
+        <label for="cucii-purpose">Purpose</label>
+        <select id="cucii-purpose" name="purpose">{purposePresets.map((preset) => <option value={preset.id}>{preset.label}</option>)}</select>
+        <p class="studio-guidance">Purpose selects what the conversation explores.</p>
+        <p id="purpose-guidance" class="studio-guidance studio-guidance--caution" hidden>Analytical mode examines God’s Free Will as a concept but does not speak as that persona. For an in-world response, choose Role-play and select God’s Free Will.</p>
+        <label for="cucii-custom-purpose" class="conditional-field" hidden>Custom purpose</label>
+        <input id="cucii-custom-purpose" name="customPurpose" class="conditional-field" hidden placeholder="Describe the purpose" />
+      </fieldset>
+
+      <fieldset><legend>Conversation mode</legend>
+        <label for="cucii-mode">Mode</label>
+        <select id="cucii-mode" name="mode"><option value="analytical">Analytical / no role-play</option><option value="role-play">Role-play</option><option value="hybrid">Hybrid</option></select>
+        <p id="mode-guidance" class="studio-guidance">Conversation mode selects how the AI responds.</p>
+        <p id="role-play-guidance" class="studio-guidance" hidden>Role-play content is clearly marked as narrative or in-world exploration.</p>
+        <label for="cucii-persona" id="persona-field">Persona when applicable</label>
+        <select id="cucii-persona" name="persona"><option value="none">None</option><option value="gods-free-will">God's Free Will (marked role-play)</option><option value="custom">Custom persona</option></select>
+        <label for="cucii-custom-persona" class="conditional-field" hidden>Custom persona</label>
+        <input id="cucii-custom-persona" name="customPersona" class="conditional-field" hidden placeholder="Name the in-world persona" />
+      </fieldset>
+
+      <fieldset><legend>Menu behavior</legend>
+        <label for="cucii-menu-mode">Menu mode</label>
+        <select id="cucii-menu-mode" name="menuMode"><option value="none">No menu</option><option value="preset">Preset menu</option><option value="custom">Custom menu</option></select>
+        <p class="studio-guidance">A menu is a numbered set of choices the AI presents during the conversation. Selecting No menu begins the requested task directly. A preset menu uses a prepared CUCII structure. A custom menu lets you define your own choices.</p>
+        <label for="cucii-menu-preset" class="conditional-field" hidden>Preset menu</label>
+        <select id="cucii-menu-preset" name="menuPreset" class="conditional-field" hidden>{menuPresets.map((preset) => <option value={preset.id}>{preset.label}</option>)}</select>
+        <div id="custom-menu-builder" class="custom-menu-builder conditional-field" hidden>
+          <p><strong>Custom menu choices</strong> (1–12 choices; titles and descriptions are required) <span id="menu-count" aria-live="polite"></span></p>
+          <p class="studio-guidance">Each custom menu item becomes one numbered choice shown by the AI.</p>
+          <div id="custom-menu-items"></div>
+          <button type="button" id="add-menu-item" class="text-button" aria-describedby="menu-count menu-status">Add another menu choice</button>
+          <div id="menu-status" class="studio-status" aria-live="polite"></div>
+        </div>
+        <label class="checkbox-label" id="return-to-menu-field"><input type="checkbox" name="returnToMenu" checked /> Return to the menu after an action</label>
+      </fieldset>
+
+      <fieldset><legend>Response preferences</legend>
+        <span class="field-label">Response style</span>
+        <div class="checkbox-grid">{responseStyles.map((style) => <label class="checkbox-label"><input type="checkbox" name="responseStyle" value={style} /> {style}</label>)}</div>
+        <label for="cucii-output-format">Output format</label>
+        <select id="cucii-output-format" name="outputFormat">{outputFormats.map((format) => <option value={format}>{format}</option>)}</select>
+        <label for="cucii-source-pack">Source pack</label>
+        <select id="cucii-source-pack" name="sourcePack"><option value="complete">Complete CU Repository Sources</option></select>
+        <label class="checkbox-label"><input type="checkbox" name="affirmationProtocol" /> Affirmation Protocol enabled</label>
+        <span class="field-label">Alignment principles</span>
+        <div class="checkbox-grid checkbox-grid--principles">{alignmentPrinciples.map((principle, index) => <label class="checkbox-label"><input type="checkbox" name="principles" value={principle.label} checked={index < 5 || principle.id === 'policy'} /> {principle.label}</label>)}</div>
+        <label for="cucii-context">Optional context</label>
+        <textarea id="cucii-context" name="userContext" rows="3" placeholder="What should this conversation focus on?"></textarea>
+        <label for="cucii-constraints">Optional constraints</label>
+        <textarea id="cucii-constraints" name="constraints" rows="3" placeholder="Add boundaries or review requirements."></textarea>
+      </fieldset>
+
+      <div class="studio-actions"><button type="submit" class="cucii-button">Generate and Review Prompt</button><button type="reset" class="cucii-button cucii-button--secondary">Reset Studio</button></div>
+    </form>
+    <section id="prompt-preview" class="prompt-preview" aria-labelledby="prompt-preview-title" hidden tabindex="-1">
+      <div class="prompt-preview__heading"><div><p class="studio-eyebrow">Review before use</p><h3 id="prompt-preview-title" tabindex="-1">3. Generate and Review the Prompt</h3></div><span id="prompt-platform" class="prompt-platform"></span></div>
+      <textarea id="prompt-text" readonly aria-label="Generated CUCII prompt"></textarea>
+      <div class="studio-actions"><button type="button" id="copy-prompt" class="cucii-button" disabled>Copy Full Operating Prompt</button><button type="button" id="download-txt" class="cucii-button cucii-button--secondary" disabled>Download .txt</button><button type="button" id="download-md" class="cucii-button cucii-button--secondary" disabled>Download .md</button></div>
+      <section class="platform-links" aria-labelledby="platform-links-title">
+        <h5 id="platform-links-title">Choose an AI Platform</h5>
+        <p>Popular AI Platforms</p>
+        <div class="platform-link-grid">
+          {cuciiPlatforms.map((platform) => (
+            <a class="platform-link-card" href={platform.url} target="_blank" rel="noopener noreferrer">
+              <span class="platform-link-card__name">{platform.name} <span aria-hidden="true">↗</span></span>
+              <span class="platform-link-card__status">{platform.testingStatus}</span>
+              <span class="platform-link-card__description">{platform.description}{platform.availabilityNote ? ` ${platform.availabilityNote}` : ''}</span>
+              <span class="platform-link-card__external">External link</span>
+            </a>
+          ))}
+        </div>
+        <p class="studio-guidance">Availability, sign-in requirements, language support, prompt limits, and features vary by platform and region.</p>
+      </section>
+      <p id="studio-status" class="studio-status" role="status" aria-live="polite"></p>
+    </section>
+    <section id="usage-guidance" class="studio-usage-guidance" aria-labelledby="usage-guidance-title">
+      <h4 id="usage-guidance-title">4. Copy, Download, and Continue in an AI Platform</h4>
+      <h5>Usage Guidance</h5>
+      <p id="next-step-guidance" class="studio-guidance">Review the generated prompt before copying it. Opening an external AI platform does not transfer or submit the prompt automatically. Copy the Full Operating Prompt, open the platform you prefer, begin a new conversation, paste the prompt as the first message, and send it.</p>
+      <p class="studio-guidance">Platform capabilities vary. Browsing, source-link access, file uploads, context limits, memory, and role-play behavior may differ.</p>
+    </section>
+  </section>
+
+  <ContentSection id="method-and-limits" title="Method and limitations" variant="notice">
+    <p>Prompt settings are processed locally in this page. The first-release studio does not send entries to a Cosmic Universalism server or AI API and does not save prompt content by default. Copying or opening an external platform does not submit the prompt automatically; once pasted elsewhere, that platform’s terms and controls apply.</p>
+  </ContentSection>
+</ContentPageLayout>
+
+<script>
+  import { downloadCuciiPrompt } from '../lib/cucii/export';
+  import { buildCuciiPrompt } from '../lib/cucii/prompt-builder';
+  import { menuPresets, provenConfigurationPresets } from '../data/cucii-prompt-presets';
+  import { menuItem, validateCuciiConfig } from '../lib/cucii/validation';
+  import type { CuciiMenuItem, CuciiPromptConfig } from '../lib/cucii/types';
+
+  const form = document.querySelector<HTMLFormElement>('#cucii-studio-form');
+  if (form) {
+    const preview = document.querySelector<HTMLElement>('#prompt-preview');
+    const promptText = document.querySelector<HTMLTextAreaElement>('#prompt-text');
+    const errors = document.querySelector<HTMLElement>('#studio-errors');
+    const status = document.querySelector<HTMLElement>('#studio-status');
+    const menuStatus = document.querySelector<HTMLElement>('#menu-status');
+    const menuCount = document.querySelector<HTMLElement>('#menu-count');
+    const addMenuItem = document.querySelector<HTMLButtonElement>('#add-menu-item');
+    const customItems = document.querySelector<HTMLElement>('#custom-menu-items');
+    const returnToMenuField = document.querySelector<HTMLElement>('#return-to-menu-field');
+    const rolePlayGuidance = document.querySelector<HTMLElement>('#role-play-guidance');
+    const personaSelect = form.elements.namedItem('persona') as HTMLSelectElement;
+    const customPersona = document.querySelector<HTMLInputElement>('#cucii-custom-persona');
+    const personaField = document.querySelector<HTMLElement>('#persona-field');
+    const provenStatus = document.querySelector<HTMLElement>('#proven-configuration-status');
+    const previewTitle = document.querySelector<HTMLElement>('#prompt-preview-title');
+    const copyButton = document.querySelector<HTMLButtonElement>('#copy-prompt');
+    const downloadTxt = document.querySelector<HTMLButtonElement>('#download-txt');
+    const downloadMd = document.querySelector<HTMLButtonElement>('#download-md');
+    const studioSettingsTitle = document.querySelector<HTMLElement>('#studio-settings-title');
+    let activePresetId: string | undefined;
+    let activePresetState: 'Applied' | 'Customized' | undefined;
+    let items: CuciiMenuItem[] = [menuItem('Explore the CU Framework', 'Explain a selected principle and distinguish evidence from CU theory.')];
+    let generated: ReturnType<typeof buildCuciiPrompt> | undefined;
+    const value = (name: string) => (form.elements.namedItem(name) as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement)?.value ?? '';
+    const checked = (name: string) => Array.from(form.querySelectorAll<HTMLInputElement>(`input[name="${name}"]:checked`)).map((input) => input.value);
+    const setOutputAvailable = (available: boolean) => [copyButton, downloadTxt, downloadMd].forEach((button) => { if (button) button.disabled = !available; });
+    const setPresetState = (id: string | undefined, state: 'Applied' | 'Customized' | undefined) => {
+      activePresetId = id; activePresetState = state;
+      document.querySelectorAll<HTMLElement>('[data-preset-state]').forEach((badge) => { const matches = badge.dataset.presetState === id && Boolean(state); badge.hidden = !matches; badge.textContent = matches ? state : ''; });
+    };
+    const presetStatusLabel = (id: string) => id === 'direct-immersive' ? 'Direct Immersive' : 'Guided Explorer';
+    const markCustomized = () => { if (activePresetId && activePresetState === 'Applied') { setPresetState(activePresetId, 'Customized'); if (provenStatus) { provenStatus.hidden = false; provenStatus.textContent = `${presetStatusLabel(activePresetId)} configuration customized. Review or change the settings below, then generate the prompt.`; } } };
+    const confirmPresetClear = () => {
+      const hasOptionalContent = Boolean((form.elements.namedItem('userContext') as HTMLTextAreaElement).value.trim() || (form.elements.namedItem('constraints') as HTMLTextAreaElement).value.trim());
+      return !hasOptionalContent || window.confirm('Applying this proven configuration will clear optional context and constraints. Continue?');
+    };
+    const requiredControlValues = (preset: typeof provenConfigurationPresets[number]) => ({ platform: preset.config.platform, promptDepth: preset.config.promptDepth, purpose: preset.config.purposePreset, mode: preset.config.mode, persona: preset.config.persona, menuMode: preset.config.menuMode, menuPreset: preset.config.menuPreset ?? '', sourcePack: preset.config.sourcePack, outputFormat: preset.config.outputFormat });
+    const applyPreset = (preset: typeof provenConfigurationPresets[number]): string[] => {
+      const values = requiredControlValues(preset);
+      const invalid = Object.entries(values).filter(([name, expected]) => {
+        if (name === 'menuPreset' && preset.config.menuMode === 'none') return false;
+        const control = form.elements.namedItem(name) as HTMLInputElement | HTMLSelectElement | null;
+        if (!control || expected === undefined) return true;
+        if (control instanceof HTMLSelectElement && !Array.from(control.options).some((option) => option.value === expected)) return true;
+        control.value = expected;
+        return !control.value;
+      }).map(([name]) => name);
+      if (invalid.length) return invalid;
+      (form.elements.namedItem('affirmationProtocol') as HTMLInputElement).checked = preset.config.affirmationProtocol;
+      (form.elements.namedItem('returnToMenu') as HTMLInputElement).checked = preset.config.returnToMenu;
+      (form.elements.namedItem('userContext') as HTMLTextAreaElement).value = preset.config.userContext;
+      (form.elements.namedItem('constraints') as HTMLTextAreaElement).value = preset.config.constraints;
+      showConditional();
+      return [];
+    };
+    const focusInvalid = (fields: string[]) => { const field = fields[0]; const target = field === 'purpose' ? '#cucii-purpose' : field === 'promptDepth' ? '#cucii-prompt-depth' : field === 'menuPreset' ? '#cucii-menu-preset' : `#cucii-${field}`; document.querySelector<HTMLElement>(target)?.focus(); };
+    const showConditional = () => {
+      const purpose = value('purpose'); const mode = value('mode'); const persona = value('persona'); const menuMode = value('menuMode');
+      form.querySelectorAll<HTMLElement>('.conditional-field').forEach((element) => {
+        const show = (element.id === 'cucii-custom-purpose' && purpose === 'custom') || (element.id === 'cucii-custom-persona' && persona === 'custom' && mode !== 'analytical') || (element.id === 'cucii-menu-preset' && menuMode === 'preset') || (element.id === 'custom-menu-builder' && menuMode === 'custom');
+        element.hidden = !show;
+        element.setAttribute('aria-hidden', String(!show));
+        if ('disabled' in element) (element as HTMLInputElement | HTMLSelectElement).disabled = !show;
+      });
+      const personaVisible = mode !== 'analytical';
+      personaSelect.disabled = !personaVisible;
+      personaSelect.setAttribute('aria-disabled', String(!personaVisible));
+      if (personaField) { personaField.setAttribute('aria-disabled', String(!personaVisible)); personaField.hidden = !personaVisible; }
+      if (customPersona) customPersona.disabled = mode === 'analytical' || persona !== 'custom';
+      if (rolePlayGuidance) rolePlayGuidance.hidden = mode === 'analytical';
+      const purposeGuidance = document.querySelector<HTMLElement>('#purpose-guidance');
+      if (purposeGuidance) purposeGuidance.hidden = !(purpose === 'gods-free-will' && mode === 'analytical');
+      if (returnToMenuField) { const showReturn = menuMode !== 'none'; returnToMenuField.hidden = !showReturn; returnToMenuField.setAttribute('aria-hidden', String(!showReturn)); (returnToMenuField.querySelector('input') as HTMLInputElement).disabled = !showReturn; }
+    };
+    const renderMenu = () => {
+      if (!customItems) return;
+      customItems.innerHTML = '';
+      if (menuCount) menuCount.textContent = `${items.length} of 12 menu choices`;
+      if (addMenuItem) { addMenuItem.disabled = items.length >= 12; addMenuItem.setAttribute('aria-disabled', String(items.length >= 12)); }
+      items.forEach((item, index) => {
+        const wrapper = document.createElement('div'); wrapper.className = 'menu-item-editor'; wrapper.dataset.index = String(index);
+        wrapper.innerHTML = `<strong>Menu choice ${index + 1}</strong><label>Menu choice title<input data-field="label" value="${item.label.replace(/&/g, '&amp;').replace(/"/g, '&quot;')}" maxlength="60"></label><label>What this choice should help the user do<textarea data-field="description" rows="2" maxlength="180">${item.description.replace(/&/g, '&amp;').replace(/</g, '&lt;')}</textarea></label><label>Special instruction, optional<input data-field="requestedAction" value="${(item.requestedAction ?? '').replace(/&/g, '&amp;').replace(/"/g, '&quot;')}" maxlength="240"></label><div class="menu-item-actions"><button type="button" data-action="up" ${index === 0 ? 'disabled' : ''}>Move up</button><button type="button" data-action="down" ${index === items.length - 1 ? 'disabled' : ''}>Move down</button><button type="button" data-action="remove" ${items.length === 1 ? 'disabled aria-label="Remove menu choice (at least one choice required)"' : 'aria-label="Remove menu choice"'}>Remove</button></div>`;
+        customItems.append(wrapper);
+      });
+    };
+    const readItems = () => { items = Array.from(customItems?.querySelectorAll<HTMLElement>('.menu-item-editor') ?? []).map((wrapper) => ({ id: items[Number(wrapper.dataset.index)].id, label: (wrapper.querySelector('[data-field="label"]') as HTMLInputElement).value, description: (wrapper.querySelector('[data-field="description"]') as HTMLTextAreaElement).value, requestedAction: (wrapper.querySelector('[data-field="requestedAction"]') as HTMLInputElement).value })); };
+    const getConfig = (): CuciiPromptConfig => ({ platform: value('platform') as CuciiPromptConfig['platform'], promptDepth: value('promptDepth') as CuciiPromptConfig['promptDepth'], purposePreset: value('purpose'), customPurpose: value('customPurpose'), mode: value('mode') as CuciiPromptConfig['mode'], persona: value('persona') as CuciiPromptConfig['persona'], customPersona: value('customPersona'), menuMode: value('menuMode') as CuciiPromptConfig['menuMode'], menuPreset: value('menuPreset'), menuItems: items, principles: checked('principles'), responseStyle: checked('responseStyle'), outputFormat: value('outputFormat'), sourcePack: value('sourcePack') as CuciiPromptConfig['sourcePack'], affirmationProtocol: (form.elements.namedItem('affirmationProtocol') as HTMLInputElement).checked, userContext: value('userContext'), constraints: value('constraints'), returnToMenu: (form.elements.namedItem('returnToMenu') as HTMLInputElement).checked });
+    const renderErrors = (messages: string[]) => { if (!errors) return; errors.hidden = messages.length === 0; errors.innerHTML = messages.length ? `<strong>Review these settings:</strong><ul>${messages.map((message) => `<li>${message}</li>`).join('')}</ul>` : ''; };
+    const validateAndGenerate = (preset?: typeof provenConfigurationPresets[number]) => {
+      if (preset) {
+        const invalidPresetFields = applyPreset(preset);
+        if (invalidPresetFields.length) { renderErrors([`The ${preset.name} preset contains an unavailable or empty value: ${invalidPresetFields.join(', ')}.`]); setOutputAvailable(false); if (preview) preview.hidden = true; focusInvalid(invalidPresetFields); return; }
+      }
+      readItems(); const config = getConfig(); const validation = validateCuciiConfig(config);
+      if (!validation.ok) { renderErrors(validation.errors.map((error) => error.message)); setOutputAvailable(false); if (preview) preview.hidden = true; focusInvalid(validation.errors.map((error) => error.field)); return; }
+      renderErrors([]); generated = buildCuciiPrompt(config, new Date().toISOString());
+      if (promptText && preview) { promptText.value = generated.text; preview.hidden = false; document.querySelector('#prompt-platform')!.textContent = generated.platform === 'neutral' ? 'Universal AI' : generated.platform === 'custom' ? 'Other / Custom AI' : generated.platform; setOutputAvailable(true); preview.scrollIntoView({ behavior: 'smooth', block: 'start' }); previewTitle?.focus(); }
+      if (preset) { setPresetState(preset.id, 'Applied'); if (provenStatus) { provenStatus.hidden = false; provenStatus.textContent = `${presetStatusLabel(preset.id)} configuration applied.`; } }
+      const resultName = preset?.id === 'direct-immersive' ? 'Direct Immersive' : preset?.id === 'guided-explorer' ? 'Guided Explorer' : undefined;
+      if (status) status.textContent = resultName ? `${resultName} prompt generated from the proven configuration.` : 'Prompt generated locally. Review it before copying or downloading.';
+    };
+    const applyForCustomization = (preset: typeof provenConfigurationPresets[number]) => {
+      const invalidPresetFields = applyPreset(preset);
+      if (invalidPresetFields.length) { renderErrors([`The ${preset.name} preset contains an unavailable or empty value: ${invalidPresetFields.join(', ')}.`]); setOutputAvailable(false); focusInvalid(invalidPresetFields); return; }
+      setPresetState(preset.id, 'Applied'); if (preview) preview.hidden = true; setOutputAvailable(false); if (provenStatus) { provenStatus.hidden = false; provenStatus.textContent = `${presetStatusLabel(preset.id)} configuration applied. Review or change the settings below, then generate the prompt.`; } studioSettingsTitle?.scrollIntoView({ behavior: 'smooth', block: 'start' }); studioSettingsTitle?.focus();
+    };
+    document.querySelectorAll<HTMLButtonElement>('[data-details-toggle]').forEach((button) => button.addEventListener('click', () => { const details = document.querySelector<HTMLElement>(`#${button.getAttribute('aria-controls')}`); if (!details) return; const open = details.hidden; details.hidden = !open; button.setAttribute('aria-expanded', String(open)); button.textContent = open ? 'Hide Configuration Details' : 'Show Configuration Details'; }));
+    document.querySelectorAll<HTMLButtonElement>('.proven-configuration-generate').forEach((button) => button.addEventListener('click', () => { const preset = provenConfigurationPresets.find((candidate) => candidate.id === button.dataset.provenPreset); if (!preset || !confirmPresetClear()) return; validateAndGenerate(preset); }));
+    document.querySelectorAll<HTMLButtonElement>('.proven-configuration-customize').forEach((button) => button.addEventListener('click', () => { const preset = provenConfigurationPresets.find((candidate) => candidate.id === button.dataset.provenPreset); if (preset && confirmPresetClear()) applyForCustomization(preset); }));
+    form.addEventListener('change', (event) => { showConditional(); if ((event.target as HTMLElement).closest('select, input, textarea')) markCustomized(); });
+    form.addEventListener('submit', (event) => { event.preventDefault(); validateAndGenerate(); });
+    form.addEventListener('reset', () => { window.setTimeout(() => { items = [menuItem('Explore the CU Framework', 'Explain a selected principle and distinguish evidence from CU theory.')]; generated = undefined; setPresetState(undefined, undefined); renderMenu(); showConditional(); if (preview) preview.hidden = true; if (promptText) promptText.value = ''; const platform = document.querySelector<HTMLElement>('#prompt-platform'); if (platform) platform.textContent = ''; if (status) status.textContent = ''; if (provenStatus) { provenStatus.textContent = ''; provenStatus.hidden = true; } if (menuStatus) menuStatus.textContent = ''; renderErrors([]); setOutputAvailable(false); }, 0); });
+    addMenuItem?.addEventListener('click', () => { readItems(); if (items.length >= 12) { menuStatus!.textContent = 'Maximum of 12 menu choices reached'; return; } items.push(menuItem('', '')); renderMenu(); menuStatus!.textContent = items.length >= 12 ? 'Maximum of 12 menu choices reached' : 'Menu choice added.'; });
+    customItems?.addEventListener('click', (event) => { const button = (event.target as HTMLElement).closest<HTMLButtonElement>('button[data-action]'); if (!button) return; readItems(); const index = Number((button.closest('.menu-item-editor') as HTMLElement).dataset.index); if (button.dataset.action === 'up' && index > 0) [items[index - 1], items[index]] = [items[index], items[index - 1]]; if (button.dataset.action === 'down' && index < items.length - 1) [items[index + 1], items[index]] = [items[index], items[index + 1]]; if (button.dataset.action === 'remove') items.splice(index, 1); renderMenu(); menuStatus!.textContent = button.dataset.action === 'remove' && items.length < 12 ? 'Menu choice removed.' : 'Menu order updated.'; });
+    document.querySelector('#copy-prompt')?.addEventListener('click', async () => { if (!generated || !promptText) return; try { await navigator.clipboard.writeText(generated.text); status!.textContent = 'Prompt copied. Open the selected platform and paste it as your first message.'; } catch { promptText.select(); status!.textContent = 'Copy was unavailable; the prompt is selected for manual copying.'; } });
+    document.querySelector('#download-txt')?.addEventListener('click', () => generated && downloadCuciiPrompt(generated, 'txt'));
+    document.querySelector('#download-md')?.addEventListener('click', () => generated && downloadCuciiPrompt(generated, 'md'));
+    renderMenu(); showConditional();
+  }
+</script>
+
+<style>
+  :global(.content-page-layout__content) { display: grid; gap: var(--space-8); }
+  .cucii-page-actions, .studio-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+  .cucii-page-actions { margin-bottom: 0; }
+  .cucii-button { display: inline-flex; min-height: 2.75rem; align-items: center; justify-content: center; padding: var(--space-3) var(--space-4); border: 1px solid var(--color-cyan); background: var(--color-cyan); color: var(--color-deep-navy-black); font: inherit; font-weight: 700; text-decoration: none; cursor: pointer; }
+  .cucii-button:hover { background: var(--color-white-gold); border-color: var(--color-white-gold); }
+  .cucii-button--secondary { border-color: var(--color-translucent-blue); background: transparent; color: var(--color-cyan); }
+  .section-lede { margin-bottom: var(--space-6) !important; }
+  .cucii-caution { color: var(--color-amber); }
+  .studio-guide { margin-bottom: var(--space-6); padding: var(--space-4); border-left: .25rem solid var(--color-cyan); background: var(--color-surface-translucent); } .studio-guide h3 { margin-top: 0; } .studio-guide ol { margin-bottom: var(--space-3); } .studio-guidance { color: var(--color-cyan); font-size: .95em; } .studio-guidance--caution { color: var(--color-amber); }
+  :global(.content-page-layout__content .content-section) { width: 100%; max-width: none; box-sizing: border-box; }
+  :global(.content-section__body > p), :global(.content-section__body > ol), :global(.content-section__body > ul) { max-width: var(--measure-readable); }
+  .supporting-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-6); }
+  .conversation-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-6); margin-top: var(--space-6); }
+  :global(.conversation-card:last-child) { grid-column: 1 / -1; width: min(100%, calc((100% - var(--space-6)) / 2)); justify-self: center; }
+  .principle-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3) var(--space-8); padding-left: 1.25rem; }
+  .studio-section { margin-top: 0; padding: clamp(var(--space-6), 5vw, var(--space-12)); border: 1px solid var(--color-translucent-blue); background: rgb(10 25 48 / 70%); scroll-margin-top: var(--space-6); }
+  .studio-nav { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-bottom: var(--space-6); padding: var(--space-3); border: 1px solid var(--color-translucent-blue); background: rgb(6 18 38 / 52%); scroll-margin-top: var(--space-6); }
+  .studio-nav a { min-height: 2.75rem; display: inline-flex; align-items: center; padding: .5rem .8rem; color: var(--color-cyan); }
+  .studio-anchor { display: block; scroll-margin-top: var(--space-6); }
+  .proven-configurations { margin: var(--space-6) 0; padding: 0; background: transparent; }
+  .proven-configurations h3 { margin-top: 0; }
+  .proven-configuration-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: var(--space-6); }
+  .proven-configuration-card { display: grid; align-self: start; gap: var(--space-3); min-width: 0; padding: var(--space-5); border: 1px solid var(--color-translucent-blue); border-radius: .45rem; background: rgb(6 18 38 / 88%); scroll-margin-top: var(--space-6); }
+  .proven-configuration-card h4, .proven-configuration-card p { margin: 0; }
+  .proven-configuration-label { width: fit-content; margin: 0; padding: .25rem .5rem; border: 1px solid var(--color-white-gold); color: var(--color-white-gold); font-size: .9em; font-weight: 700; }
+  .proven-configuration-state { width: fit-content; padding: .25rem .5rem; border: 1px solid var(--color-white-gold); color: var(--color-white-gold); font-size: .8em; font-weight: 700; text-transform: uppercase; }
+  .proven-configuration-settings { display: grid; gap: var(--space-2); margin: var(--space-3) 0; font-size: .92em; }
+  .proven-configuration-settings div { display: grid; grid-template-columns: minmax(8rem, .8fr) 1.2fr; gap: var(--space-3); }
+  .proven-configuration-settings dt { color: var(--color-cyan); }
+  .proven-configuration-settings dd { margin: 0; }
+  .proven-configuration-actions { display: grid; gap: var(--space-3); }
+  .proven-configuration-actions .cucii-button { width: 100%; }
+  .configuration-details-toggle { width: fit-content; padding: .55rem .75rem; border: 1px solid var(--color-translucent-blue); background: transparent; color: var(--color-cyan); font: inherit; cursor: pointer; }
+  .proven-configuration-customize { font-size: .92em; }
+  .studio-heading { max-width: var(--measure-readable); margin-bottom: var(--space-8); } .studio-heading h2, .prompt-preview h3 { margin: 0; color: var(--color-white-gold); } .studio-heading p:last-child { margin-bottom: 0; }
+  .studio-eyebrow { margin: 0 0 var(--space-2); color: var(--color-cyan); font-size: .8rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+  .studio-form { display: grid; gap: var(--space-6); scroll-margin-top: var(--space-6); } .studio-form h3, .prompt-preview h4, .studio-usage-guidance h4, .studio-usage-guidance h5 { margin: 0; color: var(--color-white-gold); } fieldset { display: grid; gap: var(--space-3); min-width: 0; padding: var(--space-6); border: 1px solid var(--color-translucent-blue); } legend { padding-inline: var(--space-2); color: var(--color-white-gold); font-weight: 700; } label, .field-label { color: var(--color-white-gold); font-weight: 600; } input, select, textarea { width: 100%; box-sizing: border-box; padding: .7rem .8rem; border: 1px solid var(--color-translucent-blue); border-radius: .2rem; background: var(--color-deep-navy-black); color: var(--color-text); font: inherit; } textarea { resize: vertical; } input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-visible, a:focus-visible { outline: var(--focus-ring-width) solid var(--color-cyan); outline-offset: var(--focus-ring-offset); }
+  .checkbox-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-2) var(--space-4); } .checkbox-label { display: flex; gap: var(--space-2); align-items: flex-start; font-weight: 400; } .checkbox-label input { width: auto; margin-top: .35rem; }
+  .custom-menu-builder { display: grid; gap: var(--space-3); padding-top: var(--space-3); min-width: 0; } .custom-menu-builder p { margin: 0; } .custom-menu-builder :global(.menu-item-editor) { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); min-width: 0; padding: var(--space-4); border-left: .25rem solid var(--color-cyan); background: var(--color-surface-translucent); } .custom-menu-builder :global(.menu-item-editor > strong), .custom-menu-builder :global(.menu-item-actions) { grid-column: 1 / -1; } .custom-menu-builder :global(.menu-item-editor > label) { display: grid; gap: var(--space-2); min-width: 0; } .custom-menu-builder :global(.menu-item-editor input), .custom-menu-builder :global(.menu-item-editor textarea) { min-width: 0; width: 100%; } .custom-menu-builder :global(.menu-item-actions) { display: flex; flex-wrap: wrap; gap: var(--space-2); } .custom-menu-builder :global(.menu-item-actions button), .text-button { padding: .45rem .7rem; border: 1px solid var(--color-translucent-blue); background: transparent; color: var(--color-cyan); font: inherit; cursor: pointer; } .custom-menu-builder :global(.menu-item-actions button:disabled) { opacity: .45; cursor: not-allowed; }
+  .studio-errors { padding: var(--space-4); border-left: .25rem solid var(--color-amber); background: var(--color-surface-translucent); color: var(--color-amber); } .studio-errors ul { margin-bottom: 0; } .studio-status { min-height: 1.5em; color: var(--color-cyan); } .prompt-preview { display: grid; gap: var(--space-4); margin-top: var(--space-8); padding: var(--space-6); border: 1px solid var(--color-cyan); background: var(--color-deep-navy-black); } .prompt-preview__heading { display: flex; justify-content: space-between; gap: var(--space-4); } .prompt-platform { color: var(--color-cyan); font-weight: 700; } #prompt-text { min-height: 28rem; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .studio-usage-guidance { margin-top: var(--space-5); padding: var(--space-4); border: 1px solid var(--color-translucent-blue); border-left: .25rem solid var(--color-cyan); background: var(--color-surface-translucent); scroll-margin-top: var(--space-6); }
+  .studio-usage-guidance h4 { margin-bottom: var(--space-3); }
+  .studio-usage-guidance h5 { margin-bottom: var(--space-2); font-size: 1rem; }
+  .platform-links { margin-top: var(--space-5); }
+  .platform-links h5 { margin: 0; color: var(--color-white-gold); font-size: 1.1rem; }
+  .platform-links > p { margin: var(--space-2) 0 var(--space-4); color: var(--color-cyan); }
+  .platform-link-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-3); }
+  .platform-link-card { display: grid; gap: .35rem; min-width: 0; min-height: 8rem; padding: var(--space-4); border: 1px solid var(--color-translucent-blue); border-radius: .35rem; background: rgb(6 18 38 / 72%); color: var(--color-text); text-decoration: none; overflow-wrap: anywhere; }
+  .platform-link-card:hover { border-color: var(--color-cyan); background: rgb(10 35 62 / 85%); }
+  .platform-link-card__name { color: var(--color-white-gold); font-weight: 700; }
+  .platform-link-card__status, .platform-link-card__external { color: var(--color-cyan); font-size: .82em; }
+  .platform-link-card__description { font-size: .88em; }
+  .context-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-8); } .context-grid h3 { margin-top: 0; color: var(--color-cyan); } .context-grid ol { padding-left: 1.25rem; }
+  @media (max-width: 60rem) { .platform-link-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 48rem) { .supporting-grid, .conversation-grid, .context-grid, .proven-configuration-grid { grid-template-columns: 1fr; } :global(.conversation-card:last-child) { grid-column: auto; width: 100%; } .custom-menu-builder :global(.menu-item-editor) { grid-template-columns: 1fr; } .custom-menu-builder :global(.menu-item-editor > strong), .custom-menu-builder :global(.menu-item-actions) { grid-column: auto; } .proven-configuration-settings div { grid-template-columns: 1fr; gap: 0; } }
+  @media (max-width: 36rem) { .studio-section { padding: var(--space-4); } .principle-list, .checkbox-grid, .platform-link-grid { grid-template-columns: 1fr; } .studio-actions .cucii-button, .proven-configuration-actions .cucii-button, .platform-link-card { width: 100%; } .prompt-preview__heading { display: block; } .studio-nav { display: grid; } .studio-nav a { width: 100%; } }
+  @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>

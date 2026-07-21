@@ -49,8 +49,8 @@ export const primaryNavigation: readonly NavigationItem[] = [
 ];
 
 export const primaryAction: NavigationItem = {
-  label: 'Explore CU-Time',
-  href: sitePath('cu-time'),
+  label: 'Explore CUCII',
+  href: sitePath('cu-intelligence'),
 };
 
 export function normalizePathname(pathname: string): string {
