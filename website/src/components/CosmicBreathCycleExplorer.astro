@@ -12,6 +12,7 @@ const detailsId = `${explorerId}-details`;
 const fieldTitleId = `${explorerId}-field-title`;
 const fieldDescriptionId = `${explorerId}-field-description`;
 const fieldInstructionsId = `${explorerId}-field-instructions`;
+const qualityId = `${explorerId}-quality`;
 const fieldX = (value: number) => value * 100;
 const fieldY = (value: number) => value * 64;
 const expansionPathPoints = expansionDragAnchors
@@ -79,7 +80,27 @@ const ztomAnchor = compressionDragAnchors[compressionDragAnchors.length - 1];
       </p>
     </header>
 
+    <div class="cycle-explorer__quality">
+      <label for={qualityId}>Visual quality</label>
+      <select id={qualityId} disabled data-quality-select>
+        <option value="auto" selected>Auto</option>
+        <option value="high">High</option>
+        <option value="balanced">Balanced</option>
+        <option value="reduced">Reduced</option>
+      </select>
+      <p>
+        Decorative rendering only; structural meaning and selection are unchanged.
+        <span data-quality-status>Auto</span>
+      </p>
+    </div>
+
     <figure class="cycle-explorer__field">
+      <div class="cycle-explorer__visual-field" data-visual-field>
+      <canvas
+        class="cycle-explorer__atmosphere"
+        aria-hidden="true"
+        data-atmosphere-canvas
+      ></canvas>
       <svg
         class="cycle-explorer__field-svg"
         viewBox="0 0 100 64"
@@ -159,6 +180,7 @@ const ztomAnchor = compressionDragAnchors[compressionDragAnchors.length - 1];
           <path d="M -2.4 0 H 2.4 M 0 -2.4 V 2.4" />
         </g>
       </svg>
+      </div>
       <figcaption id={fieldInstructionsId}>
         Drag the Simulated Cosmic State with a mouse, touch, or pen, or use the buttons,
         native range, keyboard commands, and complete inventory below. This field is
@@ -336,6 +358,24 @@ const ztomAnchor = compressionDragAnchors[compressionDragAnchors.length - 1];
     snappedMarkerCoordinates,
     type NormalizedPoint,
   } from '../lib/cosmicBreath/cycle-drag';
+  import {
+    createStaticAtmosphereFrame,
+    getAtmosphereDescriptor,
+    initializeAtmosphereParticles,
+    structuralAtmosphereSeed,
+    updateAtmosphereParticles,
+    type AtmosphereDescriptor,
+    type AtmosphereParticle,
+  } from '../lib/cosmicBreath/cycle-atmosphere';
+  import {
+    calculateBackingStoreSize,
+    getQualityProfile,
+    shouldAnimateContinuously,
+    VISUAL_QUALITY_MODES,
+    type QualityProfile,
+    type VisualCapabilities,
+    type VisualQualityMode,
+  } from '../lib/cosmicBreath/cycle-quality';
 
   const requiredElement = <T extends Element>(root: Element, selector: string): T => {
     const element = root.querySelector<T>(selector);
@@ -349,6 +389,10 @@ const ztomAnchor = compressionDragAnchors[compressionDragAnchors.length - 1];
 
     const overview = requiredElement<HTMLElement>(root, '[data-overview]');
     const panel = requiredElement<HTMLElement>(root, '[data-explorer-panel]');
+    const visualField = requiredElement<HTMLElement>(root, '[data-visual-field]');
+    const atmosphereCanvas = requiredElement<HTMLCanvasElement>(root, '[data-atmosphere-canvas]');
+    const qualitySelect = requiredElement<HTMLSelectElement>(root, '[data-quality-select]');
+    const qualityStatus = requiredElement<HTMLElement>(root, '[data-quality-status]');
     const dragSurface = requiredElement<SVGSVGElement>(root, '[data-drag-surface]');
     const dragMarker = requiredElement<SVGGElement>(root, '[data-drag-marker]');
     const dragPreview = requiredElement<HTMLElement>(root, '[data-drag-preview]');
@@ -387,6 +431,21 @@ const ztomAnchor = compressionDragAnchors[compressionDragAnchors.length - 1];
     let committedIndexBeforeDrag: number | null = null;
     let queuedDragPoint: NormalizedPoint | null = null;
     let dragAnimationFrame: number | null = null;
+    let qualityMode: VisualQualityMode = 'auto';
+    let atmosphereActive = false;
+    let atmosphereContext: CanvasRenderingContext2D | null = null;
+    let atmosphereProfile: QualityProfile | null = null;
+    let atmosphereDescriptor: AtmosphereDescriptor | null = null;
+    let atmosphereParticles: AtmosphereParticle[] = [];
+    let atmosphereSeed = 0;
+    let atmosphereKey = '';
+    let atmosphereAnimationFrame: number | null = null;
+    let lastAtmosphereFrameTime: number | null = null;
+    let atmosphereCssWidth = 0;
+    let atmosphereCssHeight = 0;
+    let atmosphereGradient: CanvasGradient | null = null;
+    let atmosphereResizeObserver: ResizeObserver | null = null;
+    const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 
     const cancelPendingReveal = (): void => {
       if (settleTimeout !== null) window.clearTimeout(settleTimeout);
@@ -395,6 +454,224 @@ const ztomAnchor = compressionDragAnchors[compressionDragAnchors.length - 1];
 
     const announce = (message: string): void => {
       status.textContent = message;
+    };
+
+    const readVisualCapabilities = (): VisualCapabilities => ({
+      viewportWidth: window.innerWidth,
+      viewportHeight: window.innerHeight,
+      devicePixelRatio: window.devicePixelRatio,
+      prefersReducedMotion: reducedMotionQuery.matches,
+      documentVisible: !document.hidden,
+      hardwareConcurrency: navigator.hardwareConcurrency,
+    });
+
+    const cancelAtmosphereAnimationFrame = (): void => {
+      if (atmosphereAnimationFrame !== null) {
+        window.cancelAnimationFrame(atmosphereAnimationFrame);
+      }
+      atmosphereAnimationFrame = null;
+      lastAtmosphereFrameTime = null;
+    };
+
+    const rebuildAtmosphereGradient = (): void => {
+      if (
+        atmosphereContext === null
+        || atmosphereDescriptor === null
+        || atmosphereProfile === null
+        || atmosphereCssWidth <= 0
+        || atmosphereCssHeight <= 0
+      ) {
+        atmosphereGradient = null;
+        return;
+      }
+      const radius = Math.max(atmosphereCssWidth, atmosphereCssHeight) * 0.46;
+      const gradient = atmosphereContext.createRadialGradient(
+        atmosphereCssWidth / 2,
+        atmosphereCssHeight / 2,
+        0,
+        atmosphereCssWidth / 2,
+        atmosphereCssHeight / 2,
+        radius,
+      );
+      const glowAlpha = atmosphereProfile.glowStrength
+        * atmosphereDescriptor.glowMultiplier;
+      const glowAlphaHex = Math.round(Math.min(0.24, glowAlpha * 0.16) * 255)
+        .toString(16)
+        .padStart(2, '0');
+      gradient.addColorStop(0, `${atmosphereDescriptor.color}${glowAlphaHex}`);
+      gradient.addColorStop(1, 'transparent');
+      atmosphereGradient = gradient;
+    };
+
+    const drawAtmosphere = (preserveTrails = false): void => {
+      if (
+        atmosphereContext === null
+        || atmosphereProfile === null
+        || atmosphereDescriptor === null
+        || atmosphereCssWidth <= 0
+        || atmosphereCssHeight <= 0
+      ) return;
+
+      const context = atmosphereContext;
+      if (preserveTrails && atmosphereProfile.trailStrength > 0) {
+        context.save();
+        context.globalCompositeOperation = 'destination-out';
+        context.globalAlpha = 1 - atmosphereProfile.trailStrength;
+        context.fillRect(0, 0, atmosphereCssWidth, atmosphereCssHeight);
+        context.restore();
+      } else {
+        context.clearRect(0, 0, atmosphereCssWidth, atmosphereCssHeight);
+      }
+
+      if (atmosphereGradient !== null) {
+        context.fillStyle = atmosphereGradient;
+        context.fillRect(0, 0, atmosphereCssWidth, atmosphereCssHeight);
+      }
+      context.save();
+      context.globalCompositeOperation = 'lighter';
+      context.fillStyle = atmosphereDescriptor.color;
+      context.shadowColor = atmosphereDescriptor.color;
+      context.shadowBlur = 7 * atmosphereProfile.glowStrength;
+      for (const particle of atmosphereParticles) {
+        context.globalAlpha = particle.opacity * atmosphereProfile.glowStrength;
+        context.beginPath();
+        context.arc(
+          particle.x * atmosphereCssWidth,
+          particle.y * atmosphereCssHeight,
+          particle.radius,
+          0,
+          Math.PI * 2,
+        );
+        context.fill();
+      }
+      context.restore();
+    };
+
+    const resizeAtmosphere = (): void => {
+      if (!atmosphereActive || atmosphereContext === null || atmosphereProfile === null) return;
+      const cssWidth = visualField.clientWidth;
+      const cssHeight = visualField.clientHeight;
+      const backingStore = calculateBackingStoreSize(
+        cssWidth,
+        cssHeight,
+        window.devicePixelRatio,
+        atmosphereProfile,
+      );
+      if (backingStore.width === 0 || backingStore.height === 0) return;
+      atmosphereCssWidth = cssWidth;
+      atmosphereCssHeight = cssHeight;
+      if (
+        atmosphereCanvas.width !== backingStore.width
+        || atmosphereCanvas.height !== backingStore.height
+      ) {
+        atmosphereCanvas.width = backingStore.width;
+        atmosphereCanvas.height = backingStore.height;
+      }
+      atmosphereContext.setTransform(
+        backingStore.width / cssWidth,
+        0,
+        0,
+        backingStore.height / cssHeight,
+        0,
+        0,
+      );
+      rebuildAtmosphereGradient();
+      drawAtmosphere();
+    };
+
+    const scheduleAtmosphereFrame = (): void => {
+      if (
+        atmosphereAnimationFrame !== null
+        || atmosphereProfile === null
+        || !shouldAnimateContinuously(atmosphereProfile, readVisualCapabilities())
+      ) return;
+      atmosphereAnimationFrame = window.requestAnimationFrame((time) => {
+        atmosphereAnimationFrame = null;
+        if (
+          !atmosphereActive
+          || atmosphereProfile === null
+          || atmosphereDescriptor === null
+          || !shouldAnimateContinuously(atmosphereProfile, readVisualCapabilities())
+        ) return;
+        const frameInterval = 1000 / atmosphereProfile.targetFramesPerSecond;
+        if (
+          lastAtmosphereFrameTime === null
+          || time - lastAtmosphereFrameTime >= frameInterval
+        ) {
+          const elapsed = lastAtmosphereFrameTime === null
+            ? frameInterval
+            : time - lastAtmosphereFrameTime;
+          lastAtmosphereFrameTime = time;
+          updateAtmosphereParticles(
+            atmosphereParticles,
+            elapsed,
+            atmosphereSeed,
+            atmosphereDescriptor,
+          );
+          drawAtmosphere(true);
+        }
+        scheduleAtmosphereFrame();
+      });
+    };
+
+    const configureAtmosphere = (
+      selected: StructuralTomState,
+      force = false,
+    ): void => {
+      if (!atmosphereActive || atmosphereContext === null) return;
+      const capabilities = readVisualCapabilities();
+      const profile = getQualityProfile(qualityMode, capabilities);
+      const descriptor = getAtmosphereDescriptor(selected.phase, selected.boundaryRole);
+      const seed = structuralAtmosphereSeed(selected.id, state.cycleCount);
+      const key = `${profile.mode}:${descriptor.kind}:${seed}`;
+      atmosphereProfile = profile;
+      atmosphereDescriptor = descriptor;
+      atmosphereSeed = seed;
+      qualityStatus.textContent = qualityMode === 'auto'
+        ? `Auto currently uses ${profile.mode}.`
+        : `${profile.mode[0].toUpperCase()}${profile.mode.slice(1)} selected.`;
+      if (force || key !== atmosphereKey) {
+        atmosphereKey = key;
+        atmosphereParticles = profile.continuousAnimation
+          ? initializeAtmosphereParticles(seed, profile, descriptor)
+          : createStaticAtmosphereFrame(seed, profile, descriptor);
+        lastAtmosphereFrameTime = null;
+      }
+      resizeAtmosphere();
+      if (shouldAnimateContinuously(profile, capabilities)) scheduleAtmosphereFrame();
+      else cancelAtmosphereAnimationFrame();
+    };
+
+    const startAtmosphere = (selected: StructuralTomState): void => {
+      if (!atmosphereActive) {
+        atmosphereContext = atmosphereCanvas.getContext('2d', { alpha: true });
+        if (atmosphereContext === null) {
+          atmosphereCanvas.hidden = true;
+          qualityStatus.textContent = 'Decorative Canvas unavailable; structural explorer unaffected.';
+          return;
+        }
+        atmosphereActive = true;
+        if (typeof ResizeObserver !== 'undefined') {
+          atmosphereResizeObserver = new ResizeObserver(() => {
+            resizeAtmosphere();
+          });
+          atmosphereResizeObserver.observe(visualField);
+        }
+      }
+      configureAtmosphere(selected);
+    };
+
+    const stopAtmosphere = (): void => {
+      atmosphereActive = false;
+      cancelAtmosphereAnimationFrame();
+      atmosphereResizeObserver?.disconnect();
+      atmosphereResizeObserver = null;
+      atmosphereParticles = [];
+      atmosphereKey = '';
+      atmosphereGradient = null;
+      if (atmosphereContext !== null) {
+        atmosphereContext.clearRect(0, 0, atmosphereCssWidth, atmosphereCssHeight);
+      }
     };
 
     const markerTransform = (point: NormalizedPoint): string =>
@@ -470,6 +747,7 @@ const ztomAnchor = compressionDragAnchors[compressionDragAnchors.length - 1];
       overview.hidden = !inOverview;
       panel.hidden = inOverview;
       if (state.selectedIndex === null) {
+        stopAtmosphere();
         const openingAnchor = getDragAnchorByCanonicalIndex(0);
         showStructuralPreview(getTomStateByIndex(0));
         setMarkerPoint(openingAnchor.point);
@@ -519,6 +797,7 @@ const ztomAnchor = compressionDragAnchors[compressionDragAnchors.length - 1];
         if (index === state.selectedIndex) button.setAttribute('aria-current', 'true');
         else button.removeAttribute('aria-current');
       });
+      startAtmosphere(selected);
     };
 
     const scheduleSettledDetails = (
@@ -586,7 +865,26 @@ const ztomAnchor = compressionDragAnchors[compressionDragAnchors.length - 1];
     exploreButton.setAttribute('aria-disabled', 'false');
     availability.hidden = true;
     range.disabled = false;
+    qualitySelect.disabled = false;
     inventoryButtons.forEach((button) => { button.disabled = false; });
+
+    qualitySelect.addEventListener('change', () => {
+      const requestedMode = qualitySelect.value as VisualQualityMode;
+      if (!VISUAL_QUALITY_MODES.includes(requestedMode)) return;
+      qualityMode = requestedMode;
+      if (state.selectedIndex !== null && state.mode !== 'overview') {
+        configureAtmosphere(getTomStateByIndex(state.selectedIndex), true);
+      }
+      announce(`Visual quality set to ${qualitySelect.selectedOptions[0]?.textContent ?? requestedMode}. Structural selection is unchanged.`);
+    });
+
+    const refreshAtmospherePolicy = (): void => {
+      if (state.selectedIndex === null || state.mode === 'overview' || !atmosphereActive) return;
+      configureAtmosphere(getTomStateByIndex(state.selectedIndex), true);
+    };
+    document.addEventListener('visibilitychange', refreshAtmospherePolicy);
+    reducedMotionQuery.addEventListener('change', refreshAtmospherePolicy);
+    window.addEventListener('resize', resizeAtmosphere, { passive: true });
 
     dragSurface.addEventListener('pointerdown', (event) => {
       if (
@@ -797,7 +1095,51 @@ const ztomAnchor = compressionDragAnchors[compressionDragAnchors.length - 1];
     background: var(--color-background);
   }
 
+  .cycle-explorer__quality {
+    display: grid;
+    grid-template-columns: auto minmax(8rem, 12rem);
+    align-items: center;
+    gap: var(--space-2) var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-translucent-blue);
+    background: var(--color-background);
+  }
+
+  .cycle-explorer__quality label { color: var(--color-white-gold); font-weight: 700; }
+  .cycle-explorer__quality select {
+    min-height: 2.75rem;
+    padding-inline: var(--space-3);
+    border: 1px solid var(--color-translucent-blue);
+    border-radius: 0.25rem;
+    background: var(--color-deep-navy-black);
+    color: var(--color-white-gold);
+    font: inherit;
+  }
+
+  .cycle-explorer__quality p {
+    grid-column: 1 / -1;
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+
+  .cycle-explorer__quality [data-quality-status] { color: var(--color-cyan); }
+
+  .cycle-explorer__visual-field { position: relative; isolation: isolate; }
+
+  .cycle-explorer__atmosphere {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0.25rem;
+    pointer-events: none;
+  }
+
   .cycle-explorer__field-svg {
+    position: relative;
+    z-index: 1;
     display: block;
     width: 100%;
     height: auto;
@@ -987,6 +1329,7 @@ const ztomAnchor = compressionDragAnchors[compressionDragAnchors.length - 1];
   .cycle-explorer button:disabled { cursor: not-allowed; opacity: 0.52; }
   .cycle-explorer button:focus-visible,
   .cycle-explorer input:focus-visible,
+  .cycle-explorer select:focus-visible,
   .cycle-explorer summary:focus-visible {
     outline: var(--focus-ring-width) solid var(--color-cyan);
     outline-offset: var(--focus-ring-offset);
@@ -1055,6 +1398,8 @@ const ztomAnchor = compressionDragAnchors[compressionDragAnchors.length - 1];
 
   @media (max-width: 40rem) {
     .cycle-explorer__header { display: grid; }
+    .cycle-explorer__quality { grid-template-columns: 1fr; }
+    .cycle-explorer__quality p { grid-column: auto; }
     .cycle-explorer__details dl,
     .cycle-explorer__inventory ol { grid-template-columns: 1fr; }
     .cycle-explorer__button-row,
