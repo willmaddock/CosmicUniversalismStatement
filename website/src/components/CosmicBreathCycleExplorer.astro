@@ -1,10 +1,28 @@
 ---
 import CosmicBreathDiagram from './CosmicBreathDiagram.astro';
 import { orderedTomStates } from '../lib/cosmicBreath/cycle-ledger';
+import {
+  compressionDragAnchors,
+  expansionDragAnchors,
+} from '../lib/cosmicBreath/cycle-drag';
 
 const explorerId = `cosmic-breath-cycle-explorer-${crypto.randomUUID()}`;
 const panelId = `${explorerId}-panel`;
 const detailsId = `${explorerId}-details`;
+const fieldTitleId = `${explorerId}-field-title`;
+const fieldDescriptionId = `${explorerId}-field-description`;
+const fieldInstructionsId = `${explorerId}-field-instructions`;
+const fieldX = (value: number) => value * 100;
+const fieldY = (value: number) => value * 64;
+const expansionPathPoints = expansionDragAnchors
+  .map((anchor) => `${fieldX(anchor.point.x)},${fieldY(anchor.point.y)}`)
+  .join(' ');
+const compressionPathPoints = compressionDragAnchors
+  .map((anchor) => `${fieldX(anchor.point.x)},${fieldY(anchor.point.y)}`)
+  .join(' ');
+const initialMarker = expansionDragAnchors[0].point;
+const atomAnchor = expansionDragAnchors[expansionDragAnchors.length - 1];
+const ztomAnchor = compressionDragAnchors[compressionDragAnchors.length - 1];
 ---
 
 <section
@@ -42,6 +60,7 @@ const detailsId = `${explorerId}-details`;
     id={panelId}
     class="cycle-explorer__panel"
     aria-labelledby={`${explorerId}-simulation-title`}
+    tabindex="-1"
     hidden
     data-explorer-panel
   >
@@ -59,6 +78,100 @@ const detailsId = `${explorerId}-details`;
         Cosmic Breath sequence: 1
       </p>
     </header>
+
+    <figure class="cycle-explorer__field">
+      <svg
+        class="cycle-explorer__field-svg"
+        viewBox="0 0 100 64"
+        role="img"
+        aria-labelledby={`${fieldTitleId} ${fieldDescriptionId}`}
+        aria-describedby={fieldInstructionsId}
+        data-drag-surface
+        data-active-phase="expansion"
+        style={`--field-glow: url(#${explorerId}-field-glow);`}
+      >
+        <title id={fieldTitleId}>Index-based Cosmic Breath structural drag field</title>
+        <desc id={fieldDescriptionId}>
+          A non-scale CU theoretical visualization with a solid expansion path of circular
+          anchors and a dashed compression path of diamond anchors. The Simulated Cosmic
+          State can be moved by pointer and snaps only to anchors in its active phase.
+        </desc>
+        <defs>
+          <radialGradient id={`${explorerId}-field-glow`} cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="var(--color-cyan)" stop-opacity="0.16" />
+            <stop offset="100%" stop-color="var(--color-cyan)" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+        <rect class="cycle-explorer__field-background" x="0" y="0" width="100" height="64" rx="3" />
+        <circle class="cycle-explorer__field-center" cx="50" cy="32" r="14" />
+        <polyline
+          class="cycle-explorer__path cycle-explorer__path--expansion"
+          points={expansionPathPoints}
+          aria-hidden="true"
+        />
+        <polyline
+          class="cycle-explorer__path cycle-explorer__path--compression"
+          points={compressionPathPoints}
+          aria-hidden="true"
+        />
+        <g class="cycle-explorer__anchors cycle-explorer__anchors--expansion" aria-hidden="true">
+          {expansionDragAnchors.map((anchor) => (
+            <circle
+              cx={fieldX(anchor.point.x)}
+              cy={fieldY(anchor.point.y)}
+              r={anchor.stateId === 'expansion-atom' ? 1.15 : 0.55}
+            />
+          ))}
+        </g>
+        <g class="cycle-explorer__anchors cycle-explorer__anchors--compression" aria-hidden="true">
+          {compressionDragAnchors.map((anchor) => {
+            const x = fieldX(anchor.point.x);
+            const y = fieldY(anchor.point.y);
+            const size = anchor.stateId === 'compression-ztom' ? 1.8 : 1;
+            return (
+              <rect
+                x={x - (size / 2)}
+                y={y - (size / 2)}
+                width={size}
+                height={size}
+                transform={`rotate(45 ${x} ${y})`}
+              />
+            );
+          })}
+        </g>
+        <g class="cycle-explorer__boundary-labels" aria-hidden="true">
+          <text x={fieldX(atomAnchor.point.x)} y={fieldY(atomAnchor.point.y) - 2.2} text-anchor="middle">
+            atom · expansion pause
+          </text>
+          <text x={fieldX(ztomAnchor.point.x)} y={fieldY(ztomAnchor.point.y) + 3.4} text-anchor="middle">
+            ztom · reset pause
+          </text>
+        </g>
+        <g
+          class="cycle-explorer__marker"
+          transform={`translate(${fieldX(initialMarker.x)} ${fieldY(initialMarker.y)})`}
+          aria-hidden="true"
+          data-drag-marker
+        >
+          <circle class="cycle-explorer__marker-target" r="4.8" />
+          <circle class="cycle-explorer__marker-halo" r="2.8" />
+          <circle class="cycle-explorer__marker-core" r="1.35" />
+          <path d="M -2.4 0 H 2.4 M 0 -2.4 V 2.4" />
+        </g>
+      </svg>
+      <figcaption id={fieldInstructionsId}>
+        Drag the Simulated Cosmic State with a mouse, touch, or pen, or use the buttons,
+        native range, keyboard commands, and complete inventory below. This field is
+        structural and index-based—not drawn to physical or temporal scale.
+      </figcaption>
+      <p class="cycle-explorer__drag-preview" aria-live="off" data-drag-preview>
+        sub-ztom · Expansion · cycle position 1 of 51
+      </p>
+      <div class="cycle-explorer__field-key" aria-hidden="true">
+        <span><i class="cycle-explorer__key-symbol cycle-explorer__key-symbol--expansion"></i> Expansion anchors</span>
+        <span><i class="cycle-explorer__key-symbol cycle-explorer__key-symbol--compression"></i> Compression anchors</span>
+      </div>
+    </figure>
 
     <div class="cycle-explorer__preview" aria-labelledby={`${explorerId}-preview-title`}>
       <p class="cycle-explorer__eyebrow" id={`${explorerId}-preview-title`}>
@@ -201,6 +314,7 @@ const detailsId = `${explorerId}-details`;
     returnToOverview,
     revealSettledDetails,
     selectStateByIndex,
+    updateDragPreview,
     type CosmicBreathCycleState,
   } from '../lib/cosmicBreath/cycle-state';
   import {
@@ -213,6 +327,15 @@ const detailsId = `${explorerId}-details`;
     parseStructuralIndex,
     type SelectionStatusKind,
   } from '../lib/cosmicBreath/cycle-controls';
+  import {
+    canonicalIndexForAnchor,
+    clampNormalizedPoint,
+    compactStructuralPreviewText,
+    findNearestAnchorInPhase,
+    getDragAnchorByCanonicalIndex,
+    snappedMarkerCoordinates,
+    type NormalizedPoint,
+  } from '../lib/cosmicBreath/cycle-drag';
 
   const requiredElement = <T extends Element>(root: Element, selector: string): T => {
     const element = root.querySelector<T>(selector);
@@ -226,6 +349,9 @@ const detailsId = `${explorerId}-details`;
 
     const overview = requiredElement<HTMLElement>(root, '[data-overview]');
     const panel = requiredElement<HTMLElement>(root, '[data-explorer-panel]');
+    const dragSurface = requiredElement<SVGSVGElement>(root, '[data-drag-surface]');
+    const dragMarker = requiredElement<SVGGElement>(root, '[data-drag-marker]');
+    const dragPreview = requiredElement<HTMLElement>(root, '[data-drag-preview]');
     const exploreButton = requiredElement<HTMLButtonElement>(root, '[data-explore]');
     const availability = requiredElement<HTMLElement>(root, '[data-js-availability]');
     const previousButton = requiredElement<HTMLButtonElement>(root, '[data-previous]');
@@ -257,6 +383,10 @@ const detailsId = `${explorerId}-details`;
 
     let state: CosmicBreathCycleState = INITIAL_CYCLE_STATE;
     let settleTimeout: number | null = null;
+    let activePointerId: number | null = null;
+    let committedIndexBeforeDrag: number | null = null;
+    let queuedDragPoint: NormalizedPoint | null = null;
+    let dragAnimationFrame: number | null = null;
 
     const cancelPendingReveal = (): void => {
       if (settleTimeout !== null) window.clearTimeout(settleTimeout);
@@ -264,9 +394,24 @@ const detailsId = `${explorerId}-details`;
     };
 
     const announce = (message: string): void => {
-      status.textContent = '';
-      window.requestAnimationFrame(() => {
-        status.textContent = message;
+      status.textContent = message;
+    };
+
+    const markerTransform = (point: NormalizedPoint): string =>
+      `translate(${point.x * 100} ${point.y * 64})`;
+
+    const setMarkerPoint = (point: NormalizedPoint): void => {
+      dragMarker.setAttribute('transform', markerTransform(point));
+    };
+
+    const pointFromPointer = (event: PointerEvent): NormalizedPoint => {
+      const bounds = dragSurface.getBoundingClientRect();
+      if (bounds.width <= 0 || bounds.height <= 0) {
+        throw new RangeError('Cosmic Breath drag field must have visible dimensions');
+      }
+      return clampNormalizedPoint({
+        x: (event.clientX - bounds.left) / bounds.width,
+        y: (event.clientY - bounds.top) / bounds.height,
       });
     };
 
@@ -277,12 +422,60 @@ const detailsId = `${explorerId}-details`;
       rangeOutput.textContent = summary.cyclePosition;
     };
 
+    const applyDragPoint = (point: NormalizedPoint): void => {
+      if (state.mode !== 'dragging' || state.selectedIndex === null) return;
+      const activePhase = getTomStateByIndex(state.selectedIndex).phase;
+      const nearest = findNearestAnchorInPhase(point, activePhase);
+      state = updateDragPreview(state, canonicalIndexForAnchor(nearest));
+      setMarkerPoint(point);
+      dragPreview.textContent = compactStructuralPreviewText(nearest);
+      showStructuralPreview(getTomStateByIndex(nearest.canonicalIndex));
+      stateDetails.hidden = true;
+      dragSurface.dataset.previewIndex = String(nearest.canonicalIndex);
+    };
+
+    const cancelDragAnimationFrame = (): void => {
+      if (dragAnimationFrame !== null) window.cancelAnimationFrame(dragAnimationFrame);
+      dragAnimationFrame = null;
+      queuedDragPoint = null;
+    };
+
+    const flushQueuedDragPoint = (): void => {
+      dragAnimationFrame = null;
+      const point = queuedDragPoint;
+      queuedDragPoint = null;
+      if (point !== null) applyDragPoint(point);
+    };
+
+    const queueDragPoint = (point: NormalizedPoint): void => {
+      queuedDragPoint = point;
+      if (dragAnimationFrame === null) {
+        dragAnimationFrame = window.requestAnimationFrame(flushQueuedDragPoint);
+      }
+    };
+
+    const stopPointerTracking = (): void => {
+      cancelDragAnimationFrame();
+      const pointerId = activePointerId;
+      activePointerId = null;
+      root.classList.remove('cycle-explorer--dragging');
+      dragSurface.removeAttribute('data-dragging');
+      if (pointerId !== null && dragSurface.hasPointerCapture?.(pointerId)) {
+        dragSurface.releasePointerCapture(pointerId);
+      }
+    };
+
     const render = (): void => {
       const inOverview = state.mode === 'overview';
       overview.hidden = !inOverview;
       panel.hidden = inOverview;
       if (state.selectedIndex === null) {
+        const openingAnchor = getDragAnchorByCanonicalIndex(0);
         showStructuralPreview(getTomStateByIndex(0));
+        setMarkerPoint(openingAnchor.point);
+        dragPreview.textContent = compactStructuralPreviewText(openingAnchor);
+        dragSurface.dataset.activePhase = 'expansion';
+        dragSurface.removeAttribute('data-preview-index');
         range.value = '0';
         cycleCount.textContent = 'Cosmic Breath sequence: 1';
         previousButton.disabled = false;
@@ -298,7 +491,12 @@ const detailsId = `${explorerId}-details`;
       const selected = getTomStateByIndex(state.selectedIndex);
       const summary = getStructuralStateSummary(selected);
       const controlState = getExplorerControlState(selected);
+      const selectedAnchor = getDragAnchorByCanonicalIndex(state.selectedIndex);
       showStructuralPreview(selected);
+      setMarkerPoint(snappedMarkerCoordinates(state.selectedIndex));
+      dragPreview.textContent = compactStructuralPreviewText(selectedAnchor);
+      dragSurface.dataset.activePhase = selected.phase;
+      dragSurface.removeAttribute('data-preview-index');
       cycleCount.textContent = `Cosmic Breath sequence: ${state.cycleCount + 1}`;
       range.value = String(state.selectedIndex);
       previousButton.disabled = controlState.previousDisabled;
@@ -323,18 +521,14 @@ const detailsId = `${explorerId}-details`;
       });
     };
 
-    const settleSelection = (
-      selectedState: CosmicBreathCycleState,
+    const scheduleSettledDetails = (
+      selected: StructuralTomState,
       statusKind: SelectionStatusKind,
+      initialAnnouncement = getSelectionStatusText(statusKind, selected),
     ): void => {
-      cancelPendingReveal();
-      const selectedIndex = selectedState.selectedIndex;
-      if (selectedIndex === null) return;
-      state = releaseDragIntoSettling(beginDragging(selectedState), selectedIndex);
-      const selected = getTomStateByIndex(selectedIndex);
       const token = state.pendingSettleToken;
       render();
-      announce(getSelectionStatusText(statusKind, selected));
+      announce(initialAnnouncement);
       if (token === null) return;
 
       settleTimeout = window.setTimeout(() => {
@@ -348,6 +542,30 @@ const detailsId = `${explorerId}-details`;
       }, 200);
     };
 
+    const settleSelection = (
+      selectedState: CosmicBreathCycleState,
+      statusKind: SelectionStatusKind,
+    ): void => {
+      cancelPendingReveal();
+      stopPointerTracking();
+      committedIndexBeforeDrag = null;
+      const selectedIndex = selectedState.selectedIndex;
+      if (selectedIndex === null) return;
+      state = releaseDragIntoSettling(beginDragging(selectedState), selectedIndex);
+      scheduleSettledDetails(getTomStateByIndex(selectedIndex), statusKind);
+    };
+
+    const cancelActiveDrag = (announceCancellation = true): boolean => {
+      if (activePointerId === null) return false;
+      const restoreIndex = committedIndexBeforeDrag ?? state.selectedIndex;
+      stopPointerTracking();
+      committedIndexBeforeDrag = null;
+      if (restoreIndex !== null) state = selectStateByIndex(state, restoreIndex);
+      render();
+      if (announceCancellation) announce('Drag cancelled. The last committed structural state was restored.');
+      return true;
+    };
+
     const selectDirectly = (index: number): void => {
       const base = state.mode === 'overview' ? enterExploration(state) : state;
       settleSelection(selectStateByIndex(base, index), 'direct');
@@ -355,6 +573,8 @@ const detailsId = `${explorerId}-details`;
 
     const restoreOverview = (useReset: boolean): void => {
       cancelPendingReveal();
+      stopPointerTracking();
+      committedIndexBeforeDrag = null;
       state = useReset ? resetCycleExplorer(state) : returnToOverview(state);
       inventory.open = false;
       render();
@@ -368,8 +588,72 @@ const detailsId = `${explorerId}-details`;
     range.disabled = false;
     inventoryButtons.forEach((button) => { button.disabled = false; });
 
+    dragSurface.addEventListener('pointerdown', (event) => {
+      if (
+        activePointerId !== null
+        || !event.isPrimary
+        || (event.pointerType === 'mouse' && event.button !== 0)
+        || state.mode === 'overview'
+        || state.selectedIndex === null
+      ) return;
+
+      event.preventDefault();
+      cancelPendingReveal();
+      committedIndexBeforeDrag = state.selectedIndex;
+      state = beginDragging(state);
+      activePointerId = event.pointerId;
+      root.classList.add('cycle-explorer--dragging');
+      dragSurface.setAttribute('data-dragging', 'true');
+      try {
+        dragSurface.setPointerCapture?.(event.pointerId);
+      } catch {
+        // Pointer capture is an enhancement; active-pointer checks still protect the drag.
+      }
+      stateDetails.hidden = true;
+      queueDragPoint(pointFromPointer(event));
+      announce(`Drag started from ${getTomStateByIndex(committedIndexBeforeDrag).label}.`);
+    });
+
+    dragSurface.addEventListener('pointermove', (event) => {
+      if (event.pointerId !== activePointerId || !event.isPrimary) return;
+      event.preventDefault();
+      queueDragPoint(pointFromPointer(event));
+    });
+
+    dragSurface.addEventListener('pointerup', (event) => {
+      if (event.pointerId !== activePointerId || !event.isPrimary || state.mode !== 'dragging') return;
+      event.preventDefault();
+      cancelDragAnimationFrame();
+      applyDragPoint(pointFromPointer(event));
+      const committedIndex = state.previewIndex ?? committedIndexBeforeDrag;
+      if (committedIndex === null) {
+        cancelActiveDrag();
+        return;
+      }
+      const anchor = getDragAnchorByCanonicalIndex(committedIndex);
+      state = releaseDragIntoSettling(state, committedIndex);
+      stopPointerTracking();
+      committedIndexBeforeDrag = null;
+      scheduleSettledDetails(
+        getTomStateByIndex(committedIndex),
+        'settling',
+        `Snapped to ${compactStructuralPreviewText(anchor)}. Settling.`,
+      );
+    });
+
+    dragSurface.addEventListener('pointercancel', (event) => {
+      if (event.pointerId !== activePointerId) return;
+      cancelActiveDrag();
+    });
+
+    dragSurface.addEventListener('lostpointercapture', (event) => {
+      if (event.pointerId !== activePointerId) return;
+      cancelActiveDrag();
+    });
+
     exploreButton.addEventListener('click', () => {
       settleSelection(enterExploration(state), 'settling');
+      panel.focus({ preventScroll: true });
     });
     previousButton.addEventListener('click', () => {
       settleSelection(moveToPreviousState(state), 'sequential');
@@ -388,6 +672,7 @@ const detailsId = `${explorerId}-details`;
 
     range.addEventListener('input', () => {
       cancelPendingReveal();
+      cancelActiveDrag(false);
       if (state.selectedIndex !== null && state.mode !== 'dragging') state = beginDragging(state);
       const index = parseStructuralIndex(range.value);
       const preview = getTomStateByIndex(index);
@@ -501,6 +786,146 @@ const detailsId = `${explorerId}-details`;
     margin: 0;
     color: var(--color-text-muted);
     font-size: 0.875rem;
+  }
+
+  .cycle-explorer__field {
+    display: grid;
+    gap: var(--space-3);
+    margin: 0;
+    padding: clamp(var(--space-3), 3vw, var(--space-6));
+    border: 1px solid var(--color-translucent-blue);
+    background: var(--color-background);
+  }
+
+  .cycle-explorer__field-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    border-radius: 0.25rem;
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+  }
+
+  .cycle-explorer__field-svg[data-dragging="true"] { cursor: grabbing; }
+  .cycle-explorer--dragging { user-select: none; }
+  .cycle-explorer__field-background {
+    fill: var(--color-surface-translucent);
+    stroke: var(--color-translucent-blue);
+    stroke-width: 0.35;
+  }
+
+  .cycle-explorer__field-center {
+    fill: var(--field-glow);
+    stroke: var(--color-translucent-blue);
+    stroke-dasharray: 1.2 1.2;
+    stroke-width: 0.25;
+  }
+
+  .cycle-explorer__path {
+    fill: none;
+    vector-effect: non-scaling-stroke;
+    transition: opacity 160ms ease;
+  }
+
+  .cycle-explorer__path--expansion {
+    stroke: var(--color-cyan);
+    stroke-width: 1.35;
+  }
+
+  .cycle-explorer__path--compression {
+    stroke: var(--color-amber);
+    stroke-width: 1.2;
+    stroke-dasharray: 3 2;
+  }
+
+  .cycle-explorer__anchors { transition: opacity 160ms ease; }
+  .cycle-explorer__anchors--expansion { fill: var(--color-cyan); }
+  .cycle-explorer__anchors--compression { fill: var(--color-amber); }
+  .cycle-explorer__field-svg[data-active-phase="expansion"] .cycle-explorer__path--compression,
+  .cycle-explorer__field-svg[data-active-phase="expansion"] .cycle-explorer__anchors--compression,
+  .cycle-explorer__field-svg[data-active-phase="compression"] .cycle-explorer__path--expansion,
+  .cycle-explorer__field-svg[data-active-phase="compression"] .cycle-explorer__anchors--expansion {
+    opacity: 0.26;
+  }
+
+  .cycle-explorer__boundary-labels {
+    fill: var(--color-white-gold);
+    font-family: var(--font-family-sans);
+    font-size: 2.2px;
+    font-weight: 700;
+    paint-order: stroke;
+    stroke: var(--color-background);
+    stroke-width: 0.7px;
+  }
+
+  .cycle-explorer__marker {
+    color: var(--color-white-gold);
+    pointer-events: none;
+    transition: transform 160ms ease-out;
+  }
+
+  .cycle-explorer__field-svg[data-dragging="true"] .cycle-explorer__marker {
+    transition: none;
+  }
+
+  .cycle-explorer__marker-target { fill: transparent; }
+  .cycle-explorer__marker-halo {
+    fill: var(--color-cyan);
+    opacity: 0.22;
+    stroke: var(--color-white-gold);
+    stroke-width: 0.3;
+  }
+
+  .cycle-explorer__marker-core {
+    fill: var(--color-white-gold);
+    stroke: var(--color-cyan);
+    stroke-width: 0.45;
+  }
+
+  .cycle-explorer__marker path {
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-width: 0.35;
+  }
+
+  .cycle-explorer__field figcaption,
+  .cycle-explorer__drag-preview,
+  .cycle-explorer__field-key {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+
+  .cycle-explorer__drag-preview {
+    margin: 0;
+    color: var(--color-white-gold);
+    font-weight: 700;
+  }
+
+  .cycle-explorer__field-key {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-6);
+  }
+
+  .cycle-explorer__field-key span { display: inline-flex; align-items: center; gap: var(--space-2); }
+  .cycle-explorer__key-symbol {
+    display: inline-block;
+    width: 0.7rem;
+    height: 0.7rem;
+    flex: 0 0 auto;
+  }
+
+  .cycle-explorer__key-symbol--expansion {
+    border-radius: 50%;
+    background: var(--color-cyan);
+  }
+
+  .cycle-explorer__key-symbol--compression {
+    background: var(--color-amber);
+    transform: rotate(45deg) scale(0.78);
   }
 
   .cycle-explorer__preview {
