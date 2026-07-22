@@ -1,6 +1,18 @@
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
+import {
+  atomToBtomTransition,
+  compressionTomStates,
+  expansionTomStates,
+  getTomStateById,
+  getTomStateByIndex,
+  getTomStateIndex,
+  guardedTransitions,
+  orderedTomStates,
+  structuralLedger,
+  ztomToNextSubZtomTransition,
+} from '../cycle-ledger';
 
 type TomPhase = 'expansion' | 'compression';
 type BoundaryRole = 'new-cosmic-seed' | 'expansion-pause' | 'reset-pause' | null;
@@ -161,5 +173,56 @@ describe('CB-TOM-STRUCTURAL-1.0 canonical ledger', () => {
       'website/src/data/cosmic-breath/CB-TOM-STRUCTURAL-1.0.json',
     );
     expect(actualDigest).toBe(recordedDigest);
+  });
+});
+
+describe('typed structural ledger adapter', () => {
+  it('loads the canonical state and phase collections in stable order', () => {
+    expect(structuralLedger.ledgerId).toBe('CB-TOM-STRUCTURAL-1.0');
+    expect(orderedTomStates).toHaveLength(51);
+    expect(expansionTomStates).toHaveLength(26);
+    expect(compressionTomStates).toHaveLength(25);
+    expect(orderedTomStates[0].id).toBe('expansion-sub-ztom');
+    expect(orderedTomStates[25].id).toBe('expansion-atom');
+    expect(orderedTomStates[26].id).toBe('compression-btom');
+    expect(orderedTomStates[50].id).toBe('compression-ztom');
+  });
+
+  it('supports stable lookup by ID and zero-based structural index', () => {
+    expect(getTomStateById('expansion-atom')).toBe(orderedTomStates[25]);
+    expect(getTomStateByIndex(26)).toBe(getTomStateById('compression-btom'));
+    expect(getTomStateIndex('compression-ztom')).toBe(50);
+    expect(() => getTomStateById('missing-tom')).toThrow(RangeError);
+    expect(() => getTomStateByIndex(-1)).toThrow(RangeError);
+    expect(() => getTomStateByIndex(51)).toThrow(RangeError);
+    expect(() => getTomStateByIndex(1.5)).toThrow(RangeError);
+  });
+
+  it('exposes frozen public collections and state records', () => {
+    expect(Object.isFrozen(structuralLedger)).toBe(true);
+    expect(Object.isFrozen(orderedTomStates)).toBe(true);
+    expect(Object.isFrozen(expansionTomStates)).toBe(true);
+    expect(Object.isFrozen(compressionTomStates)).toBe(true);
+    expect(Object.isFrozen(guardedTransitions)).toBe(true);
+    expect(Object.isFrozen(orderedTomStates[0])).toBe(true);
+    expect(Object.isFrozen(orderedTomStates[0].provenance)).toBe(true);
+  });
+
+  it('exposes exactly the approved guarded transitions and no withheld state fields', () => {
+    expect(guardedTransitions).toHaveLength(2);
+    expect(atomToBtomTransition).toMatchObject({
+      fromId: 'expansion-atom',
+      toId: 'compression-btom',
+      selectableTomState: false,
+    });
+    expect(ztomToNextSubZtomTransition).toMatchObject({
+      fromId: 'compression-ztom',
+      toId: 'expansion-sub-ztom',
+      toCycleOffset: 1,
+      selectableTomState: false,
+    });
+    for (const state of orderedTomStates) {
+      for (const field of withheldStateFields) expect(state).not.toHaveProperty(field);
+    }
   });
 });
