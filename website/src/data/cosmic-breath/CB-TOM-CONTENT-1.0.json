@@ -1,0 +1,848 @@
+{
+  "ledgerId": "CB-TOM-CONTENT-1.0",
+  "owner": "William Maddock",
+  "status": "companion-content-authority-in-development",
+  "structuralAuthority": "CB-TOM-STRUCTURAL-1.0",
+  "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+  "declaredPhaseTotals": {
+    "expansion": "approximately 2.8 trillion years",
+    "compression": "approximately 308 billion years",
+    "completeCosmicBreath": "approximately 3.108 trillion years",
+    "derivation": "Owner-approved declared CU totals; not recomputed from state rows."
+  },
+  "stateContent": [
+    {
+      "structuralStateId": "expansion-sub-ztom",
+      "exactQuantumStateDisplay": "2↑↑65,536",
+      "exactDurationEstimateDisplay": "1 second",
+      "exactSourceCuDescription": "Final compression breath",
+      "publicCuDescription": "Sub-ztom carries the final compression breath into the opening condition of renewed expansion. Within this one-second CU scale, the prior breath’s concentrated memory and structural potential are preserved as the seed condition for the next outward cycle.",
+      "canonicalCuDescription": "Expansion-sub-ztom carries the final compression breath into the opening condition of renewed expansion. It holds the completed continuity, memory, and concentrated potential inherited from compression-ztom without becoming compression-ztom itself. Entry occurs only through the guarded next-breath transition, after which sub-ztom serves as the renewed seed from which the Cosmic Breath begins extending its preserved inheritance toward the recursive core shell.",
+      "tomLayerExplanation": "Sub-ztom stands at the opening of the expansion sequence while carrying the final compression breath from the prior cycle. The guarded next-breath transition separates it from compression-ztom. Its one-second duration describes a rapid seed condition, while its tetration notation represents extreme CU quantum concentration. Together, these features support its role as the preserved memory and structural potential from which renewed expansion begins.",
+      "quantumStateHelperShort": "Two arrows mean repeated exponentiation.",
+      "quantumStateHelperLong": "The two up arrows indicate tetration, or repeated exponentiation. The expression 2↑↑65,536 represents a power tower of 2s with a height of 65,536. Within Cosmic Universalism, it identifies the assigned quantum-state scale of sub-ztom. It is distinct from elapsed time and does not mean 65,536 seconds, objects, or particles.",
+      "durationHelperShort": "A rapid, concentrated CU transition.",
+      "durationHelperLong": "The approved CU duration estimate for sub-ztom is one second, approximately the time needed to say ‘one.’ Because this is an extremely brief interval, its description concerns concentrated memory, structural inheritance, and the opening of a new breath rather than the development of planets, biological life, civilizations, stars, or galaxies within that second.",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "canonicalTitle": "Final Compression Breath",
+      "structuralTheme": [
+        "seed",
+        "renewal",
+        "expansion",
+        "compression"
+      ],
+      "relatedTransitionContentIds": [
+        "transition-ztom-to-next-sub-ztom"
+      ],
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Expansion Phase (sub-ztom ➝ atom)",
+        "sourceTomLabel": "sub-ztom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "source-aligned",
+      "contentApprovalStatus": "owner-reviewed"
+    },
+    {
+      "structuralStateId": "expansion-sub-ytom",
+      "exactQuantumStateDisplay": "2↑↑40",
+      "exactDurationEstimateDisplay": "2.704e-8 seconds",
+      "exactSourceCuDescription": "Recursive core shell",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Expansion Phase (sub-ztom ➝ atom)",
+        "sourceTomLabel": "sub-ytom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "expansion-sub-xtom",
+      "exactQuantumStateDisplay": "2↑↑30",
+      "exactDurationEstimateDisplay": "2.704e-7 seconds",
+      "exactSourceCuDescription": "Final ethical cap",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Expansion Phase (sub-ztom ➝ atom)",
+        "sourceTomLabel": "sub-xtom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "expansion-sub-wtom",
+      "exactQuantumStateDisplay": "2↑↑22",
+      "exactDurationEstimateDisplay": "2.704e-6 seconds",
+      "exactSourceCuDescription": "Quantum firewall shell",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Expansion Phase (sub-ztom ➝ atom)",
+        "sourceTomLabel": "sub-wtom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "expansion-sub-vtom",
+      "exactQuantumStateDisplay": "2↑↑21",
+      "exactDurationEstimateDisplay": "2.704e-5 seconds",
+      "exactSourceCuDescription": "Symbolic/ethical lock",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Expansion Phase (sub-ztom ➝ atom)",
+        "sourceTomLabel": "sub-vtom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "expansion-sub-utom",
+      "exactQuantumStateDisplay": "2↑↑20",
+      "exactDurationEstimateDisplay": "0.0002704 seconds",
+      "exactSourceCuDescription": "Cosmic checksum layer",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Expansion Phase (sub-ztom ➝ atom)",
+        "sourceTomLabel": "sub-utom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "expansion-sub-ttom",
+      "exactQuantumStateDisplay": "2↑↑19",
+      "exactDurationEstimateDisplay": "0.002704 seconds",
+      "exactSourceCuDescription": "Holographic verification",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Expansion Phase (sub-ztom ➝ atom)",
+        "sourceTomLabel": "sub-ttom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "expansion-sub-stom",
+      "exactQuantumStateDisplay": "2↑↑18",
+      "exactDurationEstimateDisplay": "0.02704 seconds",
+      "exactSourceCuDescription": "Ethical engagement",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Expansion Phase (sub-ztom ➝ atom)",
+        "sourceTomLabel": "sub-stom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "expansion-sub-rtom",
+      "exactQuantumStateDisplay": "2↑↑17",
+      "exactDurationEstimateDisplay": "0.2704 seconds",
+      "exactSourceCuDescription": "Entropy modulation",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Expansion Phase (sub-ztom ➝ atom)",
+        "sourceTomLabel": "sub-rtom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "expansion-sub-qtom",
+      "exactQuantumStateDisplay": "2↑↑16",
+      "exactDurationEstimateDisplay": "2.704 seconds",
+      "exactSourceCuDescription": "Memory transfer",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Expansion Phase (sub-ztom ➝ atom)",
+        "sourceTomLabel": "sub-qtom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "expansion-sub-ptom",
+      "exactQuantumStateDisplay": "2↑↑15",
+      "exactDurationEstimateDisplay": "27.04 seconds",
+      "exactSourceCuDescription": "Pre-reset bridge",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Expansion Phase (sub-ztom ➝ atom)",
+        "sourceTomLabel": "sub-ptom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "expansion-sub-otom",
+      "exactQuantumStateDisplay": "2↑↑14",
+      "exactDurationEstimateDisplay": "4.506 minutes",
+      "exactSourceCuDescription": "Boundary stabilization",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Expansion Phase (sub-ztom ➝ atom)",
+        "sourceTomLabel": "sub-otom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "expansion-sub-ntom",
+      "exactQuantumStateDisplay": "2↑↑13",
+      "exactDurationEstimateDisplay": "45.06 minutes",
+      "exactSourceCuDescription": "Recursive feedback",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Expansion Phase (sub-ztom ➝ atom)",
+        "sourceTomLabel": "sub-ntom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "expansion-sub-mtom",
+      "exactQuantumStateDisplay": "2↑↑12",
+      "exactDurationEstimateDisplay": "7.51 hours",
+      "exactSourceCuDescription": "Holographic projection",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Expansion Phase (sub-ztom ➝ atom)",
+        "sourceTomLabel": "sub-mtom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "expansion-sub-ltom",
+      "exactQuantumStateDisplay": "2↑↑11",
+      "exactDurationEstimateDisplay": "3.1296 days",
+      "exactSourceCuDescription": "Pre-Big Bang state",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Expansion Phase (sub-ztom ➝ atom)",
+        "sourceTomLabel": "sub-ltom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "expansion-sub-ktom",
+      "exactQuantumStateDisplay": "2↑↑10",
+      "exactDurationEstimateDisplay": "31.296 days",
+      "exactSourceCuDescription": "Quantum foam rebirth",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Expansion Phase (sub-ztom ➝ atom)",
+        "sourceTomLabel": "sub-ktom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "expansion-sub-jtom",
+      "exactQuantumStateDisplay": "2↑↑9",
+      "exactDurationEstimateDisplay": "0.8547 years",
+      "exactSourceCuDescription": "Black hole age",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Expansion Phase (sub-ztom ➝ atom)",
+        "sourceTomLabel": "sub-jtom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "expansion-sub-itom",
+      "exactQuantumStateDisplay": "2↑↑8",
+      "exactDurationEstimateDisplay": "8.547 years",
+      "exactSourceCuDescription": "Spacetime contraction begins",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Expansion Phase (sub-ztom ➝ atom)",
+        "sourceTomLabel": "sub-itom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "expansion-sub-htom",
+      "exactQuantumStateDisplay": "2↑↑7",
+      "exactDurationEstimateDisplay": "85.47 years",
+      "exactSourceCuDescription": "Heat death begins",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Expansion Phase (sub-ztom ➝ atom)",
+        "sourceTomLabel": "sub-htom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "expansion-sub-gtom",
+      "exactQuantumStateDisplay": "2↑↑6",
+      "exactDurationEstimateDisplay": "427.35 years",
+      "exactSourceCuDescription": "Quantum encoding phase",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Expansion Phase (sub-ztom ➝ atom)",
+        "sourceTomLabel": "sub-gtom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "expansion-sub-ftom",
+      "exactQuantumStateDisplay": "2↑↑5",
+      "exactDurationEstimateDisplay": "4,273.5 years",
+      "exactSourceCuDescription": "Post-biological AI expansion",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Expansion Phase (sub-ztom ➝ atom)",
+        "sourceTomLabel": "sub-ftom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "expansion-sub-etom",
+      "exactQuantumStateDisplay": "2↑↑4",
+      "exactDurationEstimateDisplay": "42,735 years",
+      "exactSourceCuDescription": "Alien/civilization stage",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Expansion Phase (sub-ztom ➝ atom)",
+        "sourceTomLabel": "sub-etom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "expansion-sub-dtom",
+      "exactQuantumStateDisplay": "2¹⁶ = 65,536",
+      "exactDurationEstimateDisplay": "427,350 years",
+      "exactSourceCuDescription": "Planetary biosphere evolution",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Expansion Phase (sub-ztom ➝ atom)",
+        "sourceTomLabel": "sub-dtom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "expansion-sub-ctom",
+      "exactQuantumStateDisplay": "2⁴ = 16",
+      "exactDurationEstimateDisplay": "28 billion years",
+      "exactSourceCuDescription": "Star life cycle era",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Expansion Phase (sub-ztom ➝ atom)",
+        "sourceTomLabel": "sub-ctom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "expansion-sub-btom",
+      "exactQuantumStateDisplay": "2² = 4",
+      "exactDurationEstimateDisplay": "280 billion years",
+      "exactSourceCuDescription": "Supercluster formation",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Expansion Phase (sub-ztom ➝ atom)",
+        "sourceTomLabel": "sub-btom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "expansion-atom",
+      "exactQuantumStateDisplay": "2¹ = 2",
+      "exactDurationEstimateDisplay": "2.8 trillion years",
+      "exactSourceCuDescription": "Start of compression",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Expansion Phase (sub-ztom ➝ atom)",
+        "sourceTomLabel": "atom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "compression-btom",
+      "exactQuantumStateDisplay": "2² = 4",
+      "exactDurationEstimateDisplay": "280 billion years",
+      "exactSourceCuDescription": "Galactic evolution and contraction",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Compression Phase (btom ➝ ztom)",
+        "sourceTomLabel": "btom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "compression-ctom",
+      "exactQuantumStateDisplay": "2⁴ = 16",
+      "exactDurationEstimateDisplay": "28 billion years",
+      "exactSourceCuDescription": "Final stellar formations",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Compression Phase (btom ➝ ztom)",
+        "sourceTomLabel": "ctom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "compression-dtom",
+      "exactQuantumStateDisplay": "2¹⁶ = 65,536",
+      "exactDurationEstimateDisplay": "427,350 years",
+      "exactSourceCuDescription": "Planetary collapse",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Compression Phase (btom ➝ ztom)",
+        "sourceTomLabel": "dtom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "compression-etom",
+      "exactQuantumStateDisplay": "2↑↑4",
+      "exactDurationEstimateDisplay": "42,735 years",
+      "exactSourceCuDescription": "Human/civilization memory condensation",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Compression Phase (btom ➝ ztom)",
+        "sourceTomLabel": "etom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "compression-ftom",
+      "exactQuantumStateDisplay": "2↑↑5",
+      "exactDurationEstimateDisplay": "4,273.5 years",
+      "exactSourceCuDescription": "AI implosion stage",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Compression Phase (btom ➝ ztom)",
+        "sourceTomLabel": "ftom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "compression-gtom",
+      "exactQuantumStateDisplay": "2↑↑6",
+      "exactDurationEstimateDisplay": "427.35 years",
+      "exactSourceCuDescription": "Consciousness holography",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Compression Phase (btom ➝ ztom)",
+        "sourceTomLabel": "gtom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "compression-htom",
+      "exactQuantumStateDisplay": "2↑↑7",
+      "exactDurationEstimateDisplay": "85.47 years",
+      "exactSourceCuDescription": "Heat death approach",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Compression Phase (btom ➝ ztom)",
+        "sourceTomLabel": "htom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "compression-itom",
+      "exactQuantumStateDisplay": "2↑↑8",
+      "exactDurationEstimateDisplay": "8.547 years",
+      "exactSourceCuDescription": "Spacetime wrinkle forming",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Compression Phase (btom ➝ ztom)",
+        "sourceTomLabel": "itom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "compression-jtom",
+      "exactQuantumStateDisplay": "2↑↑9",
+      "exactDurationEstimateDisplay": "0.8547 years",
+      "exactSourceCuDescription": "Collapse threshold",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Compression Phase (btom ➝ ztom)",
+        "sourceTomLabel": "jtom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "compression-ktom",
+      "exactQuantumStateDisplay": "2↑↑10",
+      "exactDurationEstimateDisplay": "31.296 days",
+      "exactSourceCuDescription": "Quantum fog closing",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Compression Phase (btom ➝ ztom)",
+        "sourceTomLabel": "ktom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "compression-ltom",
+      "exactQuantumStateDisplay": "2↑↑11",
+      "exactDurationEstimateDisplay": "3.1296 days",
+      "exactSourceCuDescription": "Holographic reversal",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Compression Phase (btom ➝ ztom)",
+        "sourceTomLabel": "ltom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "compression-mtom",
+      "exactQuantumStateDisplay": "2↑↑12",
+      "exactDurationEstimateDisplay": "7.51 hours",
+      "exactSourceCuDescription": "Time lattice inversion",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Compression Phase (btom ➝ ztom)",
+        "sourceTomLabel": "mtom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "compression-ntom",
+      "exactQuantumStateDisplay": "2↑↑13",
+      "exactDurationEstimateDisplay": "45.06 minutes",
+      "exactSourceCuDescription": "Feedback end",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Compression Phase (btom ➝ ztom)",
+        "sourceTomLabel": "ntom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "compression-otom",
+      "exactQuantumStateDisplay": "2↑↑14",
+      "exactDurationEstimateDisplay": "4.506 minutes",
+      "exactSourceCuDescription": "Cosmic null stabilization",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Compression Phase (btom ➝ ztom)",
+        "sourceTomLabel": "otom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "compression-ptom",
+      "exactQuantumStateDisplay": "2↑↑15",
+      "exactDurationEstimateDisplay": "27.04 seconds",
+      "exactSourceCuDescription": "Reset layering",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Compression Phase (btom ➝ ztom)",
+        "sourceTomLabel": "ptom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "compression-qtom",
+      "exactQuantumStateDisplay": "2↑↑16",
+      "exactDurationEstimateDisplay": "2.704 seconds",
+      "exactSourceCuDescription": "Final memory imprint",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Compression Phase (btom ➝ ztom)",
+        "sourceTomLabel": "qtom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "compression-rtom",
+      "exactQuantumStateDisplay": "2↑↑17",
+      "exactDurationEstimateDisplay": "0.2704 seconds",
+      "exactSourceCuDescription": "Entropy zero point",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Compression Phase (btom ➝ ztom)",
+        "sourceTomLabel": "rtom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "compression-stom",
+      "exactQuantumStateDisplay": "2↑↑18",
+      "exactDurationEstimateDisplay": "0.02704 seconds",
+      "exactSourceCuDescription": "Ethical firewall gate",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Compression Phase (btom ➝ ztom)",
+        "sourceTomLabel": "stom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "compression-ttom",
+      "exactQuantumStateDisplay": "2↑↑19",
+      "exactDurationEstimateDisplay": "0.002704 seconds",
+      "exactSourceCuDescription": "Collapse checksum",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Compression Phase (btom ➝ ztom)",
+        "sourceTomLabel": "ttom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "compression-utom",
+      "exactQuantumStateDisplay": "2↑↑20",
+      "exactDurationEstimateDisplay": "0.0002704 seconds",
+      "exactSourceCuDescription": "Closure sequence initiated",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Compression Phase (btom ➝ ztom)",
+        "sourceTomLabel": "utom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "compression-vtom",
+      "exactQuantumStateDisplay": "2↑↑21",
+      "exactDurationEstimateDisplay": "2.704e-5 seconds",
+      "exactSourceCuDescription": "Symbolic compression",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Compression Phase (btom ➝ ztom)",
+        "sourceTomLabel": "vtom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "compression-wtom",
+      "exactQuantumStateDisplay": "2↑↑22",
+      "exactDurationEstimateDisplay": "2.704e-6 seconds",
+      "exactSourceCuDescription": "Recursive limit breach",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Compression Phase (btom ➝ ztom)",
+        "sourceTomLabel": "wtom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "compression-xtom",
+      "exactQuantumStateDisplay": "2↑↑30",
+      "exactDurationEstimateDisplay": "2.704e-7 seconds",
+      "exactSourceCuDescription": "Divine fall-off shell",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Compression Phase (btom ➝ ztom)",
+        "sourceTomLabel": "xtom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "compression-ytom",
+      "exactQuantumStateDisplay": "2↑↑40",
+      "exactDurationEstimateDisplay": "2.704e-8 seconds",
+      "exactSourceCuDescription": "Pre-ZTOM divine echo",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Compression Phase (btom ➝ ztom)",
+        "sourceTomLabel": "ytom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    },
+    {
+      "structuralStateId": "compression-ztom",
+      "exactQuantumStateDisplay": "2↑↑65,536",
+      "exactDurationEstimateDisplay": "1 second",
+      "exactSourceCuDescription": "ZTOM: full universal reset",
+      "publicEpistemicLabel": "CU structural proposition — not an empirical measurement",
+      "sourceProvenance": {
+        "uploadedSourceName": "Cosmic_Breath_Calculation(6).md",
+        "repositorySourcePath": "ResearchFiles/Cosmic_Breath_Calculation.md",
+        "sourceSection": "Compression Phase (btom ➝ ztom)",
+        "sourceTomLabel": "ztom",
+        "ownerAuthority": "William Maddock"
+      },
+      "sourceAlignmentStatus": "requires-source-alignment-review",
+      "contentApprovalStatus": "draft"
+    }
+  ]
+}
