@@ -1,0 +1,645 @@
+---
+import CosmicBreathDiagram from './CosmicBreathDiagram.astro';
+import { orderedTomStates } from '../lib/cosmicBreath/cycle-ledger';
+
+const explorerId = `cosmic-breath-cycle-explorer-${crypto.randomUUID()}`;
+const panelId = `${explorerId}-panel`;
+const detailsId = `${explorerId}-details`;
+---
+
+<section
+  class="cycle-explorer"
+  data-cosmic-breath-explorer
+  aria-labelledby={`${explorerId}-title`}
+>
+  <div class="cycle-explorer__overview" data-overview>
+    <CosmicBreathDiagram />
+    <div class="cycle-explorer__entry">
+      <h3 id={`${explorerId}-title`}>Explore the structural Cosmic Breath cycle</h3>
+      <p>
+        The original five-shell overview remains the reference view. The explorer uses
+        the 51 owner-approved structural TOM positions without displaying disputed time,
+        quantum notation, formulas, magnitudes, or chronology-sensitive descriptions.
+      </p>
+      <button
+        class="cycle-explorer__button cycle-explorer__button--primary"
+        type="button"
+        aria-controls={panelId}
+        aria-disabled="true"
+        disabled
+        data-explore
+      >
+        Explore the Cycle
+      </button>
+      <p class="cycle-explorer__availability" data-js-availability>
+        Interactive controls require JavaScript. The complete structural inventory
+        remains available below.
+      </p>
+    </div>
+  </div>
+
+  <section
+    id={panelId}
+    class="cycle-explorer__panel"
+    aria-labelledby={`${explorerId}-simulation-title`}
+    hidden
+    data-explorer-panel
+  >
+    <header class="cycle-explorer__header">
+      <div>
+        <p class="cycle-explorer__eyebrow">Structural cycle explorer</p>
+        <h3 id={`${explorerId}-simulation-title`}>Simulated Cosmic State</h3>
+        <p>
+          This educational structural model is a CU theoretical proposition. It is not
+          a scale drawing, observational map, or empirical measurement, and it does not
+          move the physical universe.
+        </p>
+      </div>
+      <p class="cycle-explorer__cycle-count" data-cycle-count>
+        Cosmic Breath sequence: 1
+      </p>
+    </header>
+
+    <div class="cycle-explorer__preview" aria-labelledby={`${explorerId}-preview-title`}>
+      <p class="cycle-explorer__eyebrow" id={`${explorerId}-preview-title`}>
+        Current structural position
+      </p>
+      <p class="cycle-explorer__state-label" data-state-label>sub-ztom</p>
+      <p class="cycle-explorer__position" data-state-position>
+        Expansion · cycle position 1 of 51
+      </p>
+      <p class="cycle-explorer__review-note">
+        Time, quantum notation, formulas, magnitudes, and chronology-sensitive
+        descriptions remain under review and are intentionally withheld.
+      </p>
+    </div>
+
+    <div class="cycle-explorer__controls" aria-label="Cycle navigation controls">
+      <div class="cycle-explorer__button-row">
+        <button class="cycle-explorer__button" type="button" data-previous>
+          Previous TOM
+        </button>
+        <button class="cycle-explorer__button" type="button" data-next>
+          Next TOM
+        </button>
+        <button
+          class="cycle-explorer__button cycle-explorer__button--boundary"
+          type="button"
+          hidden
+          data-begin-compression
+        >
+          Begin Compression
+        </button>
+        <button
+          class="cycle-explorer__button cycle-explorer__button--boundary"
+          type="button"
+          hidden
+          data-begin-next-breath
+        >
+          Begin the Next Cosmic Breath
+        </button>
+      </div>
+
+      <label class="cycle-explorer__range-label" for={`${explorerId}-range`}>
+        Direct structural position
+        <span data-range-output>1 of 51</span>
+      </label>
+      <input
+        id={`${explorerId}-range`}
+        class="cycle-explorer__range"
+        type="range"
+        min="0"
+        max="50"
+        step="1"
+        value="0"
+        disabled
+        data-cycle-range
+      />
+      <p class="cycle-explorer__keyboard-help">
+        Keyboard: Left/Right moves ordinarily; Home/End jumps to the first/last state;
+        Page Up/Page Down jumps to the current phase boundary; Escape returns to overview.
+      </p>
+    </div>
+
+    <article
+      id={detailsId}
+      class="cycle-explorer__details"
+      aria-labelledby={`${explorerId}-details-title`}
+      hidden
+      data-state-details
+    >
+      <h4 id={`${explorerId}-details-title`}>Approved structural details</h4>
+      <dl>
+        <div><dt>Label</dt><dd data-detail-label></dd></div>
+        <div><dt>Phase</dt><dd data-detail-phase></dd></div>
+        <div><dt>Cycle position</dt><dd data-detail-cycle></dd></div>
+        <div><dt>Phase position</dt><dd data-detail-phase-position></dd></div>
+        <div><dt>Ordinary previous state</dt><dd data-detail-previous></dd></div>
+        <div><dt>Ordinary next state</dt><dd data-detail-next></dd></div>
+        <div><dt>Boundary role</dt><dd data-detail-boundary></dd></div>
+        <div><dt>Classification</dt><dd data-detail-classification></dd></div>
+        <div><dt>Approval status</dt><dd data-detail-approval></dd></div>
+      </dl>
+    </article>
+
+    <div class="cycle-explorer__utility-controls">
+      <button class="cycle-explorer__button" type="button" data-reset>
+        Reset Explorer
+      </button>
+      <button class="cycle-explorer__button" type="button" data-return-overview>
+        Return to Overview
+      </button>
+    </div>
+  </section>
+
+  <details class="cycle-explorer__inventory" data-inventory>
+    <summary>Complete structural TOM inventory (51 states)</summary>
+    <p>
+      Select any state for a direct educational jump when JavaScript is available.
+      Boundary crossings remain deliberate actions in ordinary navigation.
+    </p>
+    <ol>
+      {orderedTomStates.map((state, index) => (
+        <li>
+          <button
+            type="button"
+            disabled
+            data-select-state
+            data-state-index={index}
+          >
+            <span>{state.label}</span>
+            <small>
+              {state.phase === 'expansion' ? 'Expansion' : 'Compression'} · phase
+              position {state.phaseIndex}
+            </small>
+          </button>
+        </li>
+      ))}
+    </ol>
+  </details>
+
+  <p class="cycle-explorer__status" role="status" aria-live="polite" aria-atomic="true" data-status></p>
+</section>
+
+<script>
+  import {
+    getTomStateByIndex,
+    orderedTomStates,
+    type StructuralTomState,
+  } from '../lib/cosmicBreath/cycle-ledger';
+  import {
+    beginDragging,
+    beginNextCosmicBreath,
+    completeSettling,
+    continueFromAtom,
+    enterExploration,
+    INITIAL_CYCLE_STATE,
+    moveToNextState,
+    moveToPreviousState,
+    releaseDragIntoSettling,
+    resetCycleExplorer,
+    returnToOverview,
+    revealSettledDetails,
+    selectStateByIndex,
+    type CosmicBreathCycleState,
+  } from '../lib/cosmicBreath/cycle-state';
+  import {
+    getExplorerControlState,
+    getExplorerKeyboardCommand,
+    getPhaseBoundaryIndices,
+    getSelectionStatusText,
+    getStructuralStateSummary,
+    isEditableControl,
+    parseStructuralIndex,
+    type SelectionStatusKind,
+  } from '../lib/cosmicBreath/cycle-controls';
+
+  const requiredElement = <T extends Element>(root: Element, selector: string): T => {
+    const element = root.querySelector<T>(selector);
+    if (!element) throw new Error(`Cosmic Breath explorer is missing ${selector}`);
+    return element;
+  };
+
+  const initializeExplorer = (root: HTMLElement): void => {
+    if (root.dataset.initialized === 'true') return;
+    root.dataset.initialized = 'true';
+
+    const overview = requiredElement<HTMLElement>(root, '[data-overview]');
+    const panel = requiredElement<HTMLElement>(root, '[data-explorer-panel]');
+    const exploreButton = requiredElement<HTMLButtonElement>(root, '[data-explore]');
+    const availability = requiredElement<HTMLElement>(root, '[data-js-availability]');
+    const previousButton = requiredElement<HTMLButtonElement>(root, '[data-previous]');
+    const nextButton = requiredElement<HTMLButtonElement>(root, '[data-next]');
+    const beginCompressionButton = requiredElement<HTMLButtonElement>(root, '[data-begin-compression]');
+    const beginNextBreathButton = requiredElement<HTMLButtonElement>(root, '[data-begin-next-breath]');
+    const range = requiredElement<HTMLInputElement>(root, '[data-cycle-range]');
+    const rangeOutput = requiredElement<HTMLElement>(root, '[data-range-output]');
+    const stateLabel = requiredElement<HTMLElement>(root, '[data-state-label]');
+    const statePosition = requiredElement<HTMLElement>(root, '[data-state-position]');
+    const cycleCount = requiredElement<HTMLElement>(root, '[data-cycle-count]');
+    const stateDetails = requiredElement<HTMLElement>(root, '[data-state-details]');
+    const status = requiredElement<HTMLElement>(root, '[data-status]');
+    const resetButton = requiredElement<HTMLButtonElement>(root, '[data-reset]');
+    const returnButton = requiredElement<HTMLButtonElement>(root, '[data-return-overview]');
+    const inventory = requiredElement<HTMLDetailsElement>(root, '[data-inventory]');
+    const inventoryButtons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-select-state]'));
+    const detailFields = {
+      label: requiredElement<HTMLElement>(root, '[data-detail-label]'),
+      phase: requiredElement<HTMLElement>(root, '[data-detail-phase]'),
+      cycle: requiredElement<HTMLElement>(root, '[data-detail-cycle]'),
+      phasePosition: requiredElement<HTMLElement>(root, '[data-detail-phase-position]'),
+      previous: requiredElement<HTMLElement>(root, '[data-detail-previous]'),
+      next: requiredElement<HTMLElement>(root, '[data-detail-next]'),
+      boundary: requiredElement<HTMLElement>(root, '[data-detail-boundary]'),
+      classification: requiredElement<HTMLElement>(root, '[data-detail-classification]'),
+      approval: requiredElement<HTMLElement>(root, '[data-detail-approval]'),
+    };
+
+    let state: CosmicBreathCycleState = INITIAL_CYCLE_STATE;
+    let settleTimeout: number | null = null;
+
+    const cancelPendingReveal = (): void => {
+      if (settleTimeout !== null) window.clearTimeout(settleTimeout);
+      settleTimeout = null;
+    };
+
+    const announce = (message: string): void => {
+      status.textContent = '';
+      window.requestAnimationFrame(() => {
+        status.textContent = message;
+      });
+    };
+
+    const showStructuralPreview = (selected: StructuralTomState): void => {
+      const summary = getStructuralStateSummary(selected);
+      stateLabel.textContent = summary.label;
+      statePosition.textContent = `${summary.phase} · cycle position ${summary.cyclePosition}`;
+      rangeOutput.textContent = summary.cyclePosition;
+    };
+
+    const render = (): void => {
+      const inOverview = state.mode === 'overview';
+      overview.hidden = !inOverview;
+      panel.hidden = inOverview;
+      if (state.selectedIndex === null) {
+        showStructuralPreview(getTomStateByIndex(0));
+        range.value = '0';
+        cycleCount.textContent = 'Cosmic Breath sequence: 1';
+        previousButton.disabled = false;
+        nextButton.disabled = false;
+        beginCompressionButton.hidden = true;
+        beginNextBreathButton.hidden = true;
+        stateDetails.hidden = true;
+        Object.values(detailFields).forEach((field) => { field.textContent = ''; });
+        inventoryButtons.forEach((button) => button.removeAttribute('aria-current'));
+        return;
+      }
+
+      const selected = getTomStateByIndex(state.selectedIndex);
+      const summary = getStructuralStateSummary(selected);
+      const controlState = getExplorerControlState(selected);
+      showStructuralPreview(selected);
+      cycleCount.textContent = `Cosmic Breath sequence: ${state.cycleCount + 1}`;
+      range.value = String(state.selectedIndex);
+      previousButton.disabled = controlState.previousDisabled;
+      nextButton.disabled = controlState.nextDisabled;
+      beginCompressionButton.hidden = !controlState.showBeginCompression;
+      beginNextBreathButton.hidden = !controlState.showBeginNextBreath;
+
+      detailFields.label.textContent = summary.label;
+      detailFields.phase.textContent = summary.phase;
+      detailFields.cycle.textContent = summary.cyclePosition;
+      detailFields.phasePosition.textContent = summary.phasePosition;
+      detailFields.previous.textContent = summary.previousState;
+      detailFields.next.textContent = summary.nextState;
+      detailFields.boundary.textContent = summary.boundaryRole;
+      detailFields.classification.textContent = summary.classification;
+      detailFields.approval.textContent = summary.approvalStatus;
+      stateDetails.hidden = state.mode !== 'details';
+
+      inventoryButtons.forEach((button, index) => {
+        if (index === state.selectedIndex) button.setAttribute('aria-current', 'true');
+        else button.removeAttribute('aria-current');
+      });
+    };
+
+    const settleSelection = (
+      selectedState: CosmicBreathCycleState,
+      statusKind: SelectionStatusKind,
+    ): void => {
+      cancelPendingReveal();
+      const selectedIndex = selectedState.selectedIndex;
+      if (selectedIndex === null) return;
+      state = releaseDragIntoSettling(beginDragging(selectedState), selectedIndex);
+      const selected = getTomStateByIndex(selectedIndex);
+      const token = state.pendingSettleToken;
+      render();
+      announce(getSelectionStatusText(statusKind, selected));
+      if (token === null) return;
+
+      settleTimeout = window.setTimeout(() => {
+        const completed = completeSettling(state, token);
+        const revealed = revealSettledDetails(completed, token);
+        if (revealed === state) return;
+        state = revealed;
+        settleTimeout = null;
+        render();
+        announce(getSelectionStatusText('settled', selected));
+      }, 200);
+    };
+
+    const selectDirectly = (index: number): void => {
+      const base = state.mode === 'overview' ? enterExploration(state) : state;
+      settleSelection(selectStateByIndex(base, index), 'direct');
+    };
+
+    const restoreOverview = (useReset: boolean): void => {
+      cancelPendingReveal();
+      state = useReset ? resetCycleExplorer(state) : returnToOverview(state);
+      inventory.open = false;
+      render();
+      announce('Returned to the original five-shell overview.');
+      exploreButton.focus();
+    };
+
+    exploreButton.disabled = false;
+    exploreButton.setAttribute('aria-disabled', 'false');
+    availability.hidden = true;
+    range.disabled = false;
+    inventoryButtons.forEach((button) => { button.disabled = false; });
+
+    exploreButton.addEventListener('click', () => {
+      settleSelection(enterExploration(state), 'settling');
+    });
+    previousButton.addEventListener('click', () => {
+      settleSelection(moveToPreviousState(state), 'sequential');
+    });
+    nextButton.addEventListener('click', () => {
+      settleSelection(moveToNextState(state), 'sequential');
+    });
+    beginCompressionButton.addEventListener('click', () => {
+      settleSelection(continueFromAtom(state), 'sequential');
+    });
+    beginNextBreathButton.addEventListener('click', () => {
+      settleSelection(beginNextCosmicBreath(state), 'sequential');
+    });
+    resetButton.addEventListener('click', () => restoreOverview(true));
+    returnButton.addEventListener('click', () => restoreOverview(false));
+
+    range.addEventListener('input', () => {
+      cancelPendingReveal();
+      if (state.selectedIndex !== null && state.mode !== 'dragging') state = beginDragging(state);
+      const index = parseStructuralIndex(range.value);
+      const preview = getTomStateByIndex(index);
+      showStructuralPreview(preview);
+      stateDetails.hidden = true;
+      announce(`Previewing ${preview.label}, ${preview.phase} state ${preview.phaseIndex}.`);
+    });
+    range.addEventListener('change', () => {
+      selectDirectly(parseStructuralIndex(range.value));
+    });
+
+    inventoryButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const index = parseStructuralIndex(button.dataset.stateIndex ?? '');
+        selectDirectly(index);
+      });
+    });
+
+    root.addEventListener('keydown', (event) => {
+      const target = event.target instanceof HTMLElement ? event.target : null;
+      if (isEditableControl(target)) return;
+      const command = getExplorerKeyboardCommand(event.key);
+      if (command === null) return;
+      if (command === 'return-overview') {
+        if (state.mode !== 'overview') {
+          event.preventDefault();
+          restoreOverview(false);
+        }
+        return;
+      }
+      if (state.mode === 'overview' || state.selectedIndex === null) return;
+
+      event.preventDefault();
+      const selected = getTomStateByIndex(state.selectedIndex);
+      if (command === 'previous') {
+        settleSelection(moveToPreviousState(state), 'sequential');
+      } else if (command === 'next') {
+        settleSelection(moveToNextState(state), 'sequential');
+      } else if (command === 'first') {
+        selectDirectly(0);
+      } else if (command === 'last') {
+        selectDirectly(orderedTomStates.length - 1);
+      } else {
+        const bounds = getPhaseBoundaryIndices(selected.phase);
+        selectDirectly(command === 'phase-start' ? bounds.start : bounds.end);
+      }
+    });
+
+    render();
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-cosmic-breath-explorer]').forEach(initializeExplorer);
+</script>
+
+<style>
+  .cycle-explorer {
+    display: grid;
+    gap: var(--space-6);
+    width: min(100%, 48rem);
+  }
+
+  .cycle-explorer__overview,
+  .cycle-explorer__panel {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .cycle-explorer__entry,
+  .cycle-explorer__panel,
+  .cycle-explorer__inventory {
+    padding: clamp(var(--space-4), 4vw, var(--space-8));
+    border: 1px solid var(--color-translucent-blue);
+    background: var(--color-surface-translucent);
+  }
+
+  .cycle-explorer__entry h3,
+  .cycle-explorer__header h3,
+  .cycle-explorer__details h4 {
+    margin: 0;
+    color: var(--color-white-gold);
+  }
+
+  .cycle-explorer p { margin-block: var(--space-3) 0; }
+
+  .cycle-explorer__entry,
+  .cycle-explorer__header,
+  .cycle-explorer__preview,
+  .cycle-explorer__controls,
+  .cycle-explorer__details {
+    min-width: 0;
+  }
+
+  .cycle-explorer__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-6);
+  }
+
+  .cycle-explorer__eyebrow {
+    margin: 0;
+    color: var(--color-cyan);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .cycle-explorer__cycle-count {
+    flex: 0 0 auto;
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+
+  .cycle-explorer__preview {
+    padding: var(--space-6);
+    border-left: 0.25rem solid var(--color-cyan);
+    background: var(--color-background);
+  }
+
+  .cycle-explorer__state-label {
+    color: var(--color-white-gold);
+    font-size: clamp(1.75rem, 7vw, 3.25rem);
+    font-weight: 700;
+    line-height: 1.05;
+  }
+
+  .cycle-explorer__position,
+  .cycle-explorer__review-note,
+  .cycle-explorer__keyboard-help,
+  .cycle-explorer__availability,
+  .cycle-explorer__inventory p {
+    color: var(--color-text-muted);
+    font-size: 0.9375rem;
+  }
+
+  .cycle-explorer__controls { display: grid; gap: var(--space-4); }
+  .cycle-explorer__button-row,
+  .cycle-explorer__utility-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .cycle-explorer__button,
+  .cycle-explorer__inventory button {
+    min-height: 2.75rem;
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-translucent-blue);
+    border-radius: 0.25rem;
+    background: var(--color-background);
+    color: var(--color-white-gold);
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .cycle-explorer__button--primary {
+    margin-top: var(--space-4);
+    border-color: var(--color-cyan);
+    background: var(--color-cyan);
+    color: var(--color-deep-navy-black);
+  }
+
+  .cycle-explorer__button--boundary { border-color: var(--color-amber); }
+  .cycle-explorer__button:hover:not(:disabled),
+  .cycle-explorer__inventory button:hover:not(:disabled) {
+    border-color: var(--color-cyan);
+  }
+
+  .cycle-explorer button:disabled { cursor: not-allowed; opacity: 0.52; }
+  .cycle-explorer button:focus-visible,
+  .cycle-explorer input:focus-visible,
+  .cycle-explorer summary:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-cyan);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .cycle-explorer__range-label {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-4);
+    font-weight: 700;
+  }
+
+  .cycle-explorer__range { width: 100%; min-height: 2.75rem; accent-color: var(--color-cyan); }
+
+  .cycle-explorer__details {
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-translucent-blue);
+  }
+
+  .cycle-explorer__details dl {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+    margin: var(--space-4) 0 0;
+  }
+
+  .cycle-explorer__details dl div {
+    padding: var(--space-3);
+    background: var(--color-background);
+  }
+
+  .cycle-explorer__details dt { color: var(--color-text-muted); font-size: 0.8125rem; }
+  .cycle-explorer__details dd { margin: var(--space-1) 0 0; color: var(--color-white-gold); }
+
+  .cycle-explorer__inventory summary {
+    min-height: 2.75rem;
+    color: var(--color-white-gold);
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .cycle-explorer__inventory ol {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2);
+    margin: var(--space-4) 0 0;
+    padding-left: 1.75rem;
+  }
+
+  .cycle-explorer__inventory button {
+    display: grid;
+    width: 100%;
+    justify-items: start;
+    text-align: left;
+  }
+
+  .cycle-explorer__inventory button[aria-current="true"] {
+    border-color: var(--color-cyan);
+    box-shadow: inset 0.25rem 0 var(--color-cyan);
+  }
+
+  .cycle-explorer__inventory small { color: var(--color-text-muted); font-weight: 400; }
+  .cycle-explorer__status { min-height: 1.5em; margin: 0; color: var(--color-cyan); }
+
+  [hidden] { display: none !important; }
+
+  @media (max-width: 40rem) {
+    .cycle-explorer__header { display: grid; }
+    .cycle-explorer__details dl,
+    .cycle-explorer__inventory ol { grid-template-columns: 1fr; }
+    .cycle-explorer__button-row,
+    .cycle-explorer__utility-controls { display: grid; }
+    .cycle-explorer__button { width: 100%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cycle-explorer *,
+    .cycle-explorer *::before,
+    .cycle-explorer *::after { scroll-behavior: auto !important; transition: none !important; }
+  }
+</style>
