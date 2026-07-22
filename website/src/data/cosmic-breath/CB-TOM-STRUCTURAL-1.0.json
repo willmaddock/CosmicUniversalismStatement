@@ -1,0 +1,978 @@
+{
+  "ledgerId": "CB-TOM-STRUCTURAL-1.0",
+  "owner": "William Maddock",
+  "ownerDecisionDate": "2026-07-22",
+  "status": "owner-approved-structural-decisions-numerical-fields-withheld",
+  "declaredPhaseAnchors": {
+    "expansion": "approximately 2.8 trillion years",
+    "compression": "approximately 308 billion years",
+    "completeCosmicBreath": "approximately 3.108 trillion years",
+    "approvalStatus": "owner-approved-model-level-anchors",
+    "derivation": "declared CU model-level anchors; not derived from individual TOM rows"
+  },
+  "withheldFields": [
+    "quantumNotation",
+    "duration",
+    "machineMagnitude",
+    "chronologySensitiveDescription"
+  ],
+  "states": [
+    {
+      "id": "expansion-sub-ztom",
+      "label": "sub-ztom",
+      "phase": "expansion",
+      "cycleIndex": 1,
+      "phaseIndex": 1,
+      "previousId": null,
+      "nextId": "expansion-sub-ytom",
+      "boundaryRole": "new-cosmic-seed",
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-I",
+        "FM:Appendix-B-15.1",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "expansion-sub-ytom",
+      "label": "sub-ytom",
+      "phase": "expansion",
+      "cycleIndex": 2,
+      "phaseIndex": 2,
+      "previousId": "expansion-sub-ztom",
+      "nextId": "expansion-sub-xtom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-I",
+        "FM:Appendix-B-15.1",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "expansion-sub-xtom",
+      "label": "sub-xtom",
+      "phase": "expansion",
+      "cycleIndex": 3,
+      "phaseIndex": 3,
+      "previousId": "expansion-sub-ytom",
+      "nextId": "expansion-sub-wtom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-I",
+        "FM:Appendix-B-15.1",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "expansion-sub-wtom",
+      "label": "sub-wtom",
+      "phase": "expansion",
+      "cycleIndex": 4,
+      "phaseIndex": 4,
+      "previousId": "expansion-sub-xtom",
+      "nextId": "expansion-sub-vtom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-I",
+        "FM:Appendix-B-15.1",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "expansion-sub-vtom",
+      "label": "sub-vtom",
+      "phase": "expansion",
+      "cycleIndex": 5,
+      "phaseIndex": 5,
+      "previousId": "expansion-sub-wtom",
+      "nextId": "expansion-sub-utom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-I",
+        "FM:Appendix-B-15.1",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "expansion-sub-utom",
+      "label": "sub-utom",
+      "phase": "expansion",
+      "cycleIndex": 6,
+      "phaseIndex": 6,
+      "previousId": "expansion-sub-vtom",
+      "nextId": "expansion-sub-ttom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-I",
+        "FM:Appendix-B-15.1",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "expansion-sub-ttom",
+      "label": "sub-ttom",
+      "phase": "expansion",
+      "cycleIndex": 7,
+      "phaseIndex": 7,
+      "previousId": "expansion-sub-utom",
+      "nextId": "expansion-sub-stom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-I",
+        "FM:Appendix-B-15.1",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "expansion-sub-stom",
+      "label": "sub-stom",
+      "phase": "expansion",
+      "cycleIndex": 8,
+      "phaseIndex": 8,
+      "previousId": "expansion-sub-ttom",
+      "nextId": "expansion-sub-rtom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-I",
+        "FM:Appendix-B-15.1",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "expansion-sub-rtom",
+      "label": "sub-rtom",
+      "phase": "expansion",
+      "cycleIndex": 9,
+      "phaseIndex": 9,
+      "previousId": "expansion-sub-stom",
+      "nextId": "expansion-sub-qtom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-I",
+        "FM:Appendix-B-15.1",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "expansion-sub-qtom",
+      "label": "sub-qtom",
+      "phase": "expansion",
+      "cycleIndex": 10,
+      "phaseIndex": 10,
+      "previousId": "expansion-sub-rtom",
+      "nextId": "expansion-sub-ptom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-I",
+        "FM:Appendix-B-15.1",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "expansion-sub-ptom",
+      "label": "sub-ptom",
+      "phase": "expansion",
+      "cycleIndex": 11,
+      "phaseIndex": 11,
+      "previousId": "expansion-sub-qtom",
+      "nextId": "expansion-sub-otom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-I",
+        "FM:Appendix-B-15.1",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "expansion-sub-otom",
+      "label": "sub-otom",
+      "phase": "expansion",
+      "cycleIndex": 12,
+      "phaseIndex": 12,
+      "previousId": "expansion-sub-ptom",
+      "nextId": "expansion-sub-ntom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-I",
+        "FM:Appendix-B-15.1",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "expansion-sub-ntom",
+      "label": "sub-ntom",
+      "phase": "expansion",
+      "cycleIndex": 13,
+      "phaseIndex": 13,
+      "previousId": "expansion-sub-otom",
+      "nextId": "expansion-sub-mtom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-I",
+        "FM:Appendix-B-15.1",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "expansion-sub-mtom",
+      "label": "sub-mtom",
+      "phase": "expansion",
+      "cycleIndex": 14,
+      "phaseIndex": 14,
+      "previousId": "expansion-sub-ntom",
+      "nextId": "expansion-sub-ltom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-I",
+        "FM:Appendix-B-15.1",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "expansion-sub-ltom",
+      "label": "sub-ltom",
+      "phase": "expansion",
+      "cycleIndex": 15,
+      "phaseIndex": 15,
+      "previousId": "expansion-sub-mtom",
+      "nextId": "expansion-sub-ktom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-I",
+        "FM:Appendix-B-15.1",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "expansion-sub-ktom",
+      "label": "sub-ktom",
+      "phase": "expansion",
+      "cycleIndex": 16,
+      "phaseIndex": 16,
+      "previousId": "expansion-sub-ltom",
+      "nextId": "expansion-sub-jtom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-I",
+        "FM:Appendix-B-15.1",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "expansion-sub-jtom",
+      "label": "sub-jtom",
+      "phase": "expansion",
+      "cycleIndex": 17,
+      "phaseIndex": 17,
+      "previousId": "expansion-sub-ktom",
+      "nextId": "expansion-sub-itom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-I",
+        "FM:Appendix-B-15.1",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "expansion-sub-itom",
+      "label": "sub-itom",
+      "phase": "expansion",
+      "cycleIndex": 18,
+      "phaseIndex": 18,
+      "previousId": "expansion-sub-jtom",
+      "nextId": "expansion-sub-htom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-I",
+        "FM:Appendix-B-15.1",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "expansion-sub-htom",
+      "label": "sub-htom",
+      "phase": "expansion",
+      "cycleIndex": 19,
+      "phaseIndex": 19,
+      "previousId": "expansion-sub-itom",
+      "nextId": "expansion-sub-gtom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-I",
+        "FM:Appendix-B-15.1",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "expansion-sub-gtom",
+      "label": "sub-gtom",
+      "phase": "expansion",
+      "cycleIndex": 20,
+      "phaseIndex": 20,
+      "previousId": "expansion-sub-htom",
+      "nextId": "expansion-sub-ftom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-I",
+        "FM:Appendix-B-15.1",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "expansion-sub-ftom",
+      "label": "sub-ftom",
+      "phase": "expansion",
+      "cycleIndex": 21,
+      "phaseIndex": 21,
+      "previousId": "expansion-sub-gtom",
+      "nextId": "expansion-sub-etom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-I",
+        "FM:Appendix-B-15.1",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "expansion-sub-etom",
+      "label": "sub-etom",
+      "phase": "expansion",
+      "cycleIndex": 22,
+      "phaseIndex": 22,
+      "previousId": "expansion-sub-ftom",
+      "nextId": "expansion-sub-dtom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-I",
+        "FM:Appendix-B-15.1",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "expansion-sub-dtom",
+      "label": "sub-dtom",
+      "phase": "expansion",
+      "cycleIndex": 23,
+      "phaseIndex": 23,
+      "previousId": "expansion-sub-etom",
+      "nextId": "expansion-sub-ctom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-I",
+        "FM:Appendix-B-15.1",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "expansion-sub-ctom",
+      "label": "sub-ctom",
+      "phase": "expansion",
+      "cycleIndex": 24,
+      "phaseIndex": 24,
+      "previousId": "expansion-sub-dtom",
+      "nextId": "expansion-sub-btom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-I",
+        "FM:Appendix-B-15.1",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "expansion-sub-btom",
+      "label": "sub-btom",
+      "phase": "expansion",
+      "cycleIndex": 25,
+      "phaseIndex": 25,
+      "previousId": "expansion-sub-ctom",
+      "nextId": "expansion-atom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-I",
+        "FM:Appendix-B-15.1",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "expansion-atom",
+      "label": "atom",
+      "phase": "expansion",
+      "cycleIndex": 26,
+      "phaseIndex": 26,
+      "previousId": "expansion-sub-btom",
+      "nextId": null,
+      "boundaryRole": "expansion-pause",
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-I",
+        "FM:Appendix-B-15.1",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "compression-btom",
+      "label": "btom",
+      "phase": "compression",
+      "cycleIndex": 27,
+      "phaseIndex": 1,
+      "previousId": null,
+      "nextId": "compression-ctom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-II",
+        "FM:Appendix-B-15.2",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "compression-ctom",
+      "label": "ctom",
+      "phase": "compression",
+      "cycleIndex": 28,
+      "phaseIndex": 2,
+      "previousId": "compression-btom",
+      "nextId": "compression-dtom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-II",
+        "FM:Appendix-B-15.2",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "compression-dtom",
+      "label": "dtom",
+      "phase": "compression",
+      "cycleIndex": 29,
+      "phaseIndex": 3,
+      "previousId": "compression-ctom",
+      "nextId": "compression-etom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-II",
+        "FM:Appendix-B-15.2",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "compression-etom",
+      "label": "etom",
+      "phase": "compression",
+      "cycleIndex": 30,
+      "phaseIndex": 4,
+      "previousId": "compression-dtom",
+      "nextId": "compression-ftom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-II",
+        "FM:Appendix-B-15.2",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "compression-ftom",
+      "label": "ftom",
+      "phase": "compression",
+      "cycleIndex": 31,
+      "phaseIndex": 5,
+      "previousId": "compression-etom",
+      "nextId": "compression-gtom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-II",
+        "FM:Appendix-B-15.2",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "compression-gtom",
+      "label": "gtom",
+      "phase": "compression",
+      "cycleIndex": 32,
+      "phaseIndex": 6,
+      "previousId": "compression-ftom",
+      "nextId": "compression-htom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-II",
+        "FM:Appendix-B-15.2",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "compression-htom",
+      "label": "htom",
+      "phase": "compression",
+      "cycleIndex": 33,
+      "phaseIndex": 7,
+      "previousId": "compression-gtom",
+      "nextId": "compression-itom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-II",
+        "FM:Appendix-B-15.2",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "compression-itom",
+      "label": "itom",
+      "phase": "compression",
+      "cycleIndex": 34,
+      "phaseIndex": 8,
+      "previousId": "compression-htom",
+      "nextId": "compression-jtom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-II",
+        "FM:Appendix-B-15.2",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "compression-jtom",
+      "label": "jtom",
+      "phase": "compression",
+      "cycleIndex": 35,
+      "phaseIndex": 9,
+      "previousId": "compression-itom",
+      "nextId": "compression-ktom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-II",
+        "FM:Appendix-B-15.2",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "compression-ktom",
+      "label": "ktom",
+      "phase": "compression",
+      "cycleIndex": 36,
+      "phaseIndex": 10,
+      "previousId": "compression-jtom",
+      "nextId": "compression-ltom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-II",
+        "FM:Appendix-B-15.2",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "compression-ltom",
+      "label": "ltom",
+      "phase": "compression",
+      "cycleIndex": 37,
+      "phaseIndex": 11,
+      "previousId": "compression-ktom",
+      "nextId": "compression-mtom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-II",
+        "FM:Appendix-B-15.2",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "compression-mtom",
+      "label": "mtom",
+      "phase": "compression",
+      "cycleIndex": 38,
+      "phaseIndex": 12,
+      "previousId": "compression-ltom",
+      "nextId": "compression-ntom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-II",
+        "FM:Appendix-B-15.2",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "compression-ntom",
+      "label": "ntom",
+      "phase": "compression",
+      "cycleIndex": 39,
+      "phaseIndex": 13,
+      "previousId": "compression-mtom",
+      "nextId": "compression-otom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-II",
+        "FM:Appendix-B-15.2",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "compression-otom",
+      "label": "otom",
+      "phase": "compression",
+      "cycleIndex": 40,
+      "phaseIndex": 14,
+      "previousId": "compression-ntom",
+      "nextId": "compression-ptom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-II",
+        "FM:Appendix-B-15.2",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "compression-ptom",
+      "label": "ptom",
+      "phase": "compression",
+      "cycleIndex": 41,
+      "phaseIndex": 15,
+      "previousId": "compression-otom",
+      "nextId": "compression-qtom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-II",
+        "FM:Appendix-B-15.2",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "compression-qtom",
+      "label": "qtom",
+      "phase": "compression",
+      "cycleIndex": 42,
+      "phaseIndex": 16,
+      "previousId": "compression-ptom",
+      "nextId": "compression-rtom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-II",
+        "FM:Appendix-B-15.2",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "compression-rtom",
+      "label": "rtom",
+      "phase": "compression",
+      "cycleIndex": 43,
+      "phaseIndex": 17,
+      "previousId": "compression-qtom",
+      "nextId": "compression-stom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-II",
+        "FM:Appendix-B-15.2",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "compression-stom",
+      "label": "stom",
+      "phase": "compression",
+      "cycleIndex": 44,
+      "phaseIndex": 18,
+      "previousId": "compression-rtom",
+      "nextId": "compression-ttom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-II",
+        "FM:Appendix-B-15.2",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "compression-ttom",
+      "label": "ttom",
+      "phase": "compression",
+      "cycleIndex": 45,
+      "phaseIndex": 19,
+      "previousId": "compression-stom",
+      "nextId": "compression-utom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-II",
+        "FM:Appendix-B-15.2",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "compression-utom",
+      "label": "utom",
+      "phase": "compression",
+      "cycleIndex": 46,
+      "phaseIndex": 20,
+      "previousId": "compression-ttom",
+      "nextId": "compression-vtom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-II",
+        "FM:Appendix-B-15.2",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "compression-vtom",
+      "label": "vtom",
+      "phase": "compression",
+      "cycleIndex": 47,
+      "phaseIndex": 21,
+      "previousId": "compression-utom",
+      "nextId": "compression-wtom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-II",
+        "FM:Appendix-B-15.2",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "compression-wtom",
+      "label": "wtom",
+      "phase": "compression",
+      "cycleIndex": 48,
+      "phaseIndex": 22,
+      "previousId": "compression-vtom",
+      "nextId": "compression-xtom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-II",
+        "FM:Appendix-B-15.2",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "compression-xtom",
+      "label": "xtom",
+      "phase": "compression",
+      "cycleIndex": 49,
+      "phaseIndex": 23,
+      "previousId": "compression-wtom",
+      "nextId": "compression-ytom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-II",
+        "FM:Appendix-B-15.2",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "compression-ytom",
+      "label": "ytom",
+      "phase": "compression",
+      "cycleIndex": 50,
+      "phaseIndex": 24,
+      "previousId": "compression-xtom",
+      "nextId": "compression-ztom",
+      "boundaryRole": null,
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-II",
+        "FM:Appendix-B-15.2",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    },
+    {
+      "id": "compression-ztom",
+      "label": "ztom",
+      "phase": "compression",
+      "cycleIndex": 51,
+      "phaseIndex": 25,
+      "previousId": "compression-ytom",
+      "nextId": null,
+      "boundaryRole": "reset-pause",
+      "classification": "cu-theoretical-proposition",
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "CBC:Phase-II",
+        "FM:Appendix-B-15.2",
+        "P0B:TOM-001",
+        "P0B:TOM-002"
+      ]
+    }
+  ],
+  "transitions": [
+    {
+      "id": "transition-atom-to-btom",
+      "fromId": "expansion-atom",
+      "toId": "compression-btom",
+      "toCycleOffset": 0,
+      "type": "phase-continuation",
+      "label": "Begin Compression",
+      "requiresExplicitAction": true,
+      "selectableTomState": false,
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "FM:3.6",
+        "FM:8.9",
+        "P0B:TOM-008",
+        "P0B:Additional-3",
+        "P0B:Additional-4"
+      ]
+    },
+    {
+      "id": "transition-ztom-to-next-sub-ztom",
+      "fromId": "compression-ztom",
+      "toId": "expansion-sub-ztom",
+      "toCycleOffset": 1,
+      "type": "next-breath-reset",
+      "label": "Begin the Next Cosmic Breath",
+      "requiresExplicitAction": true,
+      "selectableTomState": false,
+      "approvalStatus": "owner-approved-structural",
+      "provenance": [
+        "BC:Sub-ZTOM-Quantum-Seed",
+        "FM:3.6",
+        "FM:8.9",
+        "P0B:TOM-009",
+        "P0B:Additional-5",
+        "P0B:Additional-6"
+      ]
+    }
+  ]
+}
