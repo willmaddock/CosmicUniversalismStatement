@@ -1,4 +1,8 @@
 import canonicalLedger from '../../data/cosmic-breath/CB-TOM-STRUCTURAL-1.0.json';
+import {
+  parseStructuralRuntimeLedger,
+  serializeStructuralRuntimePayload,
+} from './cycle-runtime';
 
 export type TomPhase = 'expansion' | 'compression';
 export type TomBoundaryRole =
@@ -333,3 +337,29 @@ export const getTomStateIndex = (id: string): number => {
   if (index === undefined) throw new RangeError('Unknown structural TOM state ID: ' + id);
   return index;
 };
+
+export const structuralRuntimeLedger = parseStructuralRuntimeLedger({
+  states: orderedTomStates.map((state) => ({
+    id: state.id,
+    label: state.label,
+    phase: state.phase,
+    cycleIndex: state.cycleIndex,
+    phaseIndex: state.phaseIndex,
+    previousId: state.previousId,
+    nextId: state.nextId,
+    boundaryRole: state.boundaryRole,
+  })),
+  transitions: guardedTransitions.map((transition) => ({
+    id: transition.id,
+    fromId: transition.fromId,
+    toId: transition.toId,
+    toCycleOffset: transition.toCycleOffset,
+    type: transition.type,
+    label: transition.label,
+    requiresExplicitAction: transition.requiresExplicitAction,
+    selectableTomState: transition.selectableTomState,
+  })),
+});
+
+export const serializedStructuralRuntimePayload =
+  serializeStructuralRuntimePayload(structuralRuntimeLedger);

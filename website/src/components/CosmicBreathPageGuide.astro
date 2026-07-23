@@ -1,0 +1,256 @@
+---
+const guideGroups = [
+  {
+    title: 'Cosmic Breath Field Guide',
+    label: 'Explore the framework',
+    links: [
+      ['cosmic-breath-at-a-glance', 'At a Glance'],
+      ['reading-the-structural-diagram', 'Reading the Diagram'],
+      ['tom-names-and-positions', 'TOM Names'],
+      ['exponents-tetration-and-duration', 'Notation and Duration'],
+      ['expansion-compression-and-guarded-boundaries', 'Guarded Boundaries'],
+      ['observable-universe-marker', 'Observable Universe'],
+      ['structural-and-epistemic-boundaries', 'Epistemic Boundaries'],
+    ],
+  },
+  {
+    title: 'Cosmic Breath Theory and Method',
+    label: 'Inside the CU model',
+    links: [
+      ['cu-dark-energy', 'CU Dark Energy'],
+      ['cu-anti-dark-energy', 'CU Anti-Dark Energy'],
+      ['tom-duration-representation', 'TOM Durations'],
+      ['memory-ethics-reset-seed', 'Memory and Reset'],
+      ['sources-and-method', 'Sources and Method'],
+    ],
+  },
+  {
+    title: 'Primary-Source Empirical Context',
+    label: 'Empirical Science and Cosmic Universalism',
+    links: [
+      ['empirical-observations', 'Observations'],
+      ['empirical-open-questions', 'Open Questions'],
+      ['scientific-cosmic-futures', 'Cosmic Futures'],
+      ['scientific-units-notation', 'Units and Notation'],
+      ['quantum-holography-information', 'Quantum Information'],
+      ['where-cu-begins', 'CU Boundary'],
+      ['scientific-sources', 'Scientific Sources'],
+    ],
+  },
+] as const;
+---
+
+<section
+  class="page-guide"
+  id="cosmic-breath-page-guide"
+  aria-labelledby="cosmic-breath-page-guide-title"
+>
+  <header>
+    <p class="eyebrow">Cosmic Breath page guide</p>
+    <h2 id="cosmic-breath-page-guide-title">Explore the complete page</h2>
+  </header>
+
+  <nav aria-label="Cosmic Breath page guide">
+    <div class="page-guide__groups">
+      {
+        guideGroups.map((group) => (
+          <section class="page-guide__group" aria-labelledby={`page-guide-${group.links[0][0]}`}>
+            <p>{group.label}</p>
+            <h3 id={`page-guide-${group.links[0][0]}`}>{group.title}</h3>
+            <ul>
+              {group.links.map(([id, label]) => (
+                <li>
+                  <a href={`#${id}`}>{label}</a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))
+      }
+    </div>
+  </nav>
+</section>
+
+<a class="back-to-top" href="#cosmic-breath-page-top" data-cosmic-breath-back-to-top>
+  Back to top
+</a>
+
+<script>
+  const backToTop = document.querySelector<HTMLElement>('[data-cosmic-breath-back-to-top]');
+  const pageTop = document.getElementById('cosmic-breath-page-top');
+
+  if (
+    backToTop instanceof HTMLAnchorElement &&
+    pageTop &&
+    backToTop.dataset.enhanced !== 'true'
+  ) {
+    backToTop.dataset.enhanced = 'true';
+    const updateBackToTop = (): void => {
+      backToTop.hidden = window.scrollY <= pageTop.offsetTop;
+    };
+
+    updateBackToTop();
+    window.addEventListener('scroll', updateBackToTop, { passive: true });
+    window.addEventListener('resize', updateBackToTop);
+    window.addEventListener(
+      'pagehide',
+      () => {
+        window.removeEventListener('scroll', updateBackToTop);
+        window.removeEventListener('resize', updateBackToTop);
+      },
+      { once: true },
+    );
+  }
+</script>
+
+<style>
+  .page-guide {
+    width: min(112rem, calc(100vw - clamp(2rem, 6vw, 6rem)));
+    margin: clamp(3rem, 7vw, 6rem) 0 0 50%;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    scroll-margin-top: 2rem;
+    transform: translateX(-50%);
+    color: rgba(244, 250, 255, 0.96);
+    border: 1px solid rgba(116, 202, 247, 0.22);
+    border-radius: clamp(1.25rem, 3vw, 2rem);
+    background:
+      radial-gradient(circle at 10% 0%, rgba(35, 155, 225, 0.14), transparent 30rem),
+      linear-gradient(145deg, rgba(3, 15, 30, 0.98), rgba(6, 23, 39, 0.97));
+    box-shadow: 0 2rem 5rem rgba(0, 5, 16, 0.26);
+  }
+
+  .page-guide > header {
+    max-width: 54rem;
+    margin: 0 auto clamp(1.5rem, 4vw, 2.5rem);
+    text-align: center;
+  }
+
+  .eyebrow,
+  .page-guide__group > p {
+    margin: 0;
+    color: #86d7ff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .page-guide h2 {
+    margin: 0.5rem 0 0;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+
+  .page-guide__groups {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(0.8rem, 2vw, 1.4rem);
+  }
+
+  .page-guide__group {
+    min-width: 0;
+    padding: clamp(1.1rem, 2.5vw, 1.6rem);
+    border: 1px solid rgba(116, 202, 247, 0.17);
+    border-radius: 1rem;
+    background: rgba(3, 15, 29, 0.62);
+  }
+
+  .page-guide__group h3 {
+    margin: 0.45rem 0 0;
+    color: #fff;
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    line-height: 1.25;
+  }
+
+  .page-guide__group ul {
+    display: grid;
+    gap: 0.5rem;
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .page-guide__group a,
+  .back-to-top {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    color: rgba(230, 244, 253, 0.94);
+    font-weight: 650;
+    line-height: 1.3;
+    text-decoration: none;
+    border: 1px solid rgba(116, 202, 247, 0.2);
+    border-radius: 0.8rem;
+    background: rgba(23, 67, 96, 0.42);
+  }
+
+  .page-guide__group a {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+  }
+
+  .page-guide__group a:hover,
+  .back-to-top:hover {
+    color: #fff;
+    border-color: rgba(116, 202, 247, 0.54);
+    background: rgba(31, 91, 128, 0.62);
+  }
+
+  .page-guide__group a:focus-visible,
+  .back-to-top:focus-visible {
+    outline: 3px solid #ffd18a;
+    outline-offset: 3px;
+  }
+
+  .back-to-top {
+    position: fixed;
+    right: calc(0.85rem + env(safe-area-inset-right));
+    bottom: calc(4.75rem + env(safe-area-inset-bottom));
+    z-index: 45;
+    min-width: 6.75rem;
+    justify-content: center;
+    padding: 0.6rem 0.9rem;
+    box-shadow: 0 0.85rem 2rem rgba(0, 5, 16, 0.42);
+    backdrop-filter: blur(12px);
+  }
+
+  .back-to-top[hidden] {
+    display: none;
+  }
+
+  @media (max-width: 75rem) {
+    .page-guide__groups {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .page-guide__group:last-child {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 48rem) {
+    .page-guide {
+      width: calc(100vw - 1rem);
+      padding: 1rem;
+      border-radius: 1.25rem;
+    }
+
+    .page-guide > header {
+      padding: 1rem 0.5rem 0;
+    }
+
+    .page-guide__groups {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .page-guide__group:last-child {
+      grid-column: auto;
+    }
+
+    .back-to-top {
+      right: calc(0.6rem + env(safe-area-inset-right));
+      bottom: calc(4.25rem + env(safe-area-inset-bottom));
+    }
+  }
+</style>

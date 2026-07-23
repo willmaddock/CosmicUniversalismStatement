@@ -1,0 +1,17 @@
+{
+  "authorityId": "CB-TOM-CONTENT-1.0",
+  "authorityVersion": "1.0",
+  "canonicalStatus": "owner-approved-canonical",
+  "digestAlgorithm": "SHA-256",
+  "canonicalDigest": "5eab61c46e1922cdbd52be9c128e2b18a29b6540fdec91a840e3801c580b12be",
+  "digestScope": "website/src/data/cosmic-breath/CB-TOM-CONTENT-1.0.json",
+  "recordCount": 51,
+  "expansionRecordCount": 26,
+  "compressionRecordCount": 25,
+  "ownerAuthority": "William Maddock",
+  "ownerDecisionDate": "2026-07-22",
+  "structuralAuthorityId": "CB-TOM-STRUCTURAL-1.0",
+  "canonicalStructuralDigest": "dcc34d5b7d9e32afb8d0cb97b029a12e0025959095a21b4168d59aff575da825",
+  "relationshipToStructuralAuthority": "Companion public-content authority for the 51 selectable structural TOM states; it does not alter structural ordering, transitions, boundary roles, notation, durations, or the structural digest.",
+  "notes": "The canonical digest covers the exact bytes of the content authority file. Historical internal workflow fields inside that sealed file are part of the approved byte sequence and are not publicly delivered by the browser-safe projection."
+}

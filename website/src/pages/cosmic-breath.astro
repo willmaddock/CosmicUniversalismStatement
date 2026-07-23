@@ -1,7 +1,10 @@
 ---
 import ClassificationBadge from '../components/ClassificationBadge.astro';
-import ContentSection from '../components/ContentSection.astro';
 import CosmicBreathCycleExplorer from '../components/CosmicBreathCycleExplorer.astro';
+import CosmicBreathEducation from '../components/CosmicBreathEducation.astro';
+import CosmicBreathEmpiricalScience from '../components/CosmicBreathEmpiricalScience.astro';
+import CosmicBreathPageGuide from '../components/CosmicBreathPageGuide.astro';
+import CosmicBreathTheoryAndMethod from '../components/CosmicBreathTheoryAndMethod.astro';
 import ContentPageLayout from '../layouts/ContentPageLayout.astro';
 ---
 
@@ -12,6 +15,7 @@ import ContentPageLayout from '../layouts/ContentPageLayout.astro';
   title="A proposed cycle of expansion and compression"
   description="The Cosmic Breath is CU’s organizing model for a 3.108 trillion-year cycle: 2.8 trillion years of expansion followed by 308 billion years of compression."
 >
+  <span id="cosmic-breath-page-top" class="page-top-sentinel" aria-hidden="true"></span>
   <section
     id="cosmic-breath-structure"
     class="breath-overview"
@@ -31,68 +35,47 @@ import ContentPageLayout from '../layouts/ContentPageLayout.astro';
         <ClassificationBadge classification="cu-theoretical-proposition" />
       </div>
       <p>
-        The diagram places the Observable Universe marker within ctom. This is a CU
-        structural proposition, not an empirical measurement of the universe’s location.
+        The non-selectable Observable Universe marker is a separate observational reference
+        positioned structurally between compression-btom and compression-ctom. It is not
+        ctom, not sub-ctom, and not one of the 51 selectable TOM states.
       </p>
     </div>
   </section>
 
-  <div class="breath-details">
-    <ContentSection id="reading-the-diagram" title="Reading the diagram">
-      <ClassificationBadge slot="context" classification="cu-theoretical-proposition" />
-      <p>
-        The nested shells represent relationships within the CU framework. They should
-        be read as a structural diagram of CU terminology, not as a scale drawing or an
-        observational map.
-      </p>
-      <p>
-        The labels sub-ztom, atom, btom, ctom, and ztom identify distinct positions in
-        that structure. The central sub-ztom seed remains separate from the larger shells.
-      </p>
-    </ContentSection>
-
-    <ContentSection id="ctom-observable-universe" title="ctom and the Observable Universe">
-      <ClassificationBadge slot="context" classification="cu-theoretical-proposition" />
-      <p>
-        sub-ctom and ctom remain separate terms within the framework. The Observable
-        Universe marker belongs within ctom and must not be interpreted as occupying
-        sub-ctom.
-      </p>
-    </ContentSection>
-
-    <ContentSection id="scope-of-the-model" title="Scope of the model">
-      <ClassificationBadge slot="context" classification="cu-theoretical-proposition" />
-      <p>
-        The Cosmic Breath is presented as a CU model of expansion and compression across
-        the framework’s full cycle. The durations stated in the page introduction are CU
-        framework values; this page does not present them as established cosmological
-        measurements.
-      </p>
-    </ContentSection>
-  </div>
+  <CosmicBreathPageGuide />
+  <CosmicBreathEducation />
+  <CosmicBreathTheoryAndMethod />
+  <CosmicBreathEmpiricalScience />
 </ContentPageLayout>
 
 <style>
   .breath-overview {
     display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(16rem, 0.9fr);
-    align-items: center;
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--space-12);
     scroll-margin-top: var(--space-6);
   }
 
-  .breath-overview__diagram { min-width: 0; }
+  .breath-overview__diagram {
+    width: min(112rem, calc(100vw - clamp(2rem, 6vw, 6rem)));
+    max-width: none;
+    min-width: 0;
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+  .breath-overview__content { width: min(100%, 48rem); }
   .breath-overview__classification { margin-top: var(--space-6); }
-  .breath-details {
-    display: grid;
-    margin-top: var(--space-12);
-    gap: var(--space-12);
+  .page-top-sentinel {
+    display: block;
+    width: 1px;
+    height: 1px;
+    margin-bottom: -1px;
+    overflow: hidden;
+    scroll-margin-top: var(--space-6);
   }
   h2 { margin: 0; font-size: clamp(1.75rem, 4vw, 2.5rem); }
   p { margin-block: var(--space-4) 0; }
   strong { color: var(--color-cyan); }
 
-  @media (max-width: 48rem) {
-    .breath-overview { grid-template-columns: 1fr; gap: var(--space-8); }
-  }
+  @media (max-width: 48rem) { .breath-overview { gap: var(--space-8); } }
 </style>

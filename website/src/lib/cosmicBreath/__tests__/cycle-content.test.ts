@@ -3,8 +3,10 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import rawContentLedger from '../../../data/cosmic-breath/CB-TOM-CONTENT-1.0.json';
+import canonicalContentManifest from '../../../data/cosmic-breath/CB-TOM-CONTENT-1.0.manifest.json';
 import {
   PUBLIC_EPISTEMIC_LABEL,
+  PUBLIC_TOM_CONTENT_KEYS,
   contentLedger,
   getPublicTomContentById,
   getTomContentById,
@@ -12,6 +14,7 @@ import {
   orderedTomContent,
   parseContentLedger,
   parseTransitionContentRecord,
+  serializePublicTomContentPayload,
 } from '../cycle-content';
 import { orderedTomStates } from '../cycle-ledger';
 
@@ -19,8 +22,20 @@ const structuralLedgerPath = fileURLToPath(new URL(
   '../../../data/cosmic-breath/CB-TOM-STRUCTURAL-1.0.json',
   import.meta.url,
 ));
+const contentLedgerPath = fileURLToPath(new URL(
+  '../../../data/cosmic-breath/CB-TOM-CONTENT-1.0.json',
+  import.meta.url,
+));
 const repositoryContentSourcePath = fileURLToPath(new URL(
   '../../../../../ResearchFiles/Cosmic_Breath_Calculation.md',
+  import.meta.url,
+));
+const explorerComponentPath = fileURLToPath(new URL(
+  '../../../components/CosmicBreathCycleExplorer.astro',
+  import.meta.url,
+));
+const cosmicBreathRoutePath = fileURLToPath(new URL(
+  '../../../pages/cosmic-breath.astro',
   import.meta.url,
 ));
 const expectedStructuralDigest =
@@ -169,7 +184,7 @@ describe('CB-TOM-CONTENT-1.0 companion content authority', () => {
       'The approved CU duration estimate for sub-ztom is one second, approximately the time needed to say ‘one.’ Because this is an extremely brief interval, its description concerns concentrated memory, structural inheritance, and the opening of a new breath rather than the development of planets, biological life, civilizations, stars, or galaxies within that second.',
     );
     expect(subZtom.tomLayerExplanation).toBe(
-      'Sub-ztom stands at the opening of the expansion sequence while carrying the final compression breath from the prior cycle. The guarded next-breath transition separates it from compression-ztom. Its one-second duration describes a rapid seed condition, while its tetration notation represents extreme CU quantum concentration. Together, these features support its role as the preserved memory and structural potential from which renewed expansion begins.',
+      'Sub-ztom stands at the opening of the expansion sequence while carrying the final compression breath from the prior cycle. The guarded next-breath transition separates it from compression-ztom. Its ordinary next state within the expansion sequence is expansion-sub-ytom, where Recursive core shell becomes the next focus. Its one-second duration describes a rapid seed condition, while its tetration notation represents extreme CU quantum concentration. Together, these features support its role as the preserved memory and structural potential from which renewed expansion begins.',
     );
   });
 
@@ -185,17 +200,134 @@ describe('CB-TOM-CONTENT-1.0 companion content authority', () => {
     );
   });
 
-  it('omits missing helpers and internal governance from the public projection', () => {
-    const fallback = getPublicTomContentById('expansion-sub-ytom');
-    expect(fallback).not.toHaveProperty('quantumStateHelperShort');
-    expect(fallback).not.toHaveProperty('durationHelperLong');
-    expect(fallback).not.toHaveProperty('tomLayerExplanation');
+  it('provides all five non-empty helper fields on every internal and public record', () => {
+    const helperFields = [
+      'quantumStateHelperShort',
+      'quantumStateHelperLong',
+      'durationHelperShort',
+      'durationHelperLong',
+      'tomLayerExplanation',
+    ] as const;
+
+    for (const record of [...orderedTomContent, ...orderedPublicTomContent]) {
+      for (const field of helperFields) expect(record[field].trim().length).toBeGreaterThan(0);
+    }
+
+    for (const field of ['quantumStateHelperLong', 'durationHelperLong', 'tomLayerExplanation'] as const) {
+      expect(new Set(orderedTomContent.map((record) => record[field]))).toHaveLength(51);
+    }
+  });
+
+  it('excludes internal governance from the public projection', () => {
     for (const record of orderedPublicTomContent) {
       expect(record).not.toHaveProperty('contentApprovalStatus');
       expect(record).not.toHaveProperty('sourceAlignmentStatus');
       expect(record).not.toHaveProperty('sourceProvenance');
       expect(JSON.stringify(record)).not.toMatch(/under source-alignment review|intentionally withheld/i);
     }
+  });
+
+  it('serializes exactly the explicit 51-record public whitelist for browser delivery', () => {
+    const approvedKeys = new Set<string>(PUBLIC_TOM_CONTENT_KEYS);
+    expect(PUBLIC_TOM_CONTENT_KEYS).toEqual([
+      'structuralStateId',
+      'sourceTomLabel',
+      'phase',
+      'cycleIndex',
+      'cyclePosition',
+      'phaseIndex',
+      'exactQuantumStateDisplay',
+      'exactDurationEstimateDisplay',
+      'publicCuDescription',
+      'publicEpistemicLabel',
+      'canonicalTitle',
+      'structuralTheme',
+      'relatedTransitionContentIds',
+      'tomLayerExplanation',
+      'quantumStateHelperShort',
+      'quantumStateHelperLong',
+      'durationHelperShort',
+      'durationHelperLong',
+    ]);
+    for (const record of orderedPublicTomContent) {
+      expect(Object.keys(record).every((key) => approvedKeys.has(key))).toBe(true);
+    }
+
+    const serialized = serializePublicTomContentPayload();
+    const payload = JSON.parse(serialized) as typeof orderedPublicTomContent;
+    expect(payload).toHaveLength(51);
+    expect(new Set(payload.map((record) => record.structuralStateId))).toHaveLength(51);
+    expect(payload.map((record) => record.structuralStateId)).toEqual(
+      orderedTomStates.map((state) => state.id),
+    );
+    for (const record of payload) {
+      for (const field of [
+        'quantumStateHelperShort',
+        'quantumStateHelperLong',
+        'durationHelperShort',
+        'durationHelperLong',
+        'tomLayerExplanation',
+      ] as const) expect(record[field].trim().length).toBeGreaterThan(0);
+    }
+    for (const forbidden of [
+      'sourceAlignmentStatus',
+      'contentApprovalStatus',
+      'sourceProvenance',
+      'companion-content-authority-in-development',
+    ]) expect(serialized).not.toContain(forbidden);
+  });
+
+  it('rejects non-public payload keys and escapes embedded HTML delimiters', () => {
+    const contaminated = structuredClone(orderedPublicTomContent) as unknown as Array<
+      Record<string, unknown>
+    >;
+    contaminated[0].sourceAlignmentStatus = 'source-aligned';
+    expect(() => serializePublicTomContentPayload(contaminated)).toThrow(/non-public key/);
+
+    const unsafe = structuredClone(orderedPublicTomContent) as unknown as Array<
+      Record<string, unknown>
+    >;
+    unsafe[0].publicCuDescription = '</script><script>alert("unsafe")</script>';
+    const serialized = serializePublicTomContentPayload(unsafe);
+    expect(serialized).not.toContain('</script>');
+    expect((JSON.parse(serialized) as Array<Record<string, unknown>>)[0].publicCuDescription).toBe(
+      '</script><script>alert("unsafe")</script>',
+    );
+  });
+
+  it('keeps the approved sub-ztom guarded and ordinary neighbor wording together', () => {
+    const explanation = getPublicTomContentById('expansion-sub-ztom').tomLayerExplanation;
+    expect(explanation).toContain(
+      'The guarded next-breath transition separates it from compression-ztom.',
+    );
+    expect(explanation).toContain(
+      'Its ordinary next state within the expansion sequence is expansion-sub-ytom, where Recursive core shell becomes the next focus.',
+    );
+  });
+
+  it('keeps all three semantic Learn-more controls present and closes them on state changes', () => {
+    const componentSource = readFileSync(explorerComponentPath, 'utf8');
+    for (const summary of [
+      'Quantum State — Learn more',
+      'Duration Estimate — Learn more',
+      'About this TOM layer — Learn more',
+    ]) expect(componentSource.match(new RegExp(summary, 'g'))).toHaveLength(1);
+    expect(componentSource).toMatch(/const learnMoreSections = \[[\s\S]*contentFields\.quantumDetails[\s\S]*contentFields\.durationDetails[\s\S]*contentFields\.layerDetails[\s\S]*\];/);
+    expect(componentSource).toMatch(/renderedContentStateId !== selected\.id[\s\S]*closeLearnMoreSections\(\)/);
+    expect(componentSource).toContain('type="application/json"');
+    expect(componentSource).toContain('data-public-content');
+    expect(componentSource).toContain('serializePublicTomContentPayload(orderedPublicTomContent)');
+    expect(componentSource.slice(componentSource.lastIndexOf('<script>'))).not.toContain(
+      "from '../lib/cosmicBreath/cycle-content'",
+    );
+  });
+
+  it('uses a route-specific wide breakout and a large-screen 1.65-to-1 panel split', () => {
+    const componentSource = readFileSync(explorerComponentPath, 'utf8');
+    const routeSource = readFileSync(cosmicBreathRoutePath, 'utf8');
+    expect(componentSource).toContain('grid-template-columns: minmax(0, 1.65fr) minmax(22rem, 1fr)');
+    expect(routeSource).toContain('width: min(112rem, calc(100vw - clamp(2rem, 6vw, 6rem)))');
+    expect(routeSource).toContain('.breath-overview__content { width: min(100%, 48rem); }');
   });
 
   it('carries the exact public epistemic label on every internal and public record', () => {
@@ -258,6 +390,10 @@ describe('CB-TOM-CONTENT-1.0 companion content authority', () => {
     wrongStatus.stateContent[0].contentApprovalStatus = 'published';
     expect(() => parseContentLedger(wrongStatus)).toThrow(/contentApprovalStatus/);
 
+    const missingHelper = mutableLedger();
+    delete missingHelper.stateContent[1].quantumStateHelperLong;
+    expect(() => parseContentLedger(missingHelper)).toThrow(/quantumStateHelperLong/);
+
     const wrongProvenance = mutableLedger();
     const provenance = wrongProvenance.stateContent[0].sourceProvenance as Record<string, unknown>;
     provenance.sourceTomLabel = 'ztom';
@@ -291,5 +427,46 @@ describe('CB-TOM-CONTENT-1.0 companion content authority', () => {
   it('leaves the canonical structural ledger digest unchanged', () => {
     const digest = createHash('sha256').update(readFileSync(structuralLedgerPath)).digest('hex');
     expect(digest).toBe(expectedStructuralDigest);
+  });
+
+  it('verifies the sealed canonical content authority and its structural relationship', () => {
+    expect(canonicalContentManifest).toEqual({
+      authorityId: 'CB-TOM-CONTENT-1.0',
+      authorityVersion: '1.0',
+      canonicalStatus: 'owner-approved-canonical',
+      digestAlgorithm: 'SHA-256',
+      canonicalDigest: '5eab61c46e1922cdbd52be9c128e2b18a29b6540fdec91a840e3801c580b12be',
+      digestScope: 'website/src/data/cosmic-breath/CB-TOM-CONTENT-1.0.json',
+      recordCount: 51,
+      expansionRecordCount: 26,
+      compressionRecordCount: 25,
+      ownerAuthority: 'William Maddock',
+      ownerDecisionDate: '2026-07-22',
+      structuralAuthorityId: 'CB-TOM-STRUCTURAL-1.0',
+      canonicalStructuralDigest: expectedStructuralDigest,
+      relationshipToStructuralAuthority:
+        'Companion public-content authority for the 51 selectable structural TOM states; it does not alter structural ordering, transitions, boundary roles, notation, durations, or the structural digest.',
+      notes:
+        'The canonical digest covers the exact bytes of the content authority file. Historical internal workflow fields inside that sealed file are part of the approved byte sequence and are not publicly delivered by the browser-safe projection.',
+    });
+
+    const contentDigest = createHash('sha256')
+      .update(readFileSync(contentLedgerPath))
+      .digest('hex');
+    expect(contentDigest).toBe(canonicalContentManifest.canonicalDigest);
+    expect(orderedTomContent).toHaveLength(canonicalContentManifest.recordCount);
+    expect(new Set(orderedTomContent.map((record) => record.structuralStateId))).toHaveLength(51);
+    expect(orderedPublicTomContent.filter((record) => record.phase === 'expansion')).toHaveLength(
+      canonicalContentManifest.expansionRecordCount,
+    );
+    expect(orderedPublicTomContent.filter((record) => record.phase === 'compression')).toHaveLength(
+      canonicalContentManifest.compressionRecordCount,
+    );
+
+    const structuralDigest = createHash('sha256')
+      .update(readFileSync(structuralLedgerPath))
+      .digest('hex');
+    expect(canonicalContentManifest.structuralAuthorityId).toBe('CB-TOM-STRUCTURAL-1.0');
+    expect(structuralDigest).toBe(canonicalContentManifest.canonicalStructuralDigest);
   });
 });

@@ -7,9 +7,11 @@ import {
   expansionDragAnchors,
   findNearestAnchor,
   findNearestAnchorInPhase,
+  findNearestSelectableAnchor,
   generateStructuralAnchors,
   isTerminalBoundaryAnchor,
   phaseBoundedPreviewIndex,
+  selectableDragAnchors,
   snappedMarkerCoordinates,
   type StructuralDragAnchor,
 } from '../cycle-drag';
@@ -21,6 +23,8 @@ describe('Cosmic Breath structural drag geometry', () => {
   it('generates exactly 26 expansion and 25 compression anchors', () => {
     expect(expansionDragAnchors).toHaveLength(26);
     expect(compressionDragAnchors).toHaveLength(25);
+    expect(selectableDragAnchors).toHaveLength(51);
+    expect(Object.isFrozen(selectableDragAnchors)).toBe(true);
   });
 
   it('generates deterministic readonly geometry', () => {
@@ -68,6 +72,17 @@ describe('Cosmic Breath structural drag geometry', () => {
     }
     expect(findNearestAnchorInPhase(compressionDragAnchors[4].point, 'expansion').phase)
       .toBe('expansion');
+  });
+
+  it('selects the nearest of all 51 anchors without active-phase trapping', () => {
+    const compressionTarget = compressionDragAnchors[8];
+    const expansionTarget = expansionDragAnchors[12];
+    expect(findNearestSelectableAnchor(compressionTarget.point)).toBe(compressionTarget);
+    expect(findNearestSelectableAnchor(expansionTarget.point)).toBe(expansionTarget);
+    for (const anchor of selectableDragAnchors) {
+      expect(findNearestSelectableAnchor(anchor.point)).toBe(anchor);
+    }
+    expect(new Set(selectableDragAnchors.map((anchor) => anchor.stateId))).toHaveLength(51);
   });
 
   it('breaks exact distance ties toward the lower canonical index', () => {

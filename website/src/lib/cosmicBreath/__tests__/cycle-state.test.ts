@@ -98,7 +98,7 @@ describe('Cosmic Breath pure cycle state engine', () => {
     expect(moveToNextState(nextBreath).cycleCount).toBe(1);
   });
 
-  it('tracks drag previews while clamping at guarded phase boundaries', () => {
+  it('tracks unrestricted direct drag previews across phase boundaries', () => {
     const expansionDrag = beginDragging(
       selectStateById(INITIAL_CYCLE_STATE, 'expansion-sub-ctom'),
     );
@@ -108,14 +108,53 @@ describe('Cosmic Breath pure cycle state engine', () => {
       previewIndex: 23,
       detailsIndex: null,
     });
-    expect(updateDragPreview(expansionDrag, 50).previewIndex).toBe(25);
+    expect(updateDragPreview(expansionDrag, 50).previewIndex).toBe(50);
     expect(updateDragPreview(expansionDrag, 4).previewIndex).toBe(4);
 
     const compressionDrag = beginDragging(
       selectStateById(INITIAL_CYCLE_STATE, 'compression-ctom'),
     );
-    expect(updateDragPreview(compressionDrag, 0).previewIndex).toBe(26);
+    expect(updateDragPreview(compressionDrag, 0).previewIndex).toBe(0);
     expect(updateDragPreview(compressionDrag, 49).previewIndex).toBe(49);
+  });
+
+  it('directly inspects either phase without executing guarded transitions', () => {
+    const atom = selectStateById(INITIAL_CYCLE_STATE, 'expansion-atom');
+    const inspectedBtom = selectStateById(atom, 'compression-btom');
+    expect(inspectedBtom).toMatchObject({ selectedIndex: 26, cycleCount: 0 });
+    const draggedBtom = releaseDragIntoSettling(updateDragPreview(beginDragging(atom), 26));
+    expect(draggedBtom).toMatchObject({ selectedIndex: 26, cycleCount: 0 });
+    expect(moveToNextState(atom).selectedIndex).toBe(25);
+
+    const ztom = selectStateById(inspectedBtom, 'compression-ztom');
+    const inspectedSubZtom = selectStateById(ztom, 'expansion-sub-ztom');
+    expect(inspectedSubZtom).toMatchObject({ selectedIndex: 0, cycleCount: 0 });
+    const draggedSubZtom = releaseDragIntoSettling(updateDragPreview(beginDragging(ztom), 0));
+    expect(draggedSubZtom).toMatchObject({ selectedIndex: 0, cycleCount: 0 });
+    expect(moveToNextState(ztom).selectedIndex).toBe(50);
+    expect(beginNextCosmicBreath(ztom).cycleCount).toBe(1);
+  });
+
+  it('settles rapid alternating-phase drag selections on the newest target', () => {
+    const firstDrag = updateDragPreview(
+      beginDragging(selectStateById(INITIAL_CYCLE_STATE, 'expansion-sub-stom')),
+      40,
+    );
+    const firstSettling = releaseDragIntoSettling(firstDrag);
+    const staleToken = firstSettling.pendingSettleToken!;
+    const newestDrag = updateDragPreview(beginDragging(firstSettling), 5);
+    const newestSettling = releaseDragIntoSettling(newestDrag);
+    expect(completeSettling(newestSettling, staleToken)).toBe(newestSettling);
+    expect(completeSettling(newestSettling, newestSettling.pendingSettleToken!)).toMatchObject({
+      selectedIndex: 5,
+      settledSelectionToken: newestSettling.pendingSettleToken,
+    });
+  });
+
+  it('allows direct inspection of every selectable structural state', () => {
+    for (let index = 0; index < 51; index += 1) {
+      expect(selectStateByIndex(INITIAL_CYCLE_STATE, index).selectedIndex).toBe(index);
+    }
   });
 
   it('settles at the newest preview and reveals details only for its valid token', () => {

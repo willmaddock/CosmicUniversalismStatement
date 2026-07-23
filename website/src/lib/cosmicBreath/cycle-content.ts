@@ -52,11 +52,11 @@ export interface TomContentRecord {
   readonly exactSourceCuDescription: string;
   readonly publicCuDescription?: string;
   readonly canonicalCuDescription?: string;
-  readonly tomLayerExplanation?: string;
-  readonly quantumStateHelperShort?: string;
-  readonly quantumStateHelperLong?: string;
-  readonly durationHelperShort?: string;
-  readonly durationHelperLong?: string;
+  readonly tomLayerExplanation: string;
+  readonly quantumStateHelperShort: string;
+  readonly quantumStateHelperLong: string;
+  readonly durationHelperShort: string;
+  readonly durationHelperLong: string;
   readonly publicEpistemicLabel: typeof PUBLIC_EPISTEMIC_LABEL;
   readonly canonicalTitle?: string;
   readonly structuralTheme?: readonly StructuralTheme[];
@@ -81,12 +81,33 @@ export interface PublicTomContent {
   readonly canonicalTitle?: string;
   readonly structuralTheme?: readonly StructuralTheme[];
   readonly relatedTransitionContentIds?: readonly string[];
-  readonly tomLayerExplanation?: string;
-  readonly quantumStateHelperShort?: string;
-  readonly quantumStateHelperLong?: string;
-  readonly durationHelperShort?: string;
-  readonly durationHelperLong?: string;
+  readonly tomLayerExplanation: string;
+  readonly quantumStateHelperShort: string;
+  readonly quantumStateHelperLong: string;
+  readonly durationHelperShort: string;
+  readonly durationHelperLong: string;
 }
+
+export const PUBLIC_TOM_CONTENT_KEYS = Object.freeze([
+  'structuralStateId',
+  'sourceTomLabel',
+  'phase',
+  'cycleIndex',
+  'cyclePosition',
+  'phaseIndex',
+  'exactQuantumStateDisplay',
+  'exactDurationEstimateDisplay',
+  'publicCuDescription',
+  'publicEpistemicLabel',
+  'canonicalTitle',
+  'structuralTheme',
+  'relatedTransitionContentIds',
+  'tomLayerExplanation',
+  'quantumStateHelperShort',
+  'quantumStateHelperLong',
+  'durationHelperShort',
+  'durationHelperLong',
+] as const satisfies readonly (keyof PublicTomContent)[]);
 
 export interface DeclaredContentPhaseTotals {
   readonly expansion: 'approximately 2.8 trillion years';
@@ -152,11 +173,6 @@ const TRANSITION_IDS = Object.freeze([
 const STATE_OPTIONAL_STRING_FIELDS = Object.freeze([
   'publicCuDescription',
   'canonicalCuDescription',
-  'tomLayerExplanation',
-  'quantumStateHelperShort',
-  'quantumStateHelperLong',
-  'durationHelperShort',
-  'durationHelperLong',
   'canonicalTitle',
   'extendedDescription',
 ] as const);
@@ -287,6 +303,26 @@ const parseStateContent = (value: unknown, index: number): TomContentRecord => {
       record.exactSourceCuDescription,
       name + '.exactSourceCuDescription',
     ),
+    tomLayerExplanation: requireString(
+      record.tomLayerExplanation,
+      name + '.tomLayerExplanation',
+    ),
+    quantumStateHelperShort: requireString(
+      record.quantumStateHelperShort,
+      name + '.quantumStateHelperShort',
+    ),
+    quantumStateHelperLong: requireString(
+      record.quantumStateHelperLong,
+      name + '.quantumStateHelperLong',
+    ),
+    durationHelperShort: requireString(
+      record.durationHelperShort,
+      name + '.durationHelperShort',
+    ),
+    durationHelperLong: requireString(
+      record.durationHelperLong,
+      name + '.durationHelperLong',
+    ),
     ...optionalFields,
     publicEpistemicLabel: requireExact(
       record.publicEpistemicLabel,
@@ -391,21 +427,11 @@ const publicProjection = (content: TomContentRecord): PublicTomContent => {
     ...(content.relatedTransitionContentIds === undefined
       ? {}
       : { relatedTransitionContentIds: Object.freeze([...content.relatedTransitionContentIds]) }),
-    ...(content.tomLayerExplanation === undefined
-      ? {}
-      : { tomLayerExplanation: content.tomLayerExplanation }),
-    ...(content.quantumStateHelperShort === undefined
-      ? {}
-      : { quantumStateHelperShort: content.quantumStateHelperShort }),
-    ...(content.quantumStateHelperLong === undefined
-      ? {}
-      : { quantumStateHelperLong: content.quantumStateHelperLong }),
-    ...(content.durationHelperShort === undefined
-      ? {}
-      : { durationHelperShort: content.durationHelperShort }),
-    ...(content.durationHelperLong === undefined
-      ? {}
-      : { durationHelperLong: content.durationHelperLong }),
+    tomLayerExplanation: content.tomLayerExplanation,
+    quantumStateHelperShort: content.quantumStateHelperShort,
+    quantumStateHelperLong: content.quantumStateHelperLong,
+    durationHelperShort: content.durationHelperShort,
+    durationHelperLong: content.durationHelperLong,
   });
 };
 
@@ -434,6 +460,50 @@ export const parseTransitionContentRecord = (value: unknown): TransitionContentR
 export const contentLedger = parseContentLedger(companionLedger as unknown);
 export const orderedTomContent = contentLedger.stateContent;
 export const orderedPublicTomContent = Object.freeze(orderedTomContent.map(publicProjection));
+
+const PUBLIC_TOM_CONTENT_KEY_SET = new Set<string>(PUBLIC_TOM_CONTENT_KEYS);
+
+export const serializePublicTomContentPayload = (
+  records: readonly unknown[] = orderedPublicTomContent,
+): string => {
+  if (records.length !== orderedTomStates.length) {
+    fail('public payload must contain exactly 51 records');
+  }
+
+  const structuralIds = new Set<string>();
+  records.forEach((value, index) => {
+    const record = requireRecord(value, 'publicPayload[' + index + ']');
+    for (const key of Object.keys(record)) {
+      if (!PUBLIC_TOM_CONTENT_KEY_SET.has(key)) {
+        fail('publicPayload[' + index + '] contains non-public key "' + key + '"');
+      }
+    }
+    structuralIds.add(requireString(
+      record.structuralStateId,
+      'publicPayload[' + index + '].structuralStateId',
+    ));
+  });
+
+  if (structuralIds.size !== orderedTomStates.length) {
+    fail('public payload structuralStateId values must be unique');
+  }
+  for (const state of orderedTomStates) {
+    if (!structuralIds.has(state.id)) {
+      fail('public payload is missing structural state "' + state.id + '"');
+    }
+  }
+
+  return JSON.stringify(records).replace(
+    /[<>&\u2028\u2029]/g,
+    (character) => ({
+      '<': '\\u003c',
+      '>': '\\u003e',
+      '&': '\\u0026',
+      '\u2028': '\\u2028',
+      '\u2029': '\\u2029',
+    })[character] ?? character,
+  );
+};
 
 const contentById = new Map(orderedTomContent.map((entry) => [entry.structuralStateId, entry]));
 const publicContentById = new Map(

@@ -1,4 +1,4 @@
-import type { TomBoundaryRole, TomPhase } from './cycle-ledger';
+import type { TomBoundaryRole, TomPhase } from './cycle-runtime';
 import type { QualityProfile } from './cycle-quality';
 
 export type AtmosphereKind =
