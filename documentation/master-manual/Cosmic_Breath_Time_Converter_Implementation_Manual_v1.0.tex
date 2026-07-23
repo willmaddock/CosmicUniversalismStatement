@@ -1,0 +1,2108 @@
+\documentclass[11pt,letterpaper]{article}
+
+% ============================================================
+% COSMIC BREATH TIME CONVERTER IMPLEMENTATION MANUAL
+% Compile with: pdfLaTeX
+% Verified baseline date: July 19, 2026
+% ============================================================
+
+% ------------------------------------------------------------
+% Core packages
+% ------------------------------------------------------------
+\usepackage[margin=0.78in,headheight=16pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[scaled=0.94]{helvet}
+\usepackage{microtype}
+\usepackage{parskip}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage{listings}
+\usepackage[most]{tcolorbox}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{pifont}
+
+% ------------------------------------------------------------
+% Document typography
+% ------------------------------------------------------------
+\renewcommand{\familydefault}{\sfdefault}
+\setstretch{1.08}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+
+% ------------------------------------------------------------
+% Cosmic Universalism color palette
+% ------------------------------------------------------------
+\definecolor{CUNavy}{HTML}{050812}
+\definecolor{CUNavyTwo}{HTML}{080D1A}
+\definecolor{CUSurface}{HTML}{0C1424}
+\definecolor{CUGold}{HTML}{DDBF72}
+\definecolor{CUGoldLight}{HTML}{FFF8DD}
+\definecolor{CUCyan}{HTML}{35CDEB}
+\definecolor{CUCyanLight}{HTML}{78E8FF}
+\definecolor{CUBlue}{HTML}{668ED1}
+\definecolor{CUBlueLight}{HTML}{9EB9EA}
+\definecolor{CUAmber}{HTML}{D99A32}
+\definecolor{CURed}{HTML}{B84C4C}
+\definecolor{CUGreen}{HTML}{2C8A65}
+\definecolor{CULight}{HTML}{F3F6FA}
+\definecolor{CUBorder}{HTML}{CCD5E0}
+\definecolor{CUText}{HTML}{18212E}
+\definecolor{CUMuted}{HTML}{5C6878}
+\definecolor{CUCodeBackground}{HTML}{F6F8FB}
+\definecolor{CUCodeBorder}{HTML}{BFCADA}
+
+% ------------------------------------------------------------
+% Project metadata
+% ------------------------------------------------------------
+\newcommand{\ProjectTitle}{Cosmic Breath Time Converter}
+\newcommand{\DocumentTitle}{Implementation Manual}
+\newcommand{\RepositoryName}{CosmicUniversalismStatement}
+\newcommand{\RepositoryURL}{https://github.com/willmaddock/CosmicUniversalismStatement}
+\newcommand{\StableBranch}{website}
+\newcommand{\WebsiteBranch}{feature/cu-time-converter}
+\newcommand{\WebsiteDirectory}{website/}
+\newcommand{\TargetRoute}{/CosmicUniversalismStatement/cu-time/}
+\newcommand{\BaselineTag}{website-v1.1-cu-time-foundation}
+\newcommand{\BaselineCommit}{4fd6897}
+\newcommand{\DocumentVersion}{1.0}
+\newcommand{\VerificationDate}{July 19, 2026}
+\newcommand{\AuthorName}{William Maddock}
+
+% ------------------------------------------------------------
+% Hyperlinks and PDF metadata
+% ------------------------------------------------------------
+\hypersetup{
+    colorlinks=true,
+    linkcolor=CUBlue,
+    urlcolor=CUBlue,
+    citecolor=CUBlue,
+    pdftitle={Cosmic Breath Time Converter Implementation Manual},
+    pdfauthor={William Maddock},
+    pdfsubject={Controlled migration of the Cosmic Breath Time Converter into Astro},
+    pdfkeywords={Cosmic Universalism, CU-Time, Astro, TypeScript, Decimal.js,
+                 Gregorian calendar, Julian Day Number, Vitest, functional parity}
+}
+
+% ------------------------------------------------------------
+% Header and footer
+% ------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textbf{\ProjectTitle}}
+\fancyhead[R]{\small\DocumentTitle}
+\fancyfoot[L]{\small Version \DocumentVersion}
+\fancyfoot[C]{\small \thepage\ of \pageref{LastPage}}
+\fancyfoot[R]{\small Branch: \texttt{\WebsiteBranch}}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.5pt}
+
+% ------------------------------------------------------------
+% Section formatting
+% ------------------------------------------------------------
+\titleformat{\section}
+  {\Large\bfseries\color{CUNavy}}
+  {\thesection}
+  {0.8em}
+  {}
+  [\vspace{0.2em}\color{CUCyan}\titlerule]
+
+\titleformat{\subsection}
+  {\large\bfseries\color{CUNavyTwo}}
+  {\thesubsection}
+  {0.7em}
+  {}
+
+\titleformat{\subsubsection}
+  {\normalsize\bfseries\color{CUBlue}}
+  {\thesubsubsection}
+  {0.6em}
+  {}
+
+\titlespacing*{\section}{0pt}{2.2em}{1em}
+\titlespacing*{\subsection}{0pt}{1.6em}{0.7em}
+\titlespacing*{\subsubsection}{0pt}{1.2em}{0.4em}
+
+% ------------------------------------------------------------
+% Lists
+% ------------------------------------------------------------
+\setlist[itemize]{
+    leftmargin=1.6em,
+    itemsep=0.3em,
+    topsep=0.3em
+}
+
+\setlist[enumerate]{
+    leftmargin=2em,
+    itemsep=0.45em,
+    topsep=0.4em
+}
+
+\newcommand{\checkbox}{\(\square\)}
+\newcommand{\checked}{\ding{51}}
+
+% ------------------------------------------------------------
+% Table helpers
+% ------------------------------------------------------------
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% ------------------------------------------------------------
+% General information boxes
+% ------------------------------------------------------------
+\newtcolorbox{purposebox}{
+    enhanced,
+    breakable,
+    colback=CULight,
+    colframe=CUBlue,
+    boxrule=0.8pt,
+    arc=2mm,
+    left=3mm,
+    right=3mm,
+    top=2.5mm,
+    bottom=2.5mm,
+    title=\textbf{Purpose},
+    coltitle=white,
+    colbacktitle=CUBlue
+}
+
+\newtcolorbox{checkpointbox}{
+    enhanced,
+    breakable,
+    colback=CUCyan!6,
+    colframe=CUCyan,
+    boxrule=0.8pt,
+    arc=2mm,
+    left=3mm,
+    right=3mm,
+    top=2.5mm,
+    bottom=2.5mm,
+    title=\textbf{Checkpoint},
+    coltitle=CUNavy,
+    colbacktitle=CUCyanLight
+}
+
+\newtcolorbox{safetybox}{
+    enhanced,
+    breakable,
+    colback=CUAmber!8,
+    colframe=CUAmber,
+    boxrule=0.8pt,
+    arc=2mm,
+    left=3mm,
+    right=3mm,
+    top=2.5mm,
+    bottom=2.5mm,
+    title=\textbf{Safety Rule},
+    coltitle=white,
+    colbacktitle=CUAmber
+}
+
+\newtcolorbox{warningbox}{
+    enhanced,
+    breakable,
+    colback=CURed!6,
+    colframe=CURed,
+    boxrule=0.8pt,
+    arc=2mm,
+    left=3mm,
+    right=3mm,
+    top=2.5mm,
+    bottom=2.5mm,
+    title=\textbf{Do Not Continue Until Resolved},
+    coltitle=white,
+    colbacktitle=CURed
+}
+
+\newtcolorbox{successbox}{
+    enhanced,
+    breakable,
+    colback=CUGreen!7,
+    colframe=CUGreen,
+    boxrule=0.8pt,
+    arc=2mm,
+    left=3mm,
+    right=3mm,
+    top=2.5mm,
+    bottom=2.5mm,
+    title=\textbf{Successful Result},
+    coltitle=white,
+    colbacktitle=CUGreen
+}
+
+\newtcolorbox{notebox}{
+    enhanced,
+    breakable,
+    colback=CUCodeBackground,
+    colframe=CUBorder,
+    boxrule=0.7pt,
+    arc=2mm,
+    left=3mm,
+    right=3mm,
+    top=2.5mm,
+    bottom=2.5mm
+}
+
+% ------------------------------------------------------------
+% Listing styles
+% ------------------------------------------------------------
+\lstdefinestyle{terminalstyle}{
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{CUNavyTwo},
+    keywordstyle=\color{CUCyanLight},
+    stringstyle=\color{CUGoldLight},
+    commentstyle=\color{CUBlueLight},
+    identifierstyle=\color{white},
+    showstringspaces=false,
+    columns=fullflexible,
+    keepspaces=true,
+    breaklines=true,
+    breakatwhitespace=false,
+    frame=none,
+    tabsize=2,
+    upquote=true
+}
+
+\lstdefinestyle{promptstyle}{
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{CUCodeBackground},
+    keywordstyle=\color{CUBlue},
+    stringstyle=\color{CUGreen},
+    commentstyle=\color{CUMuted},
+    identifierstyle=\color{CUText},
+    showstringspaces=false,
+    columns=fullflexible,
+    keepspaces=true,
+    breaklines=true,
+    breakatwhitespace=false,
+    frame=none,
+    tabsize=2,
+    upquote=true
+}
+
+\lstdefinestyle{codestyle}{
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{CUCodeBackground},
+    keywordstyle=\color{CUBlue},
+    stringstyle=\color{CUGreen},
+    commentstyle=\color{CUMuted},
+    identifierstyle=\color{CUText},
+    showstringspaces=false,
+    columns=fullflexible,
+    keepspaces=true,
+    breaklines=true,
+    breakatwhitespace=false,
+    frame=none,
+    tabsize=2,
+    upquote=true
+}
+
+% ------------------------------------------------------------
+% Copy-and-paste boxes
+% ------------------------------------------------------------
+\newtcblisting{commandbox}[1]{
+    enhanced,
+    breakable,
+    listing only,
+    listing engine=listings,
+    listing options={style=terminalstyle},
+    colback=CUNavyTwo,
+    colframe=CUCyan,
+    coltitle=CUNavy,
+    colbacktitle=CUCyanLight,
+    boxrule=0.8pt,
+    arc=2mm,
+    left=2mm,
+    right=2mm,
+    top=1mm,
+    bottom=1mm,
+    title=\textbf{#1}
+}
+
+\newtcblisting{promptbox}[1]{
+    enhanced,
+    breakable,
+    listing only,
+    listing engine=listings,
+    listing options={style=promptstyle},
+    colback=CUCodeBackground,
+    colframe=CUBlue,
+    coltitle=white,
+    colbacktitle=CUBlue,
+    boxrule=0.8pt,
+    arc=2mm,
+    left=2mm,
+    right=2mm,
+    top=1mm,
+    bottom=1mm,
+    title=\textbf{Copy-and-Paste Prompt: #1}
+}
+
+\newtcblisting{codebox}[1]{
+    enhanced,
+    breakable,
+    listing only,
+    listing engine=listings,
+    listing options={style=codestyle},
+    colback=CUCodeBackground,
+    colframe=CUCodeBorder,
+    coltitle=white,
+    colbacktitle=CUNavyTwo,
+    boxrule=0.8pt,
+    arc=2mm,
+    left=2mm,
+    right=2mm,
+    top=1mm,
+    bottom=1mm,
+    title=\textbf{#1}
+}
+
+% ------------------------------------------------------------
+% Convenience commands
+% ------------------------------------------------------------
+\newcommand{\filepath}[1]{\texttt{#1}}
+\newcommand{\menu}[1]{\textbf{\textsf{#1}}}
+\newcommand{\branchname}[1]{\texttt{#1}}
+\newcommand{\statusline}[2]{\textbf{#1:} #2}
+
+% ============================================================
+% DOCUMENT
+% ============================================================
+
+\begin{document}
+
+% ------------------------------------------------------------
+% Cover page
+% ------------------------------------------------------------
+\begin{titlepage}
+\pagecolor{CUNavy}
+\color{white}
+\thispagestyle{empty}
+
+\vspace*{0.65in}
+
+{\small\bfseries\color{CUCyanLight}
+COSMIC UNIVERSALISM COMPUTATIONAL INTELLIGENCE INITIATIVE}
+
+\vspace{0.42in}
+
+{\Huge\bfseries
+\ProjectTitle}
+
+\vspace{0.18in}
+
+{\LARGE\color{CUGoldLight}
+\DocumentTitle}
+
+\vspace{0.32in}
+
+{\large
+A specification-first, controlled migration manual for preserving the
+approved converter behavior while integrating a testable TypeScript engine
+and accessible interactive interface into the Astro CU-Time page.}
+
+\vfill
+
+\begin{tcolorbox}[
+    colback=CUNavyTwo,
+    colframe=CUBlue,
+    boxrule=0.8pt,
+    arc=2mm,
+    width=\textwidth
+]
+\color{white}
+\begin{tabularx}{\textwidth}{>{\bfseries}L{1.72in}Y}
+Repository & \RepositoryName \\
+Protected branch & \texttt{main} \\
+Stable website branch & \texttt{\StableBranch} \\
+Active feature branch & \texttt{\WebsiteBranch} \\
+Foundation tag & \texttt{\BaselineTag} \\
+Foundation commit & \texttt{\BaselineCommit} \\
+Target route & \texttt{\TargetRoute} \\
+Migration strategy & Approach B: tested TypeScript extraction \\
+Reference implementation & \texttt{cosmic\_breath\_time\_converter\_v3\_0\_1.html} \\
+Document version & \DocumentVersion \\
+Verified & \VerificationDate \\
+\end{tabularx}
+\end{tcolorbox}
+
+\vfill
+
+{\large\bfseries \AuthorName}
+
+\vspace{0.1in}
+
+{\small \href{\RepositoryURL}{\RepositoryURL}}
+
+\vspace{0.4in}
+
+\end{titlepage}
+
+\pagecolor{white}
+\color{CUText}
+
+% ------------------------------------------------------------
+% Document control
+% ------------------------------------------------------------
+\section*{Document Control}
+\addcontentsline{toc}{section}{Document Control}
+
+\begin{tabularx}{\textwidth}{>{\bfseries}L{1.88in}Y}
+\toprule
+Document & \ProjectTitle: \DocumentTitle \\
+Version & \DocumentVersion \\
+Classification & Technical Specification and Controlled Migration Manual \\
+Repository & \href{\RepositoryURL}{\RepositoryName} \\
+Protected branch & \branchname{main} \\
+Stable integration branch & \branchname{\StableBranch} \\
+Active development branch & \branchname{\WebsiteBranch} \\
+Foundation baseline & \branchname{\BaselineTag} at \texttt{\BaselineCommit} \\
+Target page & \filepath{website/src/pages/cu-time.astro} \\
+Target local route & \texttt{\TargetRoute} \\
+Reference implementation & \filepath{cosmic\_breath\_time\_converter\_v3\_0\_1.html} \\
+Technical baseline verified & \VerificationDate \\
+\bottomrule
+\end{tabularx}
+
+\begin{purposebox}
+This manual controls the solo-workflow migration of the existing standalone
+Cosmic Breath Time Converter into the Cosmic Universalism Astro website.
+It preserves approved numerical behavior while separating mathematical
+specification, pure conversion logic, browser interaction, presentation,
+testing, and release approval.
+\end{purposebox}
+
+\begin{safetybox}
+This document does not approve any mathematical correction merely because a
+potential defect or ambiguity is identified. The original HTML converter is
+the behavioral reference. Every intentional change to constants, formulas,
+rounding, calendar interpretation, labels, or outputs requires a documented
+review decision and new test expectations.
+\end{safetybox}
+
+\clearpage
+\tableofcontents
+\clearpage
+
+% ============================================================
+\section*{START HERE - Initialize a New Project Chat}
+\addcontentsline{toc}{section}{START HERE - Initialize a New Project Chat}
+% ============================================================
+
+Use this section whenever converter work is continued in a new chat inside
+the existing \textbf{Cosmic Universalism Website} ChatGPT Project.
+
+\subsection*{Required Project references}
+
+Add or retain these files in the Project:
+
+\begin{itemize}
+    \item \filepath{Cosmic\_Universalism\_Website\_Implementation\_Manual\_v1.1.pdf}
+    \item \filepath{Cosmic\_Breath\_Time\_Converter\_Implementation\_Manual\_v1.0.pdf}
+    \item \filepath{cosmic-universalism-website-blueprint.md}
+    \item \filepath{cosmic\_breath\_time\_converter\_v3\_0\_1.html}
+\end{itemize}
+
+\subsection*{New-chat bootstrap prompt}
+
+\begin{promptbox}{Initialize the CU-Time Converter Chat}
+We are continuing the controlled Cosmic Breath Time Converter
+implementation inside the Cosmic Universalism Website Project.
+
+Before proposing or making changes, read these Project references:
+
+1. Cosmic_Breath_Time_Converter_Implementation_Manual_v1.0.pdf
+2. Cosmic_Universalism_Website_Implementation_Manual_v1.1.pdf
+3. cosmic_breath_time_converter_v3_0_1.html
+4. cosmic-universalism-website-blueprint.md
+
+Use the Project Instructions as mandatory governance rules.
+
+Repository:
+willmaddock/CosmicUniversalismStatement
+
+Protected branch:
+main
+
+Stable website branch:
+website
+
+Active feature branch:
+feature/cu-time-converter
+
+Foundation baseline tag:
+website-v1.1-cu-time-foundation
+
+Foundation baseline commit:
+4fd6897
+
+Target page:
+website/src/pages/cu-time.astro
+
+Target route:
+/CosmicUniversalismStatement/cu-time/
+
+Reference implementation:
+cosmic_breath_time_converter_v3_0_1.html
+
+Selected migration strategy:
+Approach B - preserve approved converter behavior while extracting
+its mathematics into testable TypeScript modules and connecting an
+accessible interface to the Astro CU-Time page.
+
+The original HTML converter must remain unchanged as the reference
+implementation.
+
+First:
+
+1. Summarize the applicable Project protection rules.
+2. Summarize the verified foundation baseline.
+3. Identify the current authorized manual phase.
+4. Identify the target route and expected CU-Time files.
+5. State which repository facts must be verified before editing.
+6. State the next authorized task and its completion gate.
+
+Do not edit files.
+Do not install packages.
+Do not switch branches.
+Do not commit, tag, push, merge, or deploy.
+Wait for repository verification before implementation.
+\end{promptbox}
+
+\begin{checkpointbox}
+A new chat is initialized correctly only when it identifies
+\branchname{main} as protected, \branchname{website} as the stable baseline,
+\branchname{feature/cu-time-converter} as the active feature branch, and the
+original HTML converter as an unchanged reference implementation.
+\end{checkpointbox}
+
+% ============================================================
+\section{Part 1 - Project Governance and Verified Baseline}
+% ============================================================
+
+\subsection{Repository and branch authority}
+
+\begin{tabularx}{\textwidth}{L{2.05in}Y}
+\toprule
+\textbf{Item} & \textbf{Verified state} \\
+\midrule
+Repository root & \nolinkurl{/Users/cosmos/Documents/GitHub/CosmicUniversalismStatement} \\
+Origin & \href{\RepositoryURL}{\RepositoryURL.git} \\
+Protected branch & \branchname{main}; never modify for this workflow \\
+Stable website branch & \branchname{website} at \texttt{a4a4666} \\
+Stable website tag & \branchname{website-v1.0-foundation} \\
+Active feature branch & \branchname{feature/cu-time-converter} \\
+Feature foundation commit & \nolinkurl{4fd68974e6a8ff99289087cb195a7b09f5759386} \\
+Feature foundation tag & \branchname{website-v1.1-cu-time-foundation} \\
+Working tree & Clean and tracking \texttt{origin/feature/cu-time-converter} \\
+Deployment trigger & \branchname{website} only \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Verified technology state}
+
+\begin{tabularx}{\textwidth}{L{2.05in}Y}
+\toprule
+\textbf{Technology} & \textbf{Verified state} \\
+\midrule
+Node.js & \texttt{v24.18.0} \\
+npm & \texttt{11.16.0} \\
+Astro & \texttt{\string^7.1.1} \\
+TypeScript configuration & Astro strict configuration \\
+Astro site & \texttt{https://willmaddock.github.io} \\
+Astro base & \texttt{/CosmicUniversalismStatement} \\
+Arbitrary-precision dependency & Not installed \\
+Automated test framework & Not installed \\
+Existing client scripts & None detected in \filepath{website/src/} \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Verified foundation files}
+
+\begin{codebox}{Existing CU-Time files}
+website/src/pages/cu-time.astro
+website/src/components/CUTimeConverter.astro
+website/src/components/CUTimeInvitation.astro
+website/src/lib/cuTime/constants.ts
+\end{codebox}
+
+The current page is explanatory and imports the foundation component. The
+component contains accessible presentation markup, classification, and an
+active-development status. It does not contain controls or calculations.
+
+The constants workspace is not empty. It contains an initial inventory of
+NASA-aligned and CU framework values as ordinary JavaScript number literals.
+Those values are not yet approved for calculation and may not preserve all
+source digits when evaluated as binary floating-point numbers.
+
+\begin{warningbox}
+Do not describe \filepath{constants.ts} as an empty placeholder. The accurate
+status is: \textbf{inventory extracted, precision representation and
+mathematical approval pending}.
+\end{warningbox}
+
+\subsection{Verified production build}
+
+The foundation build was executed on \VerificationDate.
+
+\begin{codebox}{Verified build result}
+Command: npm run build
+Exit code: 0
+Output mode: static
+Pages built: 7
+CU-Time route generated: /cu-time/index.html
+Active branch: feature/cu-time-converter
+HEAD: 4fd6897
+Working tree after build: clean
+\end{codebox}
+
+\begin{successbox}
+The CU-Time presentation foundation is buildable and the target route exists.
+This authorizes specification work. It does not yet authorize mathematical
+integration.
+\end{successbox}
+
+\subsection{Project Instructions appendix block}
+
+Append this block to the existing ChatGPT Project Instructions. Do not replace
+the original website instructions.
+
+\begin{promptbox}{Permanent CU-Time Project Instructions}
+CURRENT CU-TIME DEVELOPMENT WORKFLOW
+
+ACTIVE FEATURE:
+Cosmic Breath Time Converter integration
+
+STABLE WEBSITE BRANCH:
+website
+
+STABLE WEBSITE MILESTONE:
+website-v1.0-foundation
+
+STABLE WEBSITE COMMIT:
+a4a4666
+
+ACTIVE DEVELOPMENT BRANCH:
+feature/cu-time-converter
+
+CURRENT FEATURE FOUNDATION:
+website-v1.1-cu-time-foundation
+
+FOUNDATION COMMIT:
+4fd6897
+
+TARGET PAGE:
+website/src/pages/cu-time.astro
+
+TARGET LOCAL ROUTE:
+/CosmicUniversalismStatement/cu-time/
+
+CURRENT FOUNDATION COMPONENT:
+website/src/components/CUTimeConverter.astro
+
+CURRENT CONSTANTS INVENTORY:
+website/src/lib/cuTime/constants.ts
+
+REFERENCE CONVERTER:
+cosmic_breath_time_converter_v3_0_1.html
+
+IMPLEMENTATION APPROACH:
+Approach B - extract approved converter behavior into pure,
+testable TypeScript modules and integrate it with the Astro CU-Time
+page using lightweight browser JavaScript.
+
+FUNCTIONAL PARITY RULE:
+The integrated converter must preserve approved numerical behavior,
+precision, inputs, outputs, calendar handling, and conversion
+capabilities of the reference converter. The website interface does
+not need to preserve the reference converter's React, CDN, Tailwind,
+or visual architecture.
+
+REFERENCE PROTECTION:
+Do not modify the original HTML reference converter during the
+initial migration.
+
+MATHEMATICAL PROTECTION:
+1. Do not silently change constants.
+2. Do not silently change formulas.
+3. Do not silently change rounding behavior.
+4. Do not silently change calendar assumptions.
+5. Record each proposed correction separately.
+6. Establish golden reference vectors before implementing the new
+   conversion engine.
+7. Demonstrate parity before introducing enhancements.
+
+BRANCH PROTECTION:
+1. Never modify main.
+2. Keep website as the stable website baseline.
+3. Perform CU-Time work only on feature/cu-time-converter.
+4. Confirm branch and working-tree status before every edit.
+5. Do not merge into website without explicit approval.
+6. Do not commit, tag, push, merge, or deploy unless explicitly
+   requested.
+
+CURRENT DEVELOPMENT BOUNDARY:
+The presentation foundation is complete. Constants review,
+mathematical specification, engine implementation, automated tests,
+and interactive integration remain pending.
+\end{promptbox}
+
+\subsection{Required pre-edit terminal check}
+
+\begin{commandbox}{Verify the live repository before every editing session}
+cd "$(git rev-parse --show-toplevel)" || exit 1
+
+git branch --show-current
+git rev-parse --short HEAD
+git status --short --branch
+\end{commandbox}
+
+Expected branch:
+
+\begin{codebox}{Required branch}
+feature/cu-time-converter
+\end{codebox}
+
+\subsection{No-edit Codex inspection prompt}
+
+\begin{promptbox}{Verify the Live Repository}
+Inspect the current repository without changing any files.
+
+Expected active branch:
+feature/cu-time-converter
+
+Foundation baseline tag:
+website-v1.1-cu-time-foundation
+
+Foundation baseline commit:
+4fd6897
+
+Verify and report:
+
+1. Repository root and origin
+2. Active branch and HEAD
+3. Working-tree status
+4. Relevant website and CU-Time tags
+5. CU-Time-related file structure
+6. Astro configuration and base-path handling
+7. package.json scripts and dependencies
+8. Existing test infrastructure
+9. Existing arbitrary-precision dependency
+10. Current CU-Time page and component responsibilities
+11. Current constants inventory
+12. Existing client-script conventions
+13. Deployment workflow trigger branch
+14. Production build status
+15. Differences from this manual
+
+Do not install packages.
+Do not create or edit files.
+Do not switch branches.
+Do not commit, tag, push, merge, or deploy.
+Return a structured verification report only.
+\end{promptbox}
+
+% ============================================================
+\section{Part 2 - Scope and Functional Parity}
+% ============================================================
+
+\subsection{Migration decision}
+
+The approved migration is \textbf{Approach B}: retain the standalone HTML
+converter unchanged as a reference and extract approved behavior into pure
+TypeScript modules. The Astro website provides the integrated presentation and
+browser interaction.
+
+\begin{tabularx}{\textwidth}{L{2.25in}Y}
+\toprule
+\textbf{Parity category} & \textbf{Requirement} \\
+\midrule
+Mathematical behavior & Required to match approved reference outputs \\
+Decimal precision & Required; exact literals must enter Decimal from strings \\
+Forward conversion & Required \\
+Reverse conversion & Required \\
+CE and BCE support & Required after calendar specification approval \\
+NASA-aligned output & Required \\
+Years-since-Big-Bang output & Required \\
+Essential validation & Required \\
+Copy and clear controls & Required for first interactive release \\
+React architecture & Not required \\
+Tailwind classes & Not required \\
+CDN dependencies & Not permitted for the calculation engine \\
+Original visual design & Not required \\
+\bottomrule
+\end{tabularx}
+
+\subsection{First interactive release scope}
+
+\textbf{Included:}
+
+\begin{itemize}
+    \item Gregorian date and time to CU-Time.
+    \item CU-Time to Gregorian date and time.
+    \item CE/BCE selection and documented astronomical-year mapping.
+    \item NASA-aligned CU-Time.
+    \item Years since Big Bang as defined by the approved converter model.
+    \item Full numeric and scientific-notation results.
+    \item Accessible validation and result announcements.
+    \item Copy and clear controls.
+    \item Methodology and classification disclosure.
+\end{itemize}
+
+\textbf{Deferred until core parity is approved:}
+
+\begin{itemize}
+    \item CSV upload and export.
+    \item XLSX support.
+    \item Embedded Markdown research and About tabs.
+    \item CU-Time arithmetic calculator.
+    \item Theme switching.
+    \item Spreadsheet editing.
+    \item Additional cosmological phase calculations.
+\end{itemize}
+
+\subsection{Reference behavior inventory prompt}
+
+\begin{promptbox}{Audit the Reference Converter Without Editing}
+Read the complete reference file:
+cosmic_breath_time_converter_v3_0_1.html
+
+Do not modify it.
+
+Produce a behavioral inventory with these sections:
+
+1. External runtime dependencies and versions
+2. Decimal precision and rounding configuration
+3. Constants used directly by conversion functions
+4. Constants mentioned only in research text
+5. Input fields and validation behavior
+6. Gregorian-to-CU conversion path
+7. CU-to-Gregorian conversion path
+8. NASA-aligned calculations
+9. Formatting functions
+10. Metadata calculations
+11. Result fields and labels
+12. Calculator behavior
+13. CSV/XLSX behavior
+14. Accessibility behavior
+15. Potential ambiguities or defects
+16. Features required for first-release parity
+17. Features safe to defer
+
+For every potential defect, label it REVIEW REQUIRED. Do not
+silently propose a corrected expected value.
+
+Do not edit repository files.
+Do not install packages.
+Do not commit, tag, push, merge, or deploy.
+\end{promptbox}
+
+\subsection{Parity decision record}
+
+Every behavior must receive one decision:
+
+\begin{codebox}{Permitted parity decisions}
+PRESERVE EXACTLY
+PRESERVE WITH DOCUMENTED REPRESENTATION CHANGE
+CORRECT AFTER APPROVAL
+DEFER FROM FIRST RELEASE
+REMOVE AFTER APPROVAL
+OPEN QUESTION
+\end{codebox}
+
+\begin{checkpointbox}
+No engine implementation begins until the reference behavior inventory and
+parity decision record are reviewed and accepted.
+\end{checkpointbox}
+
+% ============================================================
+\section{Part 3 - Mathematical Constants}
+% ============================================================
+
+\subsection{Direct reference-engine constants}
+
+The standalone converter constructs these values with Decimal strings and sets
+precision to 60 digits with half-up rounding.
+
+\begin{tabularx}{\textwidth}{L{1.7in}Y L{1.35in}}
+\toprule
+\textbf{Name} & \textbf{Exact source literal} & \textbf{Initial status} \\
+\midrule
+\texttt{ANCHOR\_YEAR} & \nolinkurl{2000} & Review \\
+\texttt{ANCHOR\_JDN} & \nolinkurl{2451544.5} & Review \\
+\texttt{DAYS\_PER\_YEAR} & \nolinkurl{365.2421897} & Review \\
+\texttt{BASE\_CU\_NASA} & \nolinkurl{3094213000000} & Review \\
+\texttt{OFFSET} & \nolinkurl{78955076.49024643522707769749119} & Precision critical \\
+\texttt{NASA\_UNIVERSE\_AGE} & \nolinkurl{13786999981.453} & Review \\
+\texttt{BIG\_BANG\_CU\_NASA} & Derived by subtraction & Review \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Current website constants inventory}
+
+The existing \nolinkurl{website/src/lib/cuTime/constants.ts} also lists these
+CU framework values:
+
+\begin{codebox}{Additional constants currently inventoried}
+baseCu
+subZtomCu
+secondsPerDay
+secondsPerYear
+cosmicLifespan
+convergenceYear
+ctomStart
+ztomProximity
+\end{codebox}
+
+They require separate provenance review because not all are used by the
+reference engine's core conversion functions.
+
+\begin{warningbox}
+Long decimal constants must not remain ordinary JavaScript number literals in
+the approved engine. Binary floating-point evaluation can discard source
+digits before Decimal receives the value. Store exact values as strings and
+construct Decimal instances from those strings.
+\end{warningbox}
+
+\subsection{Proposed precision-safe representation}
+
+\begin{codebox}{Illustrative constants representation - not yet authorized code}
+export const CU_TIME_CONSTANT_LITERALS = {
+  anchorYear: '2000',
+  anchorJdn: '2451544.5',
+  daysPerYear: '365.2421897',
+  baseCuNasa: '3094213000000',
+  offset: '78955076.49024643522707769749119',
+  nasaUniverseAge: '13786999981.453',
+} as const;
+\end{codebox}
+
+\subsection{Constant-review worksheet}
+
+For each constant, record:
+
+\begin{longtable}{L{1.5in}L{4.85in}}
+\toprule
+\textbf{Field} & \textbf{Required entry} \\
+\midrule
+Name & Exact code identifier \\
+Source literal & Character-for-character source value \\
+Units & Years, days, JDN, CU-Time, seconds, or dimensionless \\
+Meaning & What the constant represents \\
+Provenance & Source file and research reference \\
+Used by & Exact functions or equations \\
+Precision & Required significant and decimal digits \\
+Uncertainty & Empirical, model-defined, or not specified \\
+Approval & Approved, provisional, rejected, or open \\
+Change control & Whether parity expectation changes \\
+\bottomrule
+\end{longtable}
+
+\subsection{Constant audit prompt}
+
+\begin{promptbox}{Create the Constant Registry}
+Create a proposed CU-Time constant registry from:
+
+- cosmic_breath_time_converter_v3_0_1.html
+- website/src/lib/cuTime/constants.ts
+- approved CU-Time research references
+
+Do not edit files.
+
+Separate constants into:
+
+A. Direct conversion-engine constants
+B. Derived constants
+C. Research-only constants
+D. UI-only values
+E. Unresolved or conflicting constants
+
+For every constant, document:
+
+- exact identifier
+- exact literal as text
+- units
+- meaning
+- source location
+- functions that use it
+- precision requirement
+- uncertainty or model status
+- whether it is approved for the first engine
+
+Detect values that would lose precision as JavaScript numbers.
+Do not change values.
+Mark discrepancies as REVIEW REQUIRED.
+\end{promptbox}
+
+\begin{checkpointbox}
+Part 3 is complete only after the direct engine constants are approved as
+exact strings, derived values have explicit formulas, and research-only values
+are excluded from the first conversion engine unless separately authorized.
+\end{checkpointbox}
+
+% ============================================================
+\section{Part 4 - Calendar and Time Specification}
+% ============================================================
+
+\subsection{Reference calendar behavior}
+
+The reference converter uses a proleptic Gregorian-style Julian Day Number
+algorithm. It maps BCE input to astronomical years with:
+
+\[
+Y_{\mathrm{astronomical}} = 1 - Y_{\mathrm{BCE}}.
+\]
+
+Therefore, 1 BCE maps to astronomical year 0, and 2 BCE maps to astronomical
+year -1.
+
+The anchor JDN is \texttt{2451544.5}. The implementation treats the input time
+as UTC-like civil time and adds a day fraction based on 86,400 seconds.
+
+\subsection{Specification decisions required}
+
+\begin{itemize}
+    \item Confirm the proleptic Gregorian calendar across all supported years.
+    \item Confirm whether year 0 is accepted as direct CE input or only used internally.
+    \item Confirm BCE display and astronomical-year conversion.
+    \item Confirm the midnight/noon interpretation of the JDN anchor.
+    \item Confirm UTC as the only supported time basis.
+    \item Define valid month/day combinations and leap-year rules.
+    \item Define maximum supported year and safe conversion limits.
+    \item Define second precision and fractional-second policy.
+    \item Define rollover behavior when rounded seconds reach 60.
+\end{itemize}
+
+\subsection{Gregorian leap-year rule}
+
+For the proleptic Gregorian calendar, a year is a leap year when it is
+divisible by 4, except years divisible by 100 are not leap years unless they
+are divisible by 400. BCE application must use the approved astronomical-year
+mapping consistently.
+
+\subsection{Reference JDN formula}
+
+For year $Y$, month $M$, day $D$, and time values $h$, $m$, and $s$:
+
+\begin{align*}
+a &= \left\lfloor\frac{14-M}{12}\right\rfloor, \\
+y &= Y + 4800 - a, \\
+m' &= M + 12a - 3, \\
+J_{\mathrm{int}} &= D + \left\lfloor\frac{153m'+2}{5}\right\rfloor
++ 365y + \left\lfloor\frac{y}{4}\right\rfloor
+- \left\lfloor\frac{y}{100}\right\rfloor
++ \left\lfloor\frac{y}{400}\right\rfloor - 32045, \\
+f &= \frac{3600h+60m+s}{86400}, \\
+J &= J_{\mathrm{int}} - 0.5 + f.
+\end{align*}
+
+This records the reference algorithm. It is not a scientific endorsement of
+all supported date extrapolations.
+
+\subsection{Known validation gap}
+
+The reference input validation checks ranges such as month 1--12 and day
+1--31, but does not fully reject invalid combinations such as April 31 or a
+non-leap-year February 29 before conversion.
+
+\begin{warningbox}
+Improved date validation is a desirable correction, but it changes observable
+behavior. Record it as a separately approved correction with explicit tests.
+\end{warningbox}
+
+\subsection{Calendar specification prompt}
+
+\begin{promptbox}{Draft the Calendar Specification}
+Draft the formal calendar and time specification for the integrated
+converter.
+
+Do not edit code.
+
+Address:
+
+1. Proleptic Gregorian calendar definition
+2. Julian Day Number convention
+3. Anchor JDN and its civil date/time meaning
+4. UTC handling
+5. CE/BCE input and output
+6. Astronomical year zero mapping
+7. Leap-year rules
+8. Month-length validation
+9. Maximum supported year
+10. Seconds and fractional seconds
+11. Rounding and day rollover
+12. Invalid-input behavior
+13. Round-trip tolerance
+14. Known differences between the reference behavior and the
+    proposed validated behavior
+
+Label each proposed behavioral change REVIEW REQUIRED.
+Do not silently approve corrections.
+\end{promptbox}
+
+% ============================================================
+\section{Part 5 - Gregorian-to-CU Conversion}
+% ============================================================
+
+\subsection{Reference conversion path}
+
+The approved path to be specified and tested is:
+
+\begin{codebox}{Forward conversion sequence}
+Gregorian date, time, and era
+  -> astronomical year
+  -> Julian Day Number
+  -> delta days from ANCHOR_JDN
+  -> delta years using DAYS_PER_YEAR
+  -> NASA-aligned CU-Time
+  -> subtract OFFSET
+  -> converter-aligned CU-Time
+  -> derived and formatted outputs
+\end{codebox}
+
+\subsection{Reference equations}
+
+Let $J$ be the calculated JDN and $J_0$ the anchor JDN.
+
+\begin{align*}
+\Delta J &= J - J_0, \\
+\Delta Y &= \frac{\Delta J}{D_Y}, \\
+CU_{\mathrm{NASA}} &= CU_{\mathrm{NASA},0} + \Delta Y, \\
+CU_{\mathrm{converter}} &= CU_{\mathrm{NASA}} - O, \\
+Y_{\mathrm{BigBang}} &= Y_{\mathrm{NASA},0}
+  + \left(CU_{\mathrm{NASA}} - CU_{\mathrm{NASA},0}\right),
+\end{align*}
+
+where $D_Y$ is \texttt{DAYS\_PER\_YEAR} and $O$ is \texttt{OFFSET}.
+
+\subsection{Required forward output fields}
+
+\begin{itemize}
+    \item Original input date, era, and time.
+    \item Normalized Gregorian date.
+    \item Converter-aligned CU-Time formatted by magnitude.
+    \item Full converter-aligned numeric value.
+    \item Scientific notation.
+    \item NASA-aligned CU-Time formatted by magnitude.
+    \item Full NASA-aligned numeric value.
+    \item NASA-aligned scientific notation.
+    \item Years since Big Bang according to the converter model.
+    \item Approved metadata fields.
+\end{itemize}
+
+\subsection{Potential formatting ambiguity}
+
+The reference \texttt{formatCUTime} function appears to combine a remainder
+that may already contain the fractional component with \texttt{cuTime.mod(1)}.
+This may double-count part of the fraction. The behavior must be captured in a
+golden vector before any correction is considered.
+
+\subsection{Forward specification prompt}
+
+\begin{promptbox}{Specify Gregorian-to-CU Conversion}
+Using the approved constants registry and calendar specification,
+draft the normative Gregorian-to-CU conversion specification.
+
+Do not implement code.
+
+Include:
+
+- typed inputs
+- normalization rules
+- validation order
+- exact Decimal operations
+- forward equations
+- rounding points
+- result object fields
+- display formatting
+- error conditions
+- test invariants
+- reference-converter comparison procedure
+
+Identify any reference behavior that appears ambiguous or defective.
+Label it REVIEW REQUIRED and preserve the original expected output
+until an explicit correction is approved.
+\end{promptbox}
+
+\begin{checkpointbox}
+The forward algorithm is authorized for implementation only after its inputs,
+equations, output schema, rounding behavior, and golden expectations are
+approved.
+\end{checkpointbox}
+
+% ============================================================
+\section{Part 6 - CU-to-Gregorian Conversion}
+% ============================================================
+
+\subsection{Reference reverse path}
+
+\begin{codebox}{Reverse conversion sequence}
+Converter-aligned CU-Time
+  -> add OFFSET
+  -> NASA-aligned CU-Time
+  -> delta years from BASE_CU_NASA
+  -> Julian Day Number
+  -> Gregorian calendar conversion
+  -> CE/BCE display
+  -> derived and formatted outputs
+\end{codebox}
+
+\subsection{Reference reverse equations}
+
+\begin{align*}
+CU_{\mathrm{NASA}} &= CU_{\mathrm{converter}} + O, \\
+\Delta Y &= CU_{\mathrm{NASA}} - CU_{\mathrm{NASA},0}, \\
+J &= J_0 + \Delta Y D_Y.
+\end{align*}
+
+The JDN is then converted to Gregorian components using the reference
+\texttt{jdnToDate} algorithm.
+
+\subsection{Reverse-conversion review points}
+
+\begin{itemize}
+    \item Decimal input syntax and whitespace handling.
+    \item Negative CU-Time support.
+    \item Maximum supported magnitude.
+    \item Gregorian year conversion from Decimal to JavaScript number.
+    \item Rounding seconds to the nearest integer.
+    \item Carrying seconds to minutes and minutes to hours.
+    \item Carrying hour 24 into the next calendar day.
+    \item CE/BCE display convention.
+    \item Round-trip comparison tolerance.
+\end{itemize}
+
+The reference function reduces hours from 24 to 0 but does not visibly
+increment the calendar date in that branch. This is a potential rollover defect
+and must be evaluated with a targeted vector.
+
+\subsection{Reverse specification prompt}
+
+\begin{promptbox}{Specify CU-to-Gregorian Conversion}
+Using the approved constants registry and calendar specification,
+draft the normative CU-to-Gregorian conversion specification.
+
+Do not implement code.
+
+Include:
+
+- accepted Decimal input grammar
+- exact offset and JDN equations
+- Gregorian reconstruction algorithm
+- CE/BCE display rules
+- rounding and carry rules
+- next-day rollover behavior
+- output object fields
+- error handling
+- maximum supported magnitude
+- round-trip invariants
+- reference parity comparison
+
+Create targeted REVIEW REQUIRED cases for second, minute, hour,
+day, month, year, leap-day, and BCE rollovers.
+\end{promptbox}
+
+% ============================================================
+\section{Part 7 - Golden Reference Test Vectors}
+% ============================================================
+
+\subsection{Purpose}
+
+A golden vector records an input and the complete output produced by the
+unchanged reference converter. Golden vectors protect behavior during the
+TypeScript migration. They do not automatically prove that the underlying
+mathematics is correct.
+
+\subsection{Required vector set}
+
+\begin{longtable}{L{0.55in}L{2.65in}L{2.9in}}
+\toprule
+\textbf{ID} & \textbf{Input} & \textbf{Reason} \\
+\midrule
+F-01 & 01/01/2000 CE 00:00:00 & Anchor date \\
+F-02 & 06/05/2025 CE 00:12:00 & Metadata reference instant \\
+F-03 & 06/05/2025 CE 00:00:00 & Nearby reference boundary \\
+F-04 & 07/19/2026 CE 00:00:00 & Manual verification date \\
+F-05 & 02/29/2000 CE 12:34:56 & Valid leap day \\
+F-06 & 02/29/1900 CE 00:00:00 & Invalid Gregorian leap day \\
+F-07 & 04/31/2025 CE 00:00:00 & Invalid month/day combination \\
+F-08 & 01/01/0001 CE 00:00:00 & CE boundary \\
+F-09 & 01/01/0001 BCE 00:00:00 & Astronomical year zero mapping \\
+F-10 & Maximum supported year & Magnitude boundary \\
+R-01 & Anchor CU-Time & Reverse anchor \\
+R-02 & Approved present CU-Time & Reference example \\
+R-03 & Negative CU-Time & Input domain \\
+R-04 & Rollover-sensitive CU-Time & Seconds/day carry \\
+RT-01 & Forward then reverse & Round-trip invariant \\
+RT-02 & Reverse then forward & Round-trip invariant \\
+\bottomrule
+\end{longtable}
+
+\subsection{Derived anchor candidate}
+
+At the anchor JDN, the reference equations give:
+
+\[
+CU_{\mathrm{converter},0}
+= 3094213000000
+- 78955076.49024643522707769749119.
+\]
+
+This produces the source literal represented in the current website inventory
+as approximately \nolinkurl{3094134044923.509753564772922302508810}. It must still
+be captured from the running reference converter and compared character by
+character before becoming a golden value.
+
+\subsection{Golden vector record format}
+
+\begin{codebox}{Required vector record}
+ID:
+Reference converter version:
+Reference file hash:
+Input mode:
+Input date/time/era or CU-Time:
+Observed output labels:
+Observed full numeric values:
+Observed formatted values:
+Observed scientific notation:
+Observed metadata:
+Browser and version:
+Capture date:
+Reviewer:
+Parity decision:
+Notes and open questions:
+\end{codebox}
+
+\subsection{Reference hash command}
+
+\begin{commandbox}{Record the unchanged reference file hash}
+shasum -a 256 cosmic_breath_time_converter_v3_0_1.html
+\end{commandbox}
+
+Use the actual repository path when the file is stored elsewhere.
+
+\subsection{Golden vector prompt}
+
+\begin{promptbox}{Prepare the Golden Vector Plan}
+Create the golden reference vector worksheet for the unchanged
+HTML converter.
+
+Do not edit the reference converter or website code.
+
+For each required vector:
+
+- define exact input
+- define which output fields must be captured
+- identify the behavior being tested
+- identify expected validation behavior
+- identify whether the case is parity-only or correction-review
+- define a reproducible capture procedure
+
+Do not invent outputs that have not been observed from the reference
+converter. Leave observed-output fields blank until captured.
+\end{promptbox}
+
+\subsection{Golden vector approval gate}
+
+\begin{itemize}
+    \item[\checkbox] Reference file hash recorded.
+    \item[\checkbox] All required forward vectors captured.
+    \item[\checkbox] All required reverse vectors captured.
+    \item[\checkbox] Invalid-date behavior captured.
+    \item[\checkbox] BCE behavior captured.
+    \item[\checkbox] Rollover behavior captured.
+    \item[\checkbox] Full precision copied without spreadsheet conversion.
+    \item[\checkbox] Each ambiguity has a review decision.
+    \item[\checkbox] Golden vector dataset approved before engine coding.
+\end{itemize}
+
+% ============================================================
+\section{Part 8 - TypeScript Conversion Engine Architecture}
+% ============================================================
+
+\subsection{Approved architecture direction}
+
+The engine should contain pure modules with no direct DOM access. The Astro
+component and browser controller should consume the engine through typed
+interfaces.
+
+\begin{codebox}{Target CU-Time architecture}
+website/src/lib/cuTime/
+|-- constants.ts
+|-- types.ts
+|-- decimal.ts
+|-- validation.ts
+|-- calendar.ts
+|-- converter.ts
+|-- format.ts
+|-- metadata.ts
+`-- index.ts
+
+website/src/components/
+`-- CUTimeConverter.astro
+
+website/src/scripts/
+`-- cu-time-converter.ts
+
+website/src/pages/
+`-- cu-time.astro
+
+website/src/lib/cuTime/__tests__/
+|-- constants.test.ts
+|-- calendar.test.ts
+|-- converter.test.ts
+|-- format.test.ts
+`-- golden-vectors.test.ts
+\end{codebox}
+
+\subsection{Module responsibilities}
+
+\begin{tabularx}{\textwidth}{L{1.65in}Y}
+\toprule
+\textbf{Module} & \textbf{Responsibility} \\
+\midrule
+\texttt{constants.ts} & Exact approved literal registry; no calculations \\
+\texttt{types.ts} & Public inputs, outputs, errors, era, and vector types \\
+\texttt{decimal.ts} & Decimal configuration and safe constructors \\
+\texttt{validation.ts} & Date, time, era, numeric, and domain validation \\
+\texttt{calendar.ts} & Gregorian/JDN conversion only \\
+\texttt{converter.ts} & Forward, reverse, NASA, and Big-Bang calculations \\
+\texttt{format.ts} & Numeric and magnitude presentation \\
+\texttt{metadata.ts} & Approved secondary result calculations \\
+\texttt{index.ts} & Controlled public exports \\
+Browser controller & Form events, state, rendering, copy, and clear \\
+Astro component & Semantic form, results, labels, status, and styles \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Dependency plan}
+
+No arbitrary-precision dependency or test framework is currently installed.
+After specification approval, the intended dependency additions are:
+
+\begin{commandbox}{Install approved dependencies - run only when authorized}
+cd "$(git rev-parse --show-toplevel)/website" || exit 1
+
+npm install decimal.js
+npm install --save-dev vitest
+\end{commandbox}
+
+The exact package versions written to \filepath{package-lock.json} become part
+of the milestone record.
+
+\subsection{Required package scripts}
+
+\begin{codebox}{Proposed package.json scripts}
+"test": "vitest run",
+"test:watch": "vitest",
+"check": "astro check"
+\end{codebox}
+
+If \texttt{astro check} is added, the compatible checker package must also be
+installed according to the then-current Astro requirements.
+
+\subsection{Type and error design}
+
+The engine should return structured data and typed errors rather than formatted
+HTML strings. Suggested categories include:
+
+\begin{codebox}{Suggested error codes}
+INVALID_DATE_FORMAT
+INVALID_TIME_FORMAT
+INVALID_MONTH
+INVALID_DAY
+INVALID_LEAP_DAY
+INVALID_ERA
+INVALID_CU_TIME
+OUT_OF_SUPPORTED_RANGE
+DIVISION_BY_ZERO
+PRECISION_LIMIT
+INTERNAL_CONVERSION_ERROR
+\end{codebox}
+
+\subsection{Architecture planning prompt}
+
+\begin{promptbox}{Finalize the TypeScript Architecture}
+Using the approved specification and verified Astro repository,
+finalize the TypeScript engine architecture.
+
+Do not edit files.
+
+For every proposed file, define:
+
+- responsibility
+- imports
+- exports
+- public types
+- error behavior
+- Decimal boundary
+- test ownership
+- prohibited responsibilities
+
+Requirements:
+
+- pure conversion functions
+- exact string literals for precision-critical constants
+- no DOM access in lib/cuTime
+- no React
+- no Tailwind dependency
+- no calculation CDN
+- lightweight browser controller
+- compatibility with Astro strict TypeScript
+- compatibility with the configured base path
+- behavior controlled by golden vectors
+
+Return the file plan and dependency plan only.
+\end{promptbox}
+
+\begin{checkpointbox}
+The architecture is complete only when each responsibility has one owner,
+calculation code is independent of the UI, and no precision-critical value
+enters Decimal through a JavaScript number.
+\end{checkpointbox}
+
+% ============================================================
+\section{Part 9 - Automated Testing}
+% ============================================================
+
+\subsection{Testing layers}
+
+\begin{enumerate}
+    \item \textbf{Constant tests}: exact literals and derived identities.
+    \item \textbf{Calendar tests}: JDN, leap years, BCE, and rollovers.
+    \item \textbf{Conversion tests}: forward and reverse equations.
+    \item \textbf{Golden tests}: complete parity with captured reference outputs.
+    \item \textbf{Round-trip tests}: input recovery within approved tolerance.
+    \item \textbf{Validation tests}: malformed and impossible inputs.
+    \item \textbf{Formatting tests}: magnitude labels and full numeric output.
+    \item \textbf{Build test}: Astro static generation.
+    \item \textbf{Manual accessibility test}: keyboard and screen-reader behavior.
+\end{enumerate}
+
+\subsection{Test commands}
+
+\begin{commandbox}{Run the automated and production checks}
+cd "$(git rev-parse --show-toplevel)/website" || exit 1
+
+npm test
+npm run build
+\end{commandbox}
+
+\subsection{Numeric comparison policy}
+
+Use exact string equality when the reference output is specified as exact and
+both implementations use the same approved Decimal operations. Use an explicit
+Decimal tolerance only when the specification documents a rounding boundary or
+conversion loss. Never use an undocumented floating-point epsilon.
+
+\subsection{Minimum test requirements}
+
+\begin{itemize}
+    \item[\checkbox] Anchor JDN conversion.
+    \item[\checkbox] Anchor CU-Time conversion.
+    \item[\checkbox] All golden vectors.
+    \item[\checkbox] CE/BCE boundary.
+    \item[\checkbox] Leap-year and invalid leap-day behavior.
+    \item[\checkbox] Month-length validation.
+    \item[\checkbox] Midnight and near-midnight rollover.
+    \item[\checkbox] Negative and large CU-Time inputs.
+    \item[\checkbox] Invalid numeric syntax.
+    \item[\checkbox] Full precision literal preservation.
+    \item[\checkbox] Format behavior, including the fractional remainder review.
+    \item[\checkbox] Metadata reference instant and units.
+    \item[\checkbox] Round-trip invariants.
+\end{itemize}
+
+\subsection{Test implementation prompt}
+
+\begin{promptbox}{Implement the Approved Test Harness}
+Implement only the approved automated test foundation and test
+vectors.
+
+Preconditions:
+
+- active branch is feature/cu-time-converter
+- working tree is understood
+- constants registry is approved
+- calendar specification is approved
+- golden vectors are approved
+
+Requirements:
+
+- install only approved dependencies
+- configure Vitest minimally
+- add test scripts
+- store golden vectors in a reviewable text-based format
+- test exact strings where required
+- use documented Decimal tolerances only where approved
+- do not implement the interactive UI
+- do not modify the reference HTML converter
+- run npm test
+- run npm run build
+- report every changed file and dependency
+
+Do not commit, tag, push, merge, or deploy.
+\end{promptbox}
+
+\subsection{Testing completion gate}
+
+\begin{successbox}
+The engine may be connected to the page only after all approved unit and golden
+vector tests pass and the production build succeeds.
+\end{successbox}
+
+% ============================================================
+\section{Part 10 - Interactive Astro Page Integration}
+% ============================================================
+
+\subsection{Integration objective}
+
+Replace the current ``Interactive converter under development'' content with
+an accessible working interface while preserving the page's documentation,
+classification, research-status language, and visual system.
+
+\subsection{First-release interface}
+
+\begin{itemize}
+    \item Mode selector or clearly separated forward and reverse forms.
+    \item Date input with explicit \texttt{MM/DD/YYYY} help.
+    \item Time input with explicit 24-hour \texttt{HH:MM:SS} help.
+    \item CE/BCE selector.
+    \item CU-Time decimal input.
+    \item Convert controls.
+    \item Clear controls.
+    \item Copy result control.
+    \item Validation summary and field-level errors.
+    \item Result region announced with \texttt{aria-live}.
+    \item Full precision result preserved as text.
+    \item Scientific and formatted display values.
+    \item Calculation-method disclosure.
+\end{itemize}
+
+\subsection{Astro client strategy}
+
+The project currently contains no detected client scripts and no UI framework.
+The preferred first implementation is:
+
+\begin{codebox}{Client strategy}
+Astro semantic markup
+  + processed TypeScript <script>
+  + imported pure CU-Time modules
+  + DOM event listeners scoped to the component
+  + no React island
+  + no browser-side Babel
+  + no Tailwind CDN
+\end{codebox}
+
+The browser controller should progressively enhance valid HTML. All calculation
+logic remains in \nolinkurl{website/src/lib/cuTime/}.
+
+\subsection{Route and base-path requirements}
+
+The source page remains:
+
+\begin{codebox}{Source and route}
+Source: website/src/pages/cu-time.astro
+Development/public route:
+/CosmicUniversalismStatement/cu-time/
+Generated static file:
+website/dist/cu-time/index.html
+\end{codebox}
+
+Use the existing centralized base-path handling for internal links and assets.
+The calculator itself should not hard-code the repository base into mathematical
+logic.
+
+\subsection{Accessibility requirements}
+
+\begin{itemize}
+    \item Every field has a visible label.
+    \item Format help is associated with the field.
+    \item Errors identify the field and corrective action.
+    \item Focus moves only when necessary and predictably.
+    \item Results are announced without stealing keyboard focus.
+    \item Copy buttons report success in text.
+    \item Color is never the only status indicator.
+    \item Controls remain usable at 200\% zoom.
+    \item Mobile input controls do not overflow.
+    \item Motion is unnecessary for converter operation.
+\end{itemize}
+
+\subsection{UI planning prompt}
+
+\begin{promptbox}{Plan the Interactive CU-Time Interface}
+Using the approved engine API and the existing CU-Time page design,
+create the implementation specification for the first interactive
+converter release.
+
+Do not edit files.
+
+Specify:
+
+1. Semantic form structure
+2. Forward and reverse modes
+3. Exact field labels and help text
+4. Validation presentation
+5. Result region and fields
+6. Copy and clear behavior
+7. aria-live behavior
+8. Keyboard behavior
+9. Responsive layout
+10. Astro script loading and module imports
+11. Error-state styling using existing tokens
+12. Research classification and methodology disclosure
+13. Deferred features
+14. Manual test procedure
+15. Acceptance criteria
+
+Do not add React, Tailwind, or CDN calculation dependencies.
+\end{promptbox}
+
+\subsection{UI implementation prompt}
+
+\begin{promptbox}{Integrate the Approved Converter with Astro}
+Implement only the approved first-release interactive CU-Time
+interface.
+
+Preconditions:
+
+- active branch is feature/cu-time-converter
+- engine tests pass
+- golden parity tests pass
+- npm run build succeeds before UI changes
+
+Requirements:
+
+- update CUTimeConverter.astro
+- connect the approved pure TypeScript engine
+- use lightweight browser TypeScript
+- preserve the surrounding cu-time.astro documentation
+- preserve research classifications
+- use existing design tokens
+- provide visible labels and accessible errors
+- announce results with aria-live
+- preserve full precision as text
+- include copy and clear controls
+- support desktop and mobile layouts
+- do not add React
+- do not add Tailwind
+- do not use CDN calculation libraries
+- do not modify the reference HTML converter
+- run npm test
+- run npm run build
+- report all changed files and manual test results
+
+Do not commit, tag, push, merge, or deploy.
+\end{promptbox}
+
+\subsection{Local manual test}
+
+\begin{commandbox}{Run the integrated page locally}
+cd "$(git rev-parse --show-toplevel)/website" || exit 1
+
+npm run dev
+\end{commandbox}
+
+Open:
+
+\begin{codebox}{Local CU-Time route}
+http://localhost:4321/CosmicUniversalismStatement/cu-time/
+\end{codebox}
+
+Test keyboard navigation, mobile width, all golden inputs, invalid inputs, copy,
+clear, and browser-console output.
+
+% ============================================================
+\section{Part 11 - Acceptance, Review, Milestones, and Merge}
+% ============================================================
+
+\subsection{Parity report}
+
+Before merge, create a report that maps every approved reference vector to the
+new engine result.
+
+\begin{longtable}{L{0.55in}L{1.45in}L{1.45in}L{0.9in}L{1.1in}}
+\toprule
+\textbf{ID} & \textbf{Reference} & \textbf{TypeScript} & \textbf{Result} & \textbf{Decision} \\
+\midrule
+ & & & Pass/Fail & \\
+ & & & Pass/Fail & \\
+ & & & Pass/Fail & \\
+ & & & Pass/Fail & \\
+\bottomrule
+\end{longtable}
+
+\subsection{Final acceptance checklist}
+
+\begin{itemize}
+    \item[\checkbox] Active work remained on \branchname{feature/cu-time-converter}.
+    \item[\checkbox] \branchname{main} was not modified.
+    \item[\checkbox] Original HTML reference converter is unchanged.
+    \item[\checkbox] Reference hash matches the recorded hash.
+    \item[\checkbox] Constants registry is approved.
+    \item[\checkbox] Calendar specification is approved.
+    \item[\checkbox] Forward specification is approved.
+    \item[\checkbox] Reverse specification is approved.
+    \item[\checkbox] Golden vectors are approved.
+    \item[\checkbox] Decimal precision is preserved from strings.
+    \item[\checkbox] Automated tests pass.
+    \item[\checkbox] Golden parity tests pass.
+    \item[\checkbox] Round-trip tests pass within documented tolerance.
+    \item[\checkbox] Invalid dates are handled as approved.
+    \item[\checkbox] BCE behavior is documented and tested.
+    \item[\checkbox] Rollover behavior is documented and tested.
+    \item[\checkbox] Converter is interactive at \texttt{\TargetRoute}.
+    \item[\checkbox] Keyboard and mobile testing pass.
+    \item[\checkbox] No console errors remain.
+    \item[\checkbox] \texttt{npm run build} succeeds.
+    \item[\checkbox] Working tree contains only understood files.
+    \item[\checkbox] Documentation and current-state record are updated.
+    \item[\checkbox] Explicit approval to commit has been given.
+    \item[\checkbox] Explicit approval to merge has been given.
+\end{itemize}
+
+\subsection{Required final verification commands}
+
+\begin{commandbox}{Final feature verification}
+cd "$(git rev-parse --show-toplevel)" || exit 1
+
+git branch --show-current
+git status --short --branch
+
+cd website || exit 1
+npm test
+npm run build
+cd ..
+
+git diff --check
+git status --short --branch
+\end{commandbox}
+
+\subsection{Recommended milestone sequence}
+
+\begin{tabularx}{\textwidth}{L{2.55in}Y}
+\toprule
+\textbf{Milestone} & \textbf{Meaning} \\
+\midrule
+\nolinkurl{website-v1.1-cu-time-foundation} & Existing UI and repository foundation \\
+\nolinkurl{website-v1.1-cu-time-specification} & Constants, calendar, formulas, and vectors approved \\
+\nolinkurl{website-v1.1-cu-time-engine} & TypeScript engine and automated tests approved \\
+\nolinkurl{website-v1.1-cu-time-converter} & Interactive page, parity, accessibility, and build approved \\
+\bottomrule
+\end{tabularx}
+
+Tags should be created only after explicit approval and should point to clean,
+reviewed commits. The final converter release tag is preferably created after
+the approved feature is merged into \branchname{website}.
+
+\subsection{Commit planning}
+
+Suggested logical commits, subject to the actual approved work:
+
+\begin{codebox}{Suggested commit sequence}
+Document CU-Time mathematical specification
+Add precision-safe CU-Time constants registry
+Add CU-Time calendar conversion module
+Add CU-Time conversion engine
+Add CU-Time golden vector tests
+Integrate interactive CU-Time converter
+Document CU-Time parity and acceptance
+\end{codebox}
+
+\subsection{Merge procedure}
+
+\begin{enumerate}
+    \item Confirm all acceptance checks are complete.
+    \item Confirm the feature branch is pushed and clean.
+    \item Review the complete branch diff against \branchname{website}.
+    \item Obtain explicit approval to merge.
+    \item Merge \branchname{feature/cu-time-converter} into \branchname{website}.
+    \item Run the tests and production build on \branchname{website}.
+    \item Push \branchname{website} only after verification.
+    \item Confirm the website deployment workflow completes.
+    \item Verify the public CU-Time route.
+    \item Create the approved release tag.
+    \item Update both implementation manuals and the current-state record.
+\end{enumerate}
+
+\begin{warningbox}
+The deployment workflow is configured to run on pushes to
+\branchname{website}, not the feature branch. Merging and pushing to
+\branchname{website} may publish the converter. Treat merge approval as release
+approval unless the workflow is intentionally disabled first.
+\end{warningbox}
+
+\subsection{Final review prompt}
+
+\begin{promptbox}{Final CU-Time Converter Review}
+Perform a final no-edit review of the CU-Time converter feature.
+
+Compare feature/cu-time-converter against website.
+
+Verify:
+
+1. Branch and working-tree state
+2. Original reference converter hash
+3. Constants and precision representation
+4. Calendar specification compliance
+5. Forward and reverse specification compliance
+6. Golden vector parity
+7. Automated test results
+8. Round-trip results
+9. Validation behavior
+10. Accessibility and responsive behavior
+11. Target route and Astro base-path behavior
+12. Dependency changes
+13. Files outside the authorized scope
+14. Build success
+15. Documentation updates
+16. Deployment implications
+17. Remaining open questions
+
+Report findings by severity.
+Do not edit, commit, tag, push, merge, or deploy.
+\end{promptbox}
+
+\subsection{Final controlled statement}
+
+\begin{tcolorbox}[
+    enhanced,
+    breakable,
+    colback=CUNavy,
+    colframe=CUGold,
+    coltitle=CUNavy,
+    colbacktitle=CUGoldLight,
+    boxrule=1pt,
+    arc=2mm,
+    title=\textbf{Controlled Migration Rule}
+]
+\color{white}
+
+The Cosmic Breath Time Converter must be migrated by preserving observable
+reference behavior, documenting constants and calendar assumptions, capturing
+golden vectors, implementing pure precision-safe TypeScript functions, proving
+parity through automated tests, and only then connecting the engine to the
+Astro interface.
+
+The original HTML file remains unchanged during migration. Potential
+mathematical or implementation corrections are documented and approved
+independently; they are never introduced silently under the label of parity.
+
+\end{tcolorbox}
+
+% ============================================================
+\appendix
+\section{Appendix A - Current-State Record Template}
+% ============================================================
+
+After implementation begins, maintain a repository record such as:
+
+\begin{codebox}{website/docs/cu-time/CU\_TIME\_CURRENT\_STATE.md}
+# CU-Time Current State
+
+Repository: willmaddock/CosmicUniversalismStatement
+Protected branch: main
+Stable website branch: website
+Active feature branch: feature/cu-time-converter
+Current HEAD: [UPDATE]
+Current milestone: [UPDATE]
+Current tags: [UPDATE]
+Target route: /CosmicUniversalismStatement/cu-time/
+Reference converter hash: [UPDATE]
+
+## Completed
+- [UPDATE]
+
+## In Progress
+- [UPDATE]
+
+## Pending
+- [UPDATE]
+
+## Tests
+- npm test: [RESULT]
+- npm run build: [RESULT]
+
+## Open Questions
+- [UPDATE]
+
+## Merge Status
+- [UPDATE]
+\end{codebox}
+
+% ============================================================
+\section{Appendix B - Phase Authorization Prompt}
+% ============================================================
+
+Use this prompt before every implementation phase.
+
+\begin{promptbox}{Authorize One Controlled Phase}
+We are authorizing one controlled CU-Time implementation phase.
+
+Authorized phase:
+[INSERT PHASE]
+
+Approved specification:
+[INSERT OR REFERENCE APPROVED SECTION]
+
+Before editing:
+
+1. Confirm branch feature/cu-time-converter.
+2. Confirm working-tree status.
+3. List files expected to change.
+4. List dependencies expected to change.
+5. State the tests that must pass.
+6. State the completion gate.
+
+During implementation:
+
+- change only the authorized scope
+- preserve the reference HTML file
+- preserve exact Decimal literals
+- do not silently correct behavior
+- document all deviations
+
+After implementation:
+
+- run the authorized tests
+- run npm run build
+- report every changed file
+- report warnings, failures, and open questions
+
+Do not commit, tag, push, merge, or deploy.
+\end{promptbox}
+
+% ============================================================
+\section{Appendix C - Manual Revision Record}
+% ============================================================
+
+\begin{tabularx}{\textwidth}{L{0.65in}L{1.2in}Y}
+\toprule
+\textbf{Version} & \textbf{Date} & \textbf{Change} \\
+\midrule
+1.0 & July 19, 2026 & Initial controlled converter migration manual based on the verified CU-Time foundation branch, repository inspection, and successful Astro production build. \\
+\bottomrule
+\end{tabularx}
+
+\vfill
+
+\begin{center}
+\color{CUMuted}
+\small
+End of \ProjectTitle\ \DocumentTitle
+\end{center}
+
+\end{document}

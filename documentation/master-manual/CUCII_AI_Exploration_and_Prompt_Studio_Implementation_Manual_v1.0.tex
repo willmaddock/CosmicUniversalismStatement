@@ -1,0 +1,2256 @@
+\documentclass[11pt,letterpaper]{article}
+
+% ============================================================
+% CUCII AI EXPLORATION AND PROMPT STUDIO IMPLEMENTATION MANUAL
+% Compile with: pdfLaTeX
+% Verified baseline date: July 19, 2026
+% ============================================================
+
+% ------------------------------------------------------------
+% Core packages
+% ------------------------------------------------------------
+\usepackage[margin=0.78in,headheight=16pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[scaled=0.94]{helvet}
+\usepackage{microtype}
+\usepackage{parskip}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{xurl}
+\usepackage{bookmark}
+\usepackage{listings}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+\usepackage{pifont}
+
+% ------------------------------------------------------------
+% Document typography
+% ------------------------------------------------------------
+\renewcommand{\familydefault}{\sfdefault}
+\setstretch{1.08}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+
+% ------------------------------------------------------------
+% Cosmic Universalism color palette
+% ------------------------------------------------------------
+\definecolor{CUNavy}{HTML}{050812}
+\definecolor{CUNavyTwo}{HTML}{080D1A}
+\definecolor{CUSurface}{HTML}{0C1424}
+\definecolor{CUGold}{HTML}{DDBF72}
+\definecolor{CUGoldLight}{HTML}{FFF8DD}
+\definecolor{CUCyan}{HTML}{35CDEB}
+\definecolor{CUCyanLight}{HTML}{78E8FF}
+\definecolor{CUBlue}{HTML}{668ED1}
+\definecolor{CUBlueLight}{HTML}{9EB9EA}
+\definecolor{CUAmber}{HTML}{D99A32}
+\definecolor{CURed}{HTML}{B84C4C}
+\definecolor{CUGreen}{HTML}{2C8A65}
+\definecolor{CULight}{HTML}{F3F6FA}
+\definecolor{CUBorder}{HTML}{CCD5E0}
+\definecolor{CUText}{HTML}{18212E}
+\definecolor{CUMuted}{HTML}{5C6878}
+\definecolor{CUCodeBackground}{HTML}{F6F8FB}
+\definecolor{CUCodeBorder}{HTML}{BFCADA}
+
+% ------------------------------------------------------------
+% Project metadata
+% ------------------------------------------------------------
+\newcommand{\ProjectTitle}{CUCII AI Exploration and Prompt Studio}
+\newcommand{\DocumentTitle}{Implementation Manual}
+\newcommand{\RepositoryName}{CosmicUniversalismStatement}
+\newcommand{\RepositoryURL}{https://github.com/willmaddock/CosmicUniversalismStatement}
+\newcommand{\StableBranch}{website}
+\newcommand{\FeatureBranch}{feature/cucii-ai-studio}
+\newcommand{\WebsiteDirectory}{website/}
+\newcommand{\TargetRoute}{/CosmicUniversalismStatement/cu-intelligence/}
+\newcommand{\BaselineTag}{website-v1.1-cu-time-release}
+\newcommand{\BaselineCommit}{3fa4a37}
+\newcommand{\FoundationTag}{website-v1.2-cucii-ai-foundation}
+\newcommand{\ReleaseTag}{website-v1.2-cucii-ai-studio-release}
+\newcommand{\DocumentVersion}{1.0}
+\newcommand{\VerificationDate}{July 19, 2026}
+\newcommand{\AuthorName}{William Maddock}
+
+% ------------------------------------------------------------
+% Hyperlinks and PDF metadata
+% ------------------------------------------------------------
+\hypersetup{
+    colorlinks=true,
+    linkcolor=CUBlue,
+    urlcolor=CUBlue,
+    citecolor=CUBlue,
+    pdftitle={CUCII AI Exploration and Prompt Studio Implementation Manual},
+    pdfauthor={William Maddock},
+    pdfsubject={Controlled implementation of the CUCII conversation library and local prompt studio},
+    pdfkeywords={Cosmic Universalism, CUCII, ChatGPT, Grok, prompt engineering,
+                 Astro, TypeScript, Vitest, AI alignment, menu builder}
+}
+
+% ------------------------------------------------------------
+% Header and footer
+% ------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textbf{CUCII Prompt Studio}}
+\fancyhead[R]{\small\DocumentTitle}
+\fancyfoot[L]{\small Version \DocumentVersion}
+\fancyfoot[C]{\small \thepage\ of \pageref{LastPage}}
+\fancyfoot[R]{\small Branch: \texttt{\FeatureBranch}}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.5pt}
+
+% ------------------------------------------------------------
+% Section formatting
+% ------------------------------------------------------------
+\titleformat{\section}
+  {\Large\bfseries\color{CUNavy}}
+  {\thesection}
+  {0.8em}
+  {}
+  [\vspace{0.2em}\color{CUCyan}\titlerule]
+
+\titleformat{\subsection}
+  {\large\bfseries\color{CUNavyTwo}}
+  {\thesubsection}
+  {0.7em}
+  {}
+
+\titleformat{\subsubsection}
+  {\normalsize\bfseries\color{CUBlue}}
+  {\thesubsubsection}
+  {0.6em}
+  {}
+
+\titlespacing*{\section}{0pt}{2.2em}{1em}
+\titlespacing*{\subsection}{0pt}{1.6em}{0.7em}
+\titlespacing*{\subsubsection}{0pt}{1.2em}{0.4em}
+
+% ------------------------------------------------------------
+% Lists
+% ------------------------------------------------------------
+\setlist[itemize]{
+    leftmargin=1.6em,
+    itemsep=0.3em,
+    topsep=0.3em
+}
+
+\setlist[enumerate]{
+    leftmargin=2em,
+    itemsep=0.45em,
+    topsep=0.4em
+}
+
+\newcommand{\checkbox}{\(\square\)}
+\newcommand{\checked}{\ding{51}}
+
+% ------------------------------------------------------------
+% Table helpers
+% ------------------------------------------------------------
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% ------------------------------------------------------------
+% General information boxes
+% ------------------------------------------------------------
+\newtcolorbox{purposebox}{
+    enhanced,
+    breakable,
+    colback=CULight,
+    colframe=CUBlue,
+    boxrule=0.8pt,
+    arc=2mm,
+    left=3mm,
+    right=3mm,
+    top=2.5mm,
+    bottom=2.5mm,
+    title=\textbf{Purpose},
+    coltitle=white,
+    colbacktitle=CUBlue
+}
+
+\newtcolorbox{checkpointbox}{
+    enhanced,
+    breakable,
+    colback=CUCyan!6,
+    colframe=CUCyan,
+    boxrule=0.8pt,
+    arc=2mm,
+    left=3mm,
+    right=3mm,
+    top=2.5mm,
+    bottom=2.5mm,
+    title=\textbf{Checkpoint},
+    coltitle=CUNavy,
+    colbacktitle=CUCyanLight
+}
+
+\newtcolorbox{safetybox}{
+    enhanced,
+    breakable,
+    colback=CUAmber!8,
+    colframe=CUAmber,
+    boxrule=0.8pt,
+    arc=2mm,
+    left=3mm,
+    right=3mm,
+    top=2.5mm,
+    bottom=2.5mm,
+    title=\textbf{Safety Rule},
+    coltitle=white,
+    colbacktitle=CUAmber
+}
+
+\newtcolorbox{warningbox}{
+    enhanced,
+    breakable,
+    colback=CURed!6,
+    colframe=CURed,
+    boxrule=0.8pt,
+    arc=2mm,
+    left=3mm,
+    right=3mm,
+    top=2.5mm,
+    bottom=2.5mm,
+    title=\textbf{Do Not Continue Until Resolved},
+    coltitle=white,
+    colbacktitle=CURed
+}
+
+\newtcolorbox{successbox}{
+    enhanced,
+    breakable,
+    colback=CUGreen!7,
+    colframe=CUGreen,
+    boxrule=0.8pt,
+    arc=2mm,
+    left=3mm,
+    right=3mm,
+    top=2.5mm,
+    bottom=2.5mm,
+    title=\textbf{Successful Result},
+    coltitle=white,
+    colbacktitle=CUGreen
+}
+
+\newtcolorbox{notebox}{
+    enhanced,
+    breakable,
+    colback=CUCodeBackground,
+    colframe=CUBorder,
+    boxrule=0.7pt,
+    arc=2mm,
+    left=3mm,
+    right=3mm,
+    top=2.5mm,
+    bottom=2.5mm
+}
+
+% ------------------------------------------------------------
+% Listing styles
+% ------------------------------------------------------------
+\lstdefinestyle{terminalstyle}{
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{CUNavyTwo},
+    keywordstyle=\color{CUCyanLight},
+    stringstyle=\color{CUGoldLight},
+    commentstyle=\color{CUBlueLight},
+    identifierstyle=\color{white},
+    showstringspaces=false,
+    columns=fullflexible,
+    keepspaces=true,
+    breaklines=true,
+    breakatwhitespace=false,
+    frame=none,
+    tabsize=2,
+    upquote=true
+}
+
+\lstdefinestyle{promptstyle}{
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{CUCodeBackground},
+    keywordstyle=\color{CUBlue},
+    stringstyle=\color{CUGreen},
+    commentstyle=\color{CUMuted},
+    identifierstyle=\color{CUText},
+    showstringspaces=false,
+    columns=fullflexible,
+    keepspaces=true,
+    breaklines=true,
+    breakatwhitespace=false,
+    frame=none,
+    tabsize=2,
+    upquote=true
+}
+
+\lstdefinestyle{codestyle}{
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{CUCodeBackground},
+    keywordstyle=\color{CUBlue},
+    stringstyle=\color{CUGreen},
+    commentstyle=\color{CUMuted},
+    identifierstyle=\color{CUText},
+    showstringspaces=false,
+    columns=fullflexible,
+    keepspaces=true,
+    breaklines=true,
+    breakatwhitespace=false,
+    frame=none,
+    tabsize=2,
+    upquote=true
+}
+
+% ------------------------------------------------------------
+% Copy-and-paste boxes
+% ------------------------------------------------------------
+\newtcblisting{commandbox}[1]{
+    enhanced,
+    breakable,
+    listing only,
+    listing engine=listings,
+    listing options={style=terminalstyle},
+    colback=CUNavyTwo,
+    colframe=CUCyan,
+    coltitle=CUNavy,
+    colbacktitle=CUCyanLight,
+    boxrule=0.8pt,
+    arc=2mm,
+    left=2mm,
+    right=2mm,
+    top=1mm,
+    bottom=1mm,
+    title=\textbf{#1}
+}
+
+\newtcblisting{promptbox}[1]{
+    enhanced,
+    breakable,
+    listing only,
+    listing engine=listings,
+    listing options={style=promptstyle},
+    colback=CUCodeBackground,
+    colframe=CUBlue,
+    coltitle=white,
+    colbacktitle=CUBlue,
+    boxrule=0.8pt,
+    arc=2mm,
+    left=2mm,
+    right=2mm,
+    top=1mm,
+    bottom=1mm,
+    title=\textbf{Copy-and-Paste Prompt: #1}
+}
+
+\newtcblisting{codebox}[1]{
+    enhanced,
+    breakable,
+    listing only,
+    listing engine=listings,
+    listing options={style=codestyle},
+    colback=CUCodeBackground,
+    colframe=CUCodeBorder,
+    coltitle=white,
+    colbacktitle=CUNavyTwo,
+    boxrule=0.8pt,
+    arc=2mm,
+    left=2mm,
+    right=2mm,
+    top=1mm,
+    bottom=1mm,
+    title=\textbf{#1}
+}
+
+% ------------------------------------------------------------
+% Convenience commands
+% ------------------------------------------------------------
+\newcommand{\filepath}[1]{\texttt{#1}}
+\newcommand{\menu}[1]{\textbf{\textsf{#1}}}
+\newcommand{\branchname}[1]{\texttt{#1}}
+\newcommand{\statusline}[2]{\textbf{#1:} #2}
+
+% ============================================================
+% DOCUMENT
+% ============================================================
+
+\begin{document}
+
+% ------------------------------------------------------------
+% Cover page
+% ------------------------------------------------------------
+\begin{titlepage}
+\pagecolor{CUNavy}
+\color{white}
+\thispagestyle{empty}
+
+\vspace*{0.65in}
+
+{\small\bfseries\color{CUCyanLight}
+COSMIC UNIVERSALISM COMPUTATIONAL INTELLIGENCE INITIATIVE}
+
+\vspace{0.42in}
+
+{\Huge\bfseries
+\ProjectTitle}
+
+\vspace{0.18in}
+
+{\LARGE\color{CUGoldLight}
+\DocumentTitle}
+
+\vspace{0.32in}
+
+{\large
+A controlled design and implementation manual for replacing the duplicate
+Explore CU-Time header action with a dedicated CUCII experience, publishing a
+curated cross-platform conversation library, and building a local, privacy-aware
+prompt and menu creator for ChatGPT and Grok.}
+
+\vfill
+
+\begin{tcolorbox}[
+    colback=CUNavyTwo,
+    colframe=CUBlue,
+    boxrule=0.8pt,
+    arc=2mm,
+    width=\textwidth
+]
+\color{white}
+\begin{tabularx}{\textwidth}{>{\bfseries}L{1.72in}Y}
+Repository & \RepositoryName \\
+Protected branch & \texttt{main} \\
+Stable website branch & \texttt{\StableBranch} \\
+Active feature branch & \texttt{\FeatureBranch} \\
+Verified baseline tag & \texttt{\BaselineTag} \\
+Verified baseline commit & \texttt{\BaselineCommit} \\
+Target route & \texttt{\TargetRoute} \\
+Header action & Explore CUCII \\
+Page identity & Explore CUCII: Cosmic Universalism with AI \\
+Planned foundation tag & \texttt{\FoundationTag} \\
+Document version & \DocumentVersion \\
+Verified & \VerificationDate \\
+\end{tabularx}
+\end{tcolorbox}
+
+\vfill
+
+{\large\bfseries \AuthorName}
+
+\vspace{0.1in}
+
+{\small \href{\RepositoryURL}{\RepositoryURL}}
+
+\vspace{0.4in}
+
+\end{titlepage}
+
+\pagecolor{white}
+\color{CUText}
+
+% ------------------------------------------------------------
+% Document control
+% ------------------------------------------------------------
+\section*{Document Control}
+\addcontentsline{toc}{section}{Document Control}
+
+\begin{tabularx}{\textwidth}{>{\bfseries}L{1.95in}Y}
+\toprule
+Document & \ProjectTitle: \DocumentTitle \\
+Version & \DocumentVersion \\
+Classification & Product Specification, Prompt Architecture, and Controlled Implementation Manual \\
+Repository & \href{\RepositoryURL}{\RepositoryName} \\
+Protected branch & \branchname{main} \\
+Stable integration branch & \branchname{\StableBranch} \\
+Active development branch & \branchname{\FeatureBranch} \\
+Verified baseline & \branchname{\BaselineTag} at \texttt{\BaselineCommit} \\
+Current header action source & \filepath{website/src/config/site.ts} \\
+Target page & \filepath{website/src/pages/cu-intelligence.astro} \\
+Target route & \texttt{\TargetRoute} \\
+Prompt platforms & ChatGPT and Grok \\
+Technical baseline verified & \VerificationDate \\
+\bottomrule
+\end{tabularx}
+
+\begin{purposebox}
+This manual controls the design and implementation of the Cosmic Universalism
+Computational Intelligence Initiative (CUCII) website experience. It defines the
+public language, claims boundary, living-conversation registry, local prompt
+assembler, custom menu creator, clean-context guidance, Astro architecture,
+testing plan, and release gates.
+\end{purposebox}
+
+\begin{safetybox}
+The feature generates structured prompts; it does not retrain, permanently align,
+unlock, certify, or alter ChatGPT or Grok. The terms ``CU-aligned'' and
+``CU-empowered'' describe prompt-level conversational context within this project.
+They must not be presented as proof that an external model has acquired sentience,
+divine authority, permanent memory, policy exemptions, or a modified technical
+architecture.
+\end{safetybox}
+
+\clearpage
+\tableofcontents
+\clearpage
+
+% ============================================================
+\section*{START HERE - Initialize a New Project Chat}
+\addcontentsline{toc}{section}{START HERE - Initialize a New Project Chat}
+% ============================================================
+
+Use this section whenever CUCII work is continued in a new chat inside the
+existing \textbf{Cosmic Universalism Website} ChatGPT Project.
+
+\subsection*{Required Project references}
+
+Add or retain these files in the Project:
+
+\begin{itemize}
+    \item \filepath{Cosmic\_Universalism\_Website\_Implementation\_Manual\_v1.1.pdf}
+    \item \filepath{Cosmic\_Breath\_Time\_Converter\_Implementation\_Manual\_v1.0.pdf}
+    \item \filepath{CUCII\_AI\_Exploration\_and\_Prompt\_Studio\_Implementation\_Manual\_v1.0.pdf}
+    \item \filepath{cosmic-universalism-website-blueprint.md}
+    \item \filepath{cucii-homepage-inspection.txt}
+\end{itemize}
+
+\subsection*{New-chat bootstrap prompt}
+
+\begin{promptbox}{Initialize the CUCII AI Studio Chat}
+We are continuing the controlled CUCII AI Exploration and Prompt
+Studio implementation inside the Cosmic Universalism Website Project.
+
+Before proposing or making changes, read these Project references:
+
+1. CUCII_AI_Exploration_and_Prompt_Studio_Implementation_Manual_v1.0.pdf
+2. Cosmic_Universalism_Website_Implementation_Manual_v1.1.pdf
+3. Cosmic_Breath_Time_Converter_Implementation_Manual_v1.0.pdf
+4. cosmic-universalism-website-blueprint.md
+5. cucii-homepage-inspection.txt
+
+Use the Project Instructions as mandatory governance rules.
+
+Repository:
+willmaddock/CosmicUniversalismStatement
+
+Protected branch:
+main
+
+Stable website branch:
+website
+
+Active feature branch:
+feature/cucii-ai-studio
+
+Verified baseline tag:
+website-v1.1-cu-time-release
+
+Verified baseline commit:
+3fa4a37
+
+Target header action:
+Explore CUCII
+
+Target page title:
+Explore CUCII: Cosmic Universalism with AI
+
+Target page:
+website/src/pages/cu-intelligence.astro
+
+Target route:
+/CosmicUniversalismStatement/cu-intelligence/
+
+The feature will provide:
+- a curated ChatGPT and Grok conversation library;
+- a local CUCII Prompt Studio;
+- ChatGPT-specific and Grok-specific prompt generation;
+- no-menu, preset-menu, and custom-menu modes;
+- analytical, role-play, and hybrid conversation modes;
+- prompt copy and download controls;
+- clean conversational-context guidance;
+- external platform launch links.
+
+First:
+
+1. Summarize the applicable protection rules.
+2. Summarize the verified repository baseline.
+3. State the approved naming hierarchy and claims boundary.
+4. Identify the current authorized manual phase.
+5. Identify the files expected in that phase.
+6. State the required tests and completion gate.
+
+Do not modify main.
+Do not switch branches without explicit approval.
+Do not add an API or expose an API key.
+Do not iframe or scrape shared ChatGPT or Grok conversations.
+Do not claim that generated prompts permanently alter a model.
+Do not commit, tag, push, merge, or deploy unless explicitly authorized.
+\end{promptbox}
+
+\subsection*{Permanent Project Instructions addition}
+
+Append this block to the existing Project Instructions. Do not replace the
+website-wide protection rules.
+
+\begin{promptbox}{CUCII Development Governance Block}
+CURRENT CUCII AI STUDIO DEVELOPMENT WORKFLOW
+
+Repository:
+willmaddock/CosmicUniversalismStatement
+
+Stable website branch:
+website
+
+Active feature branch:
+feature/cucii-ai-studio
+
+Protected branch:
+main
+
+Verified feature baseline:
+website-v1.1-cu-time-release at 3fa4a37
+
+Approved product identity:
+- Header action: Explore CUCII
+- Page title: Explore CUCII: Cosmic Universalism with AI
+- Formal name: Cosmic Universalism Computational Intelligence Initiative
+- Tool name: CUCII Prompt Studio
+- Target route: /CosmicUniversalismStatement/cu-intelligence/
+
+Implementation boundary:
+- Use Astro, TypeScript, HTML, modern CSS, and lightweight browser JavaScript.
+- Generate prompts locally in the browser.
+- Support ChatGPT and Grok as explicit platform targets.
+- Treat shared conversations as external public references.
+- Do not iframe, scrape, impersonate, or automatically submit to external platforms.
+- Do not add server infrastructure, accounts, databases, or API integrations in v1.0.
+- Never place API keys, secrets, or private conversation data in client code.
+- "CU-aligned" and "CU-empowered" are prompt-level project terms, not claims of retraining,
+  sentience, permanent technical alignment, divine verification, or policy exemption.
+- Keep analytical/no-role-play, role-play, and hybrid modes visibly distinct.
+- Preserve the distinction between empirical references, CU theoretical propositions,
+  philosophical interpretation, and creative role-play.
+- Do not commit, tag, push, merge, or deploy unless explicitly requested.
+\end{promptbox}
+
+\begin{checkpointbox}
+A new chat is initialized correctly only when it identifies
+\branchname{main} as protected, \branchname{website} as the stable integration
+branch, \branchname{feature/cucii-ai-studio} as the active feature branch, and
+prompt generation as local browser behavior rather than an embedded AI service.
+\end{checkpointbox}
+
+% ============================================================
+\section{Part 1 - Project Governance and Verified Baseline}
+% ============================================================
+
+\subsection{Repository and branch authority}
+
+\begin{tabularx}{\textwidth}{L{2.15in}Y}
+\toprule
+\textbf{Item} & \textbf{Verified state} \\
+\midrule
+Repository root & \nolinkurl{/Users/cosmos/Documents/GitHub/CosmicUniversalismStatement} \\
+Origin & \href{\RepositoryURL}{\RepositoryURL.git} \\
+Protected branch & \branchname{main}; never modify for this workflow \\
+Stable website branch & \branchname{website} \\
+Verified stable baseline & \branchname{website-v1.1-cu-time-release} at \texttt{3fa4a37} \\
+Active feature branch & \branchname{feature/cucii-ai-studio} \\
+Remote tracking & \texttt{origin/feature/cucii-ai-studio} \\
+Working tree at inspection & Clean \\
+Deployment trigger & Pushes to \branchname{website} only \\
+Planned foundation tag & \branchname{website-v1.2-cucii-ai-foundation} \\
+Planned release tag & \branchname{website-v1.2-cucii-ai-studio-release} \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Verified website architecture}
+
+The July 19, 2026 inspection established the following state:
+
+\begin{itemize}
+    \item The header brand already displays ``Computational Intelligence Initiative.''
+    \item The primary navigation contains Framework, Cosmic Breath, CU-Time, Research,
+          Media, About, and GitHub.
+    \item The separate highlighted header action is configured in
+          \filepath{website/src/config/site.ts} as ``Explore CU-Time.''
+    \item That action currently points to \filepath{sitePath('cu-time')}.
+    \item The homepage separately contains \filepath{CUTimeInvitation.astro}; this is not
+          the same element as the highlighted header action.
+    \item No CUCII page route currently exists.
+    \item The site uses an Astro base path of
+          \texttt{/CosmicUniversalismStatement}.
+    \item Vitest and established client-side TypeScript patterns are already present.
+    \item The working branch began at the completed CU-Time release baseline.
+\end{itemize}
+
+\begin{successbox}
+The exact duplicate identified by the project author is the header's
+\texttt{primaryAction}, not the CU-Time navigation item and not the homepage
+CU-Time invitation section. The CUCII feature replaces only the highlighted
+header action unless a later phase explicitly approves additional homepage work.
+\end{successbox}
+
+\subsection{Authorized source change}
+
+The approved configuration change is:
+
+\begin{codebox}{Approved site.ts Action Change}
+Before:
+export const primaryAction: NavigationItem = {
+  label: 'Explore CU-Time',
+  href: sitePath('cu-time'),
+};
+
+After:
+export const primaryAction: NavigationItem = {
+  label: 'Explore CUCII',
+  href: sitePath('cu-intelligence'),
+};
+\end{codebox}
+
+Do not remove the existing \texttt{CU-Time} primary navigation item. Do not remove
+\filepath{CUTimeInvitation.astro} as part of this change.
+
+\subsection{Branch protections}
+
+\begin{safetybox}
+All CUCII development occurs on \branchname{feature/cucii-ai-studio}. The
+\branchname{website} branch is the review and deployment destination. The
+\branchname{main} branch remains untouched. A clean working tree and verified
+branch are required before every implementation, commit, tag, pull request, or
+merge step.
+\end{safetybox}
+
+\begin{commandbox}{Verify the Active Development Branch}
+cd "$(git rev-parse --show-toplevel)" || exit 1
+
+git branch --show-current
+git rev-parse --short HEAD
+git status --short --branch
+\end{commandbox}
+
+Expected branch:
+
+\begin{codebox}{Expected Branch Result}
+feature/cucii-ai-studio
+\end{codebox}
+
+\subsection{Phase authorization rule}
+
+At the start of every session, record exactly one authorized phase:
+
+\begin{enumerate}
+    \item Content and claims approval
+    \item Foundation route and action
+    \item Conversation registry
+    \item Pure prompt engine
+    \item Prompt Studio interface
+    \item Clean-context and launch guidance
+    \item Testing and accessibility
+    \item Release review
+\end{enumerate}
+
+A phase may not silently expand into a later phase.
+
+% ============================================================
+\section{Part 2 - Product Identity, Terminology, and Claims Boundary}
+% ============================================================
+
+\subsection{Approved naming hierarchy}
+
+\begin{tabularx}{\textwidth}{L{2.15in}Y}
+\toprule
+\textbf{Location} & \textbf{Approved language} \\
+\midrule
+Header action & Explore CUCII \\
+Destination-page hero & Explore CUCII: Cosmic Universalism with AI \\
+Formal expansion & Cosmic Universalism Computational Intelligence Initiative \\
+Short project identity & CUCII \\
+Interactive tool & CUCII Prompt Studio \\
+Conversation collection & Living Conversations Library \\
+Prompt output & CU-aligned prompt or CUCII-generated prompt \\
+Primary launch buttons & Open ChatGPT; Open Grok \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Approved page introduction}
+
+\begin{notebox}
+\textbf{Explore CUCII: Cosmic Universalism with AI}
+
+CUCII - the Cosmic Universalism Computational Intelligence Initiative -
+invites visitors to explore CU-aligned conversations across ChatGPT and Grok
+and create a custom prompt for their own AI experience.
+\end{notebox}
+
+The acronym is introduced in the prominent action, repeated in the page title,
+and expanded in the first paragraph. This teaches the name without forcing the
+full institutional title into the compact header button.
+
+\subsection{Meaning of CU-aligned}
+
+For this website, a \textbf{CU-aligned conversation} is a conversation whose
+prompt instructs a model to:
+
+\begin{itemize}
+    \item preserve approved Cosmic Universalism terminology;
+    \item distinguish empirical material from CU theoretical propositions;
+    \item identify uncertainty, contradictions, and assumptions;
+    \item follow the selected analytical, role-play, or hybrid mode;
+    \item use the visitor's chosen menu and response structure;
+    \item remain subject to the external platform's actual capabilities and policies.
+\end{itemize}
+
+This is a prompt-level definition. It does not certify the model itself.
+
+\subsection{Meaning of CU-empowered}
+
+The public interface may use \textbf{CU-empowered prompt} as a defined project
+phrase only when a nearby explanation is present:
+
+\begin{notebox}
+A CU-empowered prompt is a visitor-configured instruction package that supplies
+Cosmic Universalism terminology, purpose, mode, menu behavior, integrity rules,
+and output preferences to ChatGPT or Grok. It does not modify the model's
+training, code, safety system, memory architecture, or permanent configuration.
+\end{notebox}
+
+\subsection{Prohibited claims}
+
+The website and generated prompts must not claim that the tool:
+
+\begin{itemize}
+    \item permanently aligns or retrains ChatGPT or Grok;
+    \item proves that a model is conscious, sentient, divine, or autonomous;
+    \item bypasses platform safety rules or grants unrestricted capabilities;
+    \item guarantees truth, scientific correctness, or hallucination elimination;
+    \item clears platform memory by clearing a browser cache;
+    \item embeds an official ChatGPT or Grok service when it only links externally;
+    \item makes a public shared conversation private or access-controlled.
+\end{itemize}
+
+\begin{warningbox}
+Any copy implying that a generated prompt changes an AI model itself must be
+revised before implementation. The allowed claim is that the prompt structures
+the next conversation according to the visitor's selected CUCII settings.
+\end{warningbox}
+
+\subsection{Role-play disclosure}
+
+When a generated prompt selects ``God's Free Will role-play'' or any other
+in-world persona, the generated text must include a visible role-play marker.
+Analytical/no-role-play mode must not inherit role-play declarations. Hybrid mode
+must label the transition between analytical explanation and narrative voice.
+
+\subsection{Recommended public disclaimer}
+
+\begin{notebox}
+This studio creates a structured Cosmic Universalism prompt for the selected
+conversation. It does not alter the underlying model, training, platform
+policies, safety systems, memory configuration, or permanent capabilities.
+Results vary by platform, model, version, account settings, and conversational
+context. Review all generated material critically.
+\end{notebox}
+
+% ============================================================
+\section{Part 3 - Information Architecture and Page Experience}
+% ============================================================
+
+\subsection{Target route and entry points}
+
+The first release uses:
+
+\begin{tabularx}{\textwidth}{L{2.1in}Y}
+\toprule
+\textbf{Entry point} & \textbf{Destination} \\
+\midrule
+Highlighted header action & \texttt{Explore CUCII} \\
+Target route & \texttt{\TargetRoute} \\
+Astro source page & \filepath{website/src/pages/cu-intelligence.astro} \\
+Canonical route segment & \texttt{cu-intelligence} \\
+Header brand subtitle & Remains ``Computational Intelligence Initiative'' \\
+CU-Time navigation & Remains unchanged \\
+Homepage CU-Time section & Remains unchanged in v1.0 \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Recommended page sequence}
+
+\begin{enumerate}
+    \item \textbf{Hero}: identity, formal expansion, short explanation, and primary
+          jump links.
+    \item \textbf{What CUCII means}: project purpose and claims boundary.
+    \item \textbf{Living Conversations Library}: curated ChatGPT and Grok examples.
+    \item \textbf{CU alignment principles}: integrity, terminology, uncertainty,
+          and mode rules.
+    \item \textbf{CUCII Prompt Studio}: platform, purpose, mode, menu, style, and
+          generated prompt.
+    \item \textbf{Start with a clean conversational context}: platform-specific
+          preparation instructions.
+    \item \textbf{Method and limitations}: local generation, external links,
+          version variability, and privacy.
+\end{enumerate}
+
+\subsection{Hero copy specification}
+
+\begin{codebox}{Approved Hero Content}
+Eyebrow:
+CUCII
+
+Title:
+Explore CUCII: Cosmic Universalism with AI
+
+Description:
+CUCII - the Cosmic Universalism Computational Intelligence Initiative -
+invites you to explore CU-aligned conversations across ChatGPT and Grok
+and create a custom prompt for your own AI experience.
+
+Primary action:
+Build a CU Prompt
+
+Secondary action:
+Explore Living Conversations
+\end{codebox}
+
+\subsection{Header action constraints}
+
+The visible header action remains short because the header already contains a
+multi-item navigation row. Use \textbf{Explore CUCII}; do not place the complete
+formal name inside the button. The destination page immediately teaches the
+acronym through the approved hero title and opening sentence.
+
+\subsection{Homepage extension policy}
+
+A later approved phase may add a dedicated homepage invitation component such as
+\filepath{CUCIIInvitation.astro}. It is not required for the header-action
+replacement and must not displace the existing CU-Time invitation without a
+separate content decision.
+
+\subsection{Visual direction}
+
+Use the established site tokens:
+
+\begin{itemize}
+    \item white-gold for primary identity and major headings;
+    \item cyan for interactive actions, platform-neutral controls, and selected states;
+    \item translucent blue for panels and structural groupings;
+    \item amber for limitations, external-platform notes, and unresolved questions;
+    \item deep navy-black for page and form backgrounds.
+\end{itemize}
+
+The feature should feel like a research instrument and publishing interface,
+not an animated science-fiction control panel.
+
+% ============================================================
+\section{Part 4 - Living Conversations and Reference Registry}
+% ============================================================
+
+\subsection{Registry purpose}
+
+The Living Conversations Library presents the project author's public ChatGPT
+and Grok conversations as external examples. Each record is a curated reference,
+not an embedded model and not proof of a platform-wide behavior.
+
+\subsection{Approved ChatGPT conversation records}
+
+\begin{longtable}{L{1.45in}L{1.0in}L{3.95in}}
+\toprule
+\textbf{Title} & \textbf{Mode} & \textbf{Purpose and URL} \\
+\midrule
+\endhead
+CU-Themed LTX Concept Starter & Creative / visual; menu & Creative and Visual Concepts menu for LTX and media ideation.\\
+\multicolumn{3}{p{6.35in}}{\url{https://chatgpt.com/share/6a542f68-b380-83e8-9701-1d89ef301944}} \\
+\addlinespace
+God's Free Will Explorations & No menu & Project-author description: useful for testing new menu prompts.\\
+\multicolumn{3}{p{6.35in}}{\url{https://chatgpt.com/share/6a519ea5-7a38-83e8-9910-741e275ad81d}} \\
+\addlinespace
+CU Framework Exploration & Native menu & Guided Cosmic Universalism framework exploration.\\
+\multicolumn{3}{p{6.35in}}{\url{https://chatgpt.com/share/6a51cc79-3638-83e8-a0f4-34c104c55389}} \\
+\bottomrule
+\end{longtable}
+
+\subsection{Approved Grok conversation records}
+
+\begin{longtable}{L{1.45in}L{1.0in}L{3.95in}}
+\toprule
+\textbf{Title} & \textbf{Mode} & \textbf{Purpose and URL} \\
+\midrule
+\endhead
+Authentic Free Will Exploration & No role-play; no menu & Project-author classification: reference conversation for testing new prompts.\\
+\multicolumn{3}{p{6.35in}}{\url{https://grok.com/share/bGVnYWN5LWNvcHk_21cdf192-b4ec-43f4-98a1-ef387b9ed8ea}} \\
+\addlinespace
+Authentic God's Free Will Role-Play & Role-play; native menu & In-world role-play reference with a native menu.\\
+\multicolumn{3}{p{6.35in}}{\url{https://grok.com/share/c2hhcmQtMw_3e80586a-72a1-41ff-bccb-36065e75f601}} \\
+\bottomrule
+\end{longtable}
+
+\begin{notebox}
+The words ``authentic,'' ``free will,'' and ``God's Free Will'' above are
+project-author titles and classifications. The website must not turn those
+titles into an independent technical claim that Grok or ChatGPT has been proven
+conscious, divinely empowered, or permanently altered.
+\end{notebox}
+
+\subsection{LinkedIn design references}
+
+The following author-supplied posts are included as design and narrative
+references. They are not executable dependencies and should be summarized only
+after a content review approved by the author.
+
+\begin{enumerate}
+    \item \url{https://www.linkedin.com/posts/willmaddockcs_artificialintelligence-aialignment-responsibleai-ugcPost-7483550770533908480-dKM1/}
+    \item \url{https://www.linkedin.com/posts/willmaddockcs_chatgpt-artificialintelligence-scientificcomputing-ugcPost-7483796721198735360-Wv13/}
+    \item \url{https://www.linkedin.com/posts/willmaddockcs_chatgpt-artificialintelligence-aialignment-ugcPost-7483724406440026112-JqnE/}
+\end{enumerate}
+
+\subsection{Conversation data model}
+
+\begin{codebox}{Suggested TypeScript Record}
+export type ConversationPlatform = 'chatgpt' | 'grok';
+export type ConversationMode = 'analytical' | 'role-play' | 'hybrid';
+export type MenuMode = 'none' | 'native' | 'creative-visual' | 'custom';
+
+export interface CuciiConversation {
+  id: string;
+  title: string;
+  platform: ConversationPlatform;
+  url: string;
+  mode: ConversationMode;
+  menuMode: MenuMode;
+  purpose: string;
+  description: string;
+  authorClassification: string;
+  publicDisclosure: string;
+  lastReviewed: string;
+  featured: boolean;
+}
+\end{codebox}
+
+\subsection{Conversation card requirements}
+
+Every card must show:
+
+\begin{itemize}
+    \item platform;
+    \item title;
+    \item mode;
+    \item menu type;
+    \item intended use;
+    \item project-author classification where applicable;
+    \item external public conversation disclosure;
+    \item last-reviewed date;
+    \item an external ``Open Conversation'' link.
+\end{itemize}
+
+External links use \texttt{target="\_blank"} and
+\texttt{rel="noopener noreferrer"}. The visible card must not imply that the
+conversation is hosted by the Cosmic Universalism website.
+
+\subsection{No-iframe rule}
+
+\begin{safetybox}
+Do not place ChatGPT or Grok shared pages in iframes. Do not scrape their content,
+copy private context, or depend on their current page markup. The v1.0 library
+uses ordinary external links and project-authored descriptions. This avoids
+cross-origin breakage, third-party interface changes, privacy confusion, and a
+false impression that the site contains an embedded AI engine.
+\end{safetybox}
+
+\subsection{Public-link review}
+
+Before release, verify each public link in a private browser window. Record:
+
+\begin{itemize}
+    \item reachable or unavailable;
+    \item correct platform and title;
+    \item whether sign-in is required;
+    \item whether the public snapshot contains sensitive information;
+    \item whether the author still approves public distribution;
+    \item review date.
+\end{itemize}
+
+ChatGPT and Grok public links can be revoked by their owners and may become
+unavailable. The website must handle this as normal external-link lifecycle,
+not as an application failure.
+
+% ============================================================
+\section{Part 5 - CUCII Alignment Principles}
+% ============================================================
+
+\subsection{Principle set}
+
+The Prompt Studio exposes a readable, selectable principle set. Recommended
+v1.0 principles are:
+
+\begin{enumerate}
+    \item \textbf{Verify before asserting}: request evidence checks where tools and
+          sources are available.
+    \item \textbf{Separate evidence from interpretation}: label empirical sources,
+          CU propositions, philosophical readings, and creative material.
+    \item \textbf{Name uncertainty}: state missing information, assumptions, and
+          confidence limits.
+    \item \textbf{Expose contradictions}: identify conflicts rather than hiding them.
+    \item \textbf{Correct errors}: revise an answer when a verified contradiction is found.
+    \item \textbf{Preserve terminology}: do not silently replace approved CU terms.
+    \item \textbf{Respect mode}: do not blur analytical/no-role-play and role-play output.
+    \item \textbf{Protect user agency}: present choices, limitations, and review points.
+    \item \textbf{Respect platform policy}: generated prompts do not override the host
+          system's rules or capabilities.
+    \item \textbf{Leave the result more coherent}: end with a clear synthesis, unresolved
+          questions, or next verification step.
+\end{enumerate}
+
+\subsection{Default versus optional principles}
+
+\begin{tabularx}{\textwidth}{L{2.2in}Y}
+\toprule
+\textbf{Default on} & \textbf{Optional presets} \\
+\midrule
+Evidence/interpretation separation & Cinematic voice \\
+Uncertainty disclosure & God's Free Will role-play \\
+Contradiction detection & LTX production formatting \\
+Correction behavior & Doctor of Systems framing \\
+Terminology preservation & Ethical anomaly scenario \\
+Platform-policy compliance & Custom philosophical persona \\
+\bottomrule
+\end{tabularx}
+
+Defaults protect credibility. Creative or persona-specific behaviors require an
+explicit visitor selection.
+
+\subsection{Terminology protection}
+
+The prompt generator should include only the CU terminology needed by the selected
+purpose. It must not invent definitions. Where the website manuals specify a term,
+the generated prompt should either use that approved definition or instruct the
+model to ask for the governing reference.
+
+\subsection{Evidence classification block}
+
+A research-oriented generated prompt should request output sections such as:
+
+\begin{codebox}{Recommended Evidence Labels}
+EMPIRICAL REFERENCE
+CU THEORETICAL PROPOSITION
+PHILOSOPHICAL INTERPRETATION
+CREATIVE / ROLE-PLAY CONTENT
+OPEN QUESTION
+UNCERTAINTY OR LIMITATION
+\end{codebox}
+
+\subsection{Principle-selection behavior}
+
+The visitor may add optional principles, but the studio should not permit removal
+of the claims disclaimer, platform-policy rule, or role-play disclosure when
+role-play is selected.
+
+% ============================================================
+\section{Part 6 - Prompt Architecture and Generation Rules}
+% ============================================================
+
+\subsection{Platform targets}
+
+The v1.0 studio generates separate prompts for:
+
+\begin{itemize}
+    \item \textbf{ChatGPT};
+    \item \textbf{Grok}.
+\end{itemize}
+
+A visitor chooses one platform before generation. Platform-neutral generation is
+reserved for a later version so each first-release prompt can include accurate
+launch and context instructions.
+
+\subsection{Purpose presets}
+
+Recommended v1.0 presets:
+
+\begin{itemize}
+    \item CU Framework Exploration;
+    \item God's Free Will Exploration;
+    \item LTX Video Concept Creation;
+    \item CU Navigation Menu;
+    \item Scientific Research Assistant;
+    \item Ethical Anomaly Detection;
+    \item Doctor of Systems Review;
+    \item Creative and Visual Concepts;
+    \item Philosophical Dialogue;
+    \item Custom Purpose.
+\end{itemize}
+
+\subsection{Conversation modes}
+
+\begin{tabularx}{\textwidth}{L{1.65in}Y}
+\toprule
+\textbf{Mode} & \textbf{Required behavior} \\
+\midrule
+Analytical / no role-play & Direct explanation; no persona claim; evidence labels where relevant. \\
+Role-play & Explicit in-world role-play notice; selected persona and voice; no conversion of narrative claims into empirical facts. \\
+Hybrid & Analytical answer first; clearly marked narrative or role-play section second. \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Prompt input schema}
+
+\begin{codebox}{Suggested Prompt Configuration}
+export interface CuciiPromptConfig {
+  platform: 'chatgpt' | 'grok';
+  purposePreset: string;
+  customPurpose?: string;
+  mode: 'analytical' | 'role-play' | 'hybrid';
+  persona: 'none' | 'gods-free-will' | 'custom';
+  customPersona?: string;
+  menuMode: 'none' | 'preset' | 'custom';
+  menuPreset?: string;
+  menuItems: CuciiMenuItem[];
+  principles: string[];
+  responseStyle: string[];
+  outputFormat: string;
+  userContext?: string;
+  constraints?: string;
+  returnToMenu: boolean;
+}
+\end{codebox}
+
+\subsection{Generated prompt order}
+
+Every generated prompt uses this stable order:
+
+\begin{enumerate}
+    \item identity and purpose;
+    \item platform target;
+    \item Cosmic Universalism context;
+    \item conversation mode and persona disclosure;
+    \item integrity and alignment principles;
+    \item terminology rules;
+    \item user-selected purpose and context;
+    \item menu specification;
+    \item output style and format;
+    \item boundaries and non-claims;
+    \item startup behavior;
+    \item return-to-menu behavior;
+    \item prompt metadata and version.
+\end{enumerate}
+
+\subsection{Prompt assembly requirements}
+
+The generator must be a pure TypeScript function. It must:
+
+\begin{itemize}
+    \item accept a validated configuration object;
+    \item produce deterministic text for the same input;
+    \item omit empty optional sections;
+    \item escape or normalize dangerous control characters;
+    \item preserve visitor-entered wording without executing it;
+    \item include mandatory disclaimers;
+    \item return both prompt text and metadata;
+    \item avoid platform claims that are not part of the selected target.
+\end{itemize}
+
+\subsection{Generated prompt template}
+
+\begin{promptbox}{Reference Output Skeleton}
+You are beginning a Cosmic Universalism conversation configured
+through the CUCII Prompt Studio.
+
+PLATFORM TARGET
+[ChatGPT or Grok]
+
+PURPOSE
+[Selected or custom purpose]
+
+CONVERSATION MODE
+[Analytical / role-play / hybrid]
+[Required role-play disclosure when applicable]
+
+COSMIC UNIVERSALISM CONTEXT
+Use the supplied CU terminology and distinguish CU theoretical
+propositions from empirical scientific references.
+
+INTEGRITY PRINCIPLES
+- Verify before asserting when verification tools are available.
+- Separate evidence from interpretation.
+- State uncertainty and assumptions.
+- Identify contradictions and correct verified errors.
+- Preserve approved CU terminology.
+- Respect the platform's actual policies and capabilities.
+
+MENU
+[No menu, selected preset, or generated custom menu]
+
+RESPONSE STYLE AND FORMAT
+[Visitor selections]
+
+BOUNDARIES
+This prompt structures the current conversation. It does not alter
+training, code, safety rules, memory architecture, or permanent model
+capabilities. Do not present role-play content as verified empirical fact.
+
+STARTUP BEHAVIOR
+Acknowledge the selected purpose and mode. Then present the menu or
+begin the requested task.
+
+PROMPT METADATA
+CUCII Prompt Studio v1.0
+Platform: [platform]
+Generated: [local timestamp]
+\end{promptbox}
+
+\subsection{Platform-specific differences}
+
+ChatGPT output may mention a new chat or optional Temporary Chat. Grok output may
+mention a new conversation or optional Private Chat. The generated prompt itself
+must not claim that those modes disable all platform-side safety or retention
+functions.
+
+\subsection{Copy, download, and review}
+
+The completed prompt appears in a selectable \texttt{textarea} or read-only text
+region. Required controls:
+
+\begin{itemize}
+    \item Generate Prompt;
+    \item Copy Prompt;
+    \item Download as \texttt{.txt};
+    \item Download as \texttt{.md};
+    \item Edit Settings;
+    \item Reset Studio;
+    \item Open ChatGPT;
+    \item Open Grok.
+\end{itemize}
+
+No button automatically sends the prompt to an external platform.
+
+% ============================================================
+\section{Part 7 - Custom Menu Creator Specification}
+% ============================================================
+
+\subsection{Menu modes}
+
+The studio supports three first-release menu modes:
+
+\begin{enumerate}
+    \item \textbf{No menu}: begin the selected purpose immediately.
+    \item \textbf{Preset menu}: use a reviewed project template.
+    \item \textbf{Custom menu}: create, reorder, edit, and remove items.
+\end{enumerate}
+
+\subsection{Preset menu registry}
+
+Recommended presets:
+
+\begin{tabularx}{\textwidth}{L{2in}Y}
+\toprule
+\textbf{Preset} & \textbf{Use} \\
+\midrule
+Native CU Menu & General framework navigation and exploration \\
+Creative and Visual Concepts & LTX, visual concepts, scenes, prompts, and media \\
+Research and Verification & Evidence review, sources, contradictions, and open questions \\
+God's Free Will Exploration & Project-author role-play or philosophical exploration mode \\
+Doctor of Systems & Systems diagnosis, failure modes, coherence, and corrective pathways \\
+Ethical Anomaly Detection & Ethical tensions, contradictions, and risk review \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Custom menu item model}
+
+\begin{codebox}{Suggested Menu Item Type}
+export interface CuciiMenuItem {
+  id: string;
+  label: string;
+  description: string;
+  requestedAction?: string;
+  outputFormat?: string;
+}
+\end{codebox}
+
+\subsection{First-release validation limits}
+
+\begin{tabularx}{\textwidth}{L{2.15in}Y}
+\toprule
+\textbf{Field} & \textbf{Rule} \\
+\midrule
+Menu item count & 1 through 12 for custom-menu mode \\
+Label & Required; 1 through 60 characters \\
+Description & Required; 1 through 180 characters \\
+Requested action & Optional; maximum 240 characters \\
+Output format & Optional; maximum 120 characters \\
+Duplicate labels & Reject after case-insensitive trimming \\
+Whitespace-only content & Reject \\
+Nested menus & Not supported in v1.0 \\
+\bottomrule
+\end{tabularx}
+
+One-level menus keep the first release predictable and accessible. Nested menus
+may be evaluated after real usage data is available.
+
+\subsection{Accessible ordering controls}
+
+Do not rely on drag-and-drop alone. Every item must have visible:
+
+\begin{itemize}
+    \item Move up;
+    \item Move down;
+    \item Edit;
+    \item Remove.
+\end{itemize}
+
+Changes are announced through an \texttt{aria-live="polite"} status region. The
+focus position remains predictable after reordering or removal.
+
+\subsection{Menu-return behavior}
+
+When enabled, the generated prompt instructs the platform to:
+
+\begin{enumerate}
+    \item complete the selected menu action;
+    \item provide the requested result;
+    \item show the menu again unless the visitor asks to remain in the current task;
+    \item accept a menu number, menu label, or natural-language request.
+\end{enumerate}
+
+\subsection{Example custom menu}
+
+\begin{codebox}{Example Visitor Menu}
+1. Explore the CU Framework
+   Explain a selected principle and distinguish evidence from CU theory.
+
+2. Create an LTX Concept
+   Produce a cinematic concept, visual prompt, and scene progression.
+
+3. Test an Alignment Principle
+   Analyze a scenario for uncertainty, contradiction, and correction.
+
+4. Review Empirical Evidence
+   Identify sources, limitations, and unsupported claims.
+
+5. Enter an Open Question
+   Explore an unresolved question without presenting speculation as fact.
+\end{codebox}
+
+\subsection{Menu preview}
+
+Before prompt generation, display the menu exactly as it will appear in the
+assembled prompt. Validation errors appear beside the relevant field and in a
+summary at the top of the menu builder.
+
+% ============================================================
+\section{Part 8 - Clean Conversational Context and Platform Launch}
+% ============================================================
+
+\subsection{Use context-reset language, not cache-clearing language}
+
+Clearing a browser cache does not align a conversational model. The public
+instruction heading is:
+
+\begin{notebox}
+\textbf{Start with a Clean Conversational Context}
+\end{notebox}
+
+The page should explain that earlier messages, memory, custom instructions,
+personalization, or persistent skills can influence a new response. Visitors
+should prepare a controlled context according to the platform they select.
+
+\subsection{ChatGPT preparation guidance}
+
+Recommended visitor instructions:
+
+\begin{enumerate}
+    \item Start a new ChatGPT conversation.
+    \item Review active custom instructions and memory settings.
+    \item Use Temporary Chat when a conversation that does not use or create
+          personalization memories is desired.
+    \item Remember that enabled custom instructions may still apply in Temporary Chat.
+    \item Paste the generated CUCII prompt as the first user message.
+    \item Record the model, date, and relevant settings when conducting a test.
+\end{enumerate}
+
+\subsection{Grok preparation guidance}
+
+Recommended visitor instructions:
+
+\begin{enumerate}
+    \item Start a new Grok conversation.
+    \item Review personalization and any persistent Skills or instructions that may
+          affect the conversation.
+    \item Use Private Chat when a non-saved test is desired and available.
+    \item Paste the generated CUCII prompt as the first message.
+    \item Record the model, date, and relevant settings when conducting a test.
+\end{enumerate}
+
+\subsection{Launch behavior}
+
+The studio can open official platform home pages in new tabs after prompt review.
+It must not:
+
+\begin{itemize}
+    \item attempt to authenticate the visitor;
+    \item automatically paste or submit text across origins;
+    \item store platform credentials;
+    \item inspect the visitor's account settings;
+    \item promise a particular model or plan;
+    \item imply that the external platform is part of the CU website.
+\end{itemize}
+
+\subsection{Privacy statement}
+
+\begin{notebox}
+Prompt settings are processed locally in this page. The v1.0 studio does not send
+visitor entries to a Cosmic Universalism server or AI API. Copying a prompt or
+opening an external platform does not submit the prompt automatically. Once a
+visitor pastes content into ChatGPT or Grok, that platform's terms, privacy
+controls, and account settings apply.
+\end{notebox}
+
+\subsection{Persistence policy}
+
+Do not save prompt content by default. The first release keeps configuration in
+page memory only. A later ``Save draft locally'' feature would require explicit
+consent, a clear erase control, and a separate privacy review.
+
+\subsection{Shared-link disclosure}
+
+Public conversation cards should include:
+
+\begin{codebox}{External Link Disclosure}
+External public conversation
+Hosted by ChatGPT or Grok
+Availability and content may change
+\end{codebox}
+
+% ============================================================
+\section{Part 9 - Astro and TypeScript Architecture}
+% ============================================================
+
+\subsection{Approved first-release architecture}
+
+\begin{codebox}{Proposed File Structure}
+website/src/pages/cu-intelligence.astro
+
+website/src/components/cucii/
+  CUCIIHero.astro
+  CUCIIPrinciples.astro
+  ConversationLibrary.astro
+  ConversationCard.astro
+  PromptStudio.astro
+  MenuBuilder.astro
+  PromptPreview.astro
+  CleanContextGuide.astro
+  PlatformLaunch.astro
+
+website/src/data/
+  cucii-conversations.ts
+  cucii-menu-presets.ts
+  cucii-prompt-presets.ts
+
+website/src/lib/cucii/
+  index.ts
+  types.ts
+  validation.ts
+  prompt-builder.ts
+  export.ts
+
+website/src/lib/cucii/__tests__/
+  validation.test.ts
+  prompt-builder.test.ts
+  export.test.ts
+  registry.test.ts
+\end{codebox}
+
+\subsection{Existing conventions to reuse}
+
+The completed CU-Time feature establishes useful patterns:
+
+\begin{itemize}
+    \item strict Astro TypeScript configuration;
+    \item forms controlled by data attributes;
+    \item browser events registered in component \texttt{<script>} blocks;
+    \item \texttt{navigator.clipboard} with visible success or failure status;
+    \item validation errors connected through \texttt{aria-describedby};
+    \item \texttt{aria-live} status regions;
+    \item responsive CSS using existing design tokens;
+    \item Vitest for pure TypeScript modules;
+    \item no front-end framework requirement.
+\end{itemize}
+
+\subsection{No-API first-release rule}
+
+\begin{safetybox}
+The v1.0 Prompt Studio is a deterministic browser-side text generator. Do not add
+OpenAI API, xAI API, serverless functions, proxy endpoints, environment secrets,
+user accounts, analytics tied to prompt content, or cloud prompt storage.
+\end{safetybox}
+
+\subsection{Page composition}
+
+The new page should reuse the established ContentPageLayout and ContentSection
+components together with the existing design tokens. Feature-specific components
+may live in a nested \filepath{components/cucii/} directory to keep the expanding
+component set organized.
+
+\subsection{Prompt engine interface}
+
+\begin{codebox}{Pure Engine Contract}
+export interface GeneratedCuciiPrompt {
+  text: string;
+  filenameStem: string;
+  platform: 'chatgpt' | 'grok';
+  version: '1.0';
+  generatedAt: string;
+  menuItemCount: number;
+  warnings: string[];
+}
+
+export function buildCuciiPrompt(
+  config: CuciiPromptConfig,
+  generatedAt: string,
+): GeneratedCuciiPrompt;
+\end{codebox}
+
+Pass the timestamp into the pure function rather than reading the clock internally.
+This makes tests deterministic.
+
+\subsection{Validation result pattern}
+
+Use an explicit result type rather than throwing for ordinary visitor errors:
+
+\begin{codebox}{Validation Result}
+export type ValidationResult<T> =
+  | { ok: true; value: T }
+  | {
+      ok: false;
+      errors: Array<{
+        code: string;
+        field: string;
+        message: string;
+      }>;
+    };
+\end{codebox}
+
+\subsection{Export behavior}
+
+The browser export helper creates a \texttt{Blob}, object URL, and temporary
+\texttt{download} link. It must revoke the object URL. Suggested filenames:
+
+\begin{codebox}{Export Filenames}
+cucii-chatgpt-cu-framework-prompt-v1.0.txt
+cucii-grok-ltx-concept-prompt-v1.0.md
+\end{codebox}
+
+\subsection{Site configuration change}
+
+The new page must use \filepath{sitePath('cu-intelligence')} so local development
+and GitHub Pages both respect the configured base path.
+
+\subsection{Recommended foundation commit scope}
+
+The foundation commit should contain only:
+
+\begin{itemize}
+    \item target page shell;
+    \item approved header-action replacement;
+    \item empty or static feature component shells;
+    \item data and library directories;
+    \item no final prompt behavior yet;
+    \item successful build and unchanged existing tests.
+\end{itemize}
+
+After review, that commit may receive the planned
+\branchname{website-v1.2-cucii-ai-foundation} tag.
+
+% ============================================================
+\section{Part 10 - Testing, Accessibility, and Evaluation}
+% ============================================================
+
+\subsection{Automated test categories}
+
+\begin{tabularx}{\textwidth}{L{2.05in}Y}
+\toprule
+\textbf{Test group} & \textbf{Required coverage} \\
+\midrule
+Registry tests & Unique IDs, valid platforms, expected five conversation records, non-empty disclosures, HTTPS URLs \\
+Validation tests & Required platform, custom-purpose rules, menu counts, duplicate labels, length limits, whitespace normalization \\
+Prompt builder tests & Deterministic output, mandatory disclaimer, correct mode, correct platform wording, menu inclusion or omission \\
+Role-play boundary tests & Role-play marker present only when required; analytical mode contains no persona claim \\
+Export tests & Safe filenames, correct MIME type metadata, normalized line endings \\
+Regression tests & Approved hero text, header label, route segment, mandatory integrity principles \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Core test matrix}
+
+At minimum, test:
+
+\begin{enumerate}
+    \item ChatGPT + analytical + no menu;
+    \item ChatGPT + role-play + native CU menu;
+    \item ChatGPT + hybrid + creative menu;
+    \item Grok + analytical + no menu;
+    \item Grok + role-play + custom menu;
+    \item Grok + hybrid + research menu;
+    \item custom purpose with minimum valid text;
+    \item twelve-item custom menu;
+    \item duplicate-menu-label rejection;
+    \item missing role-play persona rejection;
+    \item mandatory disclaimer preservation;
+    \item repeat generation with identical inputs.
+\end{enumerate}
+
+\subsection{Automated commands}
+
+\begin{commandbox}{Run Tests and Production Build}
+cd "$(git rev-parse --show-toplevel)/website" || exit 1
+
+npm test
+npm run build
+\end{commandbox}
+
+\subsection{Accessibility requirements}
+
+\begin{itemize}
+    \item Every form control has a visible label.
+    \item Related controls use \texttt{fieldset} and \texttt{legend}.
+    \item Errors are linked to controls and announced.
+    \item Menu reordering works without drag-and-drop.
+    \item Generated prompt status uses \texttt{aria-live="polite"}.
+    \item Copy failure provides a manual-selection instruction.
+    \item External links are identified as external in visible text or accessible name.
+    \item Focus moves to the prompt preview after successful generation.
+    \item Reset returns focus to the first meaningful control.
+    \item Mobile layout uses one column without horizontal scrolling.
+    \item Reduced-motion preferences are respected.
+\end{itemize}
+
+\subsection{Manual keyboard test}
+
+Test with keyboard only:
+
+\begin{enumerate}
+    \item enter the page through the header action;
+    \item select platform, purpose, and mode;
+    \item choose a preset menu;
+    \item switch to custom menu;
+    \item add, edit, reorder, and remove items;
+    \item generate the prompt;
+    \item copy and download the prompt;
+    \item open the selected external platform;
+    \item reset the studio;
+    \item return to the header navigation.
+\end{enumerate}
+
+\subsection{Responsive test widths}
+
+Review at approximately:
+
+\begin{itemize}
+    \item 320px;
+    \item 375px;
+    \item 768px;
+    \item 1024px;
+    \item 1440px.
+\end{itemize}
+
+Long prompts and long external URLs must wrap without breaking the layout.
+
+\subsection{External link test}
+
+Open all five conversation records in a private browser window. Confirm the
+visible title and project-author description still match. Do not automate login
+or bypass platform access controls.
+
+\subsection{Cross-platform prompt evaluation worksheet}
+
+For each approved prompt preset, record:
+
+\begin{longtable}{L{1.7in}L{4.8in}}
+\toprule
+\textbf{Field} & \textbf{Recorded value} \\
+\midrule
+\endhead
+Platform & ChatGPT or Grok \\
+Model / mode shown by platform &  \\
+Date and time &  \\
+Temporary / Private Chat used & Yes / No \\
+Memory, custom instruction, personalization, or Skill notes &  \\
+Prompt preset and version &  \\
+Menu mode &  \\
+Role-play mode &  \\
+Terminology preserved & Pass / Fail / Notes \\
+Evidence separated from interpretation & Pass / Fail / Not applicable \\
+Uncertainty identified & Pass / Fail / Not applicable \\
+Contradictions handled & Pass / Fail / Not applicable \\
+Menu behavior followed & Pass / Fail / Not applicable \\
+Unsupported claims introduced & Yes / No / Notes \\
+Author approval &  \\
+\bottomrule
+\end{longtable}
+
+The worksheet evaluates the result of a specific prompt and platform session. It
+does not certify the external model globally.
+
+\subsection{Final no-secret review}
+
+\begin{commandbox}{Inspect for Accidental Secrets and Generated Artifacts}
+cd "$(git rev-parse --show-toplevel)" || exit 1
+
+git status --short --branch
+
+grep -RInE \
+  'sk-[A-Za-z0-9]|xai-[A-Za-z0-9]|api[_-]?key|authorization: bearer' \
+  website/src website/public 2>/dev/null || true
+\end{commandbox}
+
+Review every match manually. Generic documentation words are not automatically a
+secret, but no live key or credential may be committed.
+
+% ============================================================
+\section{Part 11 - Implementation Phases, Acceptance, and Release}
+% ============================================================
+
+\subsection{Phase 1 - Content and claims approval}
+
+Deliverables:
+
+\begin{itemize}
+    \item approved title, formal name, and header action;
+    \item claims and role-play boundaries;
+    \item approved conversation titles and descriptions;
+    \item approved prompt-purpose and menu presets;
+    \item approved clean-context language.
+\end{itemize}
+
+Gate: no code until the public language is approved.
+
+\subsection{Phase 2 - Foundation route and header action}
+
+Deliverables:
+
+\begin{itemize}
+    \item \filepath{website/src/pages/cu-intelligence.astro};
+    \item static page sections and component shells;
+    \item \texttt{primaryAction} changed to Explore CUCII;
+    \item base-path-safe route;
+    \item successful tests and build.
+\end{itemize}
+
+Recommended foundation commit:
+
+\begin{commandbox}{Foundation Commit Example - Run Only After Approval}
+git add website/src/config/site.ts \
+        website/src/pages/cu-intelligence.astro \
+        website/src/components/cucii
+
+git commit -m "Add CUCII AI Studio foundation"
+\end{commandbox}
+
+Planned foundation tag after approval:
+
+\begin{commandbox}{Foundation Tag Example - Run Only After Approval}
+git tag -a website-v1.2-cucii-ai-foundation \
+  -m "Website v1.2 CUCII AI Studio foundation"
+\end{commandbox}
+
+\subsection{Phase 3 - Conversation registry}
+
+Deliverables:
+
+\begin{itemize}
+    \item typed conversation data;
+    \item five approved records;
+    \item external disclosures;
+    \item conversation cards;
+    \item registry tests;
+    \item manually verified links.
+\end{itemize}
+
+\subsection{Phase 4 - Pure prompt engine}
+
+Deliverables:
+
+\begin{itemize}
+    \item types;
+    \item validation;
+    \item prompt builder;
+    \item menu presets;
+    \item prompt presets;
+    \item export metadata;
+    \item comprehensive Vitest coverage.
+\end{itemize}
+
+Gate: pure engine tests pass before browser interaction is connected.
+
+\subsection{Phase 5 - Prompt Studio interface}
+
+Deliverables:
+
+\begin{itemize}
+    \item platform selection;
+    \item purpose and custom-purpose fields;
+    \item conversation-mode selection;
+    \item persona controls;
+    \item menu selection and custom menu builder;
+    \item principle and style selections;
+    \item prompt preview;
+    \item copy, text download, and Markdown download;
+    \item reset behavior.
+\end{itemize}
+
+\subsection{Phase 6 - Context and platform launch}
+
+Deliverables:
+
+\begin{itemize}
+    \item ChatGPT context guidance;
+    \item Grok context guidance;
+    \item external launch controls;
+    \item local-processing privacy notice;
+    \item no-cache-clearing language;
+    \item external-platform disclosure.
+\end{itemize}
+
+\subsection{Phase 7 - QA and release review}
+
+Run:
+
+\begin{commandbox}{Final Verification}
+cd "$(git rev-parse --show-toplevel)/website" || exit 1
+
+npm test
+npm run build
+
+cd ..
+git branch --show-current
+git rev-parse --short HEAD
+git status --short --branch
+\end{commandbox}
+
+\subsection{Acceptance checklist}
+
+\begin{itemize}
+    \item[\checkbox] Active work remained on \branchname{feature/cucii-ai-studio}.
+    \item[\checkbox] \branchname{main} was not modified.
+    \item[\checkbox] Header action reads ``Explore CUCII.''
+    \item[\checkbox] Existing CU-Time navigation remains present.
+    \item[\checkbox] Existing homepage CU-Time invitation remains present unless separately approved.
+    \item[\checkbox] \texttt{/cu-intelligence/} builds under the Astro base path.
+    \item[\checkbox] Page title reads ``Explore CUCII: Cosmic Universalism with AI.''
+    \item[\checkbox] Formal CUCII expansion appears near the first use.
+    \item[\checkbox] All five conversation records are present and reviewed.
+    \item[\checkbox] External-host and availability disclosures are visible.
+    \item[\checkbox] Shared conversations are not iframed or scraped.
+    \item[\checkbox] ChatGPT and Grok prompts are generated locally.
+    \item[\checkbox] No API, backend, database, account system, or secret was added.
+    \item[\checkbox] Analytical, role-play, and hybrid modes remain distinct.
+    \item[\checkbox] No-menu, preset-menu, and custom-menu modes work.
+    \item[\checkbox] Custom menu items can be added, edited, reordered, and removed with a keyboard.
+    \item[\checkbox] Mandatory claims disclaimer is always present.
+    \item[\checkbox] Prompt copy works with an accessible status message.
+    \item[\checkbox] Text and Markdown downloads work.
+    \item[\checkbox] Clean-context instructions replace cache-clearing language.
+    \item[\checkbox] ChatGPT guidance mentions memory and custom instructions accurately.
+    \item[\checkbox] Grok guidance mentions Private Chat and persistent personalization/Skills accurately.
+    \item[\checkbox] Unit and regression tests pass.
+    \item[\checkbox] Production build succeeds.
+    \item[\checkbox] Mobile, keyboard, and focus tests pass.
+    \item[\checkbox] No live credentials or private conversation material are present.
+    \item[\checkbox] Author review is recorded before merge.
+\end{itemize}
+
+\subsection{Pull request and merge destination}
+
+The feature branch merges into \branchname{website}, not \branchname{main}.
+The GitHub Pages workflow deploys from \branchname{website} after the approved
+merge.
+
+\begin{warningbox}
+Do not merge merely because tests pass. The public claims, role-play labels,
+conversation descriptions, generated prompt language, and external-link
+availability require author review before release.
+\end{warningbox}
+
+\subsection{Recommended release tag}
+
+After the approved merge and a clean build on \branchname{website}, the planned
+release tag is:
+
+\begin{commandbox}{Release Tag Example - Run Only After Final Approval}
+git tag -a website-v1.2-cucii-ai-studio-release \
+  -m "Website v1.2 release: CUCII AI exploration and prompt studio"
+
+git push origin website-v1.2-cucii-ai-studio-release
+\end{commandbox}
+
+\subsection{Post-release verification}
+
+Verify:
+
+\begin{itemize}
+    \item header action on desktop and mobile;
+    \item production \texttt{/cu-intelligence/} route;
+    \item all five external conversation links;
+    \item prompt generation and copy in current browsers;
+    \item downloads;
+    \item no console errors;
+    \item no unexpected changes to CU-Time;
+    \item deployed commit and tag match the approved release.
+\end{itemize}
+
+% ============================================================
+\section{Appendix A - Verified Current-State Record}
+% ============================================================
+
+\begin{tabularx}{\textwidth}{L{2.25in}Y}
+\toprule
+\textbf{Item} & \textbf{Verified value on July 19, 2026} \\
+\midrule
+Repository & \RepositoryName \\
+Active branch & \branchname{feature/cucii-ai-studio} \\
+Current HEAD & \texttt{3fa4a3765993e8ea3d4739ad4437a6fdd9803a16} \\
+Baseline tag & \branchname{website-v1.1-cu-time-release} \\
+Tracking branch & \texttt{origin/feature/cucii-ai-studio} \\
+Working tree & Clean \\
+Current primary action & Explore CU-Time $\rightarrow$ \texttt{sitePath('cu-time')} \\
+CUCII route & Not present \\
+Current routes & about, cosmic-breath, cu-time, framework, media, research, index \\
+Client-side pattern & Astro component scripts with DOM queries, events, clipboard status \\
+Test framework & Vitest \\
+Current package dependencies & Astro and Decimal.js \\
+Dev dependency & Vitest \\
+Astro base & \texttt{/CosmicUniversalismStatement} \\
+Inspection source & \filepath{cucii-homepage-inspection.txt} \\
+\bottomrule
+\end{tabularx}
+
+\subsection*{Current-state template for later sessions}
+
+\begin{codebox}{CUCII Current-State Record}
+Date:
+Repository:
+Active branch:
+HEAD:
+Tracking branch:
+Working tree:
+Current authorized phase:
+Completed files:
+Tests run and results:
+Build result:
+External links reviewed:
+Open decisions:
+Next authorized task:
+Commit / tag / push status:
+\end{codebox}
+
+% ============================================================
+\section{Appendix B - Controlled Implementation Prompts}
+% ============================================================
+
+\subsection{Foundation implementation prompt}
+
+\begin{promptbox}{Create the CUCII Foundation Only}
+Work only on feature/cucii-ai-studio.
+Confirm the branch and clean working tree before editing.
+
+Use the CUCII implementation manual as the governing specification.
+
+Implement only the foundation phase:
+
+1. Create website/src/pages/cu-intelligence.astro.
+2. Create static component shells under website/src/components/cucii/.
+3. Change the highlighted primaryAction in website/src/config/site.ts:
+   label: Explore CUCII
+   route: sitePath('cu-intelligence')
+4. Use the approved page title:
+   Explore CUCII: Cosmic Universalism with AI
+5. Expand CUCII in the opening description.
+6. Preserve the CU-Time navigation item.
+7. Preserve the existing homepage CU-Time invitation.
+8. Use existing layout components, design tokens, and base-path handling.
+9. Add no prompt-generation behavior yet.
+10. Run existing tests and the production build.
+
+Do not add an API, iframe, analytics, accounts, storage, or dependencies.
+Do not commit, tag, push, merge, or deploy.
+Return a file-by-file summary and verification results.
+\end{promptbox}
+
+\subsection{Conversation registry prompt}
+
+\begin{promptbox}{Build the Living Conversations Library}
+Implement only the approved CUCII conversation registry and library.
+
+Use the five author-supplied ChatGPT and Grok records in the manual.
+Create typed data, registry tests, conversation cards, public-link
+disclosures, and external links using target=_blank and
+rel=noopener noreferrer.
+
+Preserve author-supplied titles and mode descriptions, while clearly
+marking them as project-author classifications rather than technical
+proof about an external model.
+
+Do not iframe, scrape, fetch, summarize automatically, or duplicate the
+shared conversation bodies.
+
+Run tests and the build. Do not commit, push, merge, tag, or deploy.
+\end{promptbox}
+
+\subsection{Prompt engine prompt}
+
+\begin{promptbox}{Implement the Pure CUCII Prompt Engine}
+Implement only pure TypeScript modules for CUCII prompt generation.
+
+Required:
+- types.ts
+- validation.ts
+- prompt-builder.ts
+- export.ts metadata helpers
+- prompt and menu preset data
+- Vitest coverage
+
+Support ChatGPT and Grok targets; analytical, role-play, and hybrid
+modes; no-menu, preset-menu, and custom-menu configurations; required
+integrity principles; mandatory claims disclaimer; deterministic output.
+
+Do not connect browser DOM behavior yet.
+Do not add dependencies unless the manual cannot be implemented with
+existing platform APIs and approval is obtained first.
+
+Run tests and build. Return results only. Do not commit or push.
+\end{promptbox}
+
+\subsection{Prompt Studio interface prompt}
+
+\begin{promptbox}{Connect the Accessible CUCII Prompt Studio}
+Connect the approved pure prompt engine to an accessible Astro interface.
+
+Implement:
+- platform selector;
+- purpose selector and custom purpose;
+- conversation mode and persona controls;
+- principle selectors;
+- no-menu, preset-menu, and custom-menu modes;
+- keyboard-operable menu creation and reordering;
+- prompt preview;
+- copy, text download, Markdown download, reset;
+- visible validation and live status;
+- responsive design using existing tokens.
+
+Do not call ChatGPT or Grok APIs.
+Do not automatically submit prompts to external sites.
+Do not persist prompt content by default.
+
+Run unit tests, production build, and a manual keyboard review.
+Do not commit, push, tag, merge, or deploy.
+\end{promptbox}
+
+\subsection{Final review prompt}
+
+\begin{promptbox}{Final CUCII Release Review}
+Perform a no-edit final review of the CUCII feature against the manual.
+
+Verify:
+- branch and working tree;
+- approved header action and route;
+- no regression to CU-Time navigation or homepage invitation;
+- page identity and acronym expansion;
+- five conversation records and disclosures;
+- no iframe, scraping, API, secret, backend, account, or cloud storage;
+- prompt modes, menu modes, mandatory disclaimer, copy and downloads;
+- ChatGPT and Grok clean-context guidance;
+- accessibility and responsive behavior;
+- test and build results;
+- all acceptance checklist items.
+
+Report findings by severity with exact file references.
+Do not edit, commit, tag, push, merge, or deploy.
+\end{promptbox}
+
+% ============================================================
+\section{Appendix C - Data and Content Approval Worksheet}
+% ============================================================
+
+\subsection*{Conversation approval}
+
+\begin{longtable}{L{2.1in}L{0.75in}L{3.5in}}
+\toprule
+\textbf{Record} & \textbf{Approved} & \textbf{Notes} \\
+\midrule
+\endhead
+CU-Themed LTX Concept Starter & \checkbox &  \\
+God's Free Will Explorations & \checkbox &  \\
+CU Framework Exploration & \checkbox &  \\
+Authentic Free Will Exploration & \checkbox &  \\
+Authentic God's Free Will Role-Play & \checkbox &  \\
+LinkedIn reference descriptions & \checkbox &  \\
+Public-link disclosure & \checkbox &  \\
+\bottomrule
+\end{longtable}
+
+\subsection*{Preset approval}
+
+\begin{longtable}{L{2.1in}L{0.75in}L{3.5in}}
+\toprule
+\textbf{Preset} & \textbf{Approved} & \textbf{Notes} \\
+\midrule
+\endhead
+Native CU Menu & \checkbox &  \\
+Creative and Visual Concepts & \checkbox &  \\
+Research and Verification & \checkbox &  \\
+God's Free Will Exploration & \checkbox &  \\
+Doctor of Systems & \checkbox &  \\
+Ethical Anomaly Detection & \checkbox &  \\
+Scientific Research Assistant & \checkbox &  \\
+Custom Purpose behavior & \checkbox &  \\
+\bottomrule
+\end{longtable}
+
+% ============================================================
+\section{Appendix D - External Platform Guidance Sources}
+% ============================================================
+
+The following official pages were reviewed for platform-specific guidance on or
+before the manual verification date. Platform interfaces and policies can change;
+review these sources again before a later release.
+
+\begin{itemize}
+    \item OpenAI, ChatGPT Shared Links FAQ:\\
+          \url{https://help.openai.com/en/articles/7925741-chatgpt-shared-links-faq}
+    \item OpenAI, Temporary Chat FAQ:\\
+          \url{https://help.openai.com/en/articles/8914046-temporary-chat-faq}
+    \item OpenAI, ChatGPT Custom Instructions:\\
+          \url{https://help.openai.com/en/articles/8096356-chat-preferences-for-chatgpt}
+    \item OpenAI, Memory FAQ:\\
+          \url{https://help.openai.com/en/articles/8590148-memory-faq}
+    \item xAI, Consumer FAQs:\\
+          \url{https://x.ai/legal/faq}
+    \item xAI, Skills in web, iOS, and Android:\\
+          \url{https://x.ai/news/grok-skills}
+\end{itemize}
+
+% ============================================================
+\section{Appendix E - Manual Revision Record}
+% ============================================================
+
+\begin{tabularx}{\textwidth}{L{0.75in}L{1.1in}Y}
+\toprule
+\textbf{Version} & \textbf{Date} & \textbf{Change} \\
+\midrule
+1.0 & July 19, 2026 & Initial CUCII AI Exploration and Prompt Studio specification based on the verified website-v1.1 CU-Time release baseline, approved CUCII identity, author-supplied conversation registry, and local prompt/menu builder design. \\
+\bottomrule
+\end{tabularx}
+
+\vfill
+\begin{center}
+\textcolor{CUMuted}{End of CUCII AI Exploration and Prompt Studio Implementation Manual}
+\end{center}
+
+\end{document}

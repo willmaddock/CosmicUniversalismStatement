@@ -1,0 +1,2232 @@
+\documentclass[11pt,letterpaper]{article}
+
+% ============================================================
+% COSMIC UNIVERSALISM WEBSITE IMPLEMENTATION MANUAL
+% Compile with: pdfLaTeX
+% Verified baseline date: July 18, 2026
+% ============================================================
+
+% ------------------------------------------------------------
+% Core packages
+% ------------------------------------------------------------
+\usepackage[margin=0.78in,headheight=16pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[scaled=0.94]{helvet}
+\usepackage{microtype}
+\usepackage{parskip}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage{listings}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+\usepackage{pifont}
+
+% ------------------------------------------------------------
+% Document typography
+% ------------------------------------------------------------
+\renewcommand{\familydefault}{\sfdefault}
+\setstretch{1.08}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+
+% ------------------------------------------------------------
+% Cosmic Universalism color palette
+% ------------------------------------------------------------
+\definecolor{CUNavy}{HTML}{050812}
+\definecolor{CUNavyTwo}{HTML}{080D1A}
+\definecolor{CUSurface}{HTML}{0C1424}
+\definecolor{CUGold}{HTML}{DDBF72}
+\definecolor{CUGoldLight}{HTML}{FFF8DD}
+\definecolor{CUCyan}{HTML}{35CDEB}
+\definecolor{CUCyanLight}{HTML}{78E8FF}
+\definecolor{CUBlue}{HTML}{668ED1}
+\definecolor{CUBlueLight}{HTML}{9EB9EA}
+\definecolor{CUAmber}{HTML}{D99A32}
+\definecolor{CURed}{HTML}{B84C4C}
+\definecolor{CUGreen}{HTML}{2C8A65}
+\definecolor{CULight}{HTML}{F3F6FA}
+\definecolor{CUBorder}{HTML}{CCD5E0}
+\definecolor{CUText}{HTML}{18212E}
+\definecolor{CUMuted}{HTML}{5C6878}
+\definecolor{CUCodeBackground}{HTML}{F6F8FB}
+\definecolor{CUCodeBorder}{HTML}{BFCADA}
+
+% ------------------------------------------------------------
+% Project metadata
+% ------------------------------------------------------------
+\newcommand{\ProjectTitle}{Cosmic Universalism Website}
+\newcommand{\DocumentTitle}{Local Website Implementation Manual}
+\newcommand{\RepositoryName}{CosmicUniversalismStatement}
+\newcommand{\RepositoryURL}{https://github.com/willmaddock/CosmicUniversalismStatement}
+\newcommand{\WebsiteBranch}{website}
+\newcommand{\WebsiteDirectory}{website/}
+\newcommand{\DocumentVersion}{1.0}
+\newcommand{\VerificationDate}{July 18, 2026}
+\newcommand{\AuthorName}{William Maddock}
+
+% ------------------------------------------------------------
+% Hyperlinks and PDF metadata
+% ------------------------------------------------------------
+\hypersetup{
+    colorlinks=true,
+    linkcolor=CUBlue,
+    urlcolor=CUBlue,
+    citecolor=CUBlue,
+    pdftitle={Cosmic Universalism Website Implementation Manual},
+    pdfauthor={William Maddock},
+    pdfsubject={Astro website implementation instructions},
+    pdfkeywords={Cosmic Universalism, Astro, TypeScript, GitHub Desktop,
+                 PyCharm, ChatGPT Desktop, Codex, GitHub Pages}
+}
+
+% ------------------------------------------------------------
+% Header and footer
+% ------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textbf{\ProjectTitle}}
+\fancyhead[R]{\small\DocumentTitle}
+\fancyfoot[L]{\small Version \DocumentVersion}
+\fancyfoot[C]{\small \thepage\ of \pageref{LastPage}}
+\fancyfoot[R]{\small Branch: \texttt{\WebsiteBranch}}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.5pt}
+
+% ------------------------------------------------------------
+% Section formatting
+% ------------------------------------------------------------
+\titleformat{\section}
+  {\Large\bfseries\color{CUNavy}}
+  {\thesection}
+  {0.8em}
+  {}
+  [\vspace{0.2em}\color{CUCyan}\titlerule]
+
+\titleformat{\subsection}
+  {\large\bfseries\color{CUNavyTwo}}
+  {\thesubsection}
+  {0.7em}
+  {}
+
+\titleformat{\subsubsection}
+  {\normalsize\bfseries\color{CUBlue}}
+  {\thesubsubsection}
+  {0.6em}
+  {}
+
+\titlespacing*{\section}{0pt}{2.2em}{1em}
+\titlespacing*{\subsection}{0pt}{1.6em}{0.7em}
+\titlespacing*{\subsubsection}{0pt}{1.2em}{0.4em}
+
+% ------------------------------------------------------------
+% Lists
+% ------------------------------------------------------------
+\setlist[itemize]{
+    leftmargin=1.6em,
+    itemsep=0.3em,
+    topsep=0.3em
+}
+
+\setlist[enumerate]{
+    leftmargin=2em,
+    itemsep=0.45em,
+    topsep=0.4em
+}
+
+\newcommand{\checkbox}{\(\square\)}
+\newcommand{\checked}{\ding{51}}
+
+% ------------------------------------------------------------
+% Table helpers
+% ------------------------------------------------------------
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% ------------------------------------------------------------
+% General information boxes
+% ------------------------------------------------------------
+\newtcolorbox{purposebox}{
+    enhanced,
+    breakable,
+    colback=CULight,
+    colframe=CUBlue,
+    boxrule=0.8pt,
+    arc=2mm,
+    left=3mm,
+    right=3mm,
+    top=2.5mm,
+    bottom=2.5mm,
+    title=\textbf{Purpose},
+    coltitle=white,
+    colbacktitle=CUBlue
+}
+
+\newtcolorbox{checkpointbox}{
+    enhanced,
+    breakable,
+    colback=CUCyan!6,
+    colframe=CUCyan,
+    boxrule=0.8pt,
+    arc=2mm,
+    left=3mm,
+    right=3mm,
+    top=2.5mm,
+    bottom=2.5mm,
+    title=\textbf{Checkpoint},
+    coltitle=CUNavy,
+    colbacktitle=CUCyanLight
+}
+
+\newtcolorbox{safetybox}{
+    enhanced,
+    breakable,
+    colback=CUAmber!8,
+    colframe=CUAmber,
+    boxrule=0.8pt,
+    arc=2mm,
+    left=3mm,
+    right=3mm,
+    top=2.5mm,
+    bottom=2.5mm,
+    title=\textbf{Safety Rule},
+    coltitle=white,
+    colbacktitle=CUAmber
+}
+
+\newtcolorbox{warningbox}{
+    enhanced,
+    breakable,
+    colback=CURed!6,
+    colframe=CURed,
+    boxrule=0.8pt,
+    arc=2mm,
+    left=3mm,
+    right=3mm,
+    top=2.5mm,
+    bottom=2.5mm,
+    title=\textbf{Do Not Continue Until Resolved},
+    coltitle=white,
+    colbacktitle=CURed
+}
+
+\newtcolorbox{successbox}{
+    enhanced,
+    breakable,
+    colback=CUGreen!7,
+    colframe=CUGreen,
+    boxrule=0.8pt,
+    arc=2mm,
+    left=3mm,
+    right=3mm,
+    top=2.5mm,
+    bottom=2.5mm,
+    title=\textbf{Successful Result},
+    coltitle=white,
+    colbacktitle=CUGreen
+}
+
+\newtcolorbox{notebox}{
+    enhanced,
+    breakable,
+    colback=CUCodeBackground,
+    colframe=CUBorder,
+    boxrule=0.7pt,
+    arc=2mm,
+    left=3mm,
+    right=3mm,
+    top=2.5mm,
+    bottom=2.5mm
+}
+
+% ------------------------------------------------------------
+% Listing styles
+% ------------------------------------------------------------
+\lstdefinestyle{terminalstyle}{
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{CUNavyTwo},
+    keywordstyle=\color{CUCyanLight},
+    stringstyle=\color{CUGoldLight},
+    commentstyle=\color{CUBlueLight},
+    identifierstyle=\color{white},
+    showstringspaces=false,
+    columns=fullflexible,
+    keepspaces=true,
+    breaklines=true,
+    breakatwhitespace=false,
+    frame=none,
+    tabsize=2,
+    upquote=true
+}
+
+\lstdefinestyle{promptstyle}{
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{CUCodeBackground},
+    keywordstyle=\color{CUBlue},
+    stringstyle=\color{CUGreen},
+    commentstyle=\color{CUMuted},
+    identifierstyle=\color{CUText},
+    showstringspaces=false,
+    columns=fullflexible,
+    keepspaces=true,
+    breaklines=true,
+    breakatwhitespace=false,
+    frame=none,
+    tabsize=2,
+    upquote=true
+}
+
+\lstdefinestyle{codestyle}{
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{CUCodeBackground},
+    keywordstyle=\color{CUBlue},
+    stringstyle=\color{CUGreen},
+    commentstyle=\color{CUMuted},
+    identifierstyle=\color{CUText},
+    showstringspaces=false,
+    columns=fullflexible,
+    keepspaces=true,
+    breaklines=true,
+    breakatwhitespace=false,
+    frame=none,
+    tabsize=2,
+    upquote=true
+}
+
+% ------------------------------------------------------------
+% Copy-and-paste boxes
+% ------------------------------------------------------------
+\newtcblisting{commandbox}[1]{
+    enhanced,
+    breakable,
+    listing only,
+    listing engine=listings,
+    listing options={style=terminalstyle},
+    colback=CUNavyTwo,
+    colframe=CUCyan,
+    coltitle=CUNavy,
+    colbacktitle=CUCyanLight,
+    boxrule=0.8pt,
+    arc=2mm,
+    left=2mm,
+    right=2mm,
+    top=1mm,
+    bottom=1mm,
+    title=\textbf{#1}
+}
+
+\newtcblisting{promptbox}[1]{
+    enhanced,
+    breakable,
+    listing only,
+    listing engine=listings,
+    listing options={style=promptstyle},
+    colback=CUCodeBackground,
+    colframe=CUBlue,
+    coltitle=white,
+    colbacktitle=CUBlue,
+    boxrule=0.8pt,
+    arc=2mm,
+    left=2mm,
+    right=2mm,
+    top=1mm,
+    bottom=1mm,
+    title=\textbf{Copy-and-Paste Prompt: #1}
+}
+
+\newtcblisting{codebox}[1]{
+    enhanced,
+    breakable,
+    listing only,
+    listing engine=listings,
+    listing options={style=codestyle},
+    colback=CUCodeBackground,
+    colframe=CUCodeBorder,
+    coltitle=white,
+    colbacktitle=CUNavyTwo,
+    boxrule=0.8pt,
+    arc=2mm,
+    left=2mm,
+    right=2mm,
+    top=1mm,
+    bottom=1mm,
+    title=\textbf{#1}
+}
+
+% ------------------------------------------------------------
+% Convenience commands
+% ------------------------------------------------------------
+\newcommand{\filepath}[1]{\texttt{#1}}
+\newcommand{\menu}[1]{\textbf{\textsf{#1}}}
+\newcommand{\branchname}[1]{\texttt{#1}}
+\newcommand{\statusline}[2]{\textbf{#1:} #2}
+
+% ============================================================
+% DOCUMENT
+% ============================================================
+\begin{document}
+
+% ------------------------------------------------------------
+% Cover page
+% ------------------------------------------------------------
+\begin{titlepage}
+\pagecolor{CUNavy}
+\color{white}
+\thispagestyle{empty}
+
+\vspace*{0.8in}
+
+{\small\bfseries\color{CUCyanLight}
+COSMIC UNIVERSALISM COMPUTATIONAL INTELLIGENCE INITIATIVE}
+
+\vspace{0.45in}
+
+{\Huge\bfseries
+\ProjectTitle}
+
+\vspace{0.2in}
+
+{\LARGE\color{CUGoldLight}
+\DocumentTitle}
+
+\vspace{0.4in}
+
+{\large
+A controlled, step-by-step workflow for building a local Astro website
+with ChatGPT Desktop, PyCharm, GitHub Desktop, and GitHub Pages.}
+
+\vfill
+
+\begin{tcolorbox}[
+    colback=CUNavyTwo,
+    colframe=CUBlue,
+    boxrule=0.8pt,
+    arc=2mm,
+    width=\textwidth
+]
+\color{white}
+\begin{tabularx}{\textwidth}{>{\bfseries}L{1.65in}Y}
+Repository & \RepositoryName \\
+Development branch & \texttt{\WebsiteBranch} \\
+Website directory & \texttt{\WebsiteDirectory} \\
+Primary framework & Astro with TypeScript \\
+Editor & PyCharm with the Astro plugin \\
+Version control & GitHub Desktop \\
+Planning environment & ChatGPT Work \\
+Implementation environment & ChatGPT Codex \\
+Document version & \DocumentVersion \\
+Technical baseline verified & \VerificationDate \\
+\end{tabularx}
+\end{tcolorbox}
+
+\vfill
+
+{\large\bfseries \AuthorName}
+
+\vspace{0.1in}
+
+{\small
+\href{\RepositoryURL}{\RepositoryURL}}
+
+\vspace{0.5in}
+
+\end{titlepage}
+
+\pagecolor{white}
+\color{CUText}
+
+% ------------------------------------------------------------
+% Document control
+% ------------------------------------------------------------
+\section*{Document Control}
+\addcontentsline{toc}{section}{Document Control}
+
+\begin{tabularx}{\textwidth}{>{\bfseries}L{1.8in}Y}
+\toprule
+Document & \ProjectTitle: \DocumentTitle \\
+Version & \DocumentVersion \\
+Status & Initial controlled implementation guide \\
+Repository & \href{\RepositoryURL}{\RepositoryName} \\
+Protected branch & \branchname{main} \\
+Development branch & \branchname{\WebsiteBranch} \\
+Website source directory & \filepath{\WebsiteDirectory} \\
+Intended platform & macOS with GitHub Desktop and PyCharm \\
+Deployment target & GitHub Pages \\
+Last technical verification & \VerificationDate \\
+\bottomrule
+\end{tabularx}
+
+\begin{notebox}
+Software interfaces and action versions can change. Before the final
+deployment, compare the deployment section with the current official
+Astro and GitHub documentation. The local build and branch-protection
+principles remain valid even when interface labels change.
+\end{notebox}
+
+\clearpage
+\tableofcontents
+\clearpage
+
+% ============================================================
+\section{Purpose and Intended Outcome}
+% ============================================================
+
+\begin{purposebox}
+This manual guides the creation of a local, production-quality website
+for the \textbf{Cosmic Universalism Statement} repository while
+protecting the existing research, converter, media, and main branch.
+\end{purposebox}
+
+The intended repository arrangement is:
+
+\begin{codebox}{Target repository structure}
+CosmicUniversalismStatement/
+|-- .github/
+|-- ResearchFiles/
+|-- cosmic_converter/
+|-- Images/
+|-- media/
+|-- website/
+|   |-- public/
+|   |-- src/
+|   |-- astro.config.mjs
+|   |-- package.json
+|   |-- package-lock.json
+|   `-- tsconfig.json
+|-- README.md
+`-- LICENSE.md
+\end{codebox}
+
+The branch arrangement is:
+
+\begin{codebox}{Branch strategy}
+main
+`-- Canonical Cosmic Universalism research repository
+
+website
+`-- Website source, website content, and website deployment workflow
+\end{codebox}
+
+\begin{safetybox}
+The \branchname{website} branch is a separate version of the complete
+repository. Work performed on that branch does not alter
+\branchname{main} unless changes are deliberately merged into
+\branchname{main}.
+\end{safetybox}
+
+% ============================================================
+\section{Application Responsibilities}
+% ============================================================
+
+\begin{tabularx}{\textwidth}{L{1.55in}Y}
+\toprule
+\textbf{Application} & \textbf{Primary responsibility} \\
+\midrule
+GitHub Desktop &
+Create and switch branches, review file changes, create commits,
+fetch, push, and publish branches. \\
+
+PyCharm &
+Inspect and edit Astro, TypeScript, HTML, CSS, Markdown, SVG, and
+configuration files. Run the local terminal and inspect project files. \\
+
+ChatGPT Work &
+Plan phases, structure research, write specifications, organize
+content, review design decisions, and prepare implementation tasks. \\
+
+ChatGPT Codex &
+Inspect the repository, create or edit code, run commands, execute
+builds, report errors, and provide file-by-file change summaries. \\
+
+Browser &
+View the website at the local Astro development address and test
+desktop and mobile behavior. \\
+
+Astro &
+Generate the static production website. \\
+
+GitHub Pages &
+Host the generated public website after the local build is approved. \\
+\bottomrule
+\end{tabularx}
+
+\begin{checkpointbox}
+Each application has one primary responsibility. Avoid asking several
+applications to manage Git simultaneously. Use GitHub Desktop as the
+main visual source-control interface.
+\end{checkpointbox}
+
+% ============================================================
+\section{Phase 1: Preflight Checklist}
+% ============================================================
+
+Complete this checklist before creating website files.
+
+\begin{itemize}
+    \item[\checkbox] GitHub Desktop is installed and signed in.
+    \item[\checkbox] The repository is available locally.
+    \item[\checkbox] PyCharm is installed.
+    \item[\checkbox] The JetBrains Astro plugin is installed.
+    \item[\checkbox] Node.js 22.12.0 or newer is installed.
+    \item[\checkbox] Node.js 24 LTS is preferred when available.
+    \item[\checkbox] npm is available.
+    \item[\checkbox] ChatGPT Desktop is installed and signed in.
+    \item[\checkbox] The approved homepage mockup is saved.
+    \item[\checkbox] The website blueprint is saved.
+\end{itemize}
+
+\subsection{Verify Node.js and npm}
+
+Open Terminal or PyCharm's built-in terminal and run:
+
+\begin{commandbox}{Verify Node.js and npm}
+node --version
+npm --version
+\end{commandbox}
+
+A suitable Node.js result is:
+
+\begin{codebox}{Expected Node.js result}
+v22.12.0 or newer
+\end{codebox}
+
+A Node 24 result may resemble:
+
+\begin{codebox}{Recommended example}
+v24.x.x
+\end{codebox}
+
+\begin{warningbox}
+Do not continue if the terminal reports
+\texttt{command not found: node} or if the Node version is older than
+22.12.0.
+\end{warningbox}
+
+% ============================================================
+\section{Phase 2: Protect the Repository with a Website Branch}
+% ============================================================
+
+\subsection{Fetch the current repository}
+
+In GitHub Desktop:
+
+\begin{enumerate}
+    \item Select the repository \textbf{\RepositoryName}.
+    \item Confirm the current branch is \branchname{main}.
+    \item Click \menu{Fetch origin}.
+    \item Allow GitHub Desktop to finish synchronizing.
+\end{enumerate}
+
+\subsection{Create the website branch}
+
+In GitHub Desktop:
+
+\begin{enumerate}
+    \item Click \menu{Current Branch}.
+    \item Click \menu{New Branch}.
+    \item Enter the branch name:
+\end{enumerate}
+
+\begin{codebox}{Branch name}
+website
+\end{codebox}
+
+\begin{enumerate}[resume]
+    \item Set \branchname{main} as the base branch.
+    \item Click \menu{Create Branch}.
+    \item Click \menu{Publish branch}.
+\end{enumerate}
+
+\begin{checkpointbox}
+The top of GitHub Desktop must display:
+
+\begin{center}
+\texttt{Current Branch: website}
+\end{center}
+
+Do not create or edit website files while GitHub Desktop displays
+\branchname{main}.
+\end{checkpointbox}
+
+\subsection{Verify the branch in Terminal}
+
+Open Terminal in the repository root and run:
+
+\begin{commandbox}{Verify the active branch}
+git branch --show-current
+\end{commandbox}
+
+The exact result should be:
+
+\begin{successbox}
+\begin{center}
+\texttt{website}
+\end{center}
+\end{successbox}
+
+% ============================================================
+\section{Phase 3: Configure PyCharm}
+% ============================================================
+
+\subsection{Open the complete repository}
+
+In PyCharm:
+
+\begin{enumerate}
+    \item Select \menu{File \textrightarrow{} Open}.
+    \item Select the complete \filepath{CosmicUniversalismStatement}
+          folder.
+    \item Do not select only \filepath{ResearchFiles/}.
+    \item Do not select only \filepath{cosmic\_converter/}.
+    \item Allow PyCharm to finish indexing the project.
+\end{enumerate}
+
+\subsection{Install the Astro plugin}
+
+In PyCharm:
+
+\begin{enumerate}
+    \item Open \menu{PyCharm \textrightarrow{} Settings}.
+    \item Select \menu{Plugins}.
+    \item Select \menu{Marketplace}.
+    \item Search for \texttt{Astro}.
+    \item Install the official Astro plugin.
+    \item Restart PyCharm if requested.
+\end{enumerate}
+
+Then inspect:
+
+\begin{codebox}{Astro language-server location}
+Settings
+  -> Languages & Frameworks
+  -> TypeScript
+  -> Astro
+\end{codebox}
+
+Enable Astro support if that option is available.
+
+\subsection{Configure Node.js in PyCharm}
+
+Open:
+
+\begin{codebox}{PyCharm Node configuration}
+Settings
+  -> Languages & Frameworks
+  -> Node.js
+\end{codebox}
+
+Confirm:
+
+\begin{itemize}
+    \item Node interpreter: Node 22.12.0 or newer.
+    \item Package manager: npm.
+\end{itemize}
+
+\subsection{Open the built-in terminal}
+
+In PyCharm:
+
+\begin{codebox}{Open Terminal}
+View
+  -> Tool Windows
+  -> Terminal
+\end{codebox}
+
+Run:
+
+\begin{commandbox}{Final PyCharm environment check}
+git branch --show-current
+node --version
+npm --version
+\end{commandbox}
+
+Record the results:
+
+\begin{longtable}{L{2.2in}L{3.8in}}
+\toprule
+\textbf{Check} & \textbf{Observed result} \\
+\midrule
+Active Git branch & \\
+Node.js version & \\
+npm version & \\
+Astro plugin installed & Yes / No \\
+Repository opened at root & Yes / No \\
+\bottomrule
+\end{longtable}
+
+% ============================================================
+\section{Phase 4: Create the ChatGPT Project}
+% ============================================================
+
+\subsection{Create the project}
+
+In ChatGPT Desktop:
+
+\begin{enumerate}
+    \item Create a new Project.
+    \item Name it:
+\end{enumerate}
+
+\begin{codebox}{ChatGPT Project name}
+Cosmic Universalism Website
+\end{codebox}
+
+\subsection{Add the permanent project instructions}
+
+Open the Project's instruction field and paste the following.
+
+\begin{promptbox}{Project Instructions}
+PROJECT: Cosmic Universalism Website
+
+REPOSITORY:
+willmaddock/CosmicUniversalismStatement
+
+LOCAL REPOSITORY:
+CosmicUniversalismStatement
+
+DEVELOPMENT BRANCH:
+website
+
+WEBSITE DIRECTORY:
+website/
+
+TECHNOLOGY:
+Astro, TypeScript, HTML, modern CSS, Markdown, SVG,
+and lightweight browser JavaScript.
+
+DEVELOPMENT APPLICATIONS:
+- PyCharm for reviewing and editing source files
+- GitHub Desktop for branches, commits, and pushes
+- ChatGPT Work for planning, research organization,
+  design, and content
+- ChatGPT Codex for repository inspection, coding,
+  commands, builds, and tests
+
+PROTECTION RULES:
+1. Never modify the main branch.
+2. Confirm the current branch is website before making changes.
+3. Keep new website source code inside website/.
+4. Do not delete or rewrite existing repository files unless
+   explicitly directed.
+5. Do not modify the CU-Time converter mathematics without a
+   separate technical review.
+6. Do not commit node_modules/, dist/, .DS_Store, private keys,
+   tokens, passwords, or secret .env files.
+7. Make small, reviewable changes.
+8. Explain planned file changes before implementing them.
+9. Run npm run build after major changes.
+10. Do not deploy until the local production build succeeds.
+11. Do not commit, push, merge, or deploy unless explicitly asked.
+
+CU CONTENT RULES:
+1. Preserve sub-ctom and ctom as different terms.
+2. Do not place the Observable Universe marker inside sub-ctom.
+3. Keep scientific references separate from CU theoretical
+   propositions.
+4. Clearly label open problems, contradictions, and superseded
+   interpretations.
+5. Preserve the 3.108-trillion-year full Cosmic Breath framework.
+6. Do not silently change established project terminology.
+
+VISUAL DIRECTION:
+A realistic combination of NASA scientific visualization,
+modern academic publishing, cinematic cosmic documentary,
+and restrained philosophical symbolism.
+
+COLORS:
+- Deep navy-black background
+- White-gold for the Great Baking Will and sub-ztom
+- Cyan for empirical references and the Observable Universe
+- Translucent blue for compression structures
+- Amber for open questions
+
+WORKFLOW:
+Plan in Work.
+Implement and test in Codex.
+Review files in PyCharm.
+Review and commit changes in GitHub Desktop.
+\end{promptbox}
+
+\subsection{Add reference materials}
+
+Add these reference materials to the Project:
+
+\begin{itemize}
+    \item The approved Cosmic Universalism homepage mockup.
+    \item The website blueprint or outline.
+    \item Any canonical research documents needed for the first pages.
+\end{itemize}
+
+Use recognizable filenames:
+
+\begin{codebox}{Suggested reference filenames}
+cosmic-universalism-homepage-reference.png
+cosmic-universalism-website-blueprint.md
+\end{codebox}
+
+\begin{safetybox}
+Do not upload passwords, GitHub tokens, private SSH keys, secret
+environment files, or unrelated personal documents.
+\end{safetybox}
+
+% ============================================================
+\section{Phase 5: Connect ChatGPT Desktop and PyCharm}
+% ============================================================
+
+\subsection{Enable Work with Apps}
+
+In ChatGPT Desktop:
+
+\begin{enumerate}
+    \item Open \menu{ChatGPT \textrightarrow{} Settings}.
+    \item Find \menu{Work with Apps}.
+    \item Enable the feature.
+    \item Open \menu{Manage Apps}.
+    \item Confirm whether PyCharm appears as a supported application.
+    \item Grant only the permissions required for the project.
+\end{enumerate}
+
+The exact interface wording can vary by desktop-app release.
+
+\subsection{Prepare the PyCharm window}
+
+Before attaching PyCharm:
+
+\begin{itemize}
+    \item Keep only the Cosmic Universalism repository open.
+    \item Close unrelated private projects.
+    \item Close files containing credentials or secrets.
+    \item Confirm the active branch is \branchname{website}.
+\end{itemize}
+
+\subsection{Use reviewable changes}
+
+For the first implementation phases:
+
+\begin{itemize}
+    \item Ask for a plan before edits.
+    \item Ask for a list of files that will change.
+    \item Review proposed diffs.
+    \item Avoid automatic application of broad edits.
+    \item Test each approved change locally.
+\end{itemize}
+
+% ============================================================
+\section{Phase 6: Create the Initial Work Plan}
+% ============================================================
+
+Open ChatGPT Work inside the Cosmic Universalism Website Project.
+
+Paste:
+
+\begin{promptbox}{Phase 1 Planning}
+We are beginning the Cosmic Universalism website project.
+
+Use the Project Instructions, website blueprint, and approved
+homepage reference image.
+
+For this task, do not edit any files.
+
+Create a concise Phase 1 implementation plan for a local Astro
+website. The first milestone must include only:
+
+1. Astro project initialization inside website/
+2. Global design tokens
+3. Base page layout
+4. Header navigation
+5. Static homepage hero
+6. Placeholder Cosmic Breath SVG
+7. Three summary cards
+8. Research classification legend
+
+For each item, identify:
+
+- the goal
+- the expected folders and files
+- dependencies
+- accessibility requirements
+- mobile behavior
+- testing requirements
+- completion criteria
+
+Do not implement anything yet.
+Do not modify the repository.
+Do not commit, push, merge, or deploy.
+\end{promptbox}
+
+Review the plan before proceeding.
+
+\begin{checkpointbox}
+The plan should keep all new application files inside
+\filepath{website/}. It should not propose changing the converter
+mathematics or rewriting the research repository.
+\end{checkpointbox}
+
+% ============================================================
+\section{Phase 7: Inspect the Repository with Codex}
+% ============================================================
+
+Switch to ChatGPT Codex and open the local repository.
+
+Paste:
+
+\begin{promptbox}{Repository Inspection}
+Inspect this repository without changing any files.
+
+Confirm:
+
+1. The repository root
+2. The current Git branch
+3. Whether a website/ directory already exists
+4. Whether package.json exists at the repository root
+5. Whether Node.js and npm are available
+6. The detected Node.js and npm versions
+7. Whether there are uncommitted changes
+8. Which GitHub Pages workflow files currently exist
+9. Which branches those workflows trigger on
+10. Whether any existing workflow could deploy from the
+    website branch
+
+Do not install packages.
+Do not create files.
+Do not modify files.
+Do not switch branches.
+Do not commit.
+Do not push.
+Do not merge.
+Do not deploy.
+
+Report the findings first.
+\end{promptbox}
+
+\begin{warningbox}
+If Codex reports that the current branch is \branchname{main}, stop.
+Return to GitHub Desktop and switch to \branchname{website}.
+\end{warningbox}
+
+% ============================================================
+\section{Phase 8: Initialize Astro}
+% ============================================================
+
+\subsection{Preferred Codex initialization prompt}
+
+After the inspection confirms the correct branch, paste:
+
+\begin{promptbox}{Initialize Astro}
+Initialize a new Astro website inside the website/ directory.
+
+Requirements:
+
+- Use the minimal Astro template.
+- Use strict TypeScript.
+- Install dependencies.
+- Use npm as the package manager.
+- Do not initialize a nested Git repository.
+- Do not modify files outside website/.
+- Do not modify the existing GitHub Pages workflow.
+- Do not deploy.
+- Do not commit or push.
+- After creation, run npm run build.
+- Report every created file.
+- Report all warnings or errors.
+- Confirm whether a nested website/.git directory exists.
+
+Stop after the initial successful Astro build.
+\end{promptbox}
+
+\subsection{Manual terminal alternative}
+
+To perform initialization manually from the repository root:
+
+\begin{commandbox}{Launch the Astro setup wizard}
+npm create astro@latest website
+\end{commandbox}
+
+Choose options equivalent to:
+
+\begin{codebox}{Astro wizard selections}
+Template: Minimal
+Install dependencies: Yes
+TypeScript: Strict
+Initialize a new Git repository: No
+\end{codebox}
+
+The wizard wording may vary slightly.
+
+\subsection{Expected project structure}
+
+After initialization, PyCharm should show:
+
+\begin{codebox}{Expected Astro structure}
+website/
+|-- public/
+|-- src/
+|   `-- pages/
+|       `-- index.astro
+|-- .gitignore
+|-- astro.config.mjs
+|-- package.json
+|-- package-lock.json
+|-- README.md
+`-- tsconfig.json
+\end{codebox}
+
+\begin{warningbox}
+There should not be a nested \filepath{website/.git/} directory.
+A nested Git repository would interfere with the parent repository's
+source control.
+\end{warningbox}
+
+% ============================================================
+\section{Phase 9: Run and Test the Initial Website}
+% ============================================================
+
+\subsection{Start the development server}
+
+In PyCharm's terminal:
+
+\begin{commandbox}{Run the local development server}
+cd website
+npm run dev
+\end{commandbox}
+
+Astro normally reports an address similar to:
+
+\begin{codebox}{Local development address}
+http://localhost:4321/
+\end{codebox}
+
+Open the address in Safari or Chrome.
+
+To stop the server, press:
+
+\begin{codebox}{Stop the server}
+Control + C
+\end{codebox}
+
+\subsection{Run the production build}
+
+From \filepath{website/}:
+
+\begin{commandbox}{Build the production website}
+npm run build
+\end{commandbox}
+
+A successful build creates:
+
+\begin{codebox}{Generated build directory}
+website/dist/
+\end{codebox}
+
+\subsection{Preview the production build}
+
+\begin{commandbox}{Preview the production build}
+npm run preview
+\end{commandbox}
+
+\begin{successbox}
+The initial milestone is successful when:
+
+\begin{itemize}
+    \item The development server launches.
+    \item The local page opens in a browser.
+    \item \texttt{npm run build} completes without errors.
+    \item \texttt{npm run preview} displays the production build.
+\end{itemize}
+\end{successbox}
+
+% ============================================================
+\section{Phase 10: Review and Commit the Initial Astro Project}
+% ============================================================
+
+\subsection{Inspect the Git changes}
+
+Return to GitHub Desktop.
+
+The changes should be concentrated inside:
+
+\begin{codebox}{Expected change location}
+website/
+\end{codebox}
+
+Do not commit:
+
+\begin{itemize}
+    \item \filepath{node\_modules/}
+    \item \filepath{dist/}
+    \item \filepath{.DS\_Store}
+    \item secret \filepath{.env} files
+    \item access tokens
+    \item passwords
+    \item private keys
+\end{itemize}
+
+Confirm that \filepath{website/.gitignore} includes:
+
+\begin{codebox}{Minimum ignore entries}
+node_modules
+dist
+\end{codebox}
+
+\subsection{Create the first commit}
+
+Use this commit summary:
+
+\begin{codebox}{Commit message}
+Create initial Astro website
+\end{codebox}
+
+In GitHub Desktop:
+
+\begin{enumerate}
+    \item Confirm the button says \menu{Commit to website}.
+    \item Review every selected file.
+    \item Click \menu{Commit to website}.
+    \item Click \menu{Push origin}.
+\end{enumerate}
+
+\begin{warningbox}
+Do not click the commit button if it says
+\menu{Commit to main}.
+\end{warningbox}
+
+% ============================================================
+\section{Phase 11: Establish the Website Architecture}
+% ============================================================
+
+Use ChatGPT Work to prepare the architecture before implementation.
+
+\begin{promptbox}{Website Architecture Plan}
+Create the implementation specification for the initial Cosmic
+Universalism website architecture.
+
+Do not edit files.
+
+The application root is website/.
+
+Plan the following structure:
+
+website/
+  public/
+    diagrams/
+    images/
+    media/
+    tools/
+  src/
+    components/
+    content/
+      framework/
+      research/
+      glossary/
+      media/
+      archive/
+    layouts/
+    pages/
+      research/
+    styles/
+
+Plan these initial components:
+
+- Header.astro
+- Hero.astro
+- CosmicBreathDiagram.astro
+- BreathSummary.astro
+- ResearchLegend.astro
+- Footer.astro
+
+Plan these initial layouts:
+
+- BaseLayout.astro
+- ResearchLayout.astro
+
+Plan these initial pages:
+
+- index.astro
+- framework.astro
+- cosmic-breath.astro
+- cu-time.astro
+- research/index.astro
+- media.astro
+- about.astro
+
+Plan these initial stylesheets:
+
+- tokens.css
+- global.css
+- typography.css
+
+For every file, explain:
+
+- its responsibility
+- what it imports
+- what content it owns
+- what content it must not duplicate
+- accessibility requirements
+- responsive behavior
+- completion criteria
+
+Do not implement the files.
+Do not modify the repository.
+Do not commit, push, merge, or deploy.
+\end{promptbox}
+
+% ============================================================
+\section{Phase 12: Implement the Design Foundation}
+% ============================================================
+
+\subsection{Planning prompt}
+
+\begin{promptbox}{Design System Specification}
+Using the approved Cosmic Universalism mockup and Project
+Instructions, prepare a detailed design-system specification.
+
+Do not edit files.
+
+Define:
+
+1. Color tokens
+2. Typography tokens
+3. Spacing scale
+4. Maximum content width
+5. Research reading width
+6. Border and surface styles
+7. Button styles
+8. Focus states
+9. Research classification styles
+10. Reduced-motion behavior
+11. Desktop breakpoints
+12. Mobile breakpoints
+
+Use these visual principles:
+
+- deep navy-black background
+- white-gold for the Great Baking Will and sub-ztom
+- cyan for empirical references and the Observable Universe
+- translucent blue for compression structures
+- amber for open questions
+- high readability
+- restrained glow
+- no video-game HUD styling
+- no cryptocurrency styling
+- no excessive particle effects
+
+Return the specification only.
+Do not implement it.
+\end{promptbox}
+
+\subsection{Implementation prompt}
+
+After approving the specification, switch to Codex and paste:
+
+\begin{promptbox}{Implement Design Tokens and Base Layout}
+Implement only the approved design tokens and base page layout.
+
+Requirements:
+
+- Work only inside website/.
+- Create maintainable CSS custom properties.
+- Create a semantic BaseLayout.astro.
+- Add accessible metadata defaults.
+- Add a skip-to-content link.
+- Add visible keyboard focus styles.
+- Add reduced-motion support.
+- Do not build the final header or hero yet.
+- Do not add heavy dependencies.
+- Do not modify existing research or converter files.
+- Run npm run build.
+- Report all changed files.
+- Report warnings and errors.
+- Do not commit, push, merge, or deploy.
+\end{promptbox}
+
+Suggested commit message after review:
+
+\begin{codebox}{Commit message}
+Add global CU design system and base layout
+\end{codebox}
+
+% ============================================================
+\section{Phase 13: Build the Header and Static Hero}
+% ============================================================
+
+\subsection{Work planning prompt}
+
+\begin{promptbox}{Header and Hero Specification}
+Using the approved homepage mockup, create an implementation
+specification for the homepage header and static hero only.
+
+Do not edit files.
+
+Specify:
+
+- exact component names
+- semantic HTML structure
+- navigation labels
+- accessible mobile navigation behavior
+- hero heading hierarchy
+- exact hero text
+- button labels
+- provisional button destinations
+- responsive desktop and mobile layout
+- placeholder behavior for the Cosmic Breath SVG
+- keyboard focus behavior
+- reduced-motion requirements
+- acceptance criteria
+
+Required navigation labels:
+
+Framework
+Cosmic Breath
+CU-Time
+Research
+Media
+About
+GitHub
+
+Required site identity:
+
+COSMIC UNIVERSALISM
+Computational Intelligence Initiative
+
+Required hero heading:
+
+COSMIC UNIVERSALISM
+
+Required hero description:
+
+A philosophical and computational framework exploring
+consciousness, time, existence, and the full Cosmic Breath.
+
+Required buttons:
+
+Explore the Framework
+Open the CU Statement
+
+Required research-status line:
+
+Scientific references distinguished from CU theoretical
+propositions.
+
+Do not implement the specification.
+\end{promptbox}
+
+\subsection{Codex implementation prompt}
+
+\begin{promptbox}{Implement Header and Static Hero}
+Implement only the approved header and static homepage hero.
+
+Requirements:
+
+- Work only inside website/.
+- Use semantic and accessible HTML.
+- Use the existing design tokens.
+- Keep content separate from decorative styling.
+- Implement a responsive desktop and mobile arrangement.
+- Use a static placeholder for the Cosmic Breath diagram.
+- Do not add animation yet.
+- Do not add a JavaScript framework.
+- Do not modify research files.
+- Do not modify converter mathematics.
+- Run npm run build.
+- Provide a file-by-file change summary.
+- Report warnings and errors.
+- Do not commit, push, merge, or deploy.
+\end{promptbox}
+
+Suggested commit message:
+
+\begin{codebox}{Commit message}
+Add homepage header and static hero
+\end{codebox}
+
+% ============================================================
+\section{Phase 14: Build the Cosmic Breath SVG}
+% ============================================================
+
+\subsection{Planning prompt}
+
+\begin{promptbox}{Cosmic Breath SVG Specification}
+Create a technical specification for a responsive, accessible,
+static SVG visualization of the Cosmic Breath.
+
+Do not edit files.
+
+The SVG must include these exact labels:
+
+- sub-ztom
+- atom
+- btom
+- ctom
+- ztom
+
+The center must contain a white-gold sub-ztom seed.
+
+The Observable Universe marker must:
+
+- be cyan
+- appear inside the ctom region
+- display "You Are Here"
+- display "Observable Universe"
+- not appear inside sub-ctom
+- not overlap the central seed
+
+The diagram should look like a realistic scientific website
+visualization built from SVG shapes, gradients, strokes, masks,
+and labels.
+
+It must not resemble:
+
+- a gaming HUD
+- a magical portal
+- a cryptocurrency graphic
+- a crowded science-fiction dashboard
+
+Specify:
+
+- SVG viewBox
+- grouping strategy
+- shell geometry
+- text-label strategy
+- responsive scaling
+- accessibility title and description
+- mobile fallback
+- reduced-motion behavior for later animation
+- acceptance criteria
+
+Do not implement the SVG yet.
+\end{promptbox}
+
+\subsection{Implementation prompt}
+
+\begin{promptbox}{Implement Static Cosmic Breath SVG}
+Implement the approved static Cosmic Breath SVG.
+
+Requirements:
+
+- Work only inside website/.
+- Use an Astro component named CosmicBreathDiagram.astro.
+- Preserve the exact approved tom labels.
+- Place the cyan Observable Universe marker inside ctom.
+- Do not introduce a sub-ctom label unless the specification
+  explicitly requires it.
+- Add an accessible SVG title and description.
+- Ensure text remains readable at supported desktop widths.
+- Provide a simplified readable mobile arrangement.
+- Do not animate the SVG yet.
+- Run npm run build.
+- Report changed files, warnings, and errors.
+- Do not commit, push, merge, or deploy.
+\end{promptbox}
+
+Suggested commit message:
+
+\begin{codebox}{Commit message}
+Add static Cosmic Breath SVG visualization
+\end{codebox}
+
+% ============================================================
+\section{Phase 15: Build the Summary Cards and Research Legend}
+% ============================================================
+
+\subsection{Required card content}
+
+\begin{codebox}{Expansion card}
+Expansion Phase
+2.8 trillion years
+sub-ztom -> atom
+\end{codebox}
+
+\begin{codebox}{Compression card}
+Compression Phase
+308 billion years
+btom -> ztom
+\end{codebox}
+
+\begin{codebox}{Full Breath card}
+Full Cosmic Breath
+3.108 trillion years
+Expansion + Compression
+\end{codebox}
+
+\subsection{Required research classifications}
+
+\begin{codebox}{Research legend}
+Empirical Reference
+CU Mathematical Model
+CU Theoretical Proposition
+Open Question
+\end{codebox}
+
+\subsection{Implementation prompt}
+
+\begin{promptbox}{Implement Summary Cards and Research Legend}
+Implement the approved Cosmic Breath summary cards and research
+classification legend.
+
+Requirements:
+
+- Work only inside website/.
+- Create BreathSummary.astro.
+- Create ResearchLegend.astro.
+- Use semantic HTML.
+- Use the approved design tokens.
+- Stack cards vertically on narrow screens.
+- Preserve all numerical values and labels exactly.
+- Use cyan for Empirical Reference.
+- Use white-gold for CU Mathematical Model.
+- Use translucent blue for CU Theoretical Proposition.
+- Use amber for Open Question.
+- Do not add unsupported scientific claims.
+- Do not add animation.
+- Run npm run build.
+- Provide a file-by-file change summary.
+- Do not commit, push, merge, or deploy.
+\end{promptbox}
+
+Suggested commit message:
+
+\begin{codebox}{Commit message}
+Add Cosmic Breath summary and research legend
+\end{codebox}
+
+% ============================================================
+\section{Phase 16: Repeatable Feature Workflow}
+% ============================================================
+
+Use the following sequence for every feature:
+
+\begin{enumerate}
+    \item Plan one small feature in ChatGPT Work.
+    \item Review the plan.
+    \item Implement only that feature in Codex.
+    \item Review every changed file in PyCharm.
+    \item Run the development server.
+    \item Inspect the feature in the browser.
+    \item Test desktop and mobile widths.
+    \item Run the production build.
+    \item Review GitHub Desktop changes.
+    \item Commit to \branchname{website}.
+    \item Push origin.
+\end{enumerate}
+
+\subsection{Generic planning prompt}
+
+\begin{promptbox}{Generic Feature Planning}
+Plan the following website feature:
+
+[INSERT FEATURE NAME]
+
+Do not edit files.
+
+Repository rules:
+
+- Current development branch: website
+- Website application directory: website/
+- Do not modify main
+- Do not modify existing research or converter files unless
+  explicitly directed
+- Do not change CU-Time mathematics
+- Preserve CU terminology exactly
+
+Provide:
+
+1. Goal
+2. User experience
+3. Files to create
+4. Files to modify
+5. Semantic HTML structure
+6. Accessibility requirements
+7. Responsive behavior
+8. Data or content requirements
+9. Testing steps
+10. Completion criteria
+11. Risks or unresolved questions
+
+Do not implement.
+Do not commit, push, merge, or deploy.
+\end{promptbox}
+
+\subsection{Generic implementation prompt}
+
+\begin{promptbox}{Generic Feature Implementation}
+Implement only this approved feature:
+
+[INSERT FEATURE NAME]
+
+Approved specification:
+
+[PASTE OR REFERENCE THE APPROVED SPECIFICATION]
+
+Rules:
+
+- Confirm the current branch is website before editing.
+- Work only inside website/ unless the approved specification
+  explicitly identifies another file.
+- Make the smallest maintainable change.
+- Use semantic HTML.
+- Preserve accessibility.
+- Preserve responsive behavior.
+- Do not add unnecessary dependencies.
+- Do not modify CU-Time mathematics.
+- Do not alter research conclusions.
+- Run npm run build after editing.
+- Report every changed file.
+- Report all warnings and errors.
+- Do not commit, push, merge, or deploy.
+\end{promptbox}
+
+\subsection{Generic review prompt}
+
+\begin{promptbox}{Review the Completed Feature}
+Review the current uncommitted website changes.
+
+Do not edit files during the first review.
+
+Check:
+
+1. Whether all changes are on the website branch
+2. Whether files outside website/ changed
+3. Whether the implementation matches the approved specification
+4. Accessibility
+5. Responsive behavior
+6. Broken links
+7. Incorrect paths
+8. Incorrect CU terminology
+9. sub-ctom versus ctom confusion
+10. Observable Universe marker placement
+11. Build warnings
+12. Unnecessary dependencies
+13. Secret or generated files that should not be committed
+14. Whether npm run build succeeds
+
+Report findings from highest to lowest priority.
+Do not commit, push, merge, or deploy.
+\end{promptbox}
+
+% ============================================================
+\section{Phase 17: Recommended Feature Order}
+% ============================================================
+
+Develop features in this order:
+
+\begin{enumerate}
+    \item Initial Astro application
+    \item Global design tokens
+    \item Base layout
+    \item Header
+    \item Static hero
+    \item Static Cosmic Breath SVG
+    \item Summary cards
+    \item Research-classification legend
+    \item Mobile navigation
+    \item Footer
+    \item Framework overview page
+    \item CU Statement page
+    \item Cosmic Breath page
+    \item Research index
+    \item Research article layout
+    \item Glossary
+    \item CU-Time converter wrapper
+    \item Media page
+    \item Subtle motion
+    \item Reduced-motion review
+    \item Accessibility review
+    \item Production deployment
+\end{enumerate}
+
+\begin{safetybox}
+Do not begin complex animation, WebGL, search, a database, a Go
+backend, or user accounts during the initial website milestone.
+\end{safetybox}
+
+% ============================================================
+\section{Phase 18: Local Quality Checks}
+% ============================================================
+
+Run these commands from \filepath{website/}:
+
+\begin{commandbox}{Development server}
+npm run dev
+\end{commandbox}
+
+\begin{commandbox}{Production build}
+npm run build
+\end{commandbox}
+
+\begin{commandbox}{Production preview}
+npm run preview
+\end{commandbox}
+
+Use this checklist:
+
+\begin{itemize}
+    \item[\checkbox] Homepage loads.
+    \item[\checkbox] No browser-console errors appear.
+    \item[\checkbox] All navigation items are visible.
+    \item[\checkbox] Keyboard focus is visible.
+    \item[\checkbox] The skip link works.
+    \item[\checkbox] The hero remains readable.
+    \item[\checkbox] The SVG labels are correct.
+    \item[\checkbox] The Observable Universe marker is inside ctom.
+    \item[\checkbox] Summary values are correct.
+    \item[\checkbox] Research classifications are distinguishable.
+    \item[\checkbox] The page works at mobile width.
+    \item[\checkbox] The page works at desktop width.
+    \item[\checkbox] Reduced-motion settings are respected.
+    \item[\checkbox] \texttt{npm run build} succeeds.
+\end{itemize}
+
+% ============================================================
+\section{Phase 19: Commit Discipline}
+% ============================================================
+
+Use small, descriptive commits.
+
+Recommended sequence:
+
+\begin{codebox}{Suggested commit history}
+Create initial Astro website
+Add global CU design system and base layout
+Add homepage header and static hero
+Add static Cosmic Breath SVG visualization
+Add Cosmic Breath summary and research legend
+Add responsive mobile navigation
+Add Framework overview page
+Add CU Statement page
+Add research library structure
+Integrate CU-Time converter page
+Add reduced-motion support
+Prepare website branch deployment
+\end{codebox}
+
+Before every commit:
+
+\begin{itemize}
+    \item[\checkbox] GitHub Desktop displays \branchname{website}.
+    \item[\checkbox] The changed-file list has been reviewed.
+    \item[\checkbox] No secret files are selected.
+    \item[\checkbox] No \filepath{node\_modules/} files are selected.
+    \item[\checkbox] No \filepath{dist/} files are selected.
+    \item[\checkbox] The production build succeeds.
+    \item[\checkbox] The commit message describes one logical change.
+\end{itemize}
+
+% ============================================================
+\section{Phase 20: GitHub Pages Deployment}
+% ============================================================
+
+\begin{warningbox}
+Do not perform this phase until the local production build has been
+reviewed and approved.
+
+The repository may already contain a GitHub Pages workflow. Inspect
+all existing workflows before adding another deployment workflow.
+If an existing workflow deploys from \branchname{main}, future pushes
+to \branchname{main} could overwrite a site deployed from
+\branchname{website}.
+\end{warningbox}
+
+\subsection{Configure Astro for the repository path}
+
+Edit \filepath{website/astro.config.mjs}:
+
+\begin{codebox}{astro.config.mjs}
+import { defineConfig } from 'astro/config';
+
+export default defineConfig({
+  site: 'https://willmaddock.github.io',
+  base: '/CosmicUniversalismStatement',
+  output: 'static',
+});
+\end{codebox}
+
+Because the site uses a repository subpath, manually written internal
+links must account for the configured base path.
+
+\subsection{Deployment-review prompt}
+
+Before creating the workflow, use:
+
+\begin{promptbox}{Deployment Safety Review}
+Inspect the repository's current GitHub Actions workflows.
+
+Do not edit files.
+
+Determine:
+
+1. Which workflows deploy GitHub Pages
+2. Which branches trigger each workflow
+3. Whether a main-branch push could overwrite a deployment from
+   the website branch
+4. Whether GitHub Pages is currently configured for Actions
+5. Whether the Astro project path should be ./website
+6. Whether astro.config.mjs has the correct site and base values
+7. Whether package-lock.json is committed
+8. Whether all internal links support the configured base path
+
+Recommend the safest deployment arrangement for keeping:
+
+- main as the canonical research branch
+- website as the permanent website branch
+
+Do not modify workflows.
+Do not commit, push, merge, or deploy.
+\end{promptbox}
+
+\subsection{Website-branch deployment workflow}
+
+As of the verification date shown on this document, the official Astro
+documentation uses:
+
+\begin{itemize}
+    \item \texttt{actions/checkout@v7}
+    \item \texttt{withastro/action@v6}
+    \item \texttt{actions/deploy-pages@v5}
+\end{itemize}
+
+Create this file only after reviewing existing workflows:
+
+\begin{codebox}{.github/workflows/deploy-website.yml}
+name: Deploy Cosmic Universalism Website
+
+on:
+  push:
+    branches: [website]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Install, build, and upload Astro site
+        uses: withastro/action@v6
+        with:
+          path: ./website
+          node-version: 24
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
+\end{codebox}
+
+\begin{notebox}
+GitHub Action major versions can change. Recheck the official Astro
+GitHub Pages documentation before committing this workflow.
+\end{notebox}
+
+\subsection{Configure GitHub Pages}
+
+On GitHub:
+
+\begin{codebox}{GitHub Pages settings}
+Repository
+  -> Settings
+  -> Pages
+  -> Source
+  -> GitHub Actions
+\end{codebox}
+
+The expected public address is:
+
+\begin{codebox}{Expected public URL}
+https://willmaddock.github.io/CosmicUniversalismStatement/
+\end{codebox}
+
+\subsection{Deployment implementation prompt}
+
+\begin{promptbox}{Prepare Deployment}
+Prepare the approved GitHub Pages deployment for the Astro website.
+
+Requirements:
+
+- Confirm the current branch is website.
+- Inspect existing workflow files before editing.
+- Do not allow an old workflow to unexpectedly overwrite the
+  website deployment.
+- Configure website/astro.config.mjs with:
+  site: https://willmaddock.github.io
+  base: /CosmicUniversalismStatement
+  output: static
+- Create or update only the approved website deployment workflow.
+- Use ./website as the Astro project path.
+- Run npm run build locally.
+- Check internal links and asset paths against the base path.
+- Report every changed file.
+- Do not commit or push.
+- Do not trigger a deployment.
+\end{promptbox}
+
+% ============================================================
+\section{Phase 21: Troubleshooting}
+% ============================================================
+
+\subsection{Node command not found}
+
+Symptom:
+
+\begin{codebox}{Error}
+zsh: command not found: node
+\end{codebox}
+
+Response:
+
+\begin{itemize}
+    \item Install a supported Node.js release.
+    \item Close and reopen Terminal.
+    \item Run \texttt{node --version}.
+\end{itemize}
+
+\subsection{Wrong branch}
+
+Symptom:
+
+\begin{codebox}{Unexpected result}
+main
+\end{codebox}
+
+Response:
+
+\begin{enumerate}
+    \item Stop editing.
+    \item Save or discard uncommitted changes appropriately.
+    \item Open GitHub Desktop.
+    \item Switch to \branchname{website}.
+    \item Run \texttt{git branch --show-current} again.
+\end{enumerate}
+
+\subsection{Nested Git repository}
+
+Symptom:
+
+\begin{codebox}{Unwanted directory}
+website/.git/
+\end{codebox}
+
+Response:
+
+\begin{itemize}
+    \item Do not commit yet.
+    \item Remove only the nested \filepath{website/.git/} directory.
+    \item Do not remove the parent repository's \filepath{.git/}.
+    \item Recheck GitHub Desktop.
+\end{itemize}
+
+\subsection{Port 4321 is already in use}
+
+Run Astro on another port:
+
+\begin{commandbox}{Alternative local port}
+npm run dev -- --port 4322
+\end{commandbox}
+
+Then open:
+
+\begin{codebox}{Alternative address}
+http://localhost:4322/
+\end{codebox}
+
+\subsection{PyCharm does not recognize Astro files}
+
+Check:
+
+\begin{itemize}
+    \item The Astro plugin is installed and enabled.
+    \item PyCharm was restarted after installation.
+    \item The complete repository is open.
+    \item Node.js is configured.
+    \item Astro language-server support is enabled.
+\end{itemize}
+
+\subsection{GitHub Pages returns a 404}
+
+Check:
+
+\begin{itemize}
+    \item The workflow succeeded.
+    \item Pages source is set to GitHub Actions.
+    \item \texttt{site} is correct.
+    \item \texttt{base} is
+          \texttt{/CosmicUniversalismStatement}.
+    \item Internal links include the repository base path.
+    \item Static asset paths are compatible with the base path.
+\end{itemize}
+
+\subsection{The build fails}
+
+Run:
+
+\begin{commandbox}{Clean dependency installation}
+cd website
+rm -rf node_modules
+npm install
+npm run build
+\end{commandbox}
+
+Do not delete \filepath{package-lock.json} unless dependency recovery
+specifically requires regenerating it.
+
+% ============================================================
+\section{Phase 22: Initial Project Checkpoint}
+% ============================================================
+
+Complete only these tasks before beginning homepage implementation:
+
+\begin{itemize}
+    \item[\checkbox] Fetch origin in GitHub Desktop.
+    \item[\checkbox] Create the \branchname{website} branch.
+    \item[\checkbox] Publish the \branchname{website} branch.
+    \item[\checkbox] Verify the branch in Terminal.
+    \item[\checkbox] Verify Node.js.
+    \item[\checkbox] Verify npm.
+    \item[\checkbox] Open the repository root in PyCharm.
+    \item[\checkbox] Install the Astro plugin.
+    \item[\checkbox] Create the ChatGPT Project.
+    \item[\checkbox] Add the Project Instructions.
+    \item[\checkbox] Add the homepage reference image.
+    \item[\checkbox] Add the website blueprint.
+    \item[\checkbox] Run the planning prompt.
+    \item[\checkbox] Run the no-edit repository inspection.
+\end{itemize}
+
+Record the checkpoint:
+
+\begin{longtable}{L{2.5in}L{3.5in}}
+\toprule
+\textbf{Checkpoint item} & \textbf{Result} \\
+\midrule
+Current branch & \\
+Node.js version & \\
+npm version & \\
+PyCharm Astro plugin & \\
+ChatGPT Project created & \\
+Reference mockup added & \\
+Blueprint added & \\
+Repository inspection complete & \\
+Uncommitted changes before setup & \\
+Existing deployment workflows & \\
+\bottomrule
+\end{longtable}
+
+% ============================================================
+\section{Official Reference Links}
+% ============================================================
+
+These links were used to establish the technical baseline of this
+manual.
+
+\begin{itemize}
+    \item Astro installation and Node.js requirements:
+
+    \href{https://docs.astro.build/en/install-and-setup/}
+    {https://docs.astro.build/en/install-and-setup/}
+
+    \item Astro editor and JetBrains setup:
+
+    \href{https://docs.astro.build/en/editor-setup/}
+    {https://docs.astro.build/en/editor-setup/}
+
+    \item Astro GitHub Pages deployment:
+
+    \href{https://docs.astro.build/en/guides/deploy/github/}
+    {https://docs.astro.build/en/guides/deploy/github/}
+
+    \item GitHub Desktop branch management:
+
+    \href{https://docs.github.com/en/desktop/making-changes-in-a-branch/managing-branches-in-github-desktop}
+    {GitHub Desktop branch-management documentation}
+
+    \item ChatGPT Projects:
+
+    \href{https://help.openai.com/en/articles/10169521-projects-in-chatgpt}
+    {OpenAI Projects documentation}
+
+    \item Work with Apps on macOS:
+
+    \href{https://help.openai.com/en/articles/10119604-work-with-apps-on-macos}
+    {OpenAI Work with Apps documentation}
+
+    \item ChatGPT Work and Codex:
+
+    \href{https://help.openai.com/en/articles/20001275-chatgpt-work-and-codex}
+    {OpenAI Work and Codex documentation}
+\end{itemize}
+
+% ============================================================
+\section*{Final Operating Principle}
+\addcontentsline{toc}{section}{Final Operating Principle}
+% ============================================================
+
+\begin{tcolorbox}[
+    enhanced,
+    breakable,
+    colback=CUNavy,
+    colframe=CUGold,
+    coltitle=CUNavy,
+    colbacktitle=CUGoldLight,
+    boxrule=1pt,
+    arc=2mm,
+    title=\textbf{Controlled Development Rule}
+]
+\color{white}
+
+Plan one feature.
+
+Implement one feature.
+
+Review every changed file.
+
+Test locally.
+
+Run the production build.
+
+Commit only to \branchname{website}.
+
+Push only after the change is understood.
+
+Do not deploy until the local website is stable.
+
+\end{tcolorbox}
+
+\vfill
+
+\begin{center}
+\color{CUMuted}
+\small
+End of \DocumentTitle
+\end{center}
+
+\end{document}

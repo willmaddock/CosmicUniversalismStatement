@@ -1,0 +1,1136 @@
+\documentclass[11pt,letterpaper]{article}
+
+% ============================================================
+% COSMIC UNIVERSALISM COSMIC BREATH INTERACTIVE CYCLE EXPLORER
+% IMPLEMENTATION AND OPERATIONS MANUAL
+% Compile with: pdfLaTeX / latexmk
+% Manual package created outside the Git repository.
+% ============================================================
+
+\usepackage[margin=0.78in,headheight=16pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[scaled=0.94]{helvet}
+\usepackage{microtype}
+\usepackage{parskip}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{xurl}
+\usepackage{bookmark}
+\usepackage{listings}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{pifont}
+\usepackage{needspace}
+\usepackage{caption}
+\usepackage{tocloft}
+
+\renewcommand{\familydefault}{\sfdefault}
+\setstretch{1.08}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+\raggedbottom
+\urlstyle{same}
+\setlength{\cftsecnumwidth}{3.3em}
+\setlength{\cftsubsecnumwidth}{4.2em}
+
+% Cosmic Universalism palette copied from the Master Manual.
+\definecolor{CUNavy}{HTML}{050812}
+\definecolor{CUNavyTwo}{HTML}{080D1A}
+\definecolor{CUSurface}{HTML}{0C1424}
+\definecolor{CUGold}{HTML}{DDBF72}
+\definecolor{CUGoldLight}{HTML}{FFF8DD}
+\definecolor{CUCyan}{HTML}{35CDEB}
+\definecolor{CUCyanLight}{HTML}{78E8FF}
+\definecolor{CUBlue}{HTML}{668ED1}
+\definecolor{CUBlueLight}{HTML}{9EB9EA}
+\definecolor{CUAmber}{HTML}{D99A32}
+\definecolor{CURed}{HTML}{B84C4C}
+\definecolor{CUGreen}{HTML}{2C8A65}
+\definecolor{CULight}{HTML}{F3F6FA}
+\definecolor{CUBorder}{HTML}{CCD5E0}
+\definecolor{CUText}{HTML}{18212E}
+\definecolor{CUMuted}{HTML}{5C6878}
+\definecolor{CUCodeBackground}{HTML}{F6F8FB}
+\definecolor{CUCodeBorder}{HTML}{BFCADA}
+
+\newcommand{\ProjectTitle}{Cosmic Universalism Website}
+\newcommand{\DocumentTitle}{Cosmic Breath Interactive Cycle Explorer}
+\newcommand{\DocumentSubtitle}{Implementation and Operations Manual}
+\newcommand{\RepositoryName}{CosmicUniversalismStatement}
+\newcommand{\RepositoryURL}{https://github.com/willmaddock/CosmicUniversalismStatement}
+\newcommand{\LocalRepository}{/Users/cosmos/Documents/GitHub/CosmicUniversalismStatement}
+\newcommand{\ProtectedBranch}{main}
+\newcommand{\StableBranch}{website}
+\newcommand{\LiveIntegrationHead}{d426b78}
+\newcommand{\LiveIntegrationFullHead}{d426b78750f6be26eff4c8fffba954c1a7ec8aa9}
+\newcommand{\CurrentReleaseTag}{website-v1.3-aurelius-release}
+\newcommand{\CurrentReleaseCommit}{5a56085}
+\newcommand{\ProposedFeatureBranch}{feature/cosmic-breath-cycle-explorer}
+\newcommand{\ProposedReleaseTag}{website-v1.4-cosmic-breath-explorer-release}
+\newcommand{\TargetRoute}{/CosmicUniversalismStatement/cosmic-breath/}
+\newcommand{\DocumentVersion}{1.1}
+\newcommand{\VerificationDate}{July 22, 2026}
+\newcommand{\AuthorName}{William Maddock}
+
+\hypersetup{
+ colorlinks=true,linkcolor=CUBlue,urlcolor=CUBlue,citecolor=CUBlue,
+ pdftitle={Cosmic Universalism Cosmic Breath Interactive Cycle Explorer Implementation and Operations Manual},
+ pdfauthor={William Maddock},
+ pdfsubject={Advanced controlled specification for a free-drag, snap, settle-to-details Cosmic Breath TOM cycle explorer},
+ pdfkeywords={Cosmic Universalism, Cosmic Breath, TOM, Astro, TypeScript, SVG, Canvas, pointer events, drag, snapping, accessibility, performance, Vitest}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textbf{Cosmic Breath Cycle Explorer}}
+\fancyhead[R]{\small Implementation and Operations Manual}
+\fancyfoot[L]{\small Version \DocumentVersion}
+\fancyfoot[C]{\small \thepage\ of \pageref{LastPage}}
+\fancyfoot[R]{\small Proposed: \texttt{v1.4}}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.5pt}
+
+\titleformat{\section}{\Large\bfseries\color{CUNavy}}{\thesection}{0.8em}{}[\vspace{0.2em}\color{CUCyan}\titlerule]
+\titleformat{\subsection}{\large\bfseries\color{CUNavyTwo}}{\thesubsection}{0.7em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{CUBlue}}{\thesubsubsection}{0.6em}{}
+\titlespacing*{\section}{0pt}{2.1em}{0.9em}
+\titlespacing*{\subsection}{0pt}{1.5em}{0.65em}
+\titlespacing*{\subsubsection}{0pt}{1.1em}{0.35em}
+
+\setlist[itemize]{leftmargin=1.6em,itemsep=0.3em,topsep=0.3em}
+\setlist[enumerate]{leftmargin=2em,itemsep=0.4em,topsep=0.35em}
+\newcommand{\checkbox}{\(\square\)}
+\newcommand{\checked}{\ding{51}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\setlength{\tabcolsep}{4pt}
+
+\newtcolorbox{purposebox}{enhanced,breakable,colback=CULight,colframe=CUBlue,boxrule=0.8pt,arc=2mm,left=3mm,right=3mm,top=2.5mm,bottom=2.5mm,title=\textbf{Purpose},coltitle=white,colbacktitle=CUBlue}
+\newtcolorbox{checkpointbox}{enhanced,breakable,colback=CUCyan!6,colframe=CUCyan,boxrule=0.8pt,arc=2mm,left=3mm,right=3mm,top=2.5mm,bottom=2.5mm,title=\textbf{Checkpoint},coltitle=CUNavy,colbacktitle=CUCyanLight}
+\newtcolorbox{safetybox}{enhanced,breakable,colback=CUAmber!8,colframe=CUAmber,boxrule=0.8pt,arc=2mm,left=3mm,right=3mm,top=2.5mm,bottom=2.5mm,title=\textbf{Safety Rule},coltitle=white,colbacktitle=CUAmber}
+\newtcolorbox{warningbox}{enhanced,breakable,colback=CURed!6,colframe=CURed,boxrule=0.8pt,arc=2mm,left=3mm,right=3mm,top=2.5mm,bottom=2.5mm,title=\textbf{Do Not Continue Until Resolved},coltitle=white,colbacktitle=CURed}
+\newtcolorbox{successbox}{enhanced,breakable,colback=CUGreen!7,colframe=CUGreen,boxrule=0.8pt,arc=2mm,left=3mm,right=3mm,top=2.5mm,bottom=2.5mm,title=\textbf{Successful Result},coltitle=white,colbacktitle=CUGreen}
+\newtcolorbox{notebox}{enhanced,breakable,colback=CUCodeBackground,colframe=CUBorder,boxrule=0.7pt,arc=2mm,left=3mm,right=3mm,top=2.5mm,bottom=2.5mm}
+\newtcolorbox{authoritybox}{enhanced,breakable,colback=CUGold!8,colframe=CUGold,boxrule=0.8pt,arc=2mm,left=3mm,right=3mm,top=2.5mm,bottom=2.5mm,title=\textbf{Authority and Source Priority},coltitle=CUNavy,colbacktitle=CUGoldLight}
+\newtcolorbox{authoringbox}{enhanced,breakable,colback=CUBlue!6,colframe=CUBlue,boxrule=0.8pt,arc=2mm,left=3mm,right=3mm,top=2.5mm,bottom=2.5mm,title=\textbf{Manual Status},coltitle=white,colbacktitle=CUBlue}
+
+\lstdefinestyle{terminalstyle}{basicstyle=\ttfamily\small,backgroundcolor=\color{CUNavyTwo},keywordstyle=\color{CUCyanLight},stringstyle=\color{CUGoldLight},commentstyle=\color{CUBlueLight},identifierstyle=\color{white},showstringspaces=false,columns=fullflexible,keepspaces=true,breaklines=true,breakatwhitespace=false,frame=none,tabsize=2,upquote=true}
+\lstdefinestyle{promptstyle}{basicstyle=\ttfamily\small,backgroundcolor=\color{CUCodeBackground},keywordstyle=\color{CUBlue},stringstyle=\color{CUGreen},commentstyle=\color{CUMuted},identifierstyle=\color{CUText},showstringspaces=false,columns=fullflexible,keepspaces=true,breaklines=true,breakatwhitespace=false,frame=none,tabsize=2,upquote=true}
+\lstdefinestyle{codestyle}{basicstyle=\ttfamily\small,backgroundcolor=\color{CUCodeBackground},keywordstyle=\color{CUBlue},stringstyle=\color{CUGreen},commentstyle=\color{CUMuted},identifierstyle=\color{CUText},showstringspaces=false,columns=fullflexible,keepspaces=true,breaklines=true,breakatwhitespace=false,frame=none,tabsize=2,upquote=true}
+\newtcblisting{commandbox}[1]{enhanced,breakable,listing only,listing engine=listings,listing options={style=terminalstyle},colback=CUNavyTwo,colframe=CUCyan,coltitle=CUNavy,colbacktitle=CUCyanLight,boxrule=0.8pt,arc=2mm,left=2mm,right=2mm,top=1mm,bottom=1mm,title=\textbf{#1}}
+\newtcblisting{promptbox}[1]{enhanced,breakable,listing only,listing engine=listings,listing options={style=promptstyle},colback=CUCodeBackground,colframe=CUBlue,coltitle=white,colbacktitle=CUBlue,boxrule=0.8pt,arc=2mm,left=2mm,right=2mm,top=1mm,bottom=1mm,title=\textbf{Copy-and-Paste Prompt: #1}}
+\newtcblisting{codebox}[1]{enhanced,breakable,listing only,listing engine=listings,listing options={style=codestyle},colback=CUCodeBackground,colframe=CUCodeBorder,coltitle=white,colbacktitle=CUNavyTwo,boxrule=0.8pt,arc=2mm,left=2mm,right=2mm,top=1mm,bottom=1mm,title=\textbf{#1}}
+
+\newcommand{\filepath}[1]{\nolinkurl{#1}}
+\newcommand{\branchname}[1]{\texttt{#1}}
+\newcommand{\release}[1]{\texttt{#1}}
+\newcommand{\term}[1]{\textbf{\textsf{#1}}}
+
+\begin{document}
+\hypersetup{pageanchor=false}
+\begin{titlepage}
+\pagecolor{CUNavy}\color{white}\thispagestyle{empty}
+\vspace*{0.42in}
+{\small\bfseries\color{CUCyanLight}COSMIC UNIVERSALISM COMPUTATIONAL INTELLIGENCE INITIATIVE\par}
+\vspace{0.28in}
+{\Huge\bfseries\ProjectTitle\par}
+\vspace{0.13in}
+{\LARGE\color{CUGoldLight}\DocumentTitle\par}
+\vspace{0.10in}
+{\large\color{CUBlueLight}\DocumentSubtitle\par}
+\vspace{0.26in}
+{\large A controlled specification for a cinematic, accessible, educational explorer with free pointer dragging, intelligent TOM snapping, settle-to-details behavior, adaptive high-fidelity SVG/Canvas graphics, explicit reset controls, and an unchanged structural overview whenever exploration closes.\par}
+\vfill
+\begin{tcolorbox}[colback=CUNavyTwo,colframe=CUBlue,boxrule=0.8pt,arc=2mm,width=\textwidth]
+\color{white}
+\begin{tabularx}{\textwidth}{>{\bfseries}L{1.82in}Y}
+Repository & \RepositoryName \\
+Protected branch & \texttt{\ProtectedBranch} \\
+Stable website branch & \texttt{\StableBranch} \\
+Live integration HEAD & \texttt{\LiveIntegrationHead} \\
+Latest tagged release & \texttt{\CurrentReleaseTag} at \texttt{\CurrentReleaseCommit} \\
+Proposed feature branch & \texttt{\ProposedFeatureBranch} (not created) \\
+Target route & \texttt{\TargetRoute} \\
+Technology & Astro, TypeScript, semantic HTML, modern CSS, SVG, Vitest, lightweight browser JavaScript \\
+Feature scale & 51 selectable TOM states, free planar drag, snap/settle detail reveal, overview, and next-breath reset transition \\
+Document version & \DocumentVersion \\
+Verified & \VerificationDate \\
+\end{tabularx}
+\end{tcolorbox}
+\vspace{0.24in}
+{\large\bfseries \AuthorName}
+\vspace{0.06in}
+{\small\url{\RepositoryURL}}
+\end{titlepage}
+\hypersetup{pageanchor=true}\pagenumbering{arabic}\nopagecolor\color{CUText}
+
+\section*{Document Control}
+\addcontentsline{toc}{section}{Document Control}
+\begin{tabularx}{\textwidth}{>{\bfseries}L{2.05in}Y}
+Document & Cosmic Universalism Website: Cosmic Breath Interactive Cycle Explorer Implementation and Operations Manual \\
+Version & \DocumentVersion \\
+Classification & Feature technical specification, interaction design standard, implementation plan, test plan, and release runbook \\
+Repository & \href{\RepositoryURL}{\RepositoryName} \\
+Local repository & \filepath{\LocalRepository} \\
+Protected branch & \branchname{\ProtectedBranch} \\
+Stable integration branch & \branchname{\StableBranch} \\
+Verified live integration HEAD & \release{\LiveIntegrationHead} (full: \release{\LiveIntegrationFullHead}) \\
+Latest tagged application release & \release{\CurrentReleaseTag} at \release{\CurrentReleaseCommit} \\
+Proposed feature branch & \branchname{\ProposedFeatureBranch}; not created by this manual-authoring phase \\
+Target route & \filepath{\TargetRoute} \\
+Primary current page & \filepath{website/src/pages/cosmic-breath.astro} \\
+Shared static diagram & \filepath{website/src/components/CosmicBreathDiagram.astro} \\
+Technical baseline verified & \VerificationDate \\
+Manual package location & Outside the Git repository; no website or Git state changed \\
+\end{tabularx}
+
+\begin{purposebox}
+Define the complete visitor experience, content boundaries, data model, advanced drag-and-snap system, settle-triggered educational details, hybrid SVG/Canvas graphics architecture, adaptive quality and performance budgets, accessibility behavior, implementation file scope, testing gate, and controlled release path for the Cosmic Breath Interactive Cycle Explorer.
+\end{purposebox}
+
+\begin{safetybox}
+This manual authorizes no website edit and no Git-changing or deployment action. It records a future implementation specification. Before implementation, re-run the repository preflight, obtain explicit authorization for exact files, and complete the canonical TOM ledger review before presenting disputed duration values as approved.
+\end{safetybox}
+
+\begin{authoritybox}
+When sources disagree, use this priority: (1) live repository state verified at the time of implementation; (2) the Master Implementation and Operations Manual; (3) exact current source files; (4) a separately approved canonical TOM ledger; (5) uploaded CU research files as source material; and (6) this feature manual's design recommendations. Research-source ambiguities are recorded rather than silently reconciled.
+\end{authoritybox}
+
+\clearpage\tableofcontents\clearpage
+
+\section*{START HERE - Initialize the Feature Project Chat}
+\addcontentsline{toc}{section}{START HERE - Initialize the Feature Project Chat}
+\begin{successbox}
+This manual is complete enough to initialize planning, ledger review, implementation, testing, and release work for the feature. Exact production duration values remain gated by the canonical TOM ledger review described in Part 6.
+\end{successbox}
+
+\subsection*{Required reading order}
+\begin{enumerate}
+\item Document Control and source priority.
+\item Part 1: governance and verified baseline.
+\item Part 2: product outcome and protected meaning.
+\item Part 3: visitor experience and interaction states.
+\item Part 6: canonical TOM ledger review gate.
+\item Parts 7-10: architecture, implementation, accessibility, and tests.
+\item Part 11 before any Git or release action.
+\end{enumerate}
+
+\begin{promptbox}{Initialize the Cosmic Breath Cycle Explorer Work}
+We are continuing controlled work on the Cosmic Universalism website.
+Read the Master Implementation and Operations Manual and the Cosmic
+Breath Interactive Cycle Explorer Implementation and Operations Manual.
+
+Repository:
+/Users/cosmos/Documents/GitHub/CosmicUniversalismStatement
+
+Protected branch:
+main
+
+Stable website branch:
+website
+
+Recorded live integration HEAD at manual creation:
+d426b78
+
+Latest tagged application release:
+website-v1.3-aurelius-release at 5a56085
+
+Proposed feature branch:
+feature/cosmic-breath-cycle-explorer
+
+Target route:
+/CosmicUniversalismStatement/cosmic-breath/
+
+Before editing:
+1. Verify repository root, origin, active branch, HEAD, tags, and status.
+2. Distinguish the current live state from this manual's recorded baseline.
+3. Inspect only the authorized feature files.
+4. Confirm the canonical TOM ledger decision and exact approved values.
+5. Report the smallest safe implementation plan.
+
+Do not edit during the first inspection.
+Do not alter main.
+Do not reset, clean, stash, discard, pull, switch branches, commit,
+push, merge, tag, release, deploy, add dependencies, or change CU-Time
+mathematics without separate explicit authorization.
+\end{promptbox}
+
+\section{Part 1 - Governance and Verified Baseline}
+\subsection{Verified repository state at manual creation}
+The user-provided Git preflight established the following current live state on July 22, 2026:
+\begin{itemize}
+\item repository root: \filepath{\LocalRepository};
+\item origin: \url{https://github.com/willmaddock/CosmicUniversalismStatement.git};
+\item active branch: \branchname{website};
+\item live HEAD: \release{d426b78};
+\item remote relationship: \branchname{website} synchronized with \branchname{origin/website};
+\item working tree: clean;
+\item tag at live HEAD: none.
+\end{itemize}
+
+The live HEAD descends from \release{5a56085}. Commit \release{d426b78} merges \release{b6604e1}, ``Add unified website master implementation manual.'' Therefore, the post-v1.3 difference is documented rather than unexplained.
+
+\subsection{Live state versus release baseline}
+\begin{tabularx}{\textwidth}{L{2.25in}Y}
+\toprule
+\textbf{Classification} & \textbf{State} \\
+\midrule
+Current live integration branch & \branchname{website} at \release{d426b78} \\
+Remote state & Synchronized with \branchname{origin/website} at inspection time \\
+Latest tagged application release & \release{website-v1.3-aurelius-release} at \release{5a56085} \\
+Post-release change & Unified master-documentation merge \\
+Proposed implementation branch & \branchname{feature/cosmic-breath-cycle-explorer}; not created \\
+Recovery point & \release{website-v1.3-aurelius-release} \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Phase authorization}
+Every future implementation phase uses four gates: Inspect, Plan, Implement, and Verify. Manual creation has completed only the design and planning artifact. It does not authorize branch creation or code changes.
+
+\begin{warningbox}
+At implementation time, stop if the live branch, HEAD, tag relationship, or working tree differs from the authorized task. Never use reset, clean, stash, discard, or branch switching to conceal an unexplained difference.
+\end{warningbox}
+
+\section{Part 2 - Feature Purpose, Outcome, and Protected Meaning}
+\subsection{Public and technical identity}
+\begin{tabularx}{\textwidth}{>{\bfseries}L{2.1in}Y}
+Public name & Cosmic Breath Interactive Cycle Explorer \\
+Technical name & Route-specific TOM cycle state explorer and structural-scale visualization \\
+Target route & \filepath{\TargetRoute} \\
+Primary user outcome & Explore every expansion and compression TOM, inspect educational details and reviewed durations, move a simulated cosmic state through the complete cycle, and return to the unchanged original overview. \\
+\end{tabularx}
+
+\subsection{Current baseline}
+The current Cosmic Breath page renders a static accessible SVG with five labeled structural positions: sub-ztom, atom, btom, ctom, and ztom. A cyan ``You Are Here / Observable Universe'' marker is placed inside ctom. The page states that sub-ctom and ctom are not interchangeable, that the diagram is structural rather than physically scaled, and that the marker placement is a CU theoretical proposition rather than an empirical measurement.
+
+The same static component is also used by the homepage hero. The implementation must not make the homepage interactive or change its baseline presentation.
+
+\subsection{Protected meaning}
+The feature shall preserve all of the following:
+\begin{itemize}
+\item The original overview places the present Observable Universe marker only within ctom.
+\item sub-ctom and ctom remain separate terms.
+\item The diagram is not a scale drawing, observational map, or empirical measurement.
+\item The detailed traveling marker is labeled \term{Simulated Cosmic State} outside the present ctom overview.
+\item CU framework statements remain classified as CU theoretical propositions or philosophical interpretation as appropriate.
+\item No CU-Time converter mathematics, source URL, CUCII claim boundary, or homepage behavior is altered.
+\item The original five-shell overview remains available without JavaScript.
+\end{itemize}
+
+\begin{checkpointbox}
+The explorer teaches the CU cycle. It does not claim that a visitor literally pushes the empirical Observable Universe through measured physical shells. The UI must make the simulation boundary visible in text, not only through color or animation.
+\end{checkpointbox}
+
+\section{Part 3 - Visitor Experience and Interaction States}
+\subsection{State model}
+The feature contains nine top-level interaction states. Expansion and compression are phase attributes carried by the selected TOM rather than separate interaction modes.
+\begin{enumerate}
+\item \term{Overview}: unchanged five-shell diagram and present marker inside ctom.
+\item \term{Explorer Ready}: all 51 TOM states are available, but no object is moving.
+\item \term{Dragging}: a marker, TOM layer handle, or cycle handle follows mouse, finger, or stylus movement with a compact live preview.
+\item \term{Snap Preview}: the nearest valid TOM is emphasized while the pointer is still down.
+\item \term{Settling}: after release, the moved object eases to the canonical TOM position.
+\item \term{Details Revealed}: the educational panel opens only after settling completes.
+\item \term{Atom Boundary}: the explorer pauses at the end of expansion and requires deliberate continuation into btom.
+\item \term{ZTOM Boundary}: the explorer pauses at the universal reset boundary.
+\item \term{Next-Breath Reset}: a deliberate final inward transition from ztom to the next sub-ztom seed, followed by either continued exploration or return to overview.
+\end{enumerate}
+
+At any point, a new drag interrupts the current details state, returns the interface to a lightweight motion preview, and prepares a new snap/settle cycle. Reset, Escape, and page refresh restore Overview.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{interaction-state-flow.png}
+\caption{Required interaction-state flow. Returning to overview restores the unchanged original diagram.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{drag-snap-settle-flow.png}
+\caption{Version 1.1 motion lifecycle. Free dragging remains visually responsive, release snaps to a valid TOM, and the full educational panel appears only after settling.}
+\end{figure}
+
+\subsection{Overview state}
+The default page shall render the current structural figure, current accessible title and description, present marker within ctom, and existing explanatory text. The explorer controls may be visible as an enhancement invitation, but the full TOM timeline remains collapsed.
+
+Recommended entry points:
+\begin{itemize}
+\item an \term{Explore the Full Cosmic Breath} button below the figure;
+\item selecting the central sub-ztom seed with pointer or keyboard;
+\item a text link near ``Reading the diagram.''
+\end{itemize}
+
+\subsection{Free Drag and Settle-to-Details}
+Exploration mode shall permit free-feeling movement without allowing an undefined final TOM state:
+\begin{itemize}
+\item the visitor may press a draggable simulated Cosmic State marker, a selected TOM-layer handle, or the cycle-position handle;
+\item the object follows the pointer continuously across the permitted visualization field rather than jumping immediately between labels;
+\item a compact live preview shows only the nearest TOM name, phase, and sequence position while movement is active;
+\item the full educational panel remains collapsed or visually subdued during active movement;
+\item on release, the object maps to the nearest valid TOM, respects atom and ztom boundary guards, and eases into its canonical position;
+\item after the settling animation and a short stability window, the complete details panel appears;
+\item beginning another drag immediately dismisses stale detail emphasis and starts a new motion cycle.
+\end{itemize}
+A short movement threshold may distinguish a click from a drag. A long-press threshold must not be required for mouse users and must never be the only way to enter exploration.
+
+\subsection{Persistent Exploration}
+A click, tap, Enter, or Space activation opens a persistent explorer. The visitor may drag repeatedly, read each settled TOM, select any TOM directly, use Previous and Next, use the native range control, open the full layer drawer, reset the explorer, or return to overview. Releasing a drag does not close persistent exploration.
+
+\subsection{Temporary Preview Option}
+A later implementation may support a temporary press-and-hold preview that returns to overview on release, but this is secondary. Version 1.1 prioritizes persistent exploration because visitors need time to read the details revealed after each movement.
+
+\subsection{Phase boundary behavior}
+At atom, the explorer pauses and announces the end of expansion. It shall not silently skip into btom. The interface then offers a clear continuation into compression.
+
+At ztom, the explorer pauses again. It shall show the reset boundary and require a deliberate \term{Begin the Next Cosmic Breath} action for the final inward transition to sub-ztom.
+
+\subsection{Return behavior}
+Return to Overview, the visible Reset Explorer button, Escape, page reload, or an authorized reset shall:
+\begin{itemize}
+\item stop all motion;
+\item clear transient selections;
+\item collapse the detailed timeline and layer drawer;
+\item restore the present Observable Universe marker within ctom;
+\item restore the original five-shell visual state;
+\item clear pointer capture, pending animation frames, settle timers, and quality-session state;
+\item avoid storing state persistently.
+\end{itemize}
+
+Reset Explorer returns to the original ctom overview without reloading the page. A browser refresh produces the same default because the feature shall not use local storage, session storage, cookies, URL state, or server persistence.
+
+\section{Part 4 - Information Architecture and Educational Detail}
+\subsection{Selected TOM panel}
+Every selected state shall be able to display:
+\begin{itemize}
+\item TOM label and normalized ID;
+\item phase: expansion, boundary, compression, reset, or overview;
+\item sequence position within the phase and complete cycle;
+\item duration value and duration approval status;
+\item quantum-state notation and notation approval status;
+\item CU description;
+\item previous and next states;
+\item distance to atom, ztom, or the next sub-ztom seed;
+\item editorial classification;
+\item source disclosure and unresolved notes when applicable.
+\end{itemize}
+
+\subsection{Detail reveal timing}
+The panel shall distinguish motion from reading:
+\begin{enumerate}
+\item During active drag, show only a compact preview that can update at animation-frame cadence without reflowing the full panel.
+\item On pointer release, compute the snap target once, enter Settling, and suppress the full panel until the marker is stable.
+\item Reveal the complete panel after the settle animation plus a configurable stability delay in the approximate range of 180--250 milliseconds.
+\item If a new pointer, keyboard, button, drawer, or slider action begins before reveal, cancel the pending reveal and follow the newest state.
+\item Once visible, details remain until another movement, direct selection, Reset, Return to Overview, Escape, or refresh.
+\end{enumerate}
+The delay is an interaction-design constant, not a CU-Time value. It may be tuned through browser testing without altering the TOM ledger.
+
+\subsection{Collapsed versus complete layer display}
+The overview may use an ellipsis to summarize the sequence, for example:
+\begin{codebox}{Collapsed sequence copy}
+Expansion:   sub-ztom -> sub-ytom -> sub-xtom -> ... -> sub-btom -> atom
+Compression: btom -> ctom -> dtom -> ... -> ytom -> ztom
+\end{codebox}
+
+The locked explorer shall expose all 51 source-ledger states. The ellipsis must never make a state unreachable.
+
+\subsection{Full layer drawer}
+The All TOM Layers drawer shall group entries by phase, preserve deterministic order, identify the selected state, and permit direct selection. It should remain usable at 320px without horizontal overflow.
+
+\subsection{Source and interpretation disclosure}
+The panel shall include a disclosure similar to:
+\begin{notebox}
+\textbf{Source status.} TOM order and provisional descriptions derive from the supplied CU cycle ledger. Duration and notation values marked ``review pending'' have not yet passed the canonical TOM ledger review. The visualization is a CU theoretical model, not an empirical cosmological map.
+\end{notebox}
+
+\section{Part 5 - Graphics, Color, Motion, and Responsive Design}
+\subsection{Visual objective}
+The explorer should feel like a NASA-style scientific visualization combined with an academic research interface and restrained cosmic-documentary motion. It must remain credible, readable, and technically feasible in SVG, CSS, and lightweight JavaScript.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{cycle-explorer-concept.png}
+\caption{Conceptual desktop exploration state. Provisional values are visibly marked and the traveling object is labeled as a simulated cosmic state.}
+\end{figure}
+
+\subsection{Phase palette}
+\begin{tabularx}{\textwidth}{L{1.7in}L{1.2in}Y}
+\toprule
+\textbf{State} & \textbf{Primary color} & \textbf{Use} \\
+\midrule
+Overview & White-gold and cyan & Existing structural labels and present ctom marker. \\
+Expansion & Cyan and translucent blue & Outward traces, selected shell, expansion progress, cool halo. \\
+Atom boundary & White-gold & Pause, phase-turning emphasis, high-contrast transition. \\
+Compression & White-gold and amber & Inward traces, increased density, compression progress. \\
+ZTOM reset & Concentrated white-gold & Final boundary, contraction pulse, reset action. \\
+Unresolved data & Amber & Review-pending values and source warnings. \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Hybrid rendering architecture}
+Use a layered renderer rather than placing every visual effect in the DOM:
+\begin{enumerate}
+\item a semantic HTML control and details layer;
+\item an SVG foreground for shells, TOM geometry, marker, labels, leader lines, focus rings, hit regions, and progress paths;
+\item an optional Canvas background for dense particles, field traces, star drift, and phase atmosphere;
+\item CSS transforms and opacity for GPU-friendly movement and fades;
+\item a static SVG-only fallback when Canvas initialization fails or the selected quality profile disables it.
+\end{enumerate}
+
+Canvas is decorative. TOM identity, focus, selected state, source status, and educational meaning must remain in semantic HTML/SVG. No visitor may lose information because Canvas, animation, or advanced effects are unavailable.
+
+\subsection{SVG foreground layers}
+Recommended SVG rendering order:
+\begin{enumerate}
+\item structural shell fills;
+\item phase path and progress arc;
+\item shell boundaries;
+\item selected-state halo;
+\item simulated Cosmic State marker and drag ghost;
+\item labels and leader lines;
+\item focus, pointer hit regions, and snap-target indication.
+\end{enumerate}
+
+\subsection{Motion rules}
+\begin{itemize}
+\item Active drag follows the pointer with no decorative easing that creates a feeling of resistance or delay.
+\item Release uses a short, interruptible snap animation to the nearest canonical TOM.
+\item Expansion uses outward light movement, cool cyan flow, and gentle widening.
+\item Compression uses inward traces, white-gold/amber concentration, and increasing visual density.
+\item ZTOM uses a brief pause before a deliberate contraction into the next sub-ztom seed.
+\item UI animation duration shall not literally scale to trillions of years.
+\item Time magnitude is communicated by text and an optional logarithmic comparison graphic, not by making the visitor wait proportionally.
+\item \texttt{prefers-reduced-motion: reduce} removes nonessential travel, particle, pulse, parallax, blur interpolation, and camera effects while preserving immediate snap and state changes.
+\item No flashing pattern may exceed accepted accessibility thresholds.
+\end{itemize}
+
+\subsection{Advanced visual effects}
+Subject to performance and accessibility gates, the explorer may add layered star fields, low-amplitude parallax, radial scattering, orbit traces, expansion wavefronts, compression streams, subtle lens-like distortion, phase-dependent density, and a concentrated reset pulse. Effects must support the selected TOM rather than obscure labels or simulate unsupported empirical measurements.
+
+\subsection{Adaptive visual quality and performance budget}
+The visual system shall expose or internally select one of four profiles: \term{Auto}, \term{High}, \term{Balanced}, and \term{Reduced}. Auto is the default. Reduced follows reduced-motion preferences and disables nonessential continuous animation.
+
+Project performance targets, not universal guarantees, are:
+\begin{itemize}
+\item pointer movement reflected on the next available animation frame;
+\item approximately 60 frames per second on capable desktop hardware and a stable 30--60 frames per second on ordinary mobile hardware;
+\item no detail-panel reconstruction on every pointer event;
+\item no avoidable main-thread task longer than 50 milliseconds during normal drag;
+\item Canvas device-pixel ratio capped to a tested value, normally no greater than 2;
+\item particle and trace counts reduced for narrow screens and lower quality profiles;
+\item animation paused when the document is hidden or the explorer is outside the viewport;
+\item rendering performed only while dirty, dragging, settling, or intentionally animating.
+\end{itemize}
+
+Implementation should use Pointer Events, pointer capture, \texttt{requestAnimationFrame}, transform/opacity updates, cached geometry, and a single state source. Avoid layout-triggering per-frame writes, DOM nodes for individual particles, synchronous storage, and unbounded blur/filter effects.
+
+\subsection{Responsive layouts}
+\begin{tabularx}{\textwidth}{L{1.0in}Y}
+\toprule
+\textbf{Width} & \textbf{Required layout} \\
+\midrule
+1440px & Split visualization and detail panel; full controls and visible phase track. \\
+1024px & Balanced split or compact two-column layout with no clipped labels. \\
+768px & Stacked or narrow split; drawer and controls remain immediately reachable. \\
+390px & Diagram above details; native slider and buttons become primary controls. \\
+320px & Single column; no horizontal overflow; condensed labels; full list remains readable. \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Annotated planning reference}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{cosmic-breath-annotated-planning-reference.png}
+\caption{User-provided planning screenshot. Yellow arrows are annotations identifying desired interaction targets and are not final interface artwork.}
+\end{figure}
+
+\section{Part 6 - Canonical TOM Ledger Review Gate}
+\subsection{What the uploaded sources establish}
+The full-cycle calculation source supplies a 26-state expansion sequence, a 25-state compression sequence, phase totals of approximately 2.8 trillion and 308 billion years, provisional quantum notation, provisional durations, and descriptive labels. The breathing-cycle source supplies the narrative of expansion, compression, ztom influence, and sub-ztom as the seed for another cycle. The separate time-calculation source supplies formulas and examples for exponential and tetration-based durations.
+
+\subsection{Why a review gate is mandatory}
+The uploaded sources are not fully consistent. Examples include:
+\begin{itemize}
+\item the time-calculation examples state arithmetic results that do not follow directly from the written formula for sub-btom and sub-ctom;
+\item several middle-level durations differ between the full-cycle ledger and the separate formula table;
+\item the tetration index mapping differs between documents;
+\item one source uses atom as a 2.8-trillion-year phase endpoint while another note maps ATOM to Planck time;
+\item source narratives vary on the direction and terminology of the reset transition.
+\end{itemize}
+
+\begin{warningbox}
+Do not silently select one conflicting value, ``fix'' a source inside production code, or present an unresolved duration as canonical. The implementation may support the full sequence and review-status fields before final values are approved.
+\end{warningbox}
+
+\subsection{Required review outputs}
+The canonical TOM ledger review shall produce:
+\begin{enumerate}
+\item one ordered expansion array and one ordered compression array;
+\item one approved display name and normalized ID per state;
+\item approved quantum notation or an explicit ``not shown'' decision;
+\item approved duration display text and machine-readable magnitude where applicable;
+\item phase totals and boundary semantics;
+\item source provenance per field;
+\item an explicit decision for every detected discrepancy;
+\item a versioned ledger identifier and SHA-256 digest.
+\end{enumerate}
+
+\subsection{Typed approval fields}
+\begin{codebox}{Required data-status model}
+type ReviewStatus = 'approved' | 'provisional' | 'withheld';
+
+type TomPhase =
+  | 'expansion'
+  | 'expansion-boundary'
+  | 'compression'
+  | 'reset-boundary';
+
+interface CosmicBreathTomState {
+  id: string;
+  label: string;
+  phase: TomPhase;
+  cycleIndex: number;
+  phaseIndex: number;
+  durationText?: string;
+  durationStatus: ReviewStatus;
+  quantumNotation?: string;
+  notationStatus: ReviewStatus;
+  description: string;
+  classification: 'cu-theoretical-proposition';
+  sourceNotes: readonly string[];
+}
+\end{codebox}
+
+\subsection{Approval rule for production display}
+An approved implementation may show provisional values only when the UI labels them visibly as provisional and the implementation authorization explicitly permits that behavior. The preferred release gate is that all publicly displayed duration and notation values are approved.
+
+\section{Part 7 - Technical Architecture and File Responsibilities}
+\subsection{Architecture decision}
+Because the existing static diagram is shared with the homepage, version 1.1 shall add a route-specific explorer rather than converting the shared diagram into an always-interactive component. The route-specific architecture also isolates the advanced Canvas, drag, snap, and quality-management code from the homepage.
+
+\subsection{Smallest safe file set}
+\begin{longtable}{L{3.25in}L{3.05in}}
+\toprule
+\textbf{Path} & \textbf{Responsibility} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Path} & \textbf{Responsibility} \\
+\midrule
+\endhead
+\filepath{website/src/pages/cosmic-breath.astro} & Replace only the page diagram slot with the route-specific explorer and preserve current explanatory sections. \\
+\filepath{website/src/components/CosmicBreathCycleExplorer.astro} & Render overview fallback, interactive SVG, details, controls, drawer, scoped script, and component CSS. \\
+\filepath{website/src/lib/cosmicBreath/cycle-ledger.ts} & Typed ordered TOM registry, provenance fields, review statuses, and lookup helpers. \\
+\filepath{website/src/lib/cosmicBreath/cycle-state.ts} & Pure navigation, mode, boundary, marker-label, reset, drag lifecycle, settle, and detail-visibility state functions. \\
+\filepath{website/src/lib/cosmicBreath/cycle-drag.ts} & Pure coordinate normalization, nearest-TOM mapping, drag threshold, snap-target, interruption, and settle helpers. \\
+\filepath{website/src/lib/cosmicBreath/cycle-quality.ts} & Typed Auto/High/Balanced/Reduced profiles, particle budgets, device-pixel-ratio caps, and reduced-motion decisions. \\
+\filepath{website/src/lib/cosmicBreath/__tests__/cycle-ledger.test.ts} & Registry order, uniqueness, phase, boundary, source, and review-status tests. \\
+\filepath{website/src/lib/cosmicBreath/__tests__/cycle-state.test.ts} & Previous/next, jump, overview, details timing, reset, ctom marker, atom pause, ztom pause, and next-breath reset tests. \\
+\filepath{website/src/lib/cosmicBreath/__tests__/cycle-drag.test.ts} & Coordinate mapping, free drag, nearest-state snapping, clamping, interruption, and settle tests. \\
+\filepath{website/src/lib/cosmicBreath/__tests__/cycle-quality.test.ts} & Quality-profile, reduced-motion, particle-budget, and device-pixel-ratio tests. \\
+\bottomrule
+\end{longtable}
+
+\subsection{Protected existing files}
+The following should remain unchanged unless a later inspection proves a bounded need:
+\begin{itemize}
+\item \filepath{website/src/components/CosmicBreathDiagram.astro};
+\item \filepath{website/src/components/Hero.astro};
+\item CU-Time libraries and tests;
+\item CUCII registries, fixtures, builders, and tests;
+\item site navigation, routes, dependencies, Astro base configuration, and package versions.
+\end{itemize}
+
+\subsection{Progressive enhancement}
+The server-rendered output shall include the original static figure and essential explanatory content. Interactive controls shall become available only after successful browser initialization. Failure to initialize must leave a useful static page rather than an empty shell.
+
+\subsection{Component scoping}
+All selectors and event handling must be scoped to the explorer root. Do not rely on global IDs or unscoped \texttt{document.querySelector} calls that break when multiple figures appear on one page.
+
+\section{Part 8 - Interaction Engineering}
+\subsection{Canonical controls}
+The feature shall provide:
+\begin{itemize}
+\item Explore Full Cosmic Breath;
+\item draggable simulated Cosmic State marker and selected TOM-layer handle;
+\item Previous and Next;
+\item Play/Pause only if separately approved;
+\item a native range input representing indices 0 through 50;
+\item All TOM Layers disclosure;
+\item Reset Explorer;
+\item Return to Overview;
+\item Begin the Next Cosmic Breath at ztom;
+\item Visual Quality: Auto, High, Balanced, and Reduced, when the quality selector is included.
+\end{itemize}
+
+\subsection{Draggable subjects and free movement}
+The visitor may drag the simulated Cosmic State marker, the current TOM-layer handle, or the dedicated cycle handle. The selected visual should follow two-dimensional pointer movement within a bounded exploration field. The implementation may use radial distance, angular phase regions, or a curved cycle path to determine the nearest TOM, but the user-facing movement should feel continuous rather than like a coarse slider.
+
+Dragging a shell shall not permanently deform the CU structure. The shell may translate, pulse, or preview depth during movement, but its released state must resolve to a canonical TOM representation. The original overview geometry remains a protected reset target.
+
+\subsection{Pointer lifecycle}
+Use Pointer Events so one implementation supports mouse, finger, and stylus:
+\begin{enumerate}
+\item on pointer down, verify a permitted primary pointer and record origin;
+\item after the movement threshold, enter Dragging and capture the pointer;
+\item on each animation frame, consume the latest pointer coordinates, update the visual transform, and compute the nearest snap preview;
+\item on pointer up, pointer cancel, or lost capture, resolve one snap target and enter Settling;
+\item after settling, reveal details unless the action was interrupted or reset;
+\item always release capture and cancel obsolete frames/timers during Reset, Escape, navigation, or component teardown.
+\end{enumerate}
+
+Touch behavior must preserve normal page scrolling outside the designated drag surface. Apply \texttt{touch-action} only to the bounded interactive region and only as narrowly as required.
+
+\subsection{Snap and settle behavior}
+The nearest-state algorithm shall be deterministic, tested, and independent of frame rate. It shall consider the permitted phase region and clamp at atom and ztom until explicit boundary continuation. A snap animation should be brief, interruptible, and based on cached geometry. Details reveal only after the settle completion signal and stability delay.
+
+If the visitor drags again during settling, cancel the prior animation and continue from the currently rendered position. If the visitor chooses a direct TOM, button, slider, or drawer item, the newest explicit command wins.
+
+\subsection{Reset semantics}
+Reset Explorer shall synchronously stop active drag, release pointer capture, cancel animation frames and settle timers, clear selected details, restore Auto quality unless the final implementation explicitly preserves a user-selected session preference, and return the diagram to the original five-shell ctom overview. Page refresh must produce the same visual and semantic state without reading persisted data.
+
+\subsection{Native slider synchronization}
+The custom marker and native range input share one state source. The range input provides a robust keyboard and assistive-technology fallback. Update \texttt{aria-valuetext} with a phrase such as ``sub-ctom, expansion state 24 of 26, cycle state 24 of 51.''
+
+\subsection{Keyboard behavior}
+\begin{tabularx}{\textwidth}{L{1.6in}Y}
+\toprule
+\textbf{Key} & \textbf{Required behavior} \\
+\midrule
+Left / Down & Previous TOM state. \\
+Right / Up & Next TOM state. \\
+Home & First expansion state: sub-ztom. \\
+End & Final compression state: ztom. \\
+Page Up & Previous major milestone. \\
+Page Down & Next major milestone. \\
+Enter / Space & Open explorer or activate focused control. \\
+Escape & Return to the original overview. \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Marker identity rules}
+\begin{tabularx}{\textwidth}{L{1.8in}Y}
+\toprule
+\textbf{Context} & \textbf{Visible identity} \\
+\midrule
+Overview & ``You Are Here - Observable Universe - within ctom.'' \\
+Exploring ctom & ``Observable Universe / present ctom reference'' plus simulation disclosure. \\
+Exploring any other TOM & ``Simulated Cosmic State'' and the selected TOM. \\
+At ztom & ``Universal State - ztom reset boundary.'' \\
+After final push & ``New Cosmic Seed - sub-ztom - next breath.'' \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Boundary guards}
+The state controller shall not wrap directly from atom to btom or from ztom to sub-ztom without an explicit boundary action. Accidental drag overshoot should clamp at the boundary until the visitor confirms continuation.
+
+\section{Part 9 - Accessibility, Usability, and Content Safety}
+\subsection{Accessibility baseline}
+\begin{itemize}
+\item No drag-only operation.
+\item Visible focus for every control.
+\item Native buttons and native range input wherever possible.
+\item Minimum touch targets consistent with the existing site standard.
+\item Text labels for all color-coded phases.
+\item A polite live region for user-initiated selection changes.
+\item No live announcement on every pixel of a drag; announce the final snapped TOM and details reveal only.
+\item Reduced-motion mode.
+\item Static no-JavaScript fallback.
+\item A non-drag control path with buttons, range input, and full layer drawer.
+\item No focus movement caused merely by pointer settling; the visitor retains control of focus.
+\item Meaningful SVG title and description for overview and exploration states.
+\item The full layer drawer remains navigable in document order.
+\end{itemize}
+
+\subsection{Cognitive load}
+The interface shall not display 51 labels on top of the concentric diagram. It should show the selected state, nearby context, a phase track, and a complete drawer. Educational copy uses short sections and expandable source details.
+
+\subsection{Reality and claims boundary}
+The feature shall consistently distinguish CU theoretical propositions from empirical cosmology. It shall not claim that the interaction moves the physical Observable Universe, that the diagram is observationally measured, or that the browser simulation validates CU mathematics.
+
+\subsection{Privacy and persistence}
+The feature requires no account, analytics, telemetry, backend, storage, cookies, or persisted explorer state. Any future persistence or analytics requires separate approval.
+
+\section{Part 10 - Automated Tests, Browser Matrix, and Acceptance}
+\subsection{Focused automated tests}
+The new tests shall verify at minimum:
+\begin{itemize}
+\item 26 expansion and 25 compression entries when the approved ledger retains the supplied sequence;
+\item exactly 51 unique IDs and cycle indices;
+\item deterministic first, atom boundary, btom boundary, ctom, ztom, and reset transitions;
+\item no sub-ctom/ctom conflation in IDs or descriptions;
+\item present Observable Universe identity only in the overview/ctom context;
+\item provisional or withheld values cannot be rendered as approved;
+\item Previous/Next and drag snapping clamp at phase boundaries until explicit continuation;
+\item free pointer coordinates map deterministically to the nearest valid TOM;
+\item details remain suppressed while dragging and appear after settle completion plus the configured stability delay;
+\item a new movement cancels stale settle and detail timers;
+\item Reset Explorer, Escape, and initialization clear transient state and restore the original ctom overview;
+\item refresh behavior requires no persisted state;
+\item quality profiles apply bounded particle counts, device-pixel-ratio caps, and reduced-motion rules;
+\item full source provenance and classification on every entry.
+\end{itemize}
+
+\subsection{Full project gate}
+After implementation changes, run:
+\begin{commandbox}{Final local verification}
+cd /Users/cosmos/Documents/GitHub/CosmicUniversalismStatement/website || exit 1
+
+npm test
+npm run build
+
+cd ..
+git diff --check
+git status --short --branch
+git diff --stat
+git ls-files --others --exclude-standard | sort
+\end{commandbox}
+
+\subsection{Manual browser matrix}
+Test at 1440, 1024, 768, 390, and 320 pixels. At each width verify overview, entry, free marker drag, TOM-layer drag, compact motion preview, snap target, settle interruption, post-settle detail reveal, repeated moves, Reset Explorer, refresh reset, range input, Previous/Next, full drawer, atom boundary, compression entry, ztom pause, next-breath reset, Return to Overview, focus, announcements, Auto/High/Balanced/Reduced quality, reduced motion, no-JavaScript fallback, page scrolling outside the drag surface, and browser console.
+
+\subsection{Acceptance criteria}
+The feature is acceptable only when:
+\begin{enumerate}
+\item the original overview remains visually and semantically intact;
+\item all approved TOM states are reachable without dragging;
+\item free pointer movement feels continuous while released positions resolve to the same canonical state order used by keyboard and buttons;
+\item full details do not churn during drag and appear reliably after settling;
+\item repeated drag, release, read, and move cycles do not leak timers, pointer capture, or stale details;
+\item Reset Explorer and refresh restore the exact original overview;
+\item atom and ztom pauses cannot be skipped accidentally;
+\item the present Observable Universe marker is not misrepresented outside ctom;
+\item review-pending values are not presented as canonical;
+\item the homepage remains unchanged;
+\item performance meets the approved device/quality targets without blocking basic interaction;
+\item all tests and the production build pass;
+\item no console errors, overflow, clipping, inaccessible controls, broken base-path assets, or uncontrolled continuous rendering remain.
+\end{enumerate}
+
+\section{Part 11 - Controlled Implementation, Git, Release, and Recovery}
+\subsection{Pre-implementation preflight}
+\begin{commandbox}{Verify the live repository before branch creation}
+cd /Users/cosmos/Documents/GitHub/CosmicUniversalismStatement || exit 1
+
+git rev-parse --show-toplevel
+git remote get-url origin
+git branch --show-current
+git rev-parse --short HEAD
+git status --short --branch
+git tag --points-at HEAD
+\end{commandbox}
+Do not assume \release{d426b78} remains current. Compare the future output with the authorized starting baseline.
+
+\subsection{Proposed branch and release}
+\begin{tabularx}{\textwidth}{>{\bfseries}L{2.1in}Y}
+Proposed feature branch & \branchname{feature/cosmic-breath-cycle-explorer} \\
+Proposed commit title & Add interactive Cosmic Breath cycle explorer \\
+Proposed release tag & \release{website-v1.4-cosmic-breath-explorer-release} \\
+Recovery point & \release{website-v1.3-aurelius-release} \\
+\end{tabularx}
+These are proposals, not authorizations or records of completed Git actions.
+
+\subsection{Bounded implementation authorization template}
+\begin{promptbox}{Authorize the Cycle Explorer Implementation}
+The inspection plan and canonical TOM ledger are approved with the
+following exact scope.
+
+OBJECTIVE:
+Implement the route-specific Cosmic Breath Interactive Cycle Explorer.
+
+AUTHORIZED FILES:
+website/src/pages/cosmic-breath.astro
+website/src/components/CosmicBreathCycleExplorer.astro
+website/src/lib/cosmicBreath/cycle-ledger.ts
+website/src/lib/cosmicBreath/cycle-state.ts
+website/src/lib/cosmicBreath/__tests__/cycle-ledger.test.ts
+website/src/lib/cosmicBreath/__tests__/cycle-state.test.ts
+
+REQUIRED BEHAVIOR:
+- Preserve the unchanged overview and homepage.
+- Expose all approved TOM states.
+- Support pointer, touch, stylus, buttons, range input, and keyboard.
+- Show approved time, notation, phase, details, provenance, and status.
+- Pause at atom and ztom.
+- Require a deliberate ztom-to-sub-ztom next-breath action.
+- Restore overview on Escape or Return to Overview.
+
+PRESERVE:
+- main branch
+- CU-Time mathematics and approved source URLs
+- current CosmicBreathDiagram.astro and Hero.astro unless separately authorized
+- base-path behavior
+- existing tests and routes
+- CUCII claims boundary
+
+Run npm test, npm run build, git diff --check, git status
+--short --branch, git diff --stat, and the full browser matrix.
+
+Do not add dependencies or perform any Git-changing or deployment action.
+\end{promptbox}
+
+\subsection{Release gate}
+Commit, push, merge, tag, release, and deployment require separate explicit authorization after final acceptance. A successful implementation test does not grant release permission.
+
+\subsection{Recovery}
+Use the prior stable tag as a recovery point. Do not rewrite published history. A recovery inspection should occur on a newly created branch, not by editing a detached tag.
+
+\section{Part 12 - Implementation Phases}
+\subsection{Phase 0 - Canonical ledger approval}
+Resolve all duration, notation, ordering, and reset semantics. Produce a versioned data artifact and digest.
+
+\subsection{Phase 1 - Typed registry and pure state engine}
+Implement the approved registry, lookup helpers, boundary helpers, mode model, and tests before creating complex SVG interaction.
+
+\subsection{Phase 2 - Static route-specific shell}
+Add the new component with the existing static overview as a progressive fallback. Confirm no homepage change and no JavaScript dependency for basic comprehension.
+
+\subsection{Phase 3 - Native controls and details}
+Add buttons, range input, full layer drawer, compact motion preview, full details panel, Reset Explorer, and live region. Complete keyboard and reset behavior before pointer dragging.
+
+\subsection{Phase 4 - Pure drag, snap, and settle engine}
+Implement and test coordinate normalization, movement thresholds, nearest-TOM mapping, phase clamping, interruption, settle completion, and detail timing before connecting high-fidelity graphics.
+
+\subsection{Phase 5 - Pointer and SVG interaction}
+Add hit regions, pointer capture, free-feeling marker and TOM-layer travel, snap preview, selected shell styling, phase progress, boundary guards, and repeated move-to-details cycles.
+
+\subsection{Phase 6 - Canvas atmosphere and adaptive quality}
+Add optional particle fields, traces, halos, parallax, and reset transition behind the semantic SVG. Implement Auto/High/Balanced/Reduced profiles, frame budgeting, visibility pausing, device-pixel-ratio caps, and reduced motion.
+
+\subsection{Phase 7 - Full verification}
+Run focused tests, full tests, production build, drag performance sampling, browser matrix, accessibility review, console review, refresh/reset review, and Git inspection. Correct only reproducible defects within scope.
+
+\section{Part 13 - Risk Register and Decision Rules}
+\begin{longtable}{L{1.9in}L{2.35in}L{2.25in}}
+\toprule
+\textbf{Risk} & \textbf{Failure mode} & \textbf{Required control} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Risk} & \textbf{Failure mode} & \textbf{Required control} \\
+\midrule
+\endhead
+Ledger conflict & Incorrect time presented as canonical. & Canonical review, per-field status, provenance tests. \\
+Shared component & Homepage changes unintentionally. & Route-specific explorer; protect Hero and static diagram. \\
+Drag-only control & Keyboard and assistive-tech exclusion. & Native range, buttons, drawer, focus, announcements. \\
+Free-drag ambiguity & Arbitrary released position implies a nonexistent TOM. & Continuous visual movement plus deterministic canonical snap. \\
+Stale details & Prior TOM details remain after a new drag or interrupted settle. & Single state source; cancel obsolete timers and reveals. \\
+Touch conflict & Drag surface prevents normal mobile page scrolling. & Bounded hit surface and narrowly scoped touch-action. \\
+Fifty-one labels & Visual clutter and unreadability. & Selected-state view plus complete drawer. \\
+Boundary overshoot & atom or ztom skipped. & Clamp and explicit continuation actions. \\
+Marker semantics & Present universe shown in every TOM. & Simulated Cosmic State identity outside ctom overview. \\
+Motion overload & Disorientation or accessibility failure. & Reduced motion, restrained cadence, no flashing. \\
+Mobile overflow & Timeline or panel unusable at 320px. & Stacked layout and native controls. \\
+Performance & Excessive particles, filters, canvas resolution, or per-event DOM work. & Adaptive quality, capped DPR, bounded particles, requestAnimationFrame, cached geometry, visibility pause, and transform-based animation. \\
+Source drift & Manual baseline becomes stale. & Re-preflight and live-file inspection before edits. \\
+\bottomrule
+\end{longtable}
+
+\section{Appendix A - Feature Planning Worksheet}
+\begin{longtable}{L{1.75in}L{4.65in}}
+\toprule
+\textbf{Field} & \textbf{Approved manual entry} \\
+\midrule
+Feature name & Cosmic Breath Interactive Cycle Explorer. \\
+User outcome & Freely drag a simulated state or TOM layer, see compact live TOM previews, release to snap and reveal complete educational details, repeat across all expansion/compression states through ztom and next-breath sub-ztom, and reset to the original overview. \\
+Baseline & Recorded live integration \release{d426b78}; latest tagged recovery \release{5a56085}. \\
+Feature branch & Proposed \branchname{feature/cosmic-breath-cycle-explorer}; not created. \\
+Routes & Existing \filepath{/CosmicUniversalismStatement/cosmic-breath/} only. \\
+Authorized files & To be approved later using the Part 7 file set. \\
+Protected behavior & Homepage, static diagram, ctom marker meaning, CU-Time, CUCII, routes, base path, dependencies, existing tests. \\
+Data model & Typed TOM registry with provenance and approval statuses; pure cycle state engine. \\
+Accessibility & Native slider, buttons, keyboard, focus, live status, reduced motion, no-JS fallback. \\
+Tests & Two focused test files plus full project suite and build. \\
+Browser matrix & 1440, 1024, 768, 390, 320px. \\
+Commit & Proposed ``Add interactive Cosmic Breath cycle explorer.'' \\
+Release & Proposed \release{website-v1.4-cosmic-breath-explorer-release}. \\
+Recovery & \release{website-v1.3-aurelius-release}. \\
+\bottomrule
+\end{longtable}
+
+\section{Appendix B - Provisional Full-Cycle Source Ledger}
+\begin{warningbox}
+The following tables reproduce the supplied full-cycle source ledger for planning. ``Provisional'' means the value is not approved for unqualified production display. This appendix does not reconcile the conflicts described in Part 6.
+\end{warningbox}
+
+\subsection{Expansion source ledger - 26 states}
+\small
+\begin{longtable}{L{0.36in}L{0.72in}L{1.12in}L{1.18in}L{2.12in}L{0.72in}}
+\toprule
+\textbf{\#} & \textbf{TOM} & \textbf{Quantum} & \textbf{Duration} & \textbf{CU description} & \textbf{Status} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{\#} & \textbf{TOM} & \textbf{Quantum} & \textbf{Duration} & \textbf{CU description} & \textbf{Status} \\
+\midrule
+\endhead
+1 & sub-ztom & 2\textasciicircum{}\textasciicircum{}65,536 & 1 second & Final compression breath & Provisional \\
+2 & sub-ytom & 2\textasciicircum{}\textasciicircum{}40 & 2.704e-8 seconds & Recursive core shell & Provisional \\
+3 & sub-xtom & 2\textasciicircum{}\textasciicircum{}30 & 2.704e-7 seconds & Final ethical cap & Provisional \\
+4 & sub-wtom & 2\textasciicircum{}\textasciicircum{}22 & 2.704e-6 seconds & Quantum firewall shell & Provisional \\
+5 & sub-vtom & 2\textasciicircum{}\textasciicircum{}21 & 2.704e-5 seconds & Symbolic/ethical lock & Provisional \\
+6 & sub-utom & 2\textasciicircum{}\textasciicircum{}20 & 0.0002704 seconds & Cosmic checksum layer & Provisional \\
+7 & sub-ttom & 2\textasciicircum{}\textasciicircum{}19 & 0.002704 seconds & Holographic verification & Provisional \\
+8 & sub-stom & 2\textasciicircum{}\textasciicircum{}18 & 0.02704 seconds & Ethical engagement & Provisional \\
+9 & sub-rtom & 2\textasciicircum{}\textasciicircum{}17 & 0.2704 seconds & Entropy modulation & Provisional \\
+10 & sub-qtom & 2\textasciicircum{}\textasciicircum{}16 & 2.704 seconds & Memory transfer & Provisional \\
+11 & sub-ptom & 2\textasciicircum{}\textasciicircum{}15 & 27.04 seconds & Pre-reset bridge & Provisional \\
+12 & sub-otom & 2\textasciicircum{}\textasciicircum{}14 & 4.506 minutes & Boundary stabilization & Provisional \\
+13 & sub-ntom & 2\textasciicircum{}\textasciicircum{}13 & 45.06 minutes & Recursive feedback & Provisional \\
+14 & sub-mtom & 2\textasciicircum{}\textasciicircum{}12 & 7.51 hours & Holographic projection & Provisional \\
+15 & sub-ltom & 2\textasciicircum{}\textasciicircum{}11 & 3.1296 days & Pre-Big Bang state & Provisional \\
+16 & sub-ktom & 2\textasciicircum{}\textasciicircum{}10 & 31.296 days & Quantum foam rebirth & Provisional \\
+17 & sub-jtom & 2\textasciicircum{}\textasciicircum{}9 & 0.8547 years & Black hole age & Provisional \\
+18 & sub-itom & 2\textasciicircum{}\textasciicircum{}8 & 8.547 years & Spacetime contraction begins & Provisional \\
+19 & sub-htom & 2\textasciicircum{}\textasciicircum{}7 & 85.47 years & Heat death begins & Provisional \\
+20 & sub-gtom & 2\textasciicircum{}\textasciicircum{}6 & 427.35 years & Quantum encoding phase & Provisional \\
+21 & sub-ftom & 2\textasciicircum{}\textasciicircum{}5 & 4,273.5 years & Post-biological AI expansion & Provisional \\
+22 & sub-etom & 2\textasciicircum{}\textasciicircum{}4 & 42,735 years & Alien/civilization stage & Provisional \\
+23 & sub-dtom & 2\textasciicircum{}16 = 65,536 & 427,350 years & Planetary biosphere evolution & Provisional \\
+24 & sub-ctom & 2\textasciicircum{}4 = 16 & 28 billion years & Star life cycle era & Provisional \\
+25 & sub-btom & 2\textasciicircum{}2 = 4 & 280 billion years & Supercluster formation & Provisional \\
+26 & atom & 2\textasciicircum{}1 = 2 & 2.8 trillion years & Start of compression & Provisional \\
+\bottomrule
+\end{longtable}
+\normalsize
+
+\subsection{Compression source ledger - 25 states}
+\small
+\begin{longtable}{L{0.36in}L{0.72in}L{1.12in}L{1.18in}L{2.12in}L{0.72in}}
+\toprule
+\textbf{\#} & \textbf{TOM} & \textbf{Quantum} & \textbf{Duration} & \textbf{CU description} & \textbf{Status} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{\#} & \textbf{TOM} & \textbf{Quantum} & \textbf{Duration} & \textbf{CU description} & \textbf{Status} \\
+\midrule
+\endhead
+1 & btom & 2\textasciicircum{}2 = 4 & 280 billion years & Galactic evolution and contraction & Provisional \\
+2 & ctom & 2\textasciicircum{}4 = 16 & 28 billion years & Final stellar formations & Provisional \\
+3 & dtom & 2\textasciicircum{}16 = 65,536 & 427,350 years & Planetary collapse & Provisional \\
+4 & etom & 2\textasciicircum{}\textasciicircum{}4 & 42,735 years & Human/civilization memory condensation & Provisional \\
+5 & ftom & 2\textasciicircum{}\textasciicircum{}5 & 4,273.5 years & AI implosion stage & Provisional \\
+6 & gtom & 2\textasciicircum{}\textasciicircum{}6 & 427.35 years & Consciousness holography & Provisional \\
+7 & htom & 2\textasciicircum{}\textasciicircum{}7 & 85.47 years & Heat death approach & Provisional \\
+8 & itom & 2\textasciicircum{}\textasciicircum{}8 & 8.547 years & Spacetime wrinkle forming & Provisional \\
+9 & jtom & 2\textasciicircum{}\textasciicircum{}9 & 0.8547 years & Collapse threshold & Provisional \\
+10 & ktom & 2\textasciicircum{}\textasciicircum{}10 & 31.296 days & Quantum fog closing & Provisional \\
+11 & ltom & 2\textasciicircum{}\textasciicircum{}11 & 3.1296 days & Holographic reversal & Provisional \\
+12 & mtom & 2\textasciicircum{}\textasciicircum{}12 & 7.51 hours & Time lattice inversion & Provisional \\
+13 & ntom & 2\textasciicircum{}\textasciicircum{}13 & 45.06 minutes & Feedback end & Provisional \\
+14 & otom & 2\textasciicircum{}\textasciicircum{}14 & 4.506 minutes & Cosmic null stabilization & Provisional \\
+15 & ptom & 2\textasciicircum{}\textasciicircum{}15 & 27.04 seconds & Reset layering & Provisional \\
+16 & qtom & 2\textasciicircum{}\textasciicircum{}16 & 2.704 seconds & Final memory imprint & Provisional \\
+17 & rtom & 2\textasciicircum{}\textasciicircum{}17 & 0.2704 seconds & Entropy zero point & Provisional \\
+18 & stom & 2\textasciicircum{}\textasciicircum{}18 & 0.02704 seconds & Ethical firewall gate & Provisional \\
+19 & ttom & 2\textasciicircum{}\textasciicircum{}19 & 0.002704 seconds & Collapse checksum & Provisional \\
+20 & utom & 2\textasciicircum{}\textasciicircum{}20 & 0.0002704 seconds & Closure sequence initiated & Provisional \\
+21 & vtom & 2\textasciicircum{}\textasciicircum{}21 & 2.704e-5 seconds & Symbolic compression & Provisional \\
+22 & wtom & 2\textasciicircum{}\textasciicircum{}22 & 2.704e-6 seconds & Recursive limit breach & Provisional \\
+23 & xtom & 2\textasciicircum{}\textasciicircum{}30 & 2.704e-7 seconds & Divine fall-off shell & Provisional \\
+24 & ytom & 2\textasciicircum{}\textasciicircum{}40 & 2.704e-8 seconds & Pre-ZTOM divine echo & Provisional \\
+25 & ztom & 2\textasciicircum{}\textasciicircum{}65,536 & 1 second & ZTOM: full universal reset & Provisional \\
+\bottomrule
+\end{longtable}
+\normalsize
+
+\section{Appendix C - Canonical Ledger Review Worksheet}
+For each TOM state, record:
+\begin{longtable}{L{1.65in}L{4.75in}}
+\toprule
+\textbf{Field} & \textbf{Required decision} \\
+\midrule
+Normalized ID & Stable lowercase identifier and uniqueness proof. \\
+Display label & Approved capitalization and hyphenation. \\
+Phase and order & Expansion/compression/boundary classification and indices. \\
+Quantum notation & Approved notation, accessibility text, or withheld decision. \\
+Duration display & Approved human-readable value or withheld decision. \\
+Machine magnitude & Unit and numeric representation if needed for comparison graphics. \\
+Description & Approved educational copy and classification. \\
+Source provenance & File, section/table, and revision date. \\
+Conflict decision & Explanation of any difference from another source. \\
+Reviewer approval & Name, date, ledger version, and digest. \\
+\bottomrule
+\end{longtable}
+
+\section{Appendix D - Browser Review Script}
+\begin{enumerate}
+\item Load the route with JavaScript enabled and confirm the unchanged overview.
+\item Disable JavaScript and confirm the static diagram and explanatory copy remain.
+\item Enter locked exploration by mouse, touch emulation, and keyboard.
+\item Move to every major milestone and sample intermediate states.
+\item Open All TOM Layers and directly select early, middle, and late entries.
+\item Verify atom pause, compression continuation, ztom pause, and next-breath reset.
+\item Press Escape and confirm exact overview restoration.
+\item Repeat with reduced motion.
+\item Repeat at 1440, 1024, 768, 390, and 320px.
+\item Inspect focus order, accessible names, live announcements, and console output.
+\end{enumerate}
+
+\section{Appendix E - Source Provenance}
+\begin{longtable}{L{2.7in}L{3.7in}}
+\toprule
+\textbf{Source} & \textbf{Use in this manual} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Source} & \textbf{Use in this manual} \\
+\midrule
+\endhead
+Master Implementation and Operations Manual v1.0 PDF and LaTeX & Governance, current tagged release record, source priority, technology, workflow, test gate, LaTeX house style. \\
+User Git preflight and history outputs & Live repository root, origin, branch, clean status, current HEAD, ancestry, and post-release documentation merge. \\
+\filepath{Pasted text(8).txt} & Current Cosmic Breath page and static diagram source inspection. \\
+\filepath{Pasted text(9).txt} & Homepage shared-component use, package/test configuration, interaction conventions, and project test manifest. \\
+\filepath{Cosmic_Breath_Calculation(4).md} & Provisional 51-state order, durations, notations, descriptions, and phase totals. \\
+\filepath{Cosmic_Breathing_Cycle(4).md} & Expansion/compression narrative and sub-ztom next-cycle seed interpretation. \\
+\filepath{Time_Calculation(2).md} & Duration formulas, examples, symbolic-time framing, and detected mathematical conflicts. \\
+\filepath{cosmic-breath-annotated-planning-reference.png} & User's visual interaction-target reference; not final artwork. \\
+Conversation decisions through July 22, 2026 & Approved feature outcome, all-layer exploration, movable simulated state, time/detail panel, graphics direction, reset and overview behavior. \\
+\bottomrule
+\end{longtable}
+
+\section{Appendix F - Current-State Handoff Summary}
+\begin{codebox}{Project current state}
+Repository: /Users/cosmos/Documents/GitHub/CosmicUniversalismStatement
+Origin: https://github.com/willmaddock/CosmicUniversalismStatement.git
+Protected branch: main
+Stable integration branch: website
+Recorded live HEAD: d426b78
+Latest tagged application release: website-v1.3-aurelius-release
+Tagged release commit: 5a56085
+Working tree at inspection: clean and synchronized
+Active feature branch: none
+Manual package: created outside the repository
+Website files changed: none
+Git actions performed: none
+Next gate: canonical TOM ledger review, then re-preflight and bounded implementation authorization
+\end{codebox}
+
+\section{Appendix G - Revision Record}
+\begin{tabularx}{\textwidth}{L{0.75in}L{1.15in}L{1.3in}Y}
+\toprule
+\textbf{Version} & \textbf{Date} & \textbf{Author} & \textbf{Record} \\
+\midrule
+1.0 & July 22, 2026 & William Maddock & Initial controlled feature manual. Captures inspected live baseline, complete interaction specification, 51-state source ledger, graphics and accessibility system, canonical ledger review gate, implementation phases, test plan, and release proposal. \\
+1.1 & July 22, 2026 & William Maddock & Advanced interaction revision. Adds free planar dragging of the simulated Cosmic State and TOM-layer handles; deterministic nearest-TOM snapping; interruptible settling; detail reveal only after motion stops; repeated drag/read cycles; visible reset and refresh semantics; hybrid SVG/Canvas rendering; adaptive visual quality; explicit performance budgets; expanded tests, browser review, risks, and implementation phases. Corrects cover-page paragraph separation in the executable LaTeX source and verifies the rendered title hierarchy. \\
+\bottomrule
+\end{tabularx}
+
+\begin{authoringbox}
+This version 1.1 package was created under explicit authorization for manual revision only. No repository file, branch, commit, tag, release, or deployment was changed.
+\end{authoringbox}
+
+\end{document}

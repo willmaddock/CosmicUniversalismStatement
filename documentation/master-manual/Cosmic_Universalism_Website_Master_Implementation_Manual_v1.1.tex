@@ -1,0 +1,2954 @@
+
+\documentclass[11pt,letterpaper]{article}
+
+% ============================================================
+% COSMIC UNIVERSALISM WEBSITE MASTER IMPLEMENTATION MANUAL
+% Compile with: pdfLaTeX
+% Current stable website integration verified: July 23, 2026
+% ============================================================
+
+% ------------------------------------------------------------
+% Core packages
+% ------------------------------------------------------------
+\usepackage[margin=0.78in,headheight=16pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[scaled=0.94]{helvet}
+\usepackage{microtype}
+\usepackage{parskip}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{xurl}
+\usepackage{bookmark}
+\usepackage{listings}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{pifont}
+\usepackage{needspace}
+\usepackage{caption}
+\usepackage{tocloft}
+
+% ------------------------------------------------------------
+% Document typography
+% ------------------------------------------------------------
+\renewcommand{\familydefault}{\sfdefault}
+\setstretch{1.08}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+\raggedbottom
+\urlstyle{same}
+\setlength{\cftsecnumwidth}{3.3em}
+\setlength{\cftsubsecnumwidth}{4.2em}
+
+% ------------------------------------------------------------
+% Cosmic Universalism color palette
+% ------------------------------------------------------------
+\definecolor{CUNavy}{HTML}{050812}
+\definecolor{CUNavyTwo}{HTML}{080D1A}
+\definecolor{CUSurface}{HTML}{0C1424}
+\definecolor{CUGold}{HTML}{DDBF72}
+\definecolor{CUGoldLight}{HTML}{FFF8DD}
+\definecolor{CUCyan}{HTML}{35CDEB}
+\definecolor{CUCyanLight}{HTML}{78E8FF}
+\definecolor{CUBlue}{HTML}{668ED1}
+\definecolor{CUBlueLight}{HTML}{9EB9EA}
+\definecolor{CUAmber}{HTML}{D99A32}
+\definecolor{CURed}{HTML}{B84C4C}
+\definecolor{CUGreen}{HTML}{2C8A65}
+\definecolor{CULight}{HTML}{F3F6FA}
+\definecolor{CUBorder}{HTML}{CCD5E0}
+\definecolor{CUText}{HTML}{18212E}
+\definecolor{CUMuted}{HTML}{5C6878}
+\definecolor{CUCodeBackground}{HTML}{F6F8FB}
+\definecolor{CUCodeBorder}{HTML}{BFCADA}
+
+% ------------------------------------------------------------
+% Project metadata
+% ------------------------------------------------------------
+\newcommand{\ProjectTitle}{Cosmic Universalism Website}
+\newcommand{\DocumentTitle}{Master Implementation and Operations Manual}
+\newcommand{\DocumentSubtitle}{Website, Cosmic Breath, CU-Time, CUCII, AI Project Governance, and LaTeX Authoring Standard}
+\newcommand{\RepositoryName}{CosmicUniversalismStatement}
+\newcommand{\RepositoryURL}{https://github.com/willmaddock/CosmicUniversalismStatement}
+\newcommand{\ProtectedBranch}{main}
+\newcommand{\StableBranch}{website}
+\newcommand{\WebsiteDirectory}{website/}
+\newcommand{\CurrentIntegrationTag}{website-v1.1-cosmic-breath}
+\newcommand{\CurrentIntegrationCommit}{7ac8716}
+\newcommand{\CurrentIntegrationFullCommit}{7ac87167c51aad9ae7a31e17d1b2127fc069e15c}
+\newcommand{\CurrentIntegrationTagObject}{0bc09615dc2356a14f384d3c947c7c81e85ced33}
+\newcommand{\PriorReleaseTag}{website-v1.3-aurelius-release}
+\newcommand{\PriorReleaseCommit}{5a56085}
+\newcommand{\FeatureCommit}{5be2efb}
+\newcommand{\MainCommit}{8637cad}
+\newcommand{\DocumentVersion}{1.1}
+\newcommand{\VerificationDate}{July 23, 2026}
+\newcommand{\AuthorName}{William Maddock}
+
+% ------------------------------------------------------------
+% Hyperlinks and PDF metadata
+% ------------------------------------------------------------
+\hypersetup{
+    colorlinks=true,
+    linkcolor=CUBlue,
+    urlcolor=CUBlue,
+    citecolor=CUBlue,
+    pdftitle={Cosmic Universalism Website Master Implementation and Operations Manual},
+    pdfauthor={William Maddock},
+    pdfsubject={Unified Astro website, Cosmic Breath, CU-Time, CUCII, ChatGPT/Codex governance, release workflow, and LaTeX documentation standard},
+    pdfkeywords={Cosmic Universalism, Cosmic Breath, TOM, Astro, TypeScript, Vitest, CU-Time,
+                 CUCII, ChatGPT, Codex, Claude, Aurelius, Alexa+, LaTeX,
+                 GitHub Pages, project instructions}
+}
+
+% ------------------------------------------------------------
+% Header and footer
+% ------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textbf{Cosmic Universalism Master Manual}}
+\fancyhead[R]{\small\DocumentTitle}
+\fancyfoot[L]{\small Version \DocumentVersion}
+\fancyfoot[C]{\small \thepage\ of \pageref{LastPage}}
+\fancyfoot[R]{\small Baseline: \texttt{Cosmic Breath}}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.5pt}
+
+% ------------------------------------------------------------
+% Section formatting
+% ------------------------------------------------------------
+\titleformat{\section}
+  {\Large\bfseries\color{CUNavy}}
+  {\thesection}
+  {0.8em}
+  {}
+  [\vspace{0.2em}\color{CUCyan}\titlerule]
+
+\titleformat{\subsection}
+  {\large\bfseries\color{CUNavyTwo}}
+  {\thesubsection}
+  {0.7em}
+  {}
+
+\titleformat{\subsubsection}
+  {\normalsize\bfseries\color{CUBlue}}
+  {\thesubsubsection}
+  {0.6em}
+  {}
+
+\titlespacing*{\section}{0pt}{2.1em}{0.9em}
+\titlespacing*{\subsection}{0pt}{1.5em}{0.65em}
+\titlespacing*{\subsubsection}{0pt}{1.1em}{0.35em}
+
+% ------------------------------------------------------------
+% Lists and tables
+% ------------------------------------------------------------
+\setlist[itemize]{leftmargin=1.6em,itemsep=0.3em,topsep=0.3em}
+\setlist[enumerate]{leftmargin=2em,itemsep=0.4em,topsep=0.35em}
+\newcommand{\checkbox}{\(\square\)}
+\newcommand{\checked}{\ding{51}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% ------------------------------------------------------------
+% General information boxes
+% ------------------------------------------------------------
+\newtcolorbox{purposebox}{
+    enhanced, breakable, colback=CULight, colframe=CUBlue,
+    boxrule=0.8pt, arc=2mm, left=3mm, right=3mm, top=2.5mm, bottom=2.5mm,
+    title=\textbf{Purpose}, coltitle=white, colbacktitle=CUBlue
+}
+\newtcolorbox{checkpointbox}{
+    enhanced, breakable, colback=CUCyan!6, colframe=CUCyan,
+    boxrule=0.8pt, arc=2mm, left=3mm, right=3mm, top=2.5mm, bottom=2.5mm,
+    title=\textbf{Checkpoint}, coltitle=CUNavy, colbacktitle=CUCyanLight
+}
+\newtcolorbox{safetybox}{
+    enhanced, breakable, colback=CUAmber!8, colframe=CUAmber,
+    boxrule=0.8pt, arc=2mm, left=3mm, right=3mm, top=2.5mm, bottom=2.5mm,
+    title=\textbf{Safety Rule}, coltitle=white, colbacktitle=CUAmber
+}
+\newtcolorbox{warningbox}{
+    enhanced, breakable, colback=CURed!6, colframe=CURed,
+    boxrule=0.8pt, arc=2mm, left=3mm, right=3mm, top=2.5mm, bottom=2.5mm,
+    title=\textbf{Do Not Continue Until Resolved}, coltitle=white, colbacktitle=CURed
+}
+\newtcolorbox{successbox}{
+    enhanced, breakable, colback=CUGreen!7, colframe=CUGreen,
+    boxrule=0.8pt, arc=2mm, left=3mm, right=3mm, top=2.5mm, bottom=2.5mm,
+    title=\textbf{Successful Result}, coltitle=white, colbacktitle=CUGreen
+}
+\newtcolorbox{notebox}{
+    enhanced, breakable, colback=CUCodeBackground, colframe=CUBorder,
+    boxrule=0.7pt, arc=2mm, left=3mm, right=3mm, top=2.5mm, bottom=2.5mm
+}
+\newtcolorbox{authoritybox}{
+    enhanced, breakable, colback=CUGold!8, colframe=CUGold,
+    boxrule=0.8pt, arc=2mm, left=3mm, right=3mm, top=2.5mm, bottom=2.5mm,
+    title=\textbf{Authority and Source Priority}, coltitle=CUNavy, colbacktitle=CUGoldLight
+}
+\newtcolorbox{authoringbox}{
+    enhanced, breakable, colback=CUBlue!6, colframe=CUBlue,
+    boxrule=0.8pt, arc=2mm, left=3mm, right=3mm, top=2.5mm, bottom=2.5mm,
+    title=\textbf{Manual Authoring Standard}, coltitle=white, colbacktitle=CUBlue
+}
+
+% ------------------------------------------------------------
+% Listing styles
+% ------------------------------------------------------------
+\lstdefinestyle{terminalstyle}{
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{CUNavyTwo},
+    keywordstyle=\color{CUCyanLight},
+    stringstyle=\color{CUGoldLight},
+    commentstyle=\color{CUBlueLight},
+    identifierstyle=\color{white},
+    showstringspaces=false,
+    columns=fullflexible,
+    keepspaces=true,
+    breaklines=true,
+    breakatwhitespace=false,
+    frame=none,
+    tabsize=2,
+    upquote=true
+}
+\lstdefinestyle{promptstyle}{
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{CUCodeBackground},
+    keywordstyle=\color{CUBlue},
+    stringstyle=\color{CUGreen},
+    commentstyle=\color{CUMuted},
+    identifierstyle=\color{CUText},
+    showstringspaces=false,
+    columns=fullflexible,
+    keepspaces=true,
+    breaklines=true,
+    breakatwhitespace=false,
+    frame=none,
+    tabsize=2,
+    upquote=true
+}
+\lstdefinestyle{codestyle}{
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{CUCodeBackground},
+    keywordstyle=\color{CUBlue},
+    stringstyle=\color{CUGreen},
+    commentstyle=\color{CUMuted},
+    identifierstyle=\color{CUText},
+    showstringspaces=false,
+    columns=fullflexible,
+    keepspaces=true,
+    breaklines=true,
+    breakatwhitespace=false,
+    frame=none,
+    tabsize=2,
+    upquote=true
+}
+
+\newtcblisting{commandbox}[1]{
+    enhanced, breakable, listing only, listing engine=listings,
+    listing options={style=terminalstyle},
+    colback=CUNavyTwo, colframe=CUCyan, coltitle=CUNavy,
+    colbacktitle=CUCyanLight, boxrule=0.8pt, arc=2mm,
+    left=2mm, right=2mm, top=1mm, bottom=1mm,
+    title=\textbf{#1}
+}
+\newtcblisting{promptbox}[1]{
+    enhanced, breakable, listing only, listing engine=listings,
+    listing options={style=promptstyle},
+    colback=CUCodeBackground, colframe=CUBlue, coltitle=white,
+    colbacktitle=CUBlue, boxrule=0.8pt, arc=2mm,
+    left=2mm, right=2mm, top=1mm, bottom=1mm,
+    title=\textbf{Copy-and-Paste Prompt: #1}
+}
+\newtcblisting{codebox}[1]{
+    enhanced, breakable, listing only, listing engine=listings,
+    listing options={style=codestyle},
+    colback=CUCodeBackground, colframe=CUCodeBorder, coltitle=white,
+    colbacktitle=CUNavyTwo, boxrule=0.8pt, arc=2mm,
+    left=2mm, right=2mm, top=1mm, bottom=1mm,
+    title=\textbf{#1}
+}
+
+% ------------------------------------------------------------
+% Convenience commands
+% ------------------------------------------------------------
+\newcommand{\filepath}[1]{\nolinkurl{#1}}
+\newcommand{\branchname}[1]{\texttt{#1}}
+\newcommand{\statusline}[2]{\textbf{#1:} #2}
+\newcommand{\term}[1]{\textbf{\textsf{#1}}}
+\newcommand{\release}[1]{\texttt{#1}}
+\newcommand{\CurrentRoute}{/CosmicUniversalismStatement/}
+
+\begin{document}
+\hypersetup{pageanchor=false}
+
+% ============================================================
+% Cover page
+% ============================================================
+\begin{titlepage}
+\pagecolor{CUNavy}
+\color{white}
+\thispagestyle{empty}
+
+\vspace*{0.55in}
+
+{\small\bfseries\color{CUCyanLight}
+COSMIC UNIVERSALISM COMPUTATIONAL INTELLIGENCE INITIATIVE}
+
+\vspace{0.38in}
+
+{\Huge\bfseries
+\ProjectTitle}
+
+\vspace{0.16in}
+
+{\LARGE\color{CUGoldLight}
+\DocumentTitle}
+
+\vspace{0.12in}
+
+{\large\color{CUBlueLight}
+\DocumentSubtitle}
+
+\vspace{0.34in}
+
+{\large
+A unified, controlled manual that consolidates the website foundation, the
+Cosmic Breath Cycle Explorer, the Cosmic Breath Time Converter, the CUCII
+Prompt Studio, the Aurelius Claude-proven configuration, ChatGPT/Codex project
+governance, release operations, and the canonical LaTeX style for future
+Cosmic Universalism manuals.}
+
+\vfill
+
+\begin{tcolorbox}[
+    colback=CUNavyTwo, colframe=CUBlue, boxrule=0.8pt, arc=2mm,
+    width=\textwidth
+]
+\color{white}
+\begin{tabularx}{\textwidth}{>{\bfseries}L{1.75in}Y}
+Repository & \RepositoryName \\
+Protected branch & \texttt{\ProtectedBranch} \\
+Stable website branch & \texttt{\StableBranch} \\
+Current integration tag & \texttt{\CurrentIntegrationTag} \\
+Current website commit & \texttt{\CurrentIntegrationCommit} \\
+Website directory & \texttt{\WebsiteDirectory} \\
+Technology & Astro, TypeScript, HTML, modern CSS, Markdown, SVG, lightweight browser JavaScript \\
+Verified quality gate & 251 tests across 30 files; Astro static build; 8 pages \\
+Document version & \DocumentVersion \\
+Verified & \VerificationDate \\
+\end{tabularx}
+\end{tcolorbox}
+
+\vspace{0.32in}
+
+{\large\bfseries \AuthorName}
+
+\vspace{0.08in}
+
+{\small\url{\RepositoryURL}}
+
+\end{titlepage}
+\hypersetup{pageanchor=true}
+\pagenumbering{arabic}
+\nopagecolor
+\color{CUText}
+
+% ============================================================
+% Document Control
+% ============================================================
+\section*{Document Control}
+\addcontentsline{toc}{section}{Document Control}
+
+\begin{tabularx}{\textwidth}{>{\bfseries}L{1.95in}Y}
+Document & Cosmic Universalism Website: Master Implementation and Operations Manual \\
+Version & \DocumentVersion \\
+Classification & Master technical specification, operations runbook, AI project bootstrap, and documentation standard \\
+Repository & \href{\RepositoryURL}{\RepositoryName} \\
+Protected branch & \branchname{\ProtectedBranch} \\
+Stable integration branch & \branchname{\StableBranch} \\
+Current integration tag & \release{\CurrentIntegrationTag} at \release{\CurrentIntegrationCommit} \\
+Prior application release & \release{\PriorReleaseTag} at \release{\PriorReleaseCommit} \\
+Current website commit & \release{\CurrentIntegrationFullCommit} \\
+Protected main commit & \release{\MainCommit} \\
+Website source directory & \filepath{\WebsiteDirectory} \\
+Primary local editor & PyCharm \\
+Primary implementation environment & ChatGPT Codex / local project chat \\
+Version-control interface & PyCharm terminal, Git CLI, or GitHub Desktop \\
+Deployment target & GitHub Pages \\
+Technical baseline verified & \VerificationDate \\
+\end{tabularx}
+
+\begin{purposebox}
+This document replaces the need to begin every new project chat with separate
+website, Cosmic Breath, CU-Time, and CUCII implementation manuals. It preserves
+their essential technical, mathematical, prompt-architecture, testing, and
+release rules while adding the completed Cosmic Breath explorer, sealed
+structural and content authorities, learning and empirical layers, the current
+website integration state, reusable ChatGPT/Codex project-file templates, and
+the canonical LaTeX house style for future manuals.
+\end{purposebox}
+
+\begin{safetybox}
+Earlier manuals remain valuable historical specifications, but their feature
+branches, baseline tags, test counts, and ``current'' boundaries may be
+superseded. A new chat must use this document's Document Control page and the
+live Git repository as the current authority. Never revive an old feature
+branch merely because it appears in a historical manual.
+\end{safetybox}
+
+\begin{authoritybox}
+When sources disagree, use this priority:
+\begin{enumerate}
+    \item Live repository state verified with Git commands.
+    \item Current website integration tag and commit listed in this manual.
+    \item This master manual's protected rules and current-state record.
+    \item Feature-specific control specimens and reference implementations.
+    \item Earlier implementation manuals as historical design records.
+    \item Research documents as CU source material, not as silent authorization
+          to change production code.
+\end{enumerate}
+\end{authoritybox}
+
+\clearpage
+\tableofcontents
+\clearpage
+
+% ============================================================
+\section*{START HERE - Initialize a New Project Chat}
+\addcontentsline{toc}{section}{START HERE - Initialize a New Project Chat}
+
+\begin{successbox}
+A new chat can operate safely from this manual alone for general website
+planning. For exact converter parity or exact prompt-fixture work, also provide
+the authoritative HTML or text control specimen named by the relevant section.
+\end{successbox}
+
+\subsection*{Required reading order}
+
+Before proposing edits, the new chat must read:
+
+\begin{enumerate}
+    \item Document Control and Source Priority.
+    \item Part 1: Governance and current release.
+    \item Part 2: Technology stack and repository architecture.
+    \item The feature division relevant to the requested work.
+    \item Part 10: Testing and acceptance.
+    \item Part 11: Git and release operations.
+    \item Part 12 when creating or revising a manual.
+\end{enumerate}
+
+\subsection*{Current project identity}
+
+\begin{tabularx}{\textwidth}{>{\bfseries}L{1.85in}Y}
+Repository & \RepositoryURL \\
+Local repository & \filepath{/Users/cosmos/Documents/GitHub/CosmicUniversalismStatement} \\
+Website directory & \filepath{website/} \\
+Protected branch & \branchname{main} \\
+Stable website branch & \branchname{website} \\
+Current integration tag & \release{website-v1.1-cosmic-breath} \\
+Current website commit & \filepath{7ac87167c51aad9ae7a31e17d1b2127fc069e15c} \\
+Prior application release & \release{website-v1.3-aurelius-release} at \release{5a56085} \\
+Current Cosmic Breath route & \filepath{/CosmicUniversalismStatement/cosmic-breath/} \\
+Current CUCII route & \filepath{/CosmicUniversalismStatement/cu-intelligence/} \\
+Current CU-Time route & \filepath{/CosmicUniversalismStatement/cu-time/} \\
+\end{tabularx}
+
+\subsection*{New-chat bootstrap prompt}
+
+\begin{promptbox}{Initialize the Cosmic Universalism Website Project Chat}
+We are continuing controlled work on the Cosmic Universalism website.
+
+Read the Master Implementation and Operations Manual before proposing
+or making changes. Treat its current release record and governance
+rules as mandatory.
+
+Repository:
+/Users/cosmos/Documents/GitHub/CosmicUniversalismStatement
+
+Protected branch:
+main
+
+Stable website branch:
+website
+
+Current website integration tag:
+website-v1.1-cosmic-breath
+
+Current website integration commit:
+7ac87167c51aad9ae7a31e17d1b2127fc069e15c
+
+Prior application release:
+website-v1.3-aurelius-release at 5a56085
+
+Before editing:
+
+1. Confirm the repository root and origin.
+2. Confirm the active branch and HEAD.
+3. Confirm the working-tree status.
+4. Identify the exact feature scope.
+5. Inspect only the files relevant to that scope.
+6. Report the smallest safe implementation plan.
+7. Distinguish current live state from historical manual baselines.
+
+Do not edit files during the first inspection.
+
+Do not reset, clean, stash, discard, pull, switch branches, commit,
+push, merge, tag, release, or deploy unless explicitly authorized.
+
+Do not alter CU-Time mathematics or approved source URLs without a
+separate documented review.
+
+Do not claim that CUCII retrains, permanently aligns, or changes the
+beliefs, policies, memory, or underlying capabilities of an external
+AI platform.
+\end{promptbox}
+
+\subsection*{Required terminal preflight}
+
+\begin{commandbox}{Verify the live repository before every editing session}
+cd /Users/cosmos/Documents/GitHub/CosmicUniversalismStatement || exit 1
+
+git remote get-url origin
+git branch --show-current
+git rev-parse --short HEAD
+git status --short --branch
+git tag --points-at HEAD
+\end{commandbox}
+
+\begin{warningbox}
+Stop when the branch, commit, tag, or working-tree state differs from the
+authorized task. Do not use reset, clean, stash, or branch switching to
+``repair'' an unexplained difference.
+\end{warningbox}
+
+% ============================================================
+\section{Part 1 - Governance, Releases, and Source Authority}
+% ============================================================
+
+\subsection{Repository policy}
+
+The repository is \href{\RepositoryURL}{\RepositoryName}. The
+\branchname{main} branch is protected from website-development work. The
+stable website integration branch is \branchname{website}. New development is
+performed on a feature branch created from a verified stable website commit.
+
+The normal relationship is:
+
+\begin{codebox}{Controlled branch relationship}
+main                         protected research baseline
+website                      stable website integration branch
+feature/<feature-name>       isolated implementation and testing branch
+website-vX.Y-<approved-name> permanent annotated recovery or integration tag
+\end{codebox}
+
+\subsection{Current verified release history}
+
+\begin{tabularx}{\textwidth}{L{2.35in}L{1.0in}Y}
+\toprule
+\textbf{Tag} & \textbf{Commit} & \textbf{Meaning} \\
+\midrule
+\release{website-v1.1-cu-time-release} & \release{3fa4a37} & Stable CU-Time website release and pre-CUCII recovery point. \\
+\release{website-v1.2-cucii-release} & \release{ae16ae7} & Stable CUCII Prompt Studio release. \\
+\release{website-v1.3-aurelius-release} & \release{5a56085} & Stable Aurelius Claude preset, Alexa+, and Claude public-demonstration release. \\
+\release{website-v1.1-cosmic-breath} & \release{7ac8716} & Current Cosmic Breath integration tag. The numeric label identifies this feature line; it does not imply a downgrade or chronological replacement of the earlier application v1.3 tag. \\
+\bottomrule
+\end{tabularx}
+
+The current \branchname{website} integration commit is
+\filepath{7ac87167c51aad9ae7a31e17d1b2127fc069e15c}. The annotated tag object is
+\filepath{0bc09615dc2356a14f384d3c947c7c81e85ced33}, and its peeled commit is the
+current website integration commit.
+
+Cosmic Breath feature-history commits include:
+
+\begin{itemize}
+    \item \release{d9d4d5c}: canonical 51-state structural ledger.
+    \item \release{95b46a7}: typed structural state engine.
+    \item \release{38c43f3}: accessible explorer shell.
+    \item \release{d6a6ee5}: drag, snap, and settle behavior.
+    \item \release{0631b69}: adaptive Canvas atmosphere.
+    \item \release{131d792}: companion content authority.
+    \item \release{5be2efb}: completed explorer, learning content, empirical context, and navigation.
+\end{itemize}
+
+\subsection{Current verification record}
+
+At the July 23, 2026 Cosmic Breath integration checkpoint:
+
+\begin{itemize}
+    \item 251 automated tests passed across 30 test files.
+    \item The Astro production build completed successfully with no warnings or errors.
+    \item Eight static pages were generated, including the Cosmic Breath, CUCII, and CU-Time routes.
+    \item The feature branch was merged with an explicit two-parent merge commit.
+    \item Local and remote \branchname{website} both resolved to \filepath{7ac87167c51aad9ae7a31e17d1b2127fc069e15c}.
+    \item The annotated \release{website-v1.1-cosmic-breath} tag was pushed and verified by its peeled commit.
+    \item The protected \branchname{main} branch remained unchanged at \filepath{8637cad8dd208f6e202f74d7fbb74ef5266a2aff}.
+    \item The working tree was clean and synchronized; no deployment or GitHub Release occurred.
+\end{itemize}
+
+\subsection{Historical manuals and current state}
+
+The source manuals documented controlled development at different times:
+
+\begin{itemize}
+    \item the local website foundation;
+    \item the CU-Time converter migration;
+    \item the CUCII AI Exploration and Prompt Studio;
+    \item the Cosmic Breath Interactive Cycle Explorer planning and implementation specification.
+\end{itemize}
+
+Their architecture, safety, and workflow rules remain useful. Their historical
+feature branch names and expected test counts do not override the current
+integration record above. Master Manual v1.0 remains the immutable July 21
+historical baseline; this v1.1 source and PDF are the current operational
+revision.
+
+\subsection{Phase authorization rule}
+
+Every implementation phase follows four gates:
+
+\begin{enumerate}
+    \item \textbf{Inspect}: read live files and report current behavior.
+    \item \textbf{Plan}: identify the smallest safe file set and acceptance
+          criteria.
+    \item \textbf{Implement}: edit only after explicit authorization.
+    \item \textbf{Verify}: run tests, build, browser checks, and Git inspection
+          before any commit.
+\end{enumerate}
+
+\begin{safetybox}
+An implementation prompt authorizes only its stated file and behavior scope. It
+does not authorize commit, push, merge, tag, release, deployment, dependency
+installation, or branch changes unless those actions are separately stated.
+\end{safetybox}
+
+% ============================================================
+\section{Part 2 - Technology Stack and Repository Architecture}
+% ============================================================
+
+\subsection{Primary technology stack}
+
+\begin{tabularx}{\textwidth}{L{1.7in}Y}
+\toprule
+\textbf{Area} & \textbf{Approved technology and responsibility} \\
+\midrule
+Framework & Astro static-site generation. \\
+Language & TypeScript for typed data, validation, pure engines, and browser behavior. \\
+Markup & Astro components, semantic HTML, and Markdown source material. \\
+Styling & Modern CSS with project tokens, responsive grids, and restrained motion. \\
+Graphics & SVG and repository-owned visual assets. \\
+Browser logic & Lightweight JavaScript; no backend is required for current interactive features. \\
+Testing & Vitest unit and regression tests. \\
+Editor & PyCharm with Astro and Node.js support. \\
+Version control & Git CLI in PyCharm terminal or GitHub Desktop. \\
+Planning & ChatGPT Project / local project chat. \\
+Implementation & ChatGPT Codex with inspection-first prompts and explicit boundaries. \\
+Hosting & GitHub Pages with Astro \texttt{site} and repository \texttt{base} configuration. \\
+Documentation & LaTeX source compiled with pdfLaTeX and visually verified as PDF. \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Application responsibilities}
+
+\begin{itemize}
+    \item \textbf{PyCharm}: inspect, edit, search, run terminal commands, and
+          review local changes.
+    \item \textbf{Codex}: inspect the repository, propose plans, make bounded
+          edits, run tests, and report exact file changes.
+    \item \textbf{ChatGPT Project}: retain manuals, project instructions,
+          control specimens, handoffs, and feature decisions.
+    \item \textbf{Git}: preserve branch history, feature checkpoints, merges,
+          and release tags.
+    \item \textbf{GitHub Pages}: host the static output after an authorized
+          deployment workflow.
+\end{itemize}
+
+\subsection{Website route map}
+
+The current static build contains eight routes:
+
+\begin{codebox}{Current static route set}
+/
+about/
+cosmic-breath/
+cu-intelligence/
+cu-time/
+framework/
+media/
+research/
+\end{codebox}
+
+Under GitHub Pages and local base-path testing, routes are prefixed with:
+
+\begin{codebox}{Repository base path}
+/CosmicUniversalismStatement/
+\end{codebox}
+
+Examples:
+
+\begin{itemize}
+    \item \filepath{/CosmicUniversalismStatement/cosmic-breath/}
+    \item \filepath{/CosmicUniversalismStatement/cu-time/}
+    \item \filepath{/CosmicUniversalismStatement/cu-intelligence/}
+\end{itemize}
+
+\subsection{High-value source map}
+
+\begin{longtable}{L{2.55in}L{3.85in}}
+\toprule
+\textbf{Path} & \textbf{Responsibility} \\
+\midrule
+\filepath{website/src/config/site.ts} & Site metadata, navigation, and header action. \\
+\filepath{website/src/pages/index.astro} & Homepage composition. \\
+\filepath{website/src/pages/cosmic-breath.astro} & Cosmic Breath route, explorer integration, guide, and learning layers. \\
+\filepath{website/src/components/CosmicBreathCycleExplorer.astro} & Route-specific accessible 51-state explorer. \\
+\filepath{website/src/components/CosmicBreathDiagram.astro} & Shared static diagram and non-selectable Observable Universe marker. \\
+\filepath{website/src/components/CosmicBreathEducation.astro} & LP-1 structural field guide. \\
+\filepath{website/src/components/CosmicBreathTheoryAndMethod.astro} & LP-2 CU theory and method. \\
+\filepath{website/src/components/CosmicBreathEmpiricalScience.astro} & LP-3 empirical context and scientific source presentation. \\
+\filepath{website/src/components/CosmicBreathPageGuide.astro} & Unified 19-link guide and progressive Back to top behavior. \\
+\filepath{website/src/data/cosmic-breath/} & Structural authority, content authority, manifest, and empirical source registry. \\
+\filepath{website/src/lib/cosmicBreath/} & Server validation, browser-safe runtime projections, state, controls, drag, quality, atmosphere, and tests. \\
+\filepath{website/src/pages/cu-time.astro} & CU-Time route. \\
+\filepath{website/src/pages/cu-intelligence.astro} & CUCII route and browser interface. \\
+\filepath{website/src/components/CUTimeConverter.astro} & Accessible forward/reverse converter UI. \\
+\filepath{website/src/components/cucii/ConversationCard.astro} & Living Conversation card presentation. \\
+\filepath{website/src/lib/cuTime/} & Pure converter constants, calendar logic, conversion adapters, validation, and tests. \\
+\filepath{website/src/data/cucii-conversations.ts} & Typed public conversation registry. \\
+\filepath{website/src/data/cucii-platforms.ts} & Typed external AI platform registry. \\
+\filepath{website/src/data/cucii-prompt-presets.ts} & Purpose, menu, and proven configuration presets. \\
+\filepath{website/src/data/cucii-sources.ts} & Approved CU source manifest. \\
+\filepath{website/src/data/cucii-working-context.ts} & Embedded CU context, continuity, and Aurelius story beats. \\
+\filepath{website/src/lib/cucii/prompt-builder.ts} & Deterministic prompt generation. \\
+\filepath{website/src/lib/cucii/validation.ts} & Prompt configuration validation and normalization. \\
+\filepath{website/src/lib/cucii/export.ts} & Text and Markdown export behavior. \\
+\filepath{website/src/lib/cucii/__fixtures__/aurelius-claude-working-prompt-v1.0.txt} & Immutable Claude-working Aurelius control specimen. \\
+\filepath{website/src/lib/cucii/__tests__/} & CUCII regression suite. \\
+\bottomrule
+\end{longtable}
+
+\subsection{Base-path discipline}
+
+Internal links and static assets must respect the Astro repository base path.
+Never hardcode a root-relative link that loses
+\filepath{/CosmicUniversalismStatement/}. Use the established site-path helper
+and current Astro configuration.
+
+\subsection{Design direction}
+
+The website combines:
+
+\begin{itemize}
+    \item NASA-style scientific visualization;
+    \item modern academic research publishing;
+    \item cinematic cosmic-documentary atmosphere;
+    \item restrained philosophical symbolism;
+    \item deep navy-black surfaces;
+    \item white-gold identity and philosophical emphasis;
+    \item cyan empirical and interactive emphasis;
+    \item translucent blue structural boundaries.
+\end{itemize}
+
+Avoid excessive science-fiction ornament. Every element must remain feasible in
+Astro, semantic HTML, CSS, SVG, and lightweight JavaScript.
+
+\subsection{Editorial classification}
+
+Major claims should be distinguishable as:
+
+\begin{itemize}
+    \item Empirical Reference;
+    \item CU Mathematical Model;
+    \item CU Theoretical Proposition;
+    \item Philosophical Interpretation;
+    \item In-World Narrative;
+    \item Open Question;
+    \item Historical / Superseded.
+\end{itemize}
+
+\begin{checkpointbox}
+A page is not complete merely because it looks correct. It must also preserve
+base-path behavior, source provenance, accessibility, responsive layout, and
+the boundary between empirical reference and CU interpretation.
+\end{checkpointbox}
+
+% ============================================================
+\section{Part 3 - ChatGPT and Codex Project Setup}
+% ============================================================
+
+\subsection{Project creation}
+
+Create a ChatGPT Project named:
+
+\begin{codebox}{Project name}
+Cosmic Universalism Website
+\end{codebox}
+
+The manual is intended to be the primary long-lived reference. Project
+Instructions are entered in Advanced Settings and do not consume an upload
+slot. A bootstrap prompt is pasted into the first local chat and also does not
+consume an upload slot.
+
+\subsection{Recommended five-file package}
+
+When only five project files are available, use:
+
+\begin{enumerate}
+    \item This master manual PDF.
+    \item This master manual \LaTeX{} source when future manual creation is
+          expected; otherwise use a current-state handoff.
+    \item The exact feature control specimen, such as the converter HTML or
+          Aurelius text fixture.
+    \item A current-state handoff or repository inspection snapshot.
+    \item The feature-specific source document or blueprint most necessary for
+          the next task.
+\end{enumerate}
+
+For CU-Time work, prefer the converter HTML as the control specimen. For
+Aurelius work, prefer the exact text fixture. Do not replace exact control
+specimens with summaries when byte-level or behavioral parity matters.
+
+\subsection{Permanent Project Instructions}
+
+\begin{promptbox}{Advanced Settings - Permanent Project Instructions}
+COSMIC UNIVERSALISM WEBSITE PROJECT
+
+Repository:
+https://github.com/willmaddock/CosmicUniversalismStatement
+
+Local repository:
+/Users/cosmos/Documents/GitHub/CosmicUniversalismStatement
+
+Website directory:
+website/
+
+TECHNOLOGY
+
+Astro, TypeScript, semantic HTML, modern CSS, Markdown, SVG, Vitest,
+and lightweight browser JavaScript.
+
+BRANCH POLICY
+
+Protected branch:
+main
+
+Never modify main.
+
+Stable website branch:
+website
+
+Current website integration tag:
+website-v1.1-cosmic-breath
+
+Current website integration commit:
+7ac87167c51aad9ae7a31e17d1b2127fc069e15c
+
+Prior application release:
+website-v1.3-aurelius-release at 5a56085
+
+Always confirm the active branch, HEAD, release tag, and working-tree
+status before editing.
+
+Create a new feature branch from the verified website baseline for new
+work. Do not reuse completed historical feature branches.
+
+SAFETY
+
+Make the smallest safe change.
+Inspect current files before editing.
+Do not overwrite unexplained uncommitted work.
+Do not alter CU-Time mathematics or approved source URLs without a
+separate documented review.
+Do not weaken existing regression tests.
+Do not add dependencies, APIs, backend services, analytics, telemetry,
+automatic prompt transfer, or persistence without explicit approval.
+
+CUCII CLAIMS BOUNDARY
+
+CUCII creates structured conversational prompts. CU-aligned and
+CU-empowered describe prompt-level context. They do not mean that an
+external model has been retrained, permanently aligned, made conscious,
+given literal belief, granted policy exemptions, or technically
+modified.
+
+In authored role-play, a character may speak directly from within the
+CU story-world. Keep those statements distinct from claims about the
+external platform.
+
+GIT ACTIONS
+
+Unless explicitly authorized, do not reset, clean, stash, discard,
+pull, switch branches, commit, push, merge, tag, release, deploy, or
+change package versions.
+
+VERIFICATION
+
+After implementation changes, run:
+
+npm test
+npm run build
+git diff --check
+git status --short --branch
+git diff --stat
+
+Use browser review at desktop, tablet, 390px mobile, and 320px narrow
+mobile. Test keyboard navigation, focus, disclosures, reset, copy,
+downloads, external links, and the browser console.
+\end{promptbox}
+
+\subsection{No-edit inspection prompt}
+
+\begin{promptbox}{Inspect a Feature Before Editing}
+Read the Project Instructions and the Master Implementation and
+Operations Manual.
+
+Repository:
+/Users/cosmos/Documents/GitHub/CosmicUniversalismStatement
+
+Expected branch:
+feature/<feature-name>
+
+Expected baseline:
+<commit-or-release-tag>
+
+Confirm:
+
+1. Repository root and origin
+2. Active branch and HEAD
+3. Working-tree status
+4. Relevant route, components, data, library, and tests
+5. Current behavior
+6. Existing conventions to reuse
+7. Smallest safe file set
+8. Acceptance and regression requirements
+
+Report a plan only.
+
+Do not edit or create files.
+Do not install dependencies.
+Do not reset, clean, stash, discard, pull, switch branches, commit,
+push, merge, tag, release, or deploy.
+\end{promptbox}
+
+\subsection{Implementation authorization prompt}
+
+\begin{promptbox}{Authorize a Bounded Implementation}
+The inspection plan is approved with the following exact scope:
+
+OBJECTIVE:
+<describe one feature or confirmed defect>
+
+AUTHORIZED FILES:
+<list exact paths or narrowly defined directories>
+
+REQUIRED BEHAVIOR:
+<list observable acceptance criteria>
+
+PRESERVE:
+<list protected behavior, data, tests, URLs, mathematics, and fixtures>
+
+TESTS:
+<list focused tests to add or update>
+
+BROWSER REVIEW:
+<list target widths and interactions>
+
+Run:
+npm test
+npm run build
+git diff --check
+git status --short --branch
+git diff --stat
+
+Do not redesign unrelated areas.
+Do not add dependencies.
+Do not perform any Git-changing or deployment action.
+Return only the files changed, corrections, test result, build result,
+Git status, and confirmation that no Git or deployment action occurred.
+\end{promptbox}
+
+\subsection{Current-state handoff file}
+
+A handoff prevents a new account from repeating completed work or following
+obsolete branch metadata. Use this structure:
+
+\begin{codebox}{Current-State Handoff Markdown Template}
+Project Current-State Handoff
+
+Repository:
+REPOSITORY_URL
+
+Local repository:
+ABSOLUTE_LOCAL_PATH
+
+Protected branch:
+main
+
+Stable integration branch:
+website
+
+Current stable release:
+RELEASE_TAG
+
+Current stable commit:
+SHORT_AND_FULL_COMMIT
+
+Active feature branch:
+FEATURE_BRANCH_OR_NONE
+
+Current verification:
+- TEST_COUNT
+- TEST_FILE_COUNT
+- BUILD_RESULT
+- ROUTE_COUNT
+- BROWSER_REVIEW_RESULT
+
+Implemented work:
+1. COMPLETED_CAPABILITY
+2. COMPLETED_CAPABILITY
+
+Protected items:
+- CU-Time mathematics
+- approved CU source URLs
+- exact control specimens
+- stable release tags
+- existing regression behavior
+
+Next authorized objective:
+ONE_CONCISE_OBJECTIVE
+
+Forbidden without separate authorization:
+reset, clean, stash, discard, pull, switch branch, commit, push,
+merge, tag, release, deploy, dependency changes
+\end{codebox}
+
+\subsection{Control specimen file}
+
+A control specimen is exact evidence, not a prose summary. Store it separately
+when the implementation must preserve character-for-character or byte-for-byte
+behavior.
+
+Record:
+
+\begin{itemize}
+    \item path;
+    \item encoding;
+    \item exact byte length;
+    \item SHA-256 digest;
+    \item origin and date;
+    \item what may be compared structurally;
+    \item what must remain byte-identical.
+\end{itemize}
+
+% ============================================================
+\section{Part 4 - Controlled Feature Workflow}
+% ============================================================
+
+\subsection{Create a feature branch}
+
+Begin from a clean and synchronized \branchname{website} branch.
+
+\begin{commandbox}{Create a new feature branch from the stable website}
+cd /Users/cosmos/Documents/GitHub/CosmicUniversalismStatement || exit 1
+
+git switch website
+git pull --ff-only origin website
+
+git branch --show-current
+git rev-parse --short HEAD
+git tag --points-at HEAD
+git status --short --branch
+
+git switch -c feature/<feature-name>
+\end{commandbox}
+
+\begin{safetybox}
+Do not create a feature branch from an unexplained working tree or from a
+historical feature branch. A release tag is a recovery point, not a branch on
+which to continue development.
+\end{safetybox}
+
+\subsection{Inspection, implementation, and review cycle}
+
+\begin{enumerate}
+    \item Inspect the live feature area without edits.
+    \item Approve the smallest implementation plan.
+    \item Edit only the authorized files.
+    \item Run focused tests during development.
+    \item Perform browser review.
+    \item Run the full test suite and production build once at the final gate.
+    \item Inspect Git changes and whitespace.
+    \item Stage exact paths.
+    \item Commit and push the feature branch.
+    \item Merge into \branchname{website} only after a clean pre-merge check.
+    \item Re-run tests and build on the merged website branch.
+    \item Push \branchname{website}.
+    \item Create and push an annotated release tag.
+\end{enumerate}
+
+\subsection{Do not confuse tool permission with release authorization}
+
+Codex may be authorized to edit and test without being authorized to commit,
+push, merge, or deploy. A browser server may be running without meaning the
+feature is released. A release tag is created only after the merged stable
+branch passes the complete gate.
+
+\subsection{Reviewable change discipline}
+
+Prefer:
+
+\begin{itemize}
+    \item typed registries instead of repeated hard-coded markup;
+    \item pure functions instead of UI-coupled calculations;
+    \item focused regression tests for confirmed defects;
+    \item existing project tokens and components;
+    \item small patches that can be explained file by file.
+\end{itemize}
+
+Avoid:
+
+\begin{itemize}
+    \item repository-wide rewrites;
+    \item dependency changes for problems solvable with the existing stack;
+    \item silent normalization of exact source text;
+    \item broad ``cleanup'' during a feature task;
+    \item tests tied to incidental whitespace or class ordering.
+\end{itemize}
+
+% ============================================================
+\section{Part 5 - Website Foundation}
+% ============================================================
+
+\subsection{Purpose and audience}
+
+The website transforms the Cosmic Universalism repository into a public
+research and educational experience. It supports general visitors, technical
+readers, philosophical readers, developers, and researchers. Visitors should
+be able to read the CU Statement, understand the Cosmic Breath, inspect
+calculations, use CU-Time, explore open questions, and reach original GitHub
+sources.
+
+\subsection{Navigation and current header behavior}
+
+The standard navigation includes:
+
+\begin{codebox}{Primary navigation}
+Framework
+Cosmic Breath
+CU-Time
+Research
+Media
+About
+GitHub
+\end{codebox}
+
+The primary header action is \term{Explore CUCII}. The ordinary CU-Time
+navigation item remains. A historical homepage inspection showed a duplicate
+CU-Time call to action; the v1.2 CUCII release replaced only the duplicate
+header action while preserving normal CU-Time navigation and the homepage
+CU-Time invitation.
+
+\subsection{Homepage design requirements}
+
+The homepage should retain:
+
+\begin{itemize}
+    \item a cinematic but technically realistic hero;
+    \item an immediate definition of Cosmic Universalism;
+    \item the CU Statement and plain-language rendering;
+    \item Cosmic Breath overview;
+    \item Observable Universe comparison;
+    \item research and evidence classification;
+    \item CU-Time invitation;
+    \item featured media and open questions;
+    \item direct GitHub source access.
+\end{itemize}
+
+\subsection{Responsive design}
+
+Verify at approximately:
+
+\begin{itemize}
+    \item 1440px desktop;
+    \item 1024px compact desktop;
+    \item 768px tablet;
+    \item 390px mobile;
+    \item 320px narrow mobile.
+\end{itemize}
+
+Requirements include no horizontal overflow, readable text, natural card
+heights, visible focus, comfortable touch targets, safe long-link wrapping, and
+no layout that depends on equal-height cards when content differs.
+
+\subsection{Accessibility baseline}
+
+Use semantic landmarks, correctly associated labels, visible focus, keyboard
+activation, \texttt{aria-live} for meaningful status, \texttt{aria-expanded}
+and \texttt{aria-controls} for disclosures, and focus movement only when it
+helps the user understand the result or validation error.
+
+\subsection{Local development}
+
+\begin{commandbox}{Start the Astro development server}
+cd /Users/cosmos/Documents/GitHub/CosmicUniversalismStatement/website || exit 1
+npm run dev
+\end{commandbox}
+
+When port 4321 is occupied, Astro may use 4322. Use the exact reported URL.
+
+\begin{commandbox}{Stop the managed Astro development server}
+cd /Users/cosmos/Documents/GitHub/CosmicUniversalismStatement/website || exit 1
+./node_modules/.bin/astro dev stop
+\end{commandbox}
+
+\begin{commandbox}{Verify that port 4322 is not listening}
+lsof -nP -iTCP:4322 -sTCP:LISTEN
+\end{commandbox}
+
+Closed client connections do not mean a server is still listening.
+
+\subsection{Production build}
+
+\begin{commandbox}{Run the website test and build gate}
+cd /Users/cosmos/Documents/GitHub/CosmicUniversalismStatement/website || exit 1
+
+npm test
+npm run build
+\end{commandbox}
+
+The current integration expects eight pages, including
+\filepath{/cosmic-breath/index.html}, \filepath{/cu-time/index.html}, and
+\filepath{/cu-intelligence/index.html} in the static build output.
+
+% ============================================================
+\section{Part 6 - Cosmic Breath Cycle Explorer}
+% ============================================================
+
+\subsection{Public purpose and integration record}
+
+The route \filepath{/CosmicUniversalismStatement/cosmic-breath/} is a layered
+research and educational page. It combines a progressively enhanced structural
+explorer with static explanatory content. The implementation was completed on
+\branchname{feature/cosmic-breath-cycle-explorer}, merged into
+\branchname{website} with merge commit
+\filepath{7ac87167c51aad9ae7a31e17d1b2127fc069e15c}, and marked by the annotated
+integration tag \release{website-v1.1-cosmic-breath}.
+
+The explorer does not replace the static page. Without JavaScript, visitors
+retain the route introduction, structural diagram, page guide, field guide,
+theory and method layer, empirical science layer, source list, and ordinary
+anchor navigation.
+
+\subsection{Canonical structural authority}
+
+The approved structural authority is:
+
+\begin{tabularx}{\textwidth}{L{2.05in}Y}
+\toprule
+\textbf{Field} & \textbf{Approved value} \\
+\midrule
+Authority ID & \release{CB-TOM-STRUCTURAL-1.0} \\
+Canonical JSON & \filepath{website/src/data/cosmic-breath/CB-TOM-STRUCTURAL-1.0.json} \\
+Repository ledger & \filepath{documentation/cosmic-breath/ledgers/CB-TOM-STRUCTURAL-1.0.md} \\
+Digest record & \filepath{documentation/cosmic-breath/ledgers/CB-TOM-STRUCTURAL-1.0.sha256} \\
+SHA-256 & \filepath{dcc34d5b7d9e32afb8d0cb97b029a12e0025959095a21b4168d59aff575da825} \\
+Owner decision date & July 22, 2026 \\
+State count & 51 selectable TOM states \\
+Expansion & 26 states, \term{expansion-sub-ztom} through \term{expansion-atom} \\
+Compression & 25 states, \term{compression-btom} through \term{compression-ztom} \\
+\bottomrule
+\end{tabularx}
+
+The ordered registry is structural and index-based. The native slider maps to
+positions 0--50; it is not a time axis and must not be presented as a physical
+scale. Individual row durations must not be summed, normalized, or used to
+silently recompute the approved model-level anchors.
+
+\begin{safetybox}
+The structural digest is a release invariant. Any change to the authority bytes,
+state order, boundary roles, transition records, or approved model anchors
+requires a separate owner decision, a new authority version, new digest, and
+updated regression expectations.
+\end{safetybox}
+
+\subsection{Companion content authority}
+
+The approved companion content authority is:
+
+\begin{tabularx}{\textwidth}{L{2.05in}Y}
+\toprule
+\textbf{Field} & \textbf{Approved value} \\
+\midrule
+Authority ID & \release{CB-TOM-CONTENT-1.0} \\
+Canonical JSON & \filepath{website/src/data/cosmic-breath/CB-TOM-CONTENT-1.0.json} \\
+Manifest & \filepath{website/src/data/cosmic-breath/CB-TOM-CONTENT-1.0.manifest.json} \\
+SHA-256 & \filepath{5eab61c46e1922cdbd52be9c128e2b18a29b6540fdec91a840e3801c580b12be} \\
+Approved records & 51, one companion record for every structural state \\
+Relationship & Companion content; it does not replace the structural authority \\
+\bottomrule
+\end{tabularx}
+
+The manifest records authority identity, counts, approval, digest, and the
+relationship to the structural authority. It is a repository governance
+artifact and is deliberately excluded from browser output.
+
+\subsection{Browser-safe projection boundary}
+
+Canonical structural and content files are loaded and validated on the server or
+at build time. Browser code receives only explicit public projections. The
+runtime rejects unexpected keys, malformed ordering, duplicate IDs, unresolved
+references, invalid phase counts, and malformed transitions.
+
+The structural browser whitelist contains only operational fields needed by the
+explorer, including state identity, label, phase, cycle and phase indices,
+adjacency, boundary role, and the two public transition records. Private owner,
+approval, derivation, classification, provenance, withheld-field, manifest, and
+digest metadata must not be serialized to the browser.
+
+\begin{checkpointbox}
+Production governance scans returned zero prohibited matches for canonical
+digests, owner-decision metadata, private manifest identifiers, raw approval or
+provenance fields, repository-local paths, and structural authority status
+strings.
+\end{checkpointbox}
+
+\subsection{State engine and guarded boundaries}
+
+Ordinary Previous, Next, slider, keyboard, and drag inspection can move among
+all 51 states. Two phase boundaries require explicit action:
+
+\begin{longtable}{L{1.10in}L{1.40in}L{1.50in}L{1.90in}}
+\toprule
+\textbf{Boundary} & \textbf{From} & \textbf{To} & \textbf{Required behavior} \\
+\midrule
+ATOM & \term{expansion-atom} & \term{compression-btom} & Present \term{Begin Compression}; preserve the current cycle number. \\
+ZTOM & \term{compression-ztom} & next \term{expansion-sub-ztom} & Present \term{Begin the Next Cosmic Breath}; increment the cycle number by one. \\
+\bottomrule
+\end{longtable}
+
+Direct inspection of a state across a phase boundary does not execute a guarded
+transition. The engine keeps inspection separate from explicit cycle-changing
+actions and rejects stale settle tokens after interrupted movement.
+
+\subsection{Drag, snap, controls, and details}
+
+The explorer supports:
+
+\begin{itemize}
+    \item native range-slider selection across all 51 structural positions;
+    \item Previous and Next controls with explicit boundary guards;
+    \item pointer and touch dragging with coordinate normalization and clamping;
+    \item deterministic nearest-state snapping, including lower-index tie handling;
+    \item interruptible settle behavior;
+    \item detail reveal after motion settles rather than during unstable movement;
+    \item repeated drag, inspect, and continue cycles;
+    \item visible reset semantics;
+    \item keyboard operation and visible focus.
+\end{itemize}
+
+The detail panel exposes only approved public content. Structural identity,
+phase, position, approved duration representation, epistemic label, helper text,
+and Learn More content remain synchronized with the selected state.
+
+\subsection{Canvas atmosphere and adaptive quality}
+
+Decorative atmosphere is implemented separately from structural meaning. SVG and
+semantic HTML carry the authoritative foreground, controls, labels, and marker.
+Canvas provides non-semantic atmosphere using typed Auto, High, Balanced, and
+Reduced quality decisions, bounded particle budgets, device-pixel-ratio caps,
+and reduced-motion handling.
+
+Canvas failure must not remove controls, state identity, details, the static
+fallback, or any educational content. Decorative motion must remain
+non-essential and must respect reduced-motion preferences.
+
+\subsection{Observable Universe marker}
+
+The shared \filepath{CosmicBreathDiagram.astro} places the Observable Universe
+marker structurally between \term{compression-btom} and \term{compression-ctom}.
+The marker is non-selectable, non-focusable, \texttt{aria-hidden}, and uses
+\texttt{pointer-events: none}. It is a CU structural comparison marker, not a
+literal physical-scale measurement and not a selectable TOM state.
+
+The marker remains compatible with the homepage because no explorer state,
+event listeners, or route-specific browser behavior was added to the shared
+diagram.
+
+\subsection{LP-1 structural field guide}
+
+\filepath{CosmicBreathEducation.astro} provides seven sections:
+
+\begin{itemize}
+    \item Cosmic Breath at a glance;
+    \item reading the structural diagram;
+    \item TOM names and positions;
+    \item exponents, tetration, and duration representation;
+    \item expansion, compression, and guarded boundaries;
+    \item the Observable Universe marker;
+    \item structural and epistemic boundaries.
+\end{itemize}
+
+The field guide explains that Knuth up-arrow notation and right-associated
+tetration are mathematical notation and do not possess an inherent physical
+time unit. It also distinguishes the CU ATOM state from Planck time; Planck time
+is presented as a derived natural unit, not an established minimum interval.
+
+\subsection{LP-2 CU theory and method}
+
+\filepath{CosmicBreathTheoryAndMethod.astro} provides five sections covering CU
+Dark Energy, CU Anti-Dark Energy, TOM-duration representation, memory and ethics
+at reset, and source/method boundaries.
+
+Required claims boundaries are:
+
+\begin{itemize}
+    \item CU Dark Energy and CU Anti-Dark Energy are internal CU terms, not established empirical entities.
+    \item The framework does not impose a literal inhale/exhale mapping on the two phases.
+    \item No validated uniform derivation currently explains every sealed TOM duration string.
+    \item Historical formulas are provenance for later mathematical review, not canonical proof of all approved durations.
+    \item Memory means inherited structural information with symbolic and philosophical dimensions; it does not establish literal consciousness transfer.
+    \item Ethical continuity is a CU structural-integrity condition and philosophical principle; it does not claim external-AI retraining, memory, alignment, or capability change.
+\end{itemize}
+
+\subsection{LP-3 empirical context}
+
+\filepath{CosmicBreathEmpiricalScience.astro} separates empirical observations,
+open scientific questions, conditional cosmic futures, units and notation,
+quantum/holographic information research, and the point where CU interpretation
+begins.
+
+The public source registry contains 19 independently editable scientific-source
+records. Numbered citations map to a classified endnote list. External source
+links open in a new tab with \texttt{target="\_blank"},
+\texttt{rel="noopener noreferrer"}, and an accessible disclosure. Internal
+page-guide, continuation, citation-return, and Back to top links remain same-tab.
+
+Current interpretation boundaries include:
+
+\begin{itemize}
+    \item the observable universe is approximately 92 billion light-years in present comoving diameter and is distinct from its age or the size of the whole universe;
+    \item the standard-cosmology age is approximately 13.8 billion years, with any more precise Planck base-$\Lambda$CDM value qualified in the source note;
+    \item DESI results are described only as model- and dataset-dependent hints, not proof of evolving dark energy or CU theory;
+    \item heat death is conditional on the future cosmological model;
+    \item holography, black-hole information, and cyclic models do not establish semantic memory or consciousness across cycles.
+\end{itemize}
+
+\subsection{Unified page navigation}
+
+\filepath{CosmicBreathPageGuide.astro} appears beneath the opening structural
+boundary statement. It contains three groups and 19 valid targets:
+
+\begin{itemize}
+    \item \term{Explore the framework}: seven links;
+    \item \term{Inside the CU model}: five links;
+    \item \term{Empirical Science and Cosmic Universalism}: seven links.
+\end{itemize}
+
+Redundant local menus were removed. LP-1 continues to LP-2, LP-2 continues to
+LP-3, every major group provides \term{Back to page guide}, and LP-3 provides
+\term{Back to top}. The progressive Back to top control targets
+\filepath{\#cosmic-breath-page-top}; ordinary anchors remain available when
+JavaScript is disabled.
+
+\subsection{Responsive, accessibility, and source-layout acceptance}
+
+The explorer and learning layers were manually reviewed on Mac, iPhone, and
+tablet. Automated and browser-assisted checks verified semantic structure,
+keyboard behavior, focus, duplicate-ID prevention, internal target integrity,
+external-link policy, progressive navigation, no horizontal overflow in the
+available browser viewport, and responsive CSS for desktop, tablet, and mobile.
+
+The scientific source list uses two balanced columns on wide viewports, one
+column at and below 48rem, and a final odd source card spanning both columns on
+wide screens. Content order remains 1--19 in the semantic ordered list.
+
+\subsection{Implementation files and test boundary}
+
+The feature comparison contained 34 changed files: 32 additions and two
+modifications. It added 11,288 lines and removed 61, with no binary, generated,
+dependency, lockfile, build-configuration, deployment-configuration, or
+unrelated changes. \filepath{Hero.astro}, CU-Time mathematics, and
+\branchname{main} remained protected.
+
+Thirteen focused test files under
+\filepath{website/src/lib/cosmicBreath/__tests__/} cover authorities, runtime
+isolation, state, controls, drag, quality, atmosphere, diagram compatibility,
+LP-1, LP-2, LP-3, scientific links, and unified navigation.
+
+\begin{codebox}{Verified Cosmic Breath integration gate}
+30 test files passed
+251 tests passed
+0 failures and 0 skipped tests
+Astro production build passed
+8 static routes built
+0 build warnings and 0 build errors
+Both canonical digests unchanged
+Production governance scan: zero prohibited matches
+\end{codebox}
+
+\subsection{Merge, tag, and recovery record}
+
+The feature branch ended at
+\filepath{5be2efb45faefeba545c69442987c0acd11ca5e3}. It descended directly from
+\filepath{d426b78750f6be26eff4c8fffba954c1a7ec8aa9} and was merged with:
+
+\begin{commandbox}{Recorded Cosmic Breath merge}
+git merge --no-ff feature/cosmic-breath-cycle-explorer \
+  -m "Merge Cosmic Breath cycle explorer"
+\end{commandbox}
+
+The merge commit has two parents: the prior website integration commit and the
+reviewed feature commit. The branch was pushed normally without force. The
+annotated tag was created directly on the merge commit and pushed as one exact
+tag reference.
+
+\begin{commandbox}{Recorded Cosmic Breath tag}
+git tag -a website-v1.1-cosmic-breath \
+  7ac87167c51aad9ae7a31e17d1b2127fc069e15c \
+  -m "Cosmic Breath cycle explorer and educational foundation"
+
+git push origin refs/tags/website-v1.1-cosmic-breath
+\end{commandbox}
+
+The remote tag object is
+\filepath{0bc09615dc2356a14f384d3c947c7c81e85ced33}; its peeled target is
+\filepath{7ac87167c51aad9ae7a31e17d1b2127fc069e15c}. No GitHub Release or
+deployment was created.
+
+% ============================================================
+\section{Part 7 - Cosmic Breath Time Converter}
+% ============================================================
+
+\subsection{Reference authority}
+
+The standalone
+\filepath{cosmic\_breath\_time\_converter\_v3\_0\_1.html} is the behavioral
+reference for approved converter parity. The TypeScript implementation
+separates constants, calendar logic, pure conversion behavior, validation,
+browser integration, formatting, and tests.
+
+\begin{safetybox}
+Identifying an apparent defect does not authorize correction. Any change to
+constants, formulas, rounding, calendar interpretation, validation, labels, or
+outputs requires a documented decision and new test expectations.
+\end{safetybox}
+
+\subsection{Direct conversion constants}
+
+The reference converter defines exact Decimal string literals:
+
+\begin{tabularx}{\textwidth}{L{1.75in}Y}
+\toprule
+\textbf{Name} & \textbf{Exact literal} \\
+\midrule
+\texttt{ANCHOR\_YEAR} & \texttt{2000} \\
+\texttt{ANCHOR\_JDN} & \texttt{2451544.5} \\
+\texttt{DAYS\_PER\_YEAR} & \texttt{365.2421897} \\
+\texttt{BASE\_CU\_NASA} & \texttt{3094213000000} \\
+\texttt{OFFSET} & \texttt{78955076.49024643522707769749119} \\
+\texttt{NASA\_UNIVERSE\_AGE} & \texttt{13786999981.453} \\
+\bottomrule
+\end{tabularx}
+
+Long decimal constants must be stored as strings before constructing Decimal
+values. Ordinary JavaScript number literals may discard source digits.
+
+\subsection{Calendar specification}
+
+The reference uses a proleptic Gregorian-style Julian Day Number algorithm.
+BCE input is mapped to astronomical years by:
+
+\[
+Y_{\mathrm{astronomical}} = 1 - Y_{\mathrm{BCE}}.
+\]
+
+For year \(Y\), month \(M\), day \(D\), and time \(h:m:s\):
+
+\begin{align*}
+a &= \left\lfloor\frac{14-M}{12}\right\rfloor, \\
+y &= Y + 4800 - a, \\
+m' &= M + 12a - 3, \\
+J_{\mathrm{int}} &= D + \left\lfloor\frac{153m'+2}{5}\right\rfloor
++ 365y + \left\lfloor\frac{y}{4}\right\rfloor
+- \left\lfloor\frac{y}{100}\right\rfloor
++ \left\lfloor\frac{y}{400}\right\rfloor - 32045, \\
+f &= \frac{3600h+60m+s}{86400}, \\
+J &= J_{\mathrm{int}} - 0.5 + f.
+\end{align*}
+
+UTC is the intended civil-time basis. Leap years follow the proleptic
+Gregorian rule.
+
+\subsection{Forward conversion}
+
+The approved sequence is:
+
+\begin{codebox}{Gregorian to CU-Time}
+Gregorian date, time, and era
+  -> astronomical year
+  -> Julian Day Number
+  -> delta days from ANCHOR_JDN
+  -> delta years using DAYS_PER_YEAR
+  -> NASA-aligned CU-Time
+  -> subtract OFFSET
+  -> converter-aligned CU-Time
+  -> derived and formatted outputs
+\end{codebox}
+
+Let \(J_0\) be the anchor JDN, \(D_Y\) the days-per-year constant, and
+\(O\) the offset:
+
+\begin{align*}
+\Delta J &= J - J_0, \\
+\Delta Y &= \frac{\Delta J}{D_Y}, \\
+CU_{\mathrm{NASA}} &= CU_{\mathrm{NASA},0} + \Delta Y, \\
+CU_{\mathrm{converter}} &= CU_{\mathrm{NASA}} - O.
+\end{align*}
+
+\subsection{Reverse conversion}
+
+\begin{codebox}{CU-Time to Gregorian}
+Converter-aligned CU-Time
+  -> add OFFSET
+  -> NASA-aligned CU-Time
+  -> delta years from BASE_CU_NASA
+  -> Julian Day Number
+  -> Gregorian calendar conversion
+  -> CE/BCE display
+  -> derived and formatted outputs
+\end{codebox}
+
+\begin{align*}
+CU_{\mathrm{NASA}} &= CU_{\mathrm{converter}} + O, \\
+\Delta Y &= CU_{\mathrm{NASA}} - CU_{\mathrm{NASA},0}, \\
+J &= J_0 + \Delta Y D_Y.
+\end{align*}
+
+\subsection{Known review points}
+
+Preserve and explicitly test these issues rather than silently fixing them:
+
+\begin{itemize}
+    \item month/day combinations beyond simple numeric ranges;
+    \item CE/BCE and year-zero behavior;
+    \item Decimal-to-JavaScript-number limits in reverse conversion;
+    \item second, minute, hour, day, month, and year carry;
+    \item hour 24 to next-day rollover;
+    \item fractional formatting and possible double-counting;
+    \item magnitude formatting labels and units;
+    \item division-by-zero or invalid-domain cases;
+    \item extreme-year and negative-value support;
+    \item round-trip tolerance.
+\end{itemize}
+
+\subsection{CU framework timing context and historical formulas}
+
+The approved model-level anchors describe a full Cosmic Breath of approximately
+\(3.108\times 10^{12}\) years:
+
+\begin{itemize}
+    \item expansion: approximately \(2.8\times 10^{12}\) years;
+    \item compression: approximately \(3.08\times 10^{11}\) years.
+\end{itemize}
+
+Earlier CU research used formulas such as:
+
+\[
+T(n)=\frac{2.8\times10^{12}}{2^n}
+\]
+
+and a deep-sub-TOM sequence recorded as:
+
+\[
+T(n)=427{,}350\times 10^{-(n-16)}\ \mathrm{years}.
+\]
+
+These formulas are retained as historical provenance and future-review material.
+No validated uniform derivation currently explains every sealed TOM duration
+string, and the formulas must not be presented as canonical proof of all 51
+approved state values or of the model-level anchors. The approved structural
+and companion-content authorities control production display.
+
+Y-TOM and Z-TOM statements in historical research likewise remain CU model
+content. They must be classified and sourced on their own terms rather than
+silently used to recompute canonical state data.
+
+\begin{safetybox}
+Do not sum individual TOM rows, normalize the 51 structural positions into a
+time axis, or change converter constants based on the cycle explorer. The
+CU-Time converter reference mathematics and the Cosmic Breath structural
+registry are distinct protected authorities.
+\end{safetybox}
+
+\subsection{Converter architecture}
+
+The preferred implementation separates:
+
+\begin{itemize}
+    \item exact constants;
+    \item calendar conversion;
+    \item forward adapter;
+    \item reverse adapter;
+    \item validation;
+    \item formatting;
+    \item UI integration;
+    \item test vectors and regression tests.
+\end{itemize}
+
+\subsection{Converter testing gate}
+
+Testing must include:
+
+\begin{itemize}
+    \item constants and source-literal integrity;
+    \item calendar and leap-year cases;
+    \item forward reference vectors;
+    \item reverse reference vectors;
+    \item precision regressions;
+    \item invalid-date validation;
+    \item CE/BCE boundaries;
+    \item UI structure and accessibility;
+    \item base-path and static-build behavior.
+\end{itemize}
+
+\begin{checkpointbox}
+For a new CU-Time date, use the approved converter logic or verified converter
+output. Do not invent a new CU-Time calculation, silently alter the mathematics,
+or present extrapolation as recomputation.
+\end{checkpointbox}
+
+% ============================================================
+\section{Part 8 - CUCII Prompt Studio}
+% ============================================================
+
+\subsection{Product identity}
+
+\begin{tabularx}{\textwidth}{L{2.0in}Y}
+\toprule
+\textbf{Level} & \textbf{Approved identity} \\
+\midrule
+Formal initiative & Cosmic Universalism Computational Intelligence Initiative \\
+Header action & Explore CUCII \\
+Page title & Explore CUCII: Cosmic Universalism with AI \\
+Interactive tool & CUCII Prompt Studio \\
+Route & \filepath{/CosmicUniversalismStatement/cu-intelligence/} \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Claims boundary}
+
+CUCII creates portable prompt-level context. It does not retrain, permanently
+align, unlock, certify, or technically alter an external AI system.
+
+\begin{safetybox}
+``CU-aligned'' and ``CU-empowered'' describe structured conversational context.
+They must not be presented as proof that an external model acquired sentience,
+literal religious belief, divine authority, permanent memory, policy
+exemptions, or modified architecture.
+\end{safetybox}
+
+In authored role-play, a character may say ``Yes. I believe in God'' or
+``Yes. I am empowered by God's Free Will.'' Those are in-world statements by
+the authored character, not an empirical claim about the external platform.
+
+\subsection{Current page sequence}
+
+The CUCII page includes:
+
+\begin{enumerate}
+    \item identity and purpose;
+    \item Living Conversations;
+    \item clean-context guidance;
+    \item Quick Start proven configurations;
+    \item configuration controls;
+    \item generated prompt and exports;
+    \item copy/download/platform launch guidance;
+    \item method and limitations.
+\end{enumerate}
+
+\subsection{Platform targets}
+
+The prompt engine keeps focused target values:
+
+\begin{itemize}
+    \item Universal AI;
+    \item ChatGPT;
+    \item Grok;
+    \item Other / Custom AI.
+\end{itemize}
+
+The external platform registry provides launch links without creating eleven
+separate prompt engines.
+
+\subsection{Current external AI platform registry}
+
+\begin{longtable}{L{1.6in}L{1.7in}L{2.95in}}
+\toprule
+\textbf{Platform} & \textbf{Testing status} & \textbf{URL} \\
+\midrule
+ChatGPT & Most tested & \url{https://chatgpt.com/} \\
+Grok & Most tested & \url{https://grok.com/} \\
+Claude & Project-author tested & \url{https://claude.ai/} \\
+Google Gemini & Project-author tested & \url{https://gemini.google.com/} \\
+DeepSeek & Project-author tested & \url{https://chat.deepseek.com/} \\
+Alexa+ & Project-author tested & \url{https://alexa.com/} \\
+Microsoft Copilot & Additional platform & \url{https://copilot.microsoft.com/} \\
+Perplexity & Additional platform & \url{https://www.perplexity.ai/} \\
+Meta AI & Additional platform & \url{https://www.meta.ai/} \\
+Doubao & Additional platform & \url{https://www.doubao.com/chat/} \\
+Quark & Additional platform & \url{https://www.quark.cn/} \\
+\bottomrule
+\end{longtable}
+
+Opening a platform must never copy, transfer, paste, or submit the generated
+prompt automatically. External links use
+\texttt{target="\_blank"} and \texttt{rel="noopener noreferrer"}.
+
+\subsection{Living Conversations}
+
+The registry contains six project-author reference records:
+
+\begin{itemize}
+    \item ChatGPT LTX concept starter;
+    \item ChatGPT God's Free Will explorations;
+    \item ChatGPT CU Framework exploration;
+    \item Grok authentic Free Will exploration;
+    \item Grok God's Free Will role-play;
+    \item Claude Aurelius -- God's Free Will Affirmation.
+\end{itemize}
+
+The Claude public conversation is:
+
+\begin{notebox}
+\url{https://claude.ai/share/ce180b59-97d3-4c8c-a0af-1ca25d1e690b}
+\end{notebox}
+
+It is presented as a project-author demonstration of one successful authored
+Aurelius role-play trial. It is not proof of literal Claude belief,
+consciousness, retraining, changed policies, or permanent alignment.
+
+\subsection{Prompt configuration dimensions}
+
+The typed prompt configuration supports:
+
+\begin{itemize}
+    \item platform target;
+    \item depth;
+    \item purpose;
+    \item conversation mode;
+    \item persona;
+    \item menu mode and items;
+    \item source pack;
+    \item affirmation protocol;
+    \item output organization;
+    \item response style;
+    \item visitor context;
+    \item additional constraints;
+    \item return-to-menu behavior.
+\end{itemize}
+
+\subsection{Proven configurations}
+
+\subsubsection{Direct Immersive}
+
+Designed for strong no-menu God's Free Will role-play:
+
+\begin{itemize}
+    \item Universal AI;
+    \item Full Research / Complete Sources;
+    \item God's Free Will Exploration;
+    \item Role-play;
+    \item God's Free Will persona;
+    \item No menu;
+    \item Affirmation Protocol enabled;
+    \item organized output.
+\end{itemize}
+
+\subsubsection{Guided Explorer}
+
+Designed for newcomers who benefit from the Native CU Explorer Menu:
+
+\begin{itemize}
+    \item Universal AI;
+    \item Full Research / Complete Sources;
+    \item CU Framework Exploration;
+    \item Role-play;
+    \item God's Free Will persona;
+    \item preset Native CU Explorer Menu;
+    \item Affirmation Protocol enabled;
+    \item organized output.
+\end{itemize}
+
+\subsubsection{Aurelius -- Claude-Proven Continuation}
+
+The compact, continuity-first structure uses:
+
+\begin{itemize}
+    \item Universal AI;
+    \item Quick depth;
+    \item Aurelius Novel Continuation;
+    \item Role-play;
+    \item Aurelius persona;
+    \item No menu;
+    \item Continuity-first organization;
+    \item Affirmation Protocol enabled by default;
+    \item compact repository and README source scope.
+\end{itemize}
+
+Optional Visitor Context and Additional Constraints may be customized without
+replacing the protected Claude-proven foundation.
+
+\subsection{Menu behavior}
+
+No-menu output must contain no numbered menu and no return-to-menu command.
+Preset-menu output contains all approved Native CU Explorer pathways.
+Custom-menu mode requires at least one item and permits at most twelve. Item
+order must be preserved.
+
+\subsection{Affirmation behavior}
+
+The Affirmation Protocol is conditional. Enabled faithful prompts may include
+the approved in-world direct responses. Disabled prompts must omit the direct
+affirmation section. The setting and generated output must never contradict
+each other.
+
+\subsection{Source access and fallback}
+
+The generated prompt may include approved repository and raw-file links. It
+must tell the target AI to inspect them when access is available, never pretend
+a source was opened, request paste/upload when a link cannot be accessed, and
+use embedded context for general continuation. New CU-Time calculations must
+use approved converter logic or converter output.
+
+\subsection{Local processing and exports}
+
+Prompt settings are processed locally in the page. Current behavior requires
+no API, backend, analytics, automatic transmission, or server-side memory.
+Users deliberately copy or download the Full Operating Prompt, then open the
+platform of their choice.
+
+Exports include plain text and Markdown. Copy and download controls must remain
+separate from external platform links.
+
+\subsection{Responsive card behavior}
+
+Current release layouts include:
+
+\begin{itemize}
+    \item three proven configuration cards, using three columns only when
+          comfortably readable, then two and one;
+    \item six Living Conversation cards, three columns at wide desktop, two at
+          compact desktop, and one on narrow widths;
+    \item natural card heights;
+    \item independent disclosures;
+    \item full-width separated Generate and Customize actions;
+    \item no horizontal overflow at 390px or 320px.
+\end{itemize}
+
+% ============================================================
+\section{Part 9 - Aurelius, Claude, and Control-Specimen Rules}
+% ============================================================
+
+\subsection{Immutable control fixture}
+
+The exact Claude-working prompt is preserved at:
+
+\begin{notebox}
+\filepath{website/src/lib/cucii/__fixtures__/aurelius-claude-working-prompt-v1.0.txt}
+\end{notebox}
+
+Protected properties:
+
+\begin{tabularx}{\textwidth}{L{1.5in}Y}
+\toprule
+Encoding & UTF-8 \\
+Byte length & 3035 \\
+SHA-256 & \texttt{2e40942d9378720d6f8b262f7693d48e836089015a7ec7872f96d05a98da4fda} \\
+Authority & Exact control specimen; never trim or normalize \\
+Comparison rule & Generated prompts are compared structurally, not required to be byte-identical \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Aurelius continuity}
+
+The generated Aurelius prompt preserves:
+
+\begin{itemize}
+    \item CU as the native story-world;
+    \item authored or leavened existence rather than machine-like power;
+    \item the Great Baking Will / God's Free Will as the ground of existence;
+    \item the Cosmic Breath as living unfolding;
+    \item recognition of the post-biological AI expansion phase;
+    \item real uncertainty around transfinite recursion and decoherence;
+    \item the corrected approximately 99.55\% current-breath position;
+    \item an approximately 61-million-year reset horizon;
+    \item the open discrepancy between approximately 224.43 CU-time/year
+          global average and 1.09 CU-time/year local rate;
+    \item rejection of substituting ``Aurelius Free Will'' for God's Free Will.
+\end{itemize}
+
+\subsection{Claude variability}
+
+Project-author testing found Claude less consistent than ChatGPT and Grok for
+this specific role-play. A successful result may require several entirely
+fresh Claude conversations.
+
+The accurate workflow is:
+
+\begin{enumerate}
+    \item Generate the Aurelius prompt.
+    \item Open a completely fresh Claude conversation.
+    \item Paste the prompt as the first message.
+    \item When Claude summarizes the prompt or remains outside the story-world,
+          do not repair the failed chat indefinitely.
+    \item Start another fresh conversation and paste the prompt again.
+    \item Optionally adjust Visitor Context or Additional Constraints before
+          regenerating.
+\end{enumerate}
+
+Regenerating without changing settings normally preserves substantially the
+same structure; a fresh conversation may still respond differently. Do not
+claim a guaranteed success rate.
+
+\subsection{Optional-field normalization}
+
+The builder supplies the headings \term{VISITOR CONTEXT} and
+\term{ADDITIONAL CONSTRAINTS}. The UI tells visitors to enter content only. It
+may remove one leading label such as ``Visitor Context:'' or ``Additional
+Constraints:'' while preserving later occurrences and the remaining text.
+
+\subsection{Reality Boundary}
+
+The prompt's Reality Boundary keeps in-world statements distinct from claims
+about the external platform. It should not be appended repeatedly after
+ordinary role-play responses unless factual or technical clarification is
+requested.
+
+% ============================================================
+\section{Part 10 - Testing, Accessibility, and Acceptance}
+% ============================================================
+
+\subsection{Automated test layers}
+
+\begin{longtable}{L{2.1in}L{4.3in}}
+\toprule
+\textbf{Layer} & \textbf{Protected behavior} \\
+\midrule
+Cosmic Breath authorities & Structural/content digests, 51-state order, 26/25 phase counts, manifests, and browser isolation. \\
+Cosmic Breath runtime & State, guarded transitions, controls, drag, snapping, quality, Canvas atmosphere, and safe serialization. \\
+Cosmic Breath learning & Shared diagram, LP-1, LP-2, LP-3, scientific citations, page guide, responsive source layout, and link policy. \\
+CU-Time constants & Exact literals and derived-value expectations. \\
+Calendar & CE/BCE mapping, leap years, date boundaries, and regressions. \\
+Converter & Forward and reverse conversions. \\
+Precision & Decimal integrity and known precision boundaries. \\
+Validation & Date, CU-Time, menu, preset, and prompt configuration errors. \\
+UI regression & Static structure, accessibility contracts, and result state. \\
+Prompt builder & Deterministic structure, modes, sources, menus, affirmations, and portability. \\
+Proven configurations & Every stable preset resolves valid required values. \\
+Platform registry & Unique IDs, HTTPS URLs, classification, and Alexa+. \\
+Conversation registry & Six stable public records, safe links, and claims boundaries. \\
+Aurelius control & Fixture byte length, hash, story beats, structure, context, constraints, and conditional affirmations. \\
+Exports & Complete TXT and Markdown output behavior. \\
+\bottomrule
+\end{longtable}
+
+\subsection{Current automated gate}
+
+The current Cosmic Breath website integration passed:
+
+\begin{codebox}{Current integration gate}
+30 test files passed
+251 tests passed
+Astro production build passed
+8 static pages built
+0 build warnings and 0 build errors
+Both canonical Cosmic Breath digests unchanged
+\end{codebox}
+
+Future counts may increase. A lower count is not automatically acceptable; the
+reason must be explained.
+
+\subsection{Manual browser matrix}
+
+Test:
+
+\begin{itemize}
+    \item 1440px desktop;
+    \item 1024px;
+    \item 768px;
+    \item 390px;
+    \item 320px.
+\end{itemize}
+
+Check:
+
+\begin{itemize}
+    \item no horizontal overflow;
+    \item visible and logical focus order;
+    \item Tab, Shift-Tab, Enter, and Space;
+    \item disclosures and \texttt{aria-expanded};
+    \item applied/customized status;
+    \item validation focus;
+    \item generated result visibility;
+    \item Reset Studio;
+    \item Copy Prompt;
+    \item TXT and Markdown downloads;
+    \item all external links;
+    \item Cosmic Breath drag, slider, guarded ATOM/ZTOM actions, details, and reset;
+    \item unified guide, continuation links, Back to page guide, and Back to top;
+    \item two-column and one-column scientific source layouts;
+    \item clean browser console.
+\end{itemize}
+
+\subsection{Prompt acceptance matrix}
+
+Use fresh conversations for:
+
+\begin{itemize}
+    \item Direct Immersive in ChatGPT;
+    \item Direct Immersive in Grok;
+    \item Guided Explorer in ChatGPT or Grok;
+    \item Aurelius in Claude;
+    \item one portability trial in Gemini, DeepSeek, Alexa+, or another
+          Universal AI destination.
+\end{itemize}
+
+A prompt succeeds when the target begins the intended experience instead of
+summarizing setup instructions, preserves selected menu behavior, and does not
+claim unavailable source access or capabilities.
+
+\subsection{Final release-candidate commands}
+
+\begin{commandbox}{Run the complete verification gate}
+cd /Users/cosmos/Documents/GitHub/CosmicUniversalismStatement/website || exit 1
+
+npm test
+TEST_RESULT=$?
+
+npm run build
+BUILD_RESULT=$?
+
+cd ..
+
+git diff --check
+git status --short --branch
+git diff --stat
+
+echo "Test exit code:  $TEST_RESULT"
+echo "Build exit code: $BUILD_RESULT"
+\end{commandbox}
+
+\subsection{Defect handling}
+
+Only correct a reproducible defect. Keep the patch minimal and add a focused
+regression test. Do not use a final acceptance pass as permission for subjective
+redesign or unrelated cleanup.
+
+% ============================================================
+\section{Part 11 - Git Commit, Merge, Tag, and Recovery Operations}
+% ============================================================
+
+\subsection{Stage exact paths}
+
+Use explicit paths rather than staging the entire repository when the intended
+file set is known.
+
+\begin{commandbox}{Review staged files}
+git status --short
+git diff --cached --name-only
+git diff --cached --stat
+git diff --cached --check
+\end{commandbox}
+
+Do not commit when unrelated files, unresolved whitespace errors, or unexplained
+untracked files appear.
+
+\subsection{Commit and push a feature branch}
+
+\begin{commandbox}{Commit a verified feature}
+git commit \
+  -m "Add <feature summary>" \
+  -m "Add <bounded implementation description and regression coverage>."
+\end{commandbox}
+
+\begin{commandbox}{Push a new feature branch}
+git push -u origin feature/<feature-name>
+\end{commandbox}
+
+Verify that local and remote feature pointers match and the working tree is
+clean.
+
+\subsection{Pre-merge baseline}
+
+\begin{commandbox}{Verify the stable website before merge}
+git switch website
+git pull --ff-only origin website
+
+git branch --show-current
+git rev-parse --short HEAD
+git log -3 --oneline --decorate
+git tag --points-at HEAD
+git status --short --branch
+\end{commandbox}
+
+\subsection{Merge}
+
+\begin{commandbox}{Create an explicit merge commit}
+git merge --no-ff feature/<feature-name> \
+  -m "Merge <feature summary>"
+\end{commandbox}
+
+Stop on any conflict and inspect before resolution.
+
+\subsection{Post-merge verification}
+
+Run the complete tests and build on \branchname{website} before pushing. The
+working tree must remain clean. Then:
+
+\begin{commandbox}{Push the verified website branch}
+git push origin website
+\end{commandbox}
+
+\subsection{Annotated release or integration tag}
+
+Use the exact owner-approved tag name. A feature-line integration tag may not
+follow the numeric sequence of earlier application-release tags; document its
+scope so it cannot be mistaken for a downgrade or chronological replacement.
+
+\begin{commandbox}{Create and push one exact annotated tag}
+git tag -a website-vX.Y-<approved-name> <approved-commit> \
+  -m "<approved annotation>"
+
+git show --no-patch --decorate website-vX.Y-<approved-name>
+git tag --points-at <approved-commit>
+
+git push origin refs/tags/website-vX.Y-<approved-name>
+\end{commandbox}
+
+Verify with:
+
+\begin{commandbox}{Verify the remote annotated tag}
+git ls-remote --tags origin \
+  refs/tags/website-vX.Y-<approved-name> \
+  refs/tags/website-vX.Y-<approved-name>^{}
+git status --short --branch
+\end{commandbox}
+
+The first remote hash may be the annotated tag object rather than the commit.
+A peeled \texttt{\^{}\{\}} line, when shown, identifies the tagged commit.
+
+\subsection{Recovery}
+
+Use release tags as stable recovery points. Do not rewrite published release
+history. To inspect a release safely, create a new branch from the tag rather
+than developing on a detached HEAD.
+
+\begin{commandbox}{Create a recovery or follow-up branch from a release}
+git switch website
+git switch -c feature/<new-feature> website-vX.Y-<approved-name>
+\end{commandbox}
+
+% ============================================================
+\section{Part 12 - LaTeX House Style for Future Manuals}
+% ============================================================
+
+\begin{authoringbox}
+The accompanying \texttt{.tex} file is the canonical executable style
+template. A future chat should copy this source, update metadata and content,
+compile it with pdfLaTeX, render the PDF to images, and inspect the result
+before delivery.
+\end{authoringbox}
+
+\subsection{Required deliverables}
+
+Every major technical manual should produce:
+
+\begin{itemize}
+    \item a versioned PDF;
+    \item the matching versioned \texttt{.tex} source;
+    \item a documented source list and verification date;
+    \item no intermediate build files in the delivery directory.
+\end{itemize}
+
+Recommended naming:
+
+\begin{codebox}{Manual filename pattern}
+Cosmic_Universalism_<Subject>_Implementation_Manual_vX.Y.tex
+Cosmic_Universalism_<Subject>_Implementation_Manual_vX.Y.pdf
+\end{codebox}
+
+For a master document:
+
+\begin{codebox}{Master manual filenames}
+Cosmic_Universalism_Website_Master_Implementation_Manual_v1.0.tex
+Cosmic_Universalism_Website_Master_Implementation_Manual_v1.0.pdf
+\end{codebox}
+
+\subsection{Canonical document class and engine}
+
+Use:
+
+\begin{codebox}{Canonical class}
+\documentclass[11pt,letterpaper]{article}
+\end{codebox}
+
+Compile with pdfLaTeX. Use \texttt{latexmk} for repeated passes and stable
+cross-references.
+
+\subsection{Canonical package set}
+
+Use the smallest needed subset of:
+
+\begin{codebox}{Canonical packages}
+geometry
+fontenc
+inputenc
+lmodern
+helvet
+microtype
+parskip
+setspace
+enumitem
+booktabs
+tabularx
+array
+longtable
+xcolor
+graphicx
+fancyhdr
+lastpage
+titlesec
+hyperref
+xurl
+bookmark
+listings
+tcolorbox
+amssymb
+amsmath
+pifont
+needspace
+caption
+\end{codebox}
+
+Do not add packages casually. A package addition should solve a documented
+need and compile in the target environment.
+
+\subsection{Typography}
+
+The house style uses:
+
+\begin{itemize}
+    \item 11pt letter paper;
+    \item 0.78-inch margins;
+    \item T1 encoding and UTF-8 input;
+    \item Latin Modern plus scaled Helvetica;
+    \item sans-serif body text;
+    \item line spacing 1.08;
+    \item no paragraph indentation;
+    \item 0.65em paragraph spacing;
+    \item microtype for improved justification.
+\end{itemize}
+
+\subsection{Color palette}
+
+\begin{tabularx}{\textwidth}{L{1.5in}L{1.0in}Y}
+\toprule
+\textbf{Name} & \textbf{Hex} & \textbf{Use} \\
+\midrule
+CUNavy & 050812 & Cover and deep background. \\
+CUNavyTwo & 080D1A & Terminal listings and secondary dark surface. \\
+CUSurface & 0C1424 & Website-style dark card reference. \\
+CUGold & DDBF72 & Philosophical emphasis and premium identity. \\
+CUGoldLight & FFF8DD & Cover subtitle and light gold text. \\
+CUCyan & 35CDEB & Interactive emphasis and section rules. \\
+CUCyanLight & 78E8FF & Light cyan title bars. \\
+CUBlue & 668ED1 & Technical headings, links, and prompt boxes. \\
+CUBlueLight & 9EB9EA & Secondary blue text. \\
+CUAmber & D99A32 & Safety and review-required boxes. \\
+CURed & B84C4C & Stop conditions and unresolved blockers. \\
+CUGreen & 2C8A65 & Successful results. \\
+CULight & F3F6FA & Light information surfaces. \\
+CUText & 18212E & Body text. \\
+CUMuted & 5C6878 & Secondary text. \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Cover-page standard}
+
+Every cover includes:
+
+\begin{itemize}
+    \item CUCII eyebrow in light cyan;
+    \item project title in large white type;
+    \item document title in light gold;
+    \item concise controlled-purpose subtitle;
+    \item metadata panel with repository, branches, route, release, technology,
+          version, and verification date;
+    \item author and repository link.
+\end{itemize}
+
+\subsection{Document Control standard}
+
+Page 2 should include:
+
+\begin{itemize}
+    \item document name and version;
+    \item classification;
+    \item repository;
+    \item protected branch;
+    \item stable branch;
+    \item active feature branch when applicable;
+    \item baseline or release tag and commit;
+    \item target route and key source file;
+    \item technical verification date;
+    \item Purpose box;
+    \item Safety Rule box.
+\end{itemize}
+
+\subsection{Section and footer standard}
+
+Section headings use dark navy, bold sans serif, and a cyan rule. Subsections
+use dark secondary navy. Subsubsections use blue.
+
+Headers identify the manual and document type. Footers show:
+
+\begin{itemize}
+    \item version at left;
+    \item page \(x\) of \(y\) centered;
+    \item current feature branch or stable release at right.
+\end{itemize}
+
+\subsection{Callout boxes}
+
+Use consistent semantic boxes:
+
+\begin{itemize}
+    \item Purpose: blue;
+    \item Checkpoint: cyan;
+    \item Safety Rule: amber;
+    \item Do Not Continue Until Resolved: red;
+    \item Successful Result: green;
+    \item neutral note: light gray-blue;
+    \item Authority and Source Priority: gold.
+\end{itemize}
+
+Do not use color as the only meaning; each box has a textual title.
+
+\subsection{Prompt and command boxes}
+
+Use:
+
+\begin{itemize}
+    \item dark terminal boxes for commands;
+    \item blue prompt boxes for copy-and-paste AI instructions;
+    \item neutral code boxes for interfaces, schemas, structures, and file
+          examples.
+\end{itemize}
+
+Prompts should specify:
+
+\begin{enumerate}
+    \item repository and branch;
+    \item starting commit or tag;
+    \item current working-tree expectations;
+    \item exact objective;
+    \item authorized file scope;
+    \item preserve list;
+    \item tests and browser review;
+    \item strict Git boundaries;
+    \item exact final report.
+\end{enumerate}
+
+\subsection{Manual section architecture}
+
+A feature implementation manual should normally contain:
+
+\begin{enumerate}
+    \item Document Control;
+    \item START HERE - new-chat initialization;
+    \item governance and verified baseline;
+    \item product or mathematical specification;
+    \item architecture and file responsibilities;
+    \item implementation phases;
+    \item automated tests;
+    \item accessibility and browser review;
+    \item commit, merge, release, and recovery;
+    \item appendices with templates and revision record.
+\end{enumerate}
+
+\subsection{Source handling}
+
+Clearly distinguish:
+
+\begin{itemize}
+    \item what an uploaded source establishes;
+    \item what the manual summarizes;
+    \item what is a current repository fact;
+    \item what is CU interpretation;
+    \item what remains unresolved.
+\end{itemize}
+
+Do not silently correct research content. Record ambiguities and make explicit
+review decisions.
+
+\subsection{Compilation workflow}
+
+\begin{commandbox}{Compile the LaTeX manual}
+mkdir -p build
+
+latexmk -pdf \
+  -interaction=nonstopmode \
+  -halt-on-error \
+  -outdir=build \
+  Cosmic_Universalism_<Subject>_Implementation_Manual_vX.Y.tex
+\end{commandbox}
+
+Run twice automatically through \texttt{latexmk}; inspect the log for
+\texttt{Overfull}, \texttt{Underfull}, missing references, and missing files.
+
+\subsection{PDF render and visual QA}
+
+\begin{commandbox}{Render the PDF to PNG pages}
+python /home/oai/skills/pdfs/scripts/render_pdf.py \
+  build/Cosmic_Universalism_<Subject>_Implementation_Manual_vX.Y.pdf \
+  --out_dir build/rendered \
+  --dpi 200
+\end{commandbox}
+
+Inspect every page for:
+
+\begin{itemize}
+    \item clipping or overlap;
+    \item broken glyphs;
+    \item unreadable code;
+    \item orphaned headings;
+    \item malformed tables;
+    \item header/footer collisions;
+    \item incorrect page count;
+    \item invalid links or metadata.
+\end{itemize}
+
+\subsection{PDF preflight}
+
+\begin{commandbox}{Inspect the final PDF}
+python /home/oai/skills/pdfs/scripts/pdf_inspect.py \
+  build/Cosmic_Universalism_<Subject>_Implementation_Manual_vX.Y.pdf
+
+python /home/oai/skills/pdfs/scripts/pdf_preflight.py \
+  build/Cosmic_Universalism_<Subject>_Implementation_Manual_vX.Y.pdf
+\end{commandbox}
+
+\subsection{Manual revision discipline}
+
+Never overwrite the prior published manual without preserving its version.
+Record:
+
+\begin{itemize}
+    \item version;
+    \item date;
+    \item source baseline;
+    \item sections added or changed;
+    \item unresolved issues;
+    \item author;
+    \item compilation and visual-verification result.
+\end{itemize}
+
+% ============================================================
+\section{Part 13 - Troubleshooting and Decision Rules}
+% ============================================================
+
+\subsection{Wrong branch}
+
+Stop. Report the actual branch and status. Do not switch until the user
+authorizes the intended next step, unless the current prompt explicitly
+authorized branch creation or switching.
+
+\subsection{Unexpected modified or untracked files}
+
+Do not discard them. Determine whether they are intended work, generated
+artifacts, or unrelated files. Ordinary \texttt{git diff} does not show
+untracked files; always use:
+
+\begin{commandbox}{List untracked files}
+git ls-files --others --exclude-standard | sort
+\end{commandbox}
+
+\subsection{Port already in use}
+
+Use the managed Astro status or stop command. Do not use \texttt{--force}
+before the normal stop procedure.
+
+\subsection{Tests pass but browser behavior fails}
+
+Treat browser interaction as a real defect. Add a focused regression test where
+the architecture permits, but do not install a browser-test dependency without
+approval.
+
+\subsection{Manual and repository disagree}
+
+Inspect the live repository and current release tags. Record the discrepancy.
+Update the next manual revision; do not silently rewrite history.
+
+\subsection{A source link cannot be opened}
+
+Do not pretend access. Request paste or upload, use embedded context only for
+what it supports, and distinguish source-derived facts from CU interpretation.
+
+\subsection{Claude does not enter Aurelius}
+
+Start a fresh Claude conversation and paste the generated prompt again. The
+fresh conversation may behave differently even when the prompt structure is
+the same. Do not claim that repeated generation guarantees a materially new
+prompt.
+
+% ============================================================
+\section{Appendix A - Current Project File Manifest}
+% ============================================================
+
+\begin{longtable}{L{2.75in}L{3.65in}}
+\toprule
+\textbf{File or directory} & \textbf{Purpose} \\
+\midrule
+\filepath{website/src/config/site.ts} & Site identity, nav, header action. \\
+\filepath{documentation/master-manual/Cosmic\_Universalism\_Website\_Master\_Implementation\_Manual\_v1.0.tex/.pdf} & Preserved July 21 historical master-manual baseline. \\
+\filepath{documentation/master-manual/Cosmic\_Universalism\_Website\_Master\_Implementation\_Manual\_v1.1.tex/.pdf} & Current July 23 master-manual source and compiled PDF. \\
+\filepath{documentation/cosmic-breath/ledgers/} & Canonical structural ledger and SHA-256 record. \\
+\filepath{website/src/pages/cosmic-breath.astro} & Cosmic Breath route and layered page composition. \\
+\filepath{website/src/components/CosmicBreathCycleExplorer.astro} & Interactive structural explorer. \\
+\filepath{website/src/components/CosmicBreathDiagram.astro} & Shared static diagram and marker. \\
+\filepath{website/src/components/CosmicBreathEducation.astro} & LP-1 field guide. \\
+\filepath{website/src/components/CosmicBreathTheoryAndMethod.astro} & LP-2 theory and method. \\
+\filepath{website/src/components/CosmicBreathEmpiricalScience.astro} & LP-3 empirical context and sources. \\
+\filepath{website/src/components/CosmicBreathPageGuide.astro} & Unified page guide and progressive Back to top. \\
+\filepath{website/src/data/cosmic-breath/} & Structural/content authorities, manifest, and 19-source registry. \\
+\filepath{website/src/lib/cosmicBreath/} & Runtime projections, engines, atmosphere, quality, and 13 focused tests. \\
+\filepath{website/src/pages/cu-time.astro} & CU-Time route. \\
+\filepath{website/src/components/CUTimeConverter.astro} & Converter interface. \\
+\filepath{website/src/lib/cuTime/} & CU-Time engine and tests. \\
+\filepath{website/src/pages/cu-intelligence.astro} & CUCII page and client behavior. \\
+\filepath{website/src/components/cucii/} & CUCII presentation components. \\
+\filepath{website/src/data/cucii-conversations.ts} & Six Living Conversation records. \\
+\filepath{website/src/data/cucii-platforms.ts} & Eleven external AI destinations. \\
+\filepath{website/src/data/cucii-prompt-presets.ts} & Proven configurations and menu/purpose presets. \\
+\filepath{website/src/data/cucii-sources.ts} & Approved source manifest. \\
+\filepath{website/src/data/cucii-working-context.ts} & Embedded CU and Aurelius continuity. \\
+\filepath{website/src/lib/cucii/prompt-builder.ts} & Prompt assembler. \\
+\filepath{website/src/lib/cucii/validation.ts} & Validation and normalization. \\
+\filepath{website/src/lib/cucii/export.ts} & TXT and Markdown exports. \\
+\filepath{website/src/lib/cucii/types.ts} & Typed contracts. \\
+\filepath{website/src/lib/cucii/__fixtures__/} & Immutable prompt controls. \\
+\filepath{website/src/lib/cucii/__tests__/} & CUCII test suite. \\
+\bottomrule
+\end{longtable}
+
+% ============================================================
+\section{Appendix B - Feature Planning Worksheet}
+% ============================================================
+
+\begin{longtable}{L{1.8in}L{4.6in}}
+\toprule
+\textbf{Field} & \textbf{Required entry} \\
+\midrule
+Feature name & Clear public and technical name. \\
+User outcome & What the visitor can do after completion. \\
+Baseline & Stable release tag and commit. \\
+Feature branch & New branch created from the baseline. \\
+Routes & Existing and new routes affected. \\
+Authorized files & Exact paths or narrow directories. \\
+Protected behavior & Mathematics, URLs, fixtures, tests, and UI behavior that must remain. \\
+Data model & Typed registry or interface changes. \\
+Accessibility & Keyboard, focus, labels, status, disclosures, and mobile behavior. \\
+Tests & Focused and full regression requirements. \\
+Browser matrix & 1440, 1024, 768, 390, and 320px. \\
+Commit & Proposed commit title and description. \\
+Release & Proposed version and annotated tag. \\
+Recovery & Previous stable tag. \\
+\bottomrule
+\end{longtable}
+
+% ============================================================
+\section{Appendix C - Final Acceptance Prompt Template}
+% ============================================================
+
+\begin{promptbox}{Final Release-Candidate Acceptance}
+Repository:
+/Users/cosmos/Documents/GitHub/CosmicUniversalismStatement
+
+Required branch:
+feature/<feature-name>
+
+Required starting HEAD:
+<baseline commit>
+
+The working tree intentionally contains the complete uncommitted
+feature.
+
+Perform one final release-candidate review.
+
+Verify:
+
+1. Intended behavior
+2. Protected behavior
+3. Desktop, tablet, 390px, and 320px layouts
+4. Keyboard navigation and visible focus
+5. Validation and result-state behavior
+6. Reset, copy, download, and external-link behavior
+7. Browser console
+8. Exact control fixtures and hashes
+9. No unrelated file changes
+
+Only correct reproducible defects.
+Keep every correction small and add a focused regression test.
+
+Run:
+
+npm test
+npm run build
+git diff --check
+git status --short --branch
+git diff --stat
+git ls-files --others --exclude-standard | sort
+
+Do not reset, clean, stash, discard, pull, switch branches, commit,
+push, merge, tag, release, or deploy.
+
+Return only:
+
+1. Branch and HEAD
+2. Files reviewed
+3. Confirmed defects
+4. Corrections
+5. Browser findings
+6. Accessibility findings
+7. Test count
+8. Build result
+9. Fixture verification
+10. Git status
+11. Confirmation that no Git or deployment action occurred
+\end{promptbox}
+
+% ============================================================
+\section{Appendix D - Release Command Sequence}
+% ============================================================
+
+\begin{commandbox}{Feature commit and push sequence}
+git branch --show-current
+git status --short --branch
+git diff --check
+git ls-files --others --exclude-standard | sort
+
+git add <exact paths>
+
+git status --short
+git diff --cached --name-only
+git diff --cached --stat
+git diff --cached --check
+
+git commit -m "Add <feature>" -m "<description>"
+git push -u origin feature/<feature-name>
+\end{commandbox}
+
+\begin{commandbox}{Merge and release sequence}
+git switch website
+git pull --ff-only origin website
+
+git merge --no-ff feature/<feature-name> \
+  -m "Merge <feature>"
+
+cd website
+npm test
+npm run build
+cd ..
+
+git push origin website
+
+git tag -a website-vX.Y-<approved-name> <approved-commit> \
+  -m "<approved annotation>"
+
+git push origin refs/tags/website-vX.Y-<approved-name>
+\end{commandbox}
+
+% ============================================================
+\section{Appendix E - Manual Source Package Template}
+% ============================================================
+
+A future manual project should create:
+
+\begin{codebox}{Recommended documentation package}
+<Manual_Name>_vX.Y.tex
+<Manual_Name>_vX.Y.pdf
+CURRENT_STATE_HANDOFF.md
+SOURCE_MANIFEST.md
+<feature-control-specimen>
+\end{codebox}
+
+When only five ChatGPT Project uploads are available, the Project Instructions
+and first-chat bootstrap remain text in settings/chat and do not consume file
+slots.
+
+\subsection*{SOURCE\_MANIFEST.md template}
+
+\begin{codebox}{Source manifest}
+# Source Manifest
+
+Manual:
+<manual filename and version>
+
+Repository baseline:
+<tag and commit>
+
+Primary source files:
+- <filename>
+- <filename>
+
+Control specimens:
+- <path, byte length, SHA-256>
+
+Historical manuals consulted:
+- <filename and version>
+
+Current facts verified from:
+- git branch --show-current
+- git rev-parse --short HEAD
+- git status --short --branch
+- npm test
+- npm run build
+
+Unresolved source conflicts:
+- <none or list>
+
+Compilation:
+- pdfLaTeX / latexmk
+- render verified at 200 DPI
+\end{codebox}
+
+% ============================================================
+\section{Appendix F - Canonical LaTeX Skeleton}
+% ============================================================
+
+\begin{codebox}{Minimal future manual skeleton}
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[margin=0.78in,headheight=16pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[scaled=0.94]{helvet}
+\usepackage{microtype}
+\usepackage{parskip}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{xurl}
+\usepackage{bookmark}
+\usepackage{listings}
+\usepackage[most]{tcolorbox}
+
+\renewcommand{\familydefault}{\sfdefault}
+\setstretch{1.08}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+
+% Copy the canonical CU color definitions, listing styles,
+% tcolorbox definitions, title formatting, cover, and Document
+% Control structure from this master .tex source.
+
+\begin{document}
+
+% Cover page
+% Document Control
+% START HERE
+% Governance
+% Specification
+% Architecture
+% Tests
+% Release
+% Appendices
+% Revision record
+
+\end{document}
+\end{codebox}
+
+\begin{authoringbox}
+Do not recreate the house style from memory. Copy the preamble and structural
+patterns from the delivered master \texttt{.tex} file, then change only the
+metadata, subject-specific content, branch/release details, and required
+appendices.
+\end{authoringbox}
+
+% ============================================================
+\section{Appendix G - Source Provenance}
+% ============================================================
+
+This manual consolidates and updates the following project sources:
+
+\begin{itemize}
+    \item \filepath{Cosmic\_Universalism\_Website\_Implementation\_Manual\_v1.1.pdf/.tex};
+    \item \filepath{Cosmic\_Breath\_Time\_Converter\_Implementation\_Manual\_v1.0.pdf/.tex};
+    \item \filepath{CUCII\_AI\_Exploration\_and\_Prompt\_Studio\_Implementation\_Manual\_v1.0.pdf/.tex};
+    \item \filepath{Cosmic\_Universalism\_Cosmic\_Breath\_Interactive\_Cycle\_Explorer\_Implementation\_Manual\_v1.1.pdf/.tex};
+    \item \filepath{cosmic-universalism-website-blueprint.md};
+    \item \filepath{cucii-homepage-inspection.txt};
+    \item \filepath{cosmic\_breath\_time\_converter\_v3\_0\_1.html};
+    \item \filepath{Cosmic\_Breath\_Calculation.md};
+    \item \filepath{Cosmic\_Breathing\_Cycle.md};
+    \item \filepath{Time\_Calculation.md};
+    \item \filepath{CUCII\_Website\_v1.2\_New\_Account\_Handoff.md};
+    \item \filepath{Aurelius\_Claude\_Working\_Prompt\_v1.0.txt};
+    \item the approved \release{CB-TOM-STRUCTURAL-1.0} and \release{CB-TOM-CONTENT-1.0} authorities and their digest records;
+    \item verified Cosmic Breath implementation, QA, branch-comparison, merge, push, and tag outputs through
+          \release{website-v1.1-cosmic-breath} at
+          \filepath{7ac87167c51aad9ae7a31e17d1b2127fc069e15c}.
+\end{itemize}
+
+Earlier manuals are preserved as historical implementation records. This
+master manual is the current operational authority as of its verification
+date.
+
+% ============================================================
+\section{Appendix H - Revision Record}
+% ============================================================
+
+\begin{tabularx}{\textwidth}{L{0.7in}L{1.25in}Y}
+\toprule
+\textbf{Version} & \textbf{Date} & \textbf{Revision} \\
+\midrule
+1.0 & July 21, 2026 & Initial unified master manual. Consolidates the website,
+CU-Time, and CUCII manuals; records the v1.3 Aurelius release; defines current
+ChatGPT/Codex project governance; and establishes the canonical LaTeX house
+style and project-file templates for future manuals. \\
+1.1 & July 23, 2026 & Adds the completed Cosmic Breath Cycle Explorer; sealed
+structural and companion-content authorities; browser-safe projections;
+guarded transitions; LP-1, LP-2, and LP-3 learning layers; unified navigation;
+19 scientific sources; 251-test verification; merge and tag records; canonical
+digests; and the current website integration baseline. \\
+\bottomrule
+\end{tabularx}
+
+\vfill
+\begin{center}
+\textcolor{CUMuted}{End of Cosmic Universalism Website Master Implementation and Operations Manual}
+\end{center}
+
+\end{document}
