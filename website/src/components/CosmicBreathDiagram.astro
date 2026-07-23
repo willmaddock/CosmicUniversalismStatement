@@ -7,6 +7,19 @@ const shellStrokeId = `${diagramId}-shell-stroke`;
 const seedFillId = `${diagramId}-seed-fill`;
 const seedHaloId = `${diagramId}-seed-halo`;
 const ztomClipId = `${diagramId}-ztom-clip`;
+const diagramCenter = Object.freeze({ x: 320, y: 300 });
+const compressionBtomRadius = 142;
+const compressionCtomRadius = 196;
+const observableMarkerRadius = (compressionBtomRadius + compressionCtomRadius) / 2;
+const observableMarkerAngle = Math.atan2(20, 162);
+const observableMarker = Object.freeze({
+  x: Number((diagramCenter.x + (Math.cos(observableMarkerAngle) * observableMarkerRadius)).toFixed(1)),
+  y: Number((diagramCenter.y + (Math.sin(observableMarkerAngle) * observableMarkerRadius)).toFixed(1)),
+});
+const observableLabel = Object.freeze({
+  x: observableMarker.x - 34,
+  y: observableMarker.y + 62,
+});
 ---
 
 <figure class="cosmic-breath-diagram">
@@ -20,10 +33,9 @@ const ztomClipId = `${diagramId}-ztom-clip`;
   >
     <title id={titleId}>Cosmic Breath nested structural levels</title>
     <desc id={descriptionId}>
-      A concentric structural diagram with sub-ztom as the central seed, nested inside
-      atom, btom, ctom, and ztom. A cyan You Are Here marker identifies the Observable
-      Universe in the ctom region, outside btom and away from the central seed. Ctom is
-      shown as distinct from sub-ctom, which is not depicted as one of these five labels.
+      Structural Cosmic Universalism diagram with a non-selectable Observable Universe
+      marker positioned between compression-btom and compression-ctom. The marker is not
+      one of the 51 TOM states, and the diagram is not drawn to physical or temporal scale.
     </desc>
 
     <defs>
@@ -94,15 +106,19 @@ const ztomClipId = `${diagramId}-ztom-clip`;
       <text class="cosmic-breath-diagram__seed-label" x="320" y="306" text-anchor="middle">sub-ztom</text>
     </g>
 
-    <g class="cosmic-breath-diagram__observable-marker" aria-hidden="true">
-      <circle class="cosmic-breath-diagram__marker-outer" cx="482" cy="320" r="16" />
-      <circle class="cosmic-breath-diagram__marker-ring" cx="482" cy="320" r="10" />
-      <circle class="cosmic-breath-diagram__marker-core" cx="482" cy="320" r="3" />
-      <path d="M 482 300 V 310 M 482 330 V 340 M 462 320 H 472 M 492 320 H 502" />
-      <path class="cosmic-breath-diagram__marker-leader" d="M 475 329 L 452 357" />
-      <text x="448" y="382" text-anchor="middle">
-        <tspan class="cosmic-breath-diagram__marker-heading" x="448" dy="0">You Are Here</tspan>
-        <tspan class="cosmic-breath-diagram__marker-detail" x="448" dy="25">Observable Universe</tspan>
+    <g
+      class="cosmic-breath-diagram__observable-marker"
+      aria-hidden="true"
+      style="pointer-events: none; user-select: none;"
+    >
+      <circle class="cosmic-breath-diagram__marker-outer" cx={observableMarker.x} cy={observableMarker.y} r="16" />
+      <circle class="cosmic-breath-diagram__marker-ring" cx={observableMarker.x} cy={observableMarker.y} r="10" />
+      <circle class="cosmic-breath-diagram__marker-core" cx={observableMarker.x} cy={observableMarker.y} r="3" />
+      <path d={`M ${observableMarker.x} ${observableMarker.y - 20} V ${observableMarker.y - 10} M ${observableMarker.x} ${observableMarker.y + 10} V ${observableMarker.y + 20} M ${observableMarker.x - 20} ${observableMarker.y} H ${observableMarker.x - 10} M ${observableMarker.x + 10} ${observableMarker.y} H ${observableMarker.x + 20}`} />
+      <path class="cosmic-breath-diagram__marker-leader" d={`M ${observableMarker.x - 7} ${observableMarker.y + 9} L ${observableMarker.x - 30} ${observableMarker.y + 37}`} />
+      <text x={observableLabel.x} y={observableLabel.y} text-anchor="middle">
+        <tspan class="cosmic-breath-diagram__marker-heading" x={observableLabel.x} dy="0">You Are Here</tspan>
+        <tspan class="cosmic-breath-diagram__marker-detail" x={observableLabel.x} dy="25">Observable Universe</tspan>
       </text>
     </g>
   </svg>
@@ -201,8 +217,10 @@ const ztomClipId = `${diagramId}-ztom-clip`;
 
   .cosmic-breath-diagram__observable-marker {
     fill: var(--color-cyan);
+    pointer-events: none;
     stroke: var(--color-cyan);
     stroke-width: 3;
+    user-select: none;
     vector-effect: non-scaling-stroke;
   }
 

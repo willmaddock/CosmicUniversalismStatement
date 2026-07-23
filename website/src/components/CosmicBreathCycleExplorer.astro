@@ -1,0 +1,1705 @@
+---
+import CosmicBreathDiagram from './CosmicBreathDiagram.astro';
+import {
+  getPublicTomContentById,
+  orderedPublicTomContent,
+  serializePublicTomContentPayload,
+} from '../lib/cosmicBreath/cycle-content';
+import {
+  orderedTomStates,
+  serializedStructuralRuntimePayload,
+} from '../lib/cosmicBreath/cycle-ledger';
+import {
+  compressionDragAnchors,
+  expansionDragAnchors,
+} from '../lib/cosmicBreath/cycle-drag';
+
+const explorerId = `cosmic-breath-cycle-explorer-${crypto.randomUUID()}`;
+const panelId = `${explorerId}-panel`;
+const detailsId = `${explorerId}-details`;
+const publicContentPayloadId = `${explorerId}-public-content`;
+const structuralRuntimePayloadId = `${explorerId}-structural-runtime`;
+const fieldTitleId = `${explorerId}-field-title`;
+const fieldDescriptionId = `${explorerId}-field-description`;
+const fieldInstructionsId = `${explorerId}-field-instructions`;
+const qualityId = `${explorerId}-quality`;
+const fieldX = (value: number) => value * 100;
+const fieldY = (value: number) => value * 64;
+const expansionPathPoints = expansionDragAnchors
+  .map((anchor) => `${fieldX(anchor.point.x)},${fieldY(anchor.point.y)}`)
+  .join(' ');
+const compressionPathPoints = compressionDragAnchors
+  .map((anchor) => `${fieldX(anchor.point.x)},${fieldY(anchor.point.y)}`)
+  .join(' ');
+const initialMarker = expansionDragAnchors[0].point;
+const atomAnchor = expansionDragAnchors[expansionDragAnchors.length - 1];
+const ztomAnchor = compressionDragAnchors[compressionDragAnchors.length - 1];
+const initialPublicContent = getPublicTomContentById('expansion-sub-ztom');
+const publicContentPayload = serializePublicTomContentPayload(orderedPublicTomContent);
+---
+
+<section
+  class="cycle-explorer"
+  data-cosmic-breath-explorer
+  aria-labelledby={`${explorerId}-title`}
+>
+  <div class="cycle-explorer__overview" data-overview>
+    <CosmicBreathDiagram />
+    <div class="cycle-explorer__entry">
+      <h2 id={`${explorerId}-title`}>Explore the structural Cosmic Breath cycle</h2>
+      <p>
+        The explorer presents 51 canonical CU structural TOM positions with approved
+        quantum-state notation, duration estimates, and CU descriptions as Cosmic
+        Universalism structural propositions.
+      </p>
+      <button
+        class="cycle-explorer__button cycle-explorer__button--primary"
+        type="button"
+        aria-controls={panelId}
+        aria-disabled="true"
+        disabled
+        data-explore
+      >
+        Explore the Cycle
+      </button>
+      <p class="cycle-explorer__availability" data-js-availability>
+        Interactive controls require JavaScript. The complete structural inventory
+        remains available below.
+      </p>
+    </div>
+  </div>
+
+  <section
+    id={panelId}
+    class="cycle-explorer__panel"
+    aria-labelledby={`${explorerId}-simulation-title`}
+    tabindex="-1"
+    hidden
+    data-explorer-panel
+  >
+    <header class="cycle-explorer__header">
+      <div>
+        <p class="cycle-explorer__eyebrow">Structural cycle explorer</p>
+        <h3 id={`${explorerId}-simulation-title`}>Simulated Cosmic State</h3>
+        <p>
+          This educational structural model is a CU theoretical proposition. It is not
+          a scale drawing, observational map, or empirical measurement, and it does not
+          move the physical universe.
+        </p>
+      </div>
+      <p class="cycle-explorer__cycle-count" data-cycle-count>
+        Cosmic Breath sequence: 1
+      </p>
+    </header>
+
+    <div class="cycle-explorer__quality">
+      <label for={qualityId}>Visual quality</label>
+      <select id={qualityId} disabled data-quality-select>
+        <option value="auto" selected>Auto</option>
+        <option value="high">High</option>
+        <option value="balanced">Balanced</option>
+        <option value="reduced">Reduced</option>
+      </select>
+      <p>
+        Decorative rendering only; structural meaning and selection are unchanged.
+        <span data-quality-status>Auto</span>
+      </p>
+    </div>
+
+    <figure class="cycle-explorer__field">
+      <div class="cycle-explorer__visual-field" data-visual-field>
+      <canvas
+        class="cycle-explorer__atmosphere"
+        aria-hidden="true"
+        data-atmosphere-canvas
+      ></canvas>
+      <svg
+        class="cycle-explorer__field-svg"
+        viewBox="0 0 100 64"
+        role="img"
+        aria-labelledby={`${fieldTitleId} ${fieldDescriptionId}`}
+        aria-describedby={fieldInstructionsId}
+        data-drag-surface
+        data-active-phase="expansion"
+        style={`--field-glow: url(#${explorerId}-field-glow);`}
+      >
+        <title id={fieldTitleId}>Index-based Cosmic Breath structural drag field</title>
+        <desc id={fieldDescriptionId}>
+          A non-scale CU theoretical visualization with a solid expansion path of circular
+          anchors and a dashed compression path of diamond anchors. The Simulated Cosmic
+          State can be moved by pointer and snaps only to anchors in its active phase.
+        </desc>
+        <defs>
+          <radialGradient id={`${explorerId}-field-glow`} cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="var(--color-cyan)" stop-opacity="0.16" />
+            <stop offset="100%" stop-color="var(--color-cyan)" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+        <rect class="cycle-explorer__field-background" x="0" y="0" width="100" height="64" rx="3" />
+        <circle class="cycle-explorer__field-center" cx="50" cy="32" r="14" />
+        <polyline
+          class="cycle-explorer__path cycle-explorer__path--expansion"
+          points={expansionPathPoints}
+          aria-hidden="true"
+        />
+        <polyline
+          class="cycle-explorer__path cycle-explorer__path--compression"
+          points={compressionPathPoints}
+          aria-hidden="true"
+        />
+        <g class="cycle-explorer__anchors cycle-explorer__anchors--expansion" aria-hidden="true">
+          {expansionDragAnchors.map((anchor) => (
+            <circle
+              cx={fieldX(anchor.point.x)}
+              cy={fieldY(anchor.point.y)}
+              r={anchor.stateId === 'expansion-atom' ? 1.15 : 0.55}
+            />
+          ))}
+        </g>
+        <g class="cycle-explorer__anchors cycle-explorer__anchors--compression" aria-hidden="true">
+          {compressionDragAnchors.map((anchor) => {
+            const x = fieldX(anchor.point.x);
+            const y = fieldY(anchor.point.y);
+            const size = anchor.stateId === 'compression-ztom' ? 1.8 : 1;
+            return (
+              <rect
+                x={x - (size / 2)}
+                y={y - (size / 2)}
+                width={size}
+                height={size}
+                transform={`rotate(45 ${x} ${y})`}
+              />
+            );
+          })}
+        </g>
+        <g class="cycle-explorer__boundary-labels" aria-hidden="true">
+          <text x={fieldX(atomAnchor.point.x)} y={fieldY(atomAnchor.point.y) - 2.2} text-anchor="middle">
+            atom · expansion pause
+          </text>
+          <text x={fieldX(ztomAnchor.point.x)} y={fieldY(ztomAnchor.point.y) + 3.4} text-anchor="middle">
+            ztom · reset pause
+          </text>
+        </g>
+        <g
+          class="cycle-explorer__marker"
+          transform={`translate(${fieldX(initialMarker.x)} ${fieldY(initialMarker.y)})`}
+          aria-hidden="true"
+          data-drag-marker
+        >
+          <circle class="cycle-explorer__marker-target" r="4.8" />
+          <circle class="cycle-explorer__marker-halo" r="2.8" />
+          <circle class="cycle-explorer__marker-core" r="1.35" />
+          <path d="M -2.4 0 H 2.4 M 0 -2.4 V 2.4" />
+        </g>
+      </svg>
+      </div>
+      <figcaption id={fieldInstructionsId}>
+        Drag the Simulated Cosmic State with a mouse, touch, or pen, or use the buttons,
+        native range, keyboard commands, and complete inventory below. This field is
+        structural and index-based—not drawn to physical or temporal scale.
+      </figcaption>
+      <p class="cycle-explorer__drag-preview" aria-live="off" data-drag-preview>
+        sub-ztom · Expansion · cycle position 1 of 51
+      </p>
+      <div class="cycle-explorer__field-key" aria-hidden="true">
+        <span><i class="cycle-explorer__key-symbol cycle-explorer__key-symbol--expansion"></i> Expansion anchors</span>
+        <span><i class="cycle-explorer__key-symbol cycle-explorer__key-symbol--compression"></i> Compression anchors</span>
+      </div>
+    </figure>
+
+    <div class="cycle-explorer__preview" aria-labelledby={`${explorerId}-preview-title`}>
+      <p class="cycle-explorer__eyebrow" id={`${explorerId}-preview-title`}>
+        Current structural position
+      </p>
+      <p class="cycle-explorer__state-label" data-state-label>sub-ztom</p>
+      <p class="cycle-explorer__position" data-state-position>
+        Expansion · cycle position 1 of 51
+      </p>
+    </div>
+
+    <div class="cycle-explorer__controls" aria-label="Cycle navigation controls">
+      <div class="cycle-explorer__button-row">
+        <button class="cycle-explorer__button" type="button" data-previous>
+          Previous TOM
+        </button>
+        <button class="cycle-explorer__button" type="button" data-next>
+          Next TOM
+        </button>
+        <button
+          class="cycle-explorer__button cycle-explorer__button--boundary"
+          type="button"
+          hidden
+          data-begin-compression
+        >
+          Begin Compression
+        </button>
+        <button
+          class="cycle-explorer__button cycle-explorer__button--boundary"
+          type="button"
+          hidden
+          data-begin-next-breath
+        >
+          Begin the Next Cosmic Breath
+        </button>
+      </div>
+
+      <label class="cycle-explorer__range-label" for={`${explorerId}-range`}>
+        Direct structural position
+        <span data-range-output>1 of 51</span>
+      </label>
+      <input
+        id={`${explorerId}-range`}
+        class="cycle-explorer__range"
+        type="range"
+        min="0"
+        max="50"
+        step="1"
+        value="0"
+        disabled
+        data-cycle-range
+      />
+      <p class="cycle-explorer__keyboard-help">
+        Keyboard: Left/Right moves ordinarily; Home/End jumps to the first/last state;
+        Page Up/Page Down jumps to the current phase boundary; Escape returns to overview.
+      </p>
+    </div>
+
+    <article
+      id={detailsId}
+      class="cycle-explorer__details"
+      aria-labelledby={`${explorerId}-details-title`}
+      hidden
+      data-state-details
+    >
+      <h4 id={`${explorerId}-details-title`}>TOM content</h4>
+      <p
+        class="cycle-explorer__content-title"
+        hidden={initialPublicContent.canonicalTitle === undefined}
+        data-content-title
+      >
+        {initialPublicContent.canonicalTitle ?? ''}
+      </p>
+
+      <div class="cycle-explorer__content-grid">
+        <section class="cycle-explorer__content-field" aria-labelledby={`${explorerId}-quantum-title`}>
+          <h5 id={`${explorerId}-quantum-title`}>Quantum State</h5>
+          <p class="cycle-explorer__content-value" data-content-quantum>
+            {initialPublicContent.exactQuantumStateDisplay}
+          </p>
+          <p
+            class="cycle-explorer__content-helper"
+            data-content-quantum-short
+          >
+            {initialPublicContent.quantumStateHelperShort}
+          </p>
+          <details
+            class="cycle-explorer__learn-more"
+            data-content-quantum-details
+          >
+            <summary>Quantum State — Learn more</summary>
+            <p data-content-quantum-long>{initialPublicContent.quantumStateHelperLong}</p>
+          </details>
+        </section>
+
+        <section class="cycle-explorer__content-field" aria-labelledby={`${explorerId}-duration-title`}>
+          <h5 id={`${explorerId}-duration-title`}>Duration Estimate</h5>
+          <p class="cycle-explorer__content-value" data-content-duration>
+            {initialPublicContent.exactDurationEstimateDisplay}
+          </p>
+          <p
+            class="cycle-explorer__content-helper"
+            data-content-duration-short
+          >
+            {initialPublicContent.durationHelperShort}
+          </p>
+          <details
+            class="cycle-explorer__learn-more"
+            data-content-duration-details
+          >
+            <summary>Duration Estimate — Learn more</summary>
+            <p data-content-duration-long>{initialPublicContent.durationHelperLong}</p>
+          </details>
+        </section>
+
+        <section
+          class="cycle-explorer__content-field cycle-explorer__content-field--description"
+          aria-labelledby={`${explorerId}-description-title`}
+        >
+          <h5 id={`${explorerId}-description-title`}>CU Description</h5>
+          <p data-content-description>{initialPublicContent.publicCuDescription}</p>
+          <details
+            class="cycle-explorer__learn-more"
+            data-content-layer-details
+          >
+            <summary>About this TOM layer — Learn more</summary>
+            <p data-content-layer-long>{initialPublicContent.tomLayerExplanation}</p>
+          </details>
+        </section>
+      </div>
+
+      <p class="cycle-explorer__epistemic-label" data-content-epistemic>
+        {initialPublicContent.publicEpistemicLabel}
+      </p>
+    </article>
+
+    <div class="cycle-explorer__utility-controls">
+      <button class="cycle-explorer__button" type="button" data-reset>
+        Reset Explorer
+      </button>
+      <button class="cycle-explorer__button" type="button" data-return-overview>
+        Return to Overview
+      </button>
+    </div>
+  </section>
+
+  <details class="cycle-explorer__inventory" data-inventory>
+    <summary>Complete structural TOM inventory (51 states)</summary>
+    <p>
+      Select any state for a direct educational jump when JavaScript is available.
+      Boundary crossings remain deliberate actions in ordinary navigation.
+    </p>
+    <ol>
+      {orderedTomStates.map((state, index) => (
+        <li>
+          <button
+            type="button"
+            disabled
+            data-select-state
+            data-state-index={index}
+          >
+            <span>{state.label}</span>
+            <small>
+              {state.phase === 'expansion' ? 'Expansion' : 'Compression'} · phase
+              position {state.phaseIndex}
+            </small>
+          </button>
+        </li>
+      ))}
+    </ol>
+  </details>
+
+  <script
+    id={publicContentPayloadId}
+    type="application/json"
+    data-public-content
+    set:html={publicContentPayload}
+  ></script>
+  <script
+    id={structuralRuntimePayloadId}
+    type="application/json"
+    data-structural-runtime
+    set:html={serializedStructuralRuntimePayload}
+  ></script>
+
+  <p class="cycle-explorer__status" role="status" aria-live="polite" aria-atomic="true" data-status></p>
+</section>
+
+<script>
+  import {
+    clampNormalizedPoint,
+    createCycleControlEngine,
+    createCycleDragEngine,
+    createCycleStateEngine,
+    getExplorerControlState,
+    getExplorerKeyboardCommand,
+    getSelectionStatusText,
+    isEditableControl,
+    parseStructuralRuntimePayload,
+    type CosmicBreathCycleState,
+    type NormalizedPoint,
+    type RuntimeTomState,
+    type SelectionStatusKind,
+  } from '../lib/cosmicBreath/cycle-runtime';
+  import {
+    createStaticAtmosphereFrame,
+    getAtmosphereDescriptor,
+    initializeAtmosphereParticles,
+    structuralAtmosphereSeed,
+    updateAtmosphereParticles,
+    type AtmosphereDescriptor,
+    type AtmosphereParticle,
+  } from '../lib/cosmicBreath/cycle-atmosphere';
+  import {
+    calculateBackingStoreSize,
+    getQualityProfile,
+    shouldAnimateContinuously,
+    VISUAL_QUALITY_MODES,
+    type QualityProfile,
+    type VisualCapabilities,
+    type VisualQualityMode,
+  } from '../lib/cosmicBreath/cycle-quality';
+
+  const requiredElement = <T extends Element>(root: Element, selector: string): T => {
+    const element = root.querySelector<T>(selector);
+    if (!element) throw new Error(`Cosmic Breath explorer is missing ${selector}`);
+    return element;
+  };
+
+  interface BrowserPublicTomContent {
+    readonly structuralStateId: string;
+    readonly exactQuantumStateDisplay: string;
+    readonly exactDurationEstimateDisplay: string;
+    readonly publicCuDescription: string;
+    readonly publicEpistemicLabel: string;
+    readonly canonicalTitle?: string;
+    readonly tomLayerExplanation: string;
+    readonly quantumStateHelperShort: string;
+    readonly quantumStateHelperLong: string;
+    readonly durationHelperShort: string;
+    readonly durationHelperLong: string;
+  }
+
+  const REQUIRED_BROWSER_CONTENT_STRING_FIELDS = Object.freeze([
+    'structuralStateId',
+    'sourceTomLabel',
+    'cyclePosition',
+    'exactQuantumStateDisplay',
+    'exactDurationEstimateDisplay',
+    'publicCuDescription',
+    'publicEpistemicLabel',
+    'tomLayerExplanation',
+    'quantumStateHelperShort',
+    'quantumStateHelperLong',
+    'durationHelperShort',
+    'durationHelperLong',
+  ] as const);
+
+  const parsePublicContentLookup = (
+    payloadElement: HTMLScriptElement,
+    runtimeStates: readonly RuntimeTomState[],
+  ): ReadonlyMap<string, BrowserPublicTomContent> => {
+    const parsed: unknown = JSON.parse(payloadElement.textContent ?? '');
+    if (!Array.isArray(parsed) || parsed.length !== runtimeStates.length) {
+      throw new Error('Cosmic Breath public content payload must contain exactly 51 records');
+    }
+
+    const lookup = new Map<string, BrowserPublicTomContent>();
+    parsed.forEach((value, index) => {
+      if (typeof value !== 'object' || value === null || Array.isArray(value)) {
+        throw new Error(`Cosmic Breath public content record ${index} must be an object`);
+      }
+      const record = value as Record<string, unknown>;
+      for (const field of REQUIRED_BROWSER_CONTENT_STRING_FIELDS) {
+        if (typeof record[field] !== 'string' || record[field].length === 0) {
+          throw new Error(`Cosmic Breath public content record ${index} is missing ${field}`);
+        }
+      }
+      if (record.phase !== 'expansion' && record.phase !== 'compression') {
+        throw new Error(`Cosmic Breath public content record ${index} has an invalid phase`);
+      }
+      if (!Number.isInteger(record.cycleIndex) || !Number.isInteger(record.phaseIndex)) {
+        throw new Error(`Cosmic Breath public content record ${index} has invalid positions`);
+      }
+      if (record.canonicalTitle !== undefined && typeof record.canonicalTitle !== 'string') {
+        throw new Error(`Cosmic Breath public content record ${index} has an invalid title`);
+      }
+
+      const content = record as unknown as BrowserPublicTomContent;
+      if (lookup.has(content.structuralStateId)) {
+        throw new Error(`Duplicate Cosmic Breath public content ID: ${content.structuralStateId}`);
+      }
+      lookup.set(content.structuralStateId, content);
+    });
+
+    for (const state of runtimeStates) {
+      if (!lookup.has(state.id)) {
+        throw new Error(`Missing Cosmic Breath public content for ${state.id}`);
+      }
+    }
+    return lookup;
+  };
+
+  const initializeExplorer = (root: HTMLElement): void => {
+    if (root.dataset.initialized === 'true') return;
+    root.dataset.initialized = 'true';
+
+    const overview = requiredElement<HTMLElement>(root, '[data-overview]');
+    const panel = requiredElement<HTMLElement>(root, '[data-explorer-panel]');
+    const visualField = requiredElement<HTMLElement>(root, '[data-visual-field]');
+    const atmosphereCanvas = requiredElement<HTMLCanvasElement>(root, '[data-atmosphere-canvas]');
+    const qualitySelect = requiredElement<HTMLSelectElement>(root, '[data-quality-select]');
+    const qualityStatus = requiredElement<HTMLElement>(root, '[data-quality-status]');
+    const dragSurface = requiredElement<SVGSVGElement>(root, '[data-drag-surface]');
+    const dragMarker = requiredElement<SVGGElement>(root, '[data-drag-marker]');
+    const dragPreview = requiredElement<HTMLElement>(root, '[data-drag-preview]');
+    const exploreButton = requiredElement<HTMLButtonElement>(root, '[data-explore]');
+    const availability = requiredElement<HTMLElement>(root, '[data-js-availability]');
+    const previousButton = requiredElement<HTMLButtonElement>(root, '[data-previous]');
+    const nextButton = requiredElement<HTMLButtonElement>(root, '[data-next]');
+    const beginCompressionButton = requiredElement<HTMLButtonElement>(root, '[data-begin-compression]');
+    const beginNextBreathButton = requiredElement<HTMLButtonElement>(root, '[data-begin-next-breath]');
+    const range = requiredElement<HTMLInputElement>(root, '[data-cycle-range]');
+    const rangeOutput = requiredElement<HTMLElement>(root, '[data-range-output]');
+    const stateLabel = requiredElement<HTMLElement>(root, '[data-state-label]');
+    const statePosition = requiredElement<HTMLElement>(root, '[data-state-position]');
+    const cycleCount = requiredElement<HTMLElement>(root, '[data-cycle-count]');
+    const stateDetails = requiredElement<HTMLElement>(root, '[data-state-details]');
+    const status = requiredElement<HTMLElement>(root, '[data-status]');
+    const resetButton = requiredElement<HTMLButtonElement>(root, '[data-reset]');
+    const returnButton = requiredElement<HTMLButtonElement>(root, '[data-return-overview]');
+    const inventory = requiredElement<HTMLDetailsElement>(root, '[data-inventory]');
+    const structuralPayloadElements = root.querySelectorAll<HTMLScriptElement>(
+      '[data-structural-runtime]',
+    );
+    if (structuralPayloadElements.length !== 1) {
+      throw new Error('Cosmic Breath explorer requires exactly one structural runtime payload');
+    }
+    const structuralRuntime = parseStructuralRuntimePayload(
+      structuralPayloadElements[0].textContent ?? '',
+    );
+    const orderedTomStates = structuralRuntime.states;
+    const {
+      INITIAL_CYCLE_STATE,
+      enterExploration,
+      selectStateByIndex,
+      moveToPreviousState,
+      moveToNextState,
+      continueFromAtom,
+      beginNextCosmicBreath,
+      beginDragging,
+      updateDragPreview,
+      releaseDragIntoSettling,
+      completeSettling,
+      revealSettledDetails,
+      returnToOverview,
+      resetCycleExplorer,
+    } = createCycleStateEngine(structuralRuntime);
+    const {
+      findNearestSelectableAnchor,
+      canonicalIndexForAnchor,
+      getDragAnchorByCanonicalIndex,
+      snappedMarkerCoordinates,
+      compactStructuralPreviewText,
+    } = createCycleDragEngine(structuralRuntime);
+    const {
+      parseStructuralIndex,
+      getPhaseBoundaryIndices,
+      getStructuralStateSummary,
+    } = createCycleControlEngine(structuralRuntime);
+    const getTomStateByIndex = (index: number): RuntimeTomState => {
+      if (!Number.isInteger(index) || index < 0 || index >= orderedTomStates.length) {
+        throw new RangeError('Structural TOM index must be an integer from 0 to 50: ' + index);
+      }
+      return orderedTomStates[index];
+    };
+    const publicContentPayloadElement = requiredElement<HTMLScriptElement>(
+      root,
+      '[data-public-content]',
+    );
+    const publicContentById = parsePublicContentLookup(
+      publicContentPayloadElement,
+      orderedTomStates,
+    );
+    const inventoryButtons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-select-state]'));
+    const contentFields = {
+      title: requiredElement<HTMLElement>(root, '[data-content-title]'),
+      quantum: requiredElement<HTMLElement>(root, '[data-content-quantum]'),
+      quantumShort: requiredElement<HTMLElement>(root, '[data-content-quantum-short]'),
+      quantumDetails: requiredElement<HTMLDetailsElement>(root, '[data-content-quantum-details]'),
+      quantumLong: requiredElement<HTMLElement>(root, '[data-content-quantum-long]'),
+      duration: requiredElement<HTMLElement>(root, '[data-content-duration]'),
+      durationShort: requiredElement<HTMLElement>(root, '[data-content-duration-short]'),
+      durationDetails: requiredElement<HTMLDetailsElement>(root, '[data-content-duration-details]'),
+      durationLong: requiredElement<HTMLElement>(root, '[data-content-duration-long]'),
+      description: requiredElement<HTMLElement>(root, '[data-content-description]'),
+      layerDetails: requiredElement<HTMLDetailsElement>(root, '[data-content-layer-details]'),
+      layerLong: requiredElement<HTMLElement>(root, '[data-content-layer-long]'),
+      epistemic: requiredElement<HTMLElement>(root, '[data-content-epistemic]'),
+    };
+    const learnMoreSections = [
+      contentFields.quantumDetails,
+      contentFields.durationDetails,
+      contentFields.layerDetails,
+    ];
+
+    let state: CosmicBreathCycleState = INITIAL_CYCLE_STATE;
+    let settleTimeout: number | null = null;
+    let activePointerId: number | null = null;
+    let committedIndexBeforeDrag: number | null = null;
+    let queuedDragPoint: NormalizedPoint | null = null;
+    let dragAnimationFrame: number | null = null;
+    let qualityMode: VisualQualityMode = 'auto';
+    let atmosphereActive = false;
+    let atmosphereContext: CanvasRenderingContext2D | null = null;
+    let atmosphereProfile: QualityProfile | null = null;
+    let atmosphereDescriptor: AtmosphereDescriptor | null = null;
+    let atmosphereParticles: AtmosphereParticle[] = [];
+    let atmosphereSeed = 0;
+    let atmosphereKey = '';
+    let atmosphereAnimationFrame: number | null = null;
+    let lastAtmosphereFrameTime: number | null = null;
+    let atmosphereCssWidth = 0;
+    let atmosphereCssHeight = 0;
+    let atmosphereGradient: CanvasGradient | null = null;
+    let atmosphereResizeObserver: ResizeObserver | null = null;
+    let renderedContentStateId: string | null = null;
+    const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    const cancelPendingReveal = (): void => {
+      if (settleTimeout !== null) window.clearTimeout(settleTimeout);
+      settleTimeout = null;
+    };
+
+    const announce = (message: string): void => {
+      status.textContent = message;
+    };
+
+    const readVisualCapabilities = (): VisualCapabilities => ({
+      viewportWidth: window.innerWidth,
+      viewportHeight: window.innerHeight,
+      devicePixelRatio: window.devicePixelRatio,
+      prefersReducedMotion: reducedMotionQuery.matches,
+      documentVisible: !document.hidden,
+      hardwareConcurrency: navigator.hardwareConcurrency,
+    });
+
+    const cancelAtmosphereAnimationFrame = (): void => {
+      if (atmosphereAnimationFrame !== null) {
+        window.cancelAnimationFrame(atmosphereAnimationFrame);
+      }
+      atmosphereAnimationFrame = null;
+      lastAtmosphereFrameTime = null;
+    };
+
+    const rebuildAtmosphereGradient = (): void => {
+      if (
+        atmosphereContext === null
+        || atmosphereDescriptor === null
+        || atmosphereProfile === null
+        || atmosphereCssWidth <= 0
+        || atmosphereCssHeight <= 0
+      ) {
+        atmosphereGradient = null;
+        return;
+      }
+      const radius = Math.max(atmosphereCssWidth, atmosphereCssHeight) * 0.46;
+      const gradient = atmosphereContext.createRadialGradient(
+        atmosphereCssWidth / 2,
+        atmosphereCssHeight / 2,
+        0,
+        atmosphereCssWidth / 2,
+        atmosphereCssHeight / 2,
+        radius,
+      );
+      const glowAlpha = atmosphereProfile.glowStrength
+        * atmosphereDescriptor.glowMultiplier;
+      const glowAlphaHex = Math.round(Math.min(0.24, glowAlpha * 0.16) * 255)
+        .toString(16)
+        .padStart(2, '0');
+      gradient.addColorStop(0, `${atmosphereDescriptor.color}${glowAlphaHex}`);
+      gradient.addColorStop(1, 'transparent');
+      atmosphereGradient = gradient;
+    };
+
+    const drawAtmosphere = (preserveTrails = false): void => {
+      if (
+        atmosphereContext === null
+        || atmosphereProfile === null
+        || atmosphereDescriptor === null
+        || atmosphereCssWidth <= 0
+        || atmosphereCssHeight <= 0
+      ) return;
+
+      const context = atmosphereContext;
+      if (preserveTrails && atmosphereProfile.trailStrength > 0) {
+        context.save();
+        context.globalCompositeOperation = 'destination-out';
+        context.globalAlpha = 1 - atmosphereProfile.trailStrength;
+        context.fillRect(0, 0, atmosphereCssWidth, atmosphereCssHeight);
+        context.restore();
+      } else {
+        context.clearRect(0, 0, atmosphereCssWidth, atmosphereCssHeight);
+      }
+
+      if (atmosphereGradient !== null) {
+        context.fillStyle = atmosphereGradient;
+        context.fillRect(0, 0, atmosphereCssWidth, atmosphereCssHeight);
+      }
+      context.save();
+      context.globalCompositeOperation = 'lighter';
+      context.fillStyle = atmosphereDescriptor.color;
+      context.shadowColor = atmosphereDescriptor.color;
+      context.shadowBlur = 7 * atmosphereProfile.glowStrength;
+      for (const particle of atmosphereParticles) {
+        context.globalAlpha = particle.opacity * atmosphereProfile.glowStrength;
+        context.beginPath();
+        context.arc(
+          particle.x * atmosphereCssWidth,
+          particle.y * atmosphereCssHeight,
+          particle.radius,
+          0,
+          Math.PI * 2,
+        );
+        context.fill();
+      }
+      context.restore();
+    };
+
+    const resizeAtmosphere = (): void => {
+      if (!atmosphereActive || atmosphereContext === null || atmosphereProfile === null) return;
+      const cssWidth = visualField.clientWidth;
+      const cssHeight = visualField.clientHeight;
+      const backingStore = calculateBackingStoreSize(
+        cssWidth,
+        cssHeight,
+        window.devicePixelRatio,
+        atmosphereProfile,
+      );
+      if (backingStore.width === 0 || backingStore.height === 0) return;
+      atmosphereCssWidth = cssWidth;
+      atmosphereCssHeight = cssHeight;
+      if (
+        atmosphereCanvas.width !== backingStore.width
+        || atmosphereCanvas.height !== backingStore.height
+      ) {
+        atmosphereCanvas.width = backingStore.width;
+        atmosphereCanvas.height = backingStore.height;
+      }
+      atmosphereContext.setTransform(
+        backingStore.width / cssWidth,
+        0,
+        0,
+        backingStore.height / cssHeight,
+        0,
+        0,
+      );
+      rebuildAtmosphereGradient();
+      drawAtmosphere();
+    };
+
+    const scheduleAtmosphereFrame = (): void => {
+      if (
+        atmosphereAnimationFrame !== null
+        || atmosphereProfile === null
+        || !shouldAnimateContinuously(atmosphereProfile, readVisualCapabilities())
+      ) return;
+      atmosphereAnimationFrame = window.requestAnimationFrame((time) => {
+        atmosphereAnimationFrame = null;
+        if (
+          !atmosphereActive
+          || atmosphereProfile === null
+          || atmosphereDescriptor === null
+          || !shouldAnimateContinuously(atmosphereProfile, readVisualCapabilities())
+        ) return;
+        const frameInterval = 1000 / atmosphereProfile.targetFramesPerSecond;
+        if (
+          lastAtmosphereFrameTime === null
+          || time - lastAtmosphereFrameTime >= frameInterval
+        ) {
+          const elapsed = lastAtmosphereFrameTime === null
+            ? frameInterval
+            : time - lastAtmosphereFrameTime;
+          lastAtmosphereFrameTime = time;
+          updateAtmosphereParticles(
+            atmosphereParticles,
+            elapsed,
+            atmosphereSeed,
+            atmosphereDescriptor,
+          );
+          drawAtmosphere(true);
+        }
+        scheduleAtmosphereFrame();
+      });
+    };
+
+    const configureAtmosphere = (
+      selected: RuntimeTomState,
+      force = false,
+    ): void => {
+      if (!atmosphereActive || atmosphereContext === null) return;
+      const capabilities = readVisualCapabilities();
+      const profile = getQualityProfile(qualityMode, capabilities);
+      const descriptor = getAtmosphereDescriptor(selected.phase, selected.boundaryRole);
+      const seed = structuralAtmosphereSeed(selected.id, state.cycleCount);
+      const key = `${profile.mode}:${descriptor.kind}:${seed}`;
+      atmosphereProfile = profile;
+      atmosphereDescriptor = descriptor;
+      atmosphereSeed = seed;
+      qualityStatus.textContent = qualityMode === 'auto'
+        ? `Auto currently uses ${profile.mode}.`
+        : `${profile.mode[0].toUpperCase()}${profile.mode.slice(1)} selected.`;
+      if (force || key !== atmosphereKey) {
+        atmosphereKey = key;
+        atmosphereParticles = profile.continuousAnimation
+          ? initializeAtmosphereParticles(seed, profile, descriptor)
+          : createStaticAtmosphereFrame(seed, profile, descriptor);
+        lastAtmosphereFrameTime = null;
+      }
+      resizeAtmosphere();
+      if (shouldAnimateContinuously(profile, capabilities)) scheduleAtmosphereFrame();
+      else cancelAtmosphereAnimationFrame();
+    };
+
+    const startAtmosphere = (selected: RuntimeTomState): void => {
+      if (!atmosphereActive) {
+        atmosphereContext = atmosphereCanvas.getContext('2d', { alpha: true });
+        if (atmosphereContext === null) {
+          atmosphereCanvas.hidden = true;
+          qualityStatus.textContent = 'Decorative Canvas unavailable; structural explorer unaffected.';
+          return;
+        }
+        atmosphereActive = true;
+        if (typeof ResizeObserver !== 'undefined') {
+          atmosphereResizeObserver = new ResizeObserver(() => {
+            resizeAtmosphere();
+          });
+          atmosphereResizeObserver.observe(visualField);
+        }
+      }
+      configureAtmosphere(selected);
+    };
+
+    const stopAtmosphere = (): void => {
+      atmosphereActive = false;
+      cancelAtmosphereAnimationFrame();
+      atmosphereResizeObserver?.disconnect();
+      atmosphereResizeObserver = null;
+      atmosphereParticles = [];
+      atmosphereKey = '';
+      atmosphereGradient = null;
+      if (atmosphereContext !== null) {
+        atmosphereContext.clearRect(0, 0, atmosphereCssWidth, atmosphereCssHeight);
+      }
+    };
+
+    const markerTransform = (point: NormalizedPoint): string =>
+      `translate(${point.x * 100} ${point.y * 64})`;
+
+    const setMarkerPoint = (point: NormalizedPoint): void => {
+      dragMarker.setAttribute('transform', markerTransform(point));
+    };
+
+    const pointFromPointer = (event: PointerEvent): NormalizedPoint => {
+      const bounds = dragSurface.getBoundingClientRect();
+      if (bounds.width <= 0 || bounds.height <= 0) {
+        throw new RangeError('Cosmic Breath drag field must have visible dimensions');
+      }
+      return clampNormalizedPoint({
+        x: (event.clientX - bounds.left) / bounds.width,
+        y: (event.clientY - bounds.top) / bounds.height,
+      });
+    };
+
+    const showStructuralPreview = (selected: RuntimeTomState): void => {
+      const summary = getStructuralStateSummary(selected);
+      stateLabel.textContent = summary.label;
+      statePosition.textContent = `${summary.phase} · cycle position ${summary.cyclePosition}`;
+      rangeOutput.textContent = summary.cyclePosition;
+    };
+
+    const closeLearnMoreSections = (): void => {
+      learnMoreSections.forEach((section) => { section.open = false; });
+    };
+
+    const setOptionalText = (element: HTMLElement, value: string | undefined): void => {
+      element.textContent = value ?? '';
+      element.hidden = value === undefined;
+    };
+
+    const renderPublicContent = (selected: RuntimeTomState): void => {
+      const content = publicContentById.get(selected.id);
+      if (!content) throw new Error(`Missing Cosmic Breath public content for ${selected.id}`);
+      if (renderedContentStateId !== selected.id) {
+        closeLearnMoreSections();
+        renderedContentStateId = selected.id;
+      }
+      setOptionalText(contentFields.title, content.canonicalTitle);
+      contentFields.quantum.textContent = content.exactQuantumStateDisplay;
+      contentFields.quantumShort.textContent = content.quantumStateHelperShort;
+      contentFields.quantumLong.textContent = content.quantumStateHelperLong;
+      contentFields.duration.textContent = content.exactDurationEstimateDisplay;
+      contentFields.durationShort.textContent = content.durationHelperShort;
+      contentFields.durationLong.textContent = content.durationHelperLong;
+      contentFields.description.textContent = content.publicCuDescription;
+      contentFields.layerLong.textContent = content.tomLayerExplanation;
+      contentFields.epistemic.textContent = content.publicEpistemicLabel;
+    };
+
+    const applyDragPoint = (point: NormalizedPoint): void => {
+      if (state.mode !== 'dragging' || state.selectedIndex === null) return;
+      const nearest = findNearestSelectableAnchor(point);
+      state = updateDragPreview(state, canonicalIndexForAnchor(nearest));
+      setMarkerPoint(point);
+      dragPreview.textContent = compactStructuralPreviewText(nearest);
+      showStructuralPreview(getTomStateByIndex(nearest.canonicalIndex));
+      stateDetails.hidden = true;
+      dragSurface.dataset.activePhase = nearest.phase;
+      dragSurface.dataset.previewIndex = String(nearest.canonicalIndex);
+    };
+
+    const cancelDragAnimationFrame = (): void => {
+      if (dragAnimationFrame !== null) window.cancelAnimationFrame(dragAnimationFrame);
+      dragAnimationFrame = null;
+      queuedDragPoint = null;
+    };
+
+    const flushQueuedDragPoint = (): void => {
+      dragAnimationFrame = null;
+      const point = queuedDragPoint;
+      queuedDragPoint = null;
+      if (point !== null) applyDragPoint(point);
+    };
+
+    const queueDragPoint = (point: NormalizedPoint): void => {
+      queuedDragPoint = point;
+      if (dragAnimationFrame === null) {
+        dragAnimationFrame = window.requestAnimationFrame(flushQueuedDragPoint);
+      }
+    };
+
+    const stopPointerTracking = (): void => {
+      cancelDragAnimationFrame();
+      const pointerId = activePointerId;
+      activePointerId = null;
+      root.classList.remove('cycle-explorer--dragging');
+      dragSurface.removeAttribute('data-dragging');
+      if (pointerId !== null && dragSurface.hasPointerCapture?.(pointerId)) {
+        dragSurface.releasePointerCapture(pointerId);
+      }
+    };
+
+    const render = (): void => {
+      const inOverview = state.mode === 'overview';
+      overview.hidden = !inOverview;
+      panel.hidden = inOverview;
+      if (state.selectedIndex === null) {
+        stopAtmosphere();
+        const openingAnchor = getDragAnchorByCanonicalIndex(0);
+        showStructuralPreview(getTomStateByIndex(0));
+        setMarkerPoint(openingAnchor.point);
+        dragPreview.textContent = compactStructuralPreviewText(openingAnchor);
+        dragSurface.dataset.activePhase = 'expansion';
+        dragSurface.removeAttribute('data-preview-index');
+        range.value = '0';
+        cycleCount.textContent = 'Cosmic Breath sequence: 1';
+        previousButton.disabled = false;
+        nextButton.disabled = false;
+        beginCompressionButton.hidden = true;
+        beginNextBreathButton.hidden = true;
+        stateDetails.hidden = true;
+        closeLearnMoreSections();
+        renderedContentStateId = null;
+        inventoryButtons.forEach((button) => button.removeAttribute('aria-current'));
+        return;
+      }
+
+      const selected = getTomStateByIndex(state.selectedIndex);
+      const summary = getStructuralStateSummary(selected);
+      const controlState = getExplorerControlState(selected);
+      const selectedAnchor = getDragAnchorByCanonicalIndex(state.selectedIndex);
+      showStructuralPreview(selected);
+      setMarkerPoint(snappedMarkerCoordinates(state.selectedIndex));
+      dragPreview.textContent = compactStructuralPreviewText(selectedAnchor);
+      dragSurface.dataset.activePhase = selected.phase;
+      dragSurface.removeAttribute('data-preview-index');
+      cycleCount.textContent = `Cosmic Breath sequence: ${state.cycleCount + 1}`;
+      range.value = String(state.selectedIndex);
+      previousButton.disabled = controlState.previousDisabled;
+      nextButton.disabled = controlState.nextDisabled;
+      beginCompressionButton.hidden = !controlState.showBeginCompression;
+      beginNextBreathButton.hidden = !controlState.showBeginNextBreath;
+
+      renderPublicContent(selected);
+      stateDetails.hidden = state.mode !== 'details';
+
+      inventoryButtons.forEach((button, index) => {
+        if (index === state.selectedIndex) button.setAttribute('aria-current', 'true');
+        else button.removeAttribute('aria-current');
+      });
+      startAtmosphere(selected);
+    };
+
+    const scheduleSettledDetails = (
+      selected: RuntimeTomState,
+      statusKind: SelectionStatusKind,
+      initialAnnouncement = getSelectionStatusText(statusKind, selected),
+    ): void => {
+      const token = state.pendingSettleToken;
+      render();
+      announce(initialAnnouncement);
+      if (token === null) return;
+
+      settleTimeout = window.setTimeout(() => {
+        const completed = completeSettling(state, token);
+        const revealed = revealSettledDetails(completed, token);
+        if (revealed === state) return;
+        state = revealed;
+        settleTimeout = null;
+        render();
+        announce(getSelectionStatusText('settled', selected));
+      }, 200);
+    };
+
+    const settleSelection = (
+      selectedState: CosmicBreathCycleState,
+      statusKind: SelectionStatusKind,
+    ): void => {
+      cancelPendingReveal();
+      stopPointerTracking();
+      committedIndexBeforeDrag = null;
+      const selectedIndex = selectedState.selectedIndex;
+      if (selectedIndex === null) return;
+      state = releaseDragIntoSettling(beginDragging(selectedState), selectedIndex);
+      scheduleSettledDetails(getTomStateByIndex(selectedIndex), statusKind);
+    };
+
+    const cancelActiveDrag = (announceCancellation = true): boolean => {
+      if (activePointerId === null) return false;
+      const restoreIndex = committedIndexBeforeDrag ?? state.selectedIndex;
+      stopPointerTracking();
+      committedIndexBeforeDrag = null;
+      if (restoreIndex !== null) state = selectStateByIndex(state, restoreIndex);
+      render();
+      if (announceCancellation) announce('Drag cancelled. The last committed structural state was restored.');
+      return true;
+    };
+
+    const selectDirectly = (index: number): void => {
+      const base = state.mode === 'overview' ? enterExploration(state) : state;
+      settleSelection(selectStateByIndex(base, index), 'direct');
+    };
+
+    const restoreOverview = (useReset: boolean): void => {
+      cancelPendingReveal();
+      stopPointerTracking();
+      committedIndexBeforeDrag = null;
+      state = useReset ? resetCycleExplorer(state) : returnToOverview(state);
+      inventory.open = false;
+      render();
+      announce('Returned to the original five-shell overview.');
+      exploreButton.focus();
+    };
+
+    exploreButton.disabled = false;
+    exploreButton.setAttribute('aria-disabled', 'false');
+    availability.hidden = true;
+    range.disabled = false;
+    qualitySelect.disabled = false;
+    inventoryButtons.forEach((button) => { button.disabled = false; });
+
+    qualitySelect.addEventListener('change', () => {
+      const requestedMode = qualitySelect.value as VisualQualityMode;
+      if (!VISUAL_QUALITY_MODES.includes(requestedMode)) return;
+      qualityMode = requestedMode;
+      if (state.selectedIndex !== null && state.mode !== 'overview') {
+        configureAtmosphere(getTomStateByIndex(state.selectedIndex), true);
+      }
+      announce(`Visual quality set to ${qualitySelect.selectedOptions[0]?.textContent ?? requestedMode}. Structural selection is unchanged.`);
+    });
+
+    const refreshAtmospherePolicy = (): void => {
+      if (state.selectedIndex === null || state.mode === 'overview' || !atmosphereActive) return;
+      configureAtmosphere(getTomStateByIndex(state.selectedIndex), true);
+    };
+    document.addEventListener('visibilitychange', refreshAtmospherePolicy);
+    reducedMotionQuery.addEventListener('change', refreshAtmospherePolicy);
+    window.addEventListener('resize', resizeAtmosphere, { passive: true });
+
+    dragSurface.addEventListener('pointerdown', (event) => {
+      if (
+        activePointerId !== null
+        || !event.isPrimary
+        || (event.pointerType === 'mouse' && event.button !== 0)
+        || state.mode === 'overview'
+        || state.selectedIndex === null
+      ) return;
+
+      event.preventDefault();
+      cancelPendingReveal();
+      committedIndexBeforeDrag = state.selectedIndex;
+      state = beginDragging(state);
+      activePointerId = event.pointerId;
+      root.classList.add('cycle-explorer--dragging');
+      dragSurface.setAttribute('data-dragging', 'true');
+      try {
+        dragSurface.setPointerCapture?.(event.pointerId);
+      } catch {
+        // Pointer capture is an enhancement; active-pointer checks still protect the drag.
+      }
+      stateDetails.hidden = true;
+      queueDragPoint(pointFromPointer(event));
+      announce(`Drag started from ${getTomStateByIndex(committedIndexBeforeDrag).label}.`);
+    });
+
+    dragSurface.addEventListener('pointermove', (event) => {
+      if (event.pointerId !== activePointerId || !event.isPrimary) return;
+      event.preventDefault();
+      queueDragPoint(pointFromPointer(event));
+    });
+
+    dragSurface.addEventListener('pointerup', (event) => {
+      if (event.pointerId !== activePointerId || !event.isPrimary || state.mode !== 'dragging') return;
+      event.preventDefault();
+      cancelDragAnimationFrame();
+      applyDragPoint(pointFromPointer(event));
+      const committedIndex = state.previewIndex ?? committedIndexBeforeDrag;
+      if (committedIndex === null) {
+        cancelActiveDrag();
+        return;
+      }
+      const anchor = getDragAnchorByCanonicalIndex(committedIndex);
+      state = releaseDragIntoSettling(state, committedIndex);
+      stopPointerTracking();
+      committedIndexBeforeDrag = null;
+      scheduleSettledDetails(
+        getTomStateByIndex(committedIndex),
+        'settling',
+        `Snapped to ${compactStructuralPreviewText(anchor)}. Settling.`,
+      );
+    });
+
+    dragSurface.addEventListener('pointercancel', (event) => {
+      if (event.pointerId !== activePointerId) return;
+      cancelActiveDrag();
+    });
+
+    dragSurface.addEventListener('lostpointercapture', (event) => {
+      if (event.pointerId !== activePointerId) return;
+      cancelActiveDrag();
+    });
+
+    exploreButton.addEventListener('click', () => {
+      settleSelection(enterExploration(state), 'settling');
+      panel.focus({ preventScroll: true });
+    });
+    previousButton.addEventListener('click', () => {
+      settleSelection(moveToPreviousState(state), 'sequential');
+    });
+    nextButton.addEventListener('click', () => {
+      settleSelection(moveToNextState(state), 'sequential');
+    });
+    beginCompressionButton.addEventListener('click', () => {
+      settleSelection(continueFromAtom(state), 'sequential');
+    });
+    beginNextBreathButton.addEventListener('click', () => {
+      settleSelection(beginNextCosmicBreath(state), 'sequential');
+    });
+    resetButton.addEventListener('click', () => restoreOverview(true));
+    returnButton.addEventListener('click', () => restoreOverview(false));
+
+    range.addEventListener('input', () => {
+      cancelPendingReveal();
+      cancelActiveDrag(false);
+      if (state.selectedIndex !== null && state.mode !== 'dragging') state = beginDragging(state);
+      const index = parseStructuralIndex(range.value);
+      const preview = getTomStateByIndex(index);
+      showStructuralPreview(preview);
+      stateDetails.hidden = true;
+      announce(`Previewing ${preview.label}, ${preview.phase} state ${preview.phaseIndex}.`);
+    });
+    range.addEventListener('change', () => {
+      selectDirectly(parseStructuralIndex(range.value));
+    });
+
+    inventoryButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const index = parseStructuralIndex(button.dataset.stateIndex ?? '');
+        selectDirectly(index);
+      });
+    });
+
+    root.addEventListener('keydown', (event) => {
+      const target = event.target instanceof HTMLElement ? event.target : null;
+      if (isEditableControl(target)) return;
+      const command = getExplorerKeyboardCommand(event.key);
+      if (command === null) return;
+      if (command === 'return-overview') {
+        if (state.mode !== 'overview') {
+          event.preventDefault();
+          restoreOverview(false);
+        }
+        return;
+      }
+      if (state.mode === 'overview' || state.selectedIndex === null) return;
+
+      event.preventDefault();
+      const selected = getTomStateByIndex(state.selectedIndex);
+      if (command === 'previous') {
+        settleSelection(moveToPreviousState(state), 'sequential');
+      } else if (command === 'next') {
+        settleSelection(moveToNextState(state), 'sequential');
+      } else if (command === 'first') {
+        selectDirectly(0);
+      } else if (command === 'last') {
+        selectDirectly(orderedTomStates.length - 1);
+      } else {
+        const bounds = getPhaseBoundaryIndices(selected.phase);
+        selectDirectly(command === 'phase-start' ? bounds.start : bounds.end);
+      }
+    });
+
+    render();
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-cosmic-breath-explorer]').forEach(initializeExplorer);
+</script>
+
+<style>
+  .cycle-explorer {
+    display: grid;
+    gap: var(--space-6);
+    width: 100%;
+    max-width: none;
+  }
+
+  .cycle-explorer__overview,
+  .cycle-explorer__panel {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .cycle-explorer__entry,
+  .cycle-explorer__panel,
+  .cycle-explorer__inventory {
+    padding: clamp(var(--space-4), 4vw, var(--space-8));
+    border: 1px solid var(--color-translucent-blue);
+    background: var(--color-surface-translucent);
+  }
+
+  .cycle-explorer__entry h2,
+  .cycle-explorer__header h3,
+  .cycle-explorer__details h4 {
+    margin: 0;
+    color: var(--color-white-gold);
+  }
+
+  .cycle-explorer p { margin-block: var(--space-3) 0; }
+
+  .cycle-explorer__entry,
+  .cycle-explorer__header,
+  .cycle-explorer__preview,
+  .cycle-explorer__controls,
+  .cycle-explorer__details {
+    min-width: 0;
+  }
+
+  .cycle-explorer__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-6);
+  }
+
+  .cycle-explorer__eyebrow {
+    margin: 0;
+    color: var(--color-cyan);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .cycle-explorer__cycle-count {
+    flex: 0 0 auto;
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+
+  .cycle-explorer__field {
+    display: grid;
+    gap: var(--space-3);
+    margin: 0;
+    padding: clamp(var(--space-3), 3vw, var(--space-6));
+    border: 1px solid var(--color-translucent-blue);
+    background: var(--color-background);
+  }
+
+  .cycle-explorer__quality {
+    display: grid;
+    grid-template-columns: auto minmax(8rem, 12rem);
+    align-items: center;
+    gap: var(--space-2) var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-translucent-blue);
+    background: var(--color-background);
+  }
+
+  .cycle-explorer__quality label { color: var(--color-white-gold); font-weight: 700; }
+  .cycle-explorer__quality select {
+    min-height: 2.75rem;
+    padding-inline: var(--space-3);
+    border: 1px solid var(--color-translucent-blue);
+    border-radius: 0.25rem;
+    background: var(--color-deep-navy-black);
+    color: var(--color-white-gold);
+    font: inherit;
+  }
+
+  .cycle-explorer__quality p {
+    grid-column: 1 / -1;
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+
+  .cycle-explorer__quality [data-quality-status] { color: var(--color-cyan); }
+
+  .cycle-explorer__visual-field { position: relative; isolation: isolate; }
+
+  .cycle-explorer__atmosphere {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0.25rem;
+    pointer-events: none;
+  }
+
+  .cycle-explorer__field-svg {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    border-radius: 0.25rem;
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+  }
+
+  .cycle-explorer__field-svg[data-dragging="true"] { cursor: grabbing; }
+  .cycle-explorer--dragging { user-select: none; }
+  .cycle-explorer__field-background {
+    fill: var(--color-surface-translucent);
+    stroke: var(--color-translucent-blue);
+    stroke-width: 0.35;
+  }
+
+  .cycle-explorer__field-center {
+    fill: var(--field-glow);
+    stroke: var(--color-translucent-blue);
+    stroke-dasharray: 1.2 1.2;
+    stroke-width: 0.25;
+  }
+
+  .cycle-explorer__path {
+    fill: none;
+    vector-effect: non-scaling-stroke;
+    transition: opacity 160ms ease;
+  }
+
+  .cycle-explorer__path--expansion {
+    stroke: var(--color-cyan);
+    stroke-width: 1.35;
+  }
+
+  .cycle-explorer__path--compression {
+    stroke: var(--color-amber);
+    stroke-width: 1.2;
+    stroke-dasharray: 3 2;
+  }
+
+  .cycle-explorer__anchors { transition: opacity 160ms ease; }
+  .cycle-explorer__anchors--expansion { fill: var(--color-cyan); }
+  .cycle-explorer__anchors--compression { fill: var(--color-amber); }
+  .cycle-explorer__field-svg[data-active-phase="expansion"] .cycle-explorer__path--compression,
+  .cycle-explorer__field-svg[data-active-phase="expansion"] .cycle-explorer__anchors--compression,
+  .cycle-explorer__field-svg[data-active-phase="compression"] .cycle-explorer__path--expansion,
+  .cycle-explorer__field-svg[data-active-phase="compression"] .cycle-explorer__anchors--expansion {
+    opacity: 0.26;
+  }
+
+  .cycle-explorer__boundary-labels {
+    fill: var(--color-white-gold);
+    font-family: var(--font-family-sans);
+    font-size: 2.2px;
+    font-weight: 700;
+    paint-order: stroke;
+    stroke: var(--color-background);
+    stroke-width: 0.7px;
+  }
+
+  .cycle-explorer__marker {
+    color: var(--color-white-gold);
+    pointer-events: none;
+    transition: transform 160ms ease-out;
+  }
+
+  .cycle-explorer__field-svg[data-dragging="true"] .cycle-explorer__marker {
+    transition: none;
+  }
+
+  .cycle-explorer__marker-target { fill: transparent; }
+  .cycle-explorer__marker-halo {
+    fill: var(--color-cyan);
+    opacity: 0.22;
+    stroke: var(--color-white-gold);
+    stroke-width: 0.3;
+  }
+
+  .cycle-explorer__marker-core {
+    fill: var(--color-white-gold);
+    stroke: var(--color-cyan);
+    stroke-width: 0.45;
+  }
+
+  .cycle-explorer__marker path {
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-width: 0.35;
+  }
+
+  .cycle-explorer__field figcaption,
+  .cycle-explorer__drag-preview,
+  .cycle-explorer__field-key {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+
+  .cycle-explorer__drag-preview {
+    margin: 0;
+    color: var(--color-white-gold);
+    font-weight: 700;
+  }
+
+  .cycle-explorer__field-key {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-6);
+  }
+
+  .cycle-explorer__field-key span { display: inline-flex; align-items: center; gap: var(--space-2); }
+  .cycle-explorer__key-symbol {
+    display: inline-block;
+    width: 0.7rem;
+    height: 0.7rem;
+    flex: 0 0 auto;
+  }
+
+  .cycle-explorer__key-symbol--expansion {
+    border-radius: 50%;
+    background: var(--color-cyan);
+  }
+
+  .cycle-explorer__key-symbol--compression {
+    background: var(--color-amber);
+    transform: rotate(45deg) scale(0.78);
+  }
+
+  .cycle-explorer__preview {
+    padding: var(--space-6);
+    border-left: 0.25rem solid var(--color-cyan);
+    background: var(--color-background);
+  }
+
+  .cycle-explorer__state-label {
+    color: var(--color-white-gold);
+    font-size: clamp(1.75rem, 7vw, 3.25rem);
+    font-weight: 700;
+    line-height: 1.05;
+  }
+
+  .cycle-explorer__position,
+  .cycle-explorer__keyboard-help,
+  .cycle-explorer__availability,
+  .cycle-explorer__inventory p {
+    color: var(--color-text-muted);
+    font-size: 0.9375rem;
+  }
+
+  .cycle-explorer__controls { display: grid; gap: var(--space-4); }
+  .cycle-explorer__button-row,
+  .cycle-explorer__utility-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .cycle-explorer__button,
+  .cycle-explorer__inventory button {
+    min-height: 2.75rem;
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-translucent-blue);
+    border-radius: 0.25rem;
+    background: var(--color-background);
+    color: var(--color-white-gold);
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .cycle-explorer__button--primary {
+    margin-top: var(--space-4);
+    border-color: var(--color-cyan);
+    background: var(--color-cyan);
+    color: var(--color-deep-navy-black);
+  }
+
+  .cycle-explorer__button--boundary { border-color: var(--color-amber); }
+  .cycle-explorer__button:hover:not(:disabled),
+  .cycle-explorer__inventory button:hover:not(:disabled) {
+    border-color: var(--color-cyan);
+  }
+
+  .cycle-explorer button:disabled { cursor: not-allowed; opacity: 0.52; }
+  .cycle-explorer button:focus-visible,
+  .cycle-explorer input:focus-visible,
+  .cycle-explorer select:focus-visible,
+  .cycle-explorer summary:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-cyan);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .cycle-explorer__range-label {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-4);
+    font-weight: 700;
+  }
+
+  .cycle-explorer__range { width: 100%; min-height: 2.75rem; accent-color: var(--color-cyan); }
+
+  .cycle-explorer__details {
+    display: grid;
+    gap: var(--space-4);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-translucent-blue);
+  }
+
+  .cycle-explorer__content-title {
+    margin: 0;
+    color: var(--color-cyan);
+    font-size: 1.125rem;
+    font-weight: 700;
+  }
+
+  .cycle-explorer__content-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  .cycle-explorer__content-field {
+    min-width: 0;
+    padding: clamp(var(--space-4), 3vw, var(--space-6));
+    border: 1px solid var(--color-translucent-blue);
+    background: var(--color-background);
+  }
+
+  .cycle-explorer__content-field--description { grid-column: 1 / -1; }
+  .cycle-explorer__content-field h5 {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.8125rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .cycle-explorer__content-value {
+    overflow-wrap: anywhere;
+    color: var(--color-white-gold);
+    font-size: clamp(1.25rem, 4vw, 1.75rem);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .cycle-explorer__content-helper { color: var(--color-text-muted); }
+  .cycle-explorer__learn-more {
+    margin-top: var(--space-4);
+    border-top: 1px solid var(--color-translucent-blue);
+  }
+
+  .cycle-explorer__learn-more summary {
+    display: flex;
+    min-height: 2.75rem;
+    align-items: center;
+    padding-block: var(--space-2);
+    overflow-wrap: anywhere;
+    color: var(--color-cyan);
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .cycle-explorer__learn-more p { overflow-wrap: anywhere; }
+  .cycle-explorer__epistemic-label {
+    margin: 0;
+    padding: var(--space-3) var(--space-4);
+    border-left: 0.25rem solid var(--color-cyan);
+    background: var(--color-background);
+    color: var(--color-white-gold);
+    font-size: 0.875rem;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+  }
+
+  .cycle-explorer__inventory summary {
+    min-height: 2.75rem;
+    color: var(--color-white-gold);
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .cycle-explorer__inventory ol {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2);
+    margin: var(--space-4) 0 0;
+    padding-left: 1.75rem;
+  }
+
+  .cycle-explorer__inventory button {
+    display: grid;
+    width: 100%;
+    justify-items: start;
+    text-align: left;
+  }
+
+  .cycle-explorer__inventory button[aria-current="true"] {
+    border-color: var(--color-cyan);
+    box-shadow: inset 0.25rem 0 var(--color-cyan);
+  }
+
+  .cycle-explorer__inventory small { color: var(--color-text-muted); font-weight: 400; }
+  .cycle-explorer__status { min-height: 1.5em; margin: 0; color: var(--color-cyan); }
+
+  [hidden] { display: none !important; }
+
+  @media (min-width: 75rem) {
+    .cycle-explorer__panel {
+      grid-template-columns: minmax(0, 1.65fr) minmax(22rem, 1fr);
+      grid-template-areas:
+        "header header"
+        "quality quality"
+        "field details"
+        "preview details"
+        "controls details"
+        "utility details";
+      align-items: start;
+    }
+
+    .cycle-explorer__header { grid-area: header; }
+    .cycle-explorer__quality { grid-area: quality; }
+    .cycle-explorer__field { grid-area: field; }
+    .cycle-explorer__preview { grid-area: preview; }
+    .cycle-explorer__controls { grid-area: controls; }
+    .cycle-explorer__details { grid-area: details; }
+    .cycle-explorer__utility-controls { grid-area: utility; }
+    .cycle-explorer__content-grid { grid-template-columns: 1fr; }
+    .cycle-explorer__content-field--description { grid-column: auto; }
+  }
+
+  @media (max-width: 48rem) {
+    .cycle-explorer__content-grid { grid-template-columns: 1fr; }
+    .cycle-explorer__content-field--description { grid-column: auto; }
+  }
+
+  @media (max-width: 40rem) {
+    .cycle-explorer__header { display: grid; }
+    .cycle-explorer__quality { grid-template-columns: 1fr; }
+    .cycle-explorer__quality p { grid-column: auto; }
+    .cycle-explorer__inventory ol { grid-template-columns: 1fr; }
+    .cycle-explorer__button-row,
+    .cycle-explorer__utility-controls { display: grid; }
+    .cycle-explorer__button { width: 100%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cycle-explorer *,
+    .cycle-explorer *::before,
+    .cycle-explorer *::after { scroll-behavior: auto !important; transition: none !important; }
+  }
+</style>
