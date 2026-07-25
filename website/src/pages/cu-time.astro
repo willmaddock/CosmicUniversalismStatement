@@ -29,6 +29,10 @@ import CUTimeConverter from '../components/CUTimeConverter.astro';
     </p>
   </ContentSection>
 
+  <div class="cu-time-converter-breakout">
+    <CUTimeConverter />
+  </div>
+
   <div class="cu-time-details">
     <ContentSection id="cu-time-purpose-limits" title="Purpose and limits">
       <ClassificationBadge
@@ -82,13 +86,20 @@ import CUTimeConverter from '../components/CUTimeConverter.astro';
       </p>
     </ContentSection>
   </div>
-
-  <CUTimeConverter />
 </ContentPageLayout>
 
 <style>
+  .cu-time-converter-breakout {
+    width: min(112rem, calc(100vw - clamp(2rem, 6vw, 6rem)));
+    max-width: none;
+    min-width: 0;
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+
   .cu-time-details {
     display: grid;
+    width: min(100%, 48rem);
     margin-top: var(--space-12);
     gap: var(--space-12);
   }

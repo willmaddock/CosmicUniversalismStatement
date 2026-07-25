@@ -14,8 +14,13 @@ import ClassificationBadge from './ClassificationBadge.astro';
     civil CE/BCE date corresponding to a converter-aligned CU-Time value.
   </p>
 
+  <nav class="cu-time-converter__nav" aria-label="Converter directions">
+    <a href="#gregorian-to-cu">Forward conversion</a>
+    <a href="#cu-to-gregorian">Reverse conversion</a>
+  </nav>
+
   <div class="cu-time-converter__directions">
-    <section class="cu-time-direction" aria-labelledby="gregorian-to-cu-title">
+    <section id="gregorian-to-cu" class="cu-time-direction" aria-labelledby="gregorian-to-cu-title">
     <div class="cu-time-direction__header">
       <p class="cu-time-direction__label">Forward conversion</p>
       <h3 id="gregorian-to-cu-title">Gregorian UTC to CU-Time</h3>
@@ -74,67 +79,9 @@ import ClassificationBadge from './ClassificationBadge.astro';
       <p id="gregorian-error" class="cu-time-form__error" role="alert" aria-live="assertive" hidden data-gregorian-error></p>
       <button type="submit">Convert Gregorian UTC</button>
     </form>
-
-    <section class="cu-time-result" aria-labelledby="gregorian-result-title" aria-live="polite" tabindex="-1" hidden data-gregorian-result>
-      <div class="cu-time-result__header">
-        <div>
-          <p class="cu-time-result__status">Conversion complete</p>
-          <h3 id="gregorian-result-title">CU-Time result</h3>
-        </div>
-        <button class="cu-time-result__copy" type="button" data-copy-button data-copy-source="gregorian-cu-time" aria-describedby="gregorian-copy-status">
-          Copy exact value
-        </button>
-      </div>
-      <dl class="cu-time-result__grid">
-        <div class="cu-time-result__item cu-time-result__item--context">
-          <dt>Input instant</dt>
-          <dd data-gregorian-result-input></dd>
-        </div>
-        <div class="cu-time-result__item cu-time-result__item--primary">
-          <dt>Exact CU-Time</dt>
-          <dd class="cu-time-result__number" data-gregorian-result-cu-time data-copy-value="gregorian-cu-time"></dd>
-          <p class="cu-time-result__note">Fixed-point decimal · no digits hidden</p>
-        </div>
-        <div class="cu-time-result__item">
-          <dt>Scientific notation</dt>
-          <dd class="cu-time-result__number" data-gregorian-result-exponential></dd>
-        </div>
-      </dl>
-      <section class="cu-time-result__reference" aria-labelledby="gregorian-reference-title">
-        <h4 id="gregorian-reference-title">Observable-Universe Reference</h4>
-        <dl class="cu-time-result__reference-grid">
-          <div class="cu-time-result__item">
-            <dt>Observable-Universe–Aligned CU Coordinate</dt>
-            <dd class="cu-time-result__number" data-gregorian-reference-coordinate></dd>
-            <p class="cu-time-result__note" data-gregorian-reference-coordinate-exponential></p>
-          </div>
-          <div class="cu-time-result__item">
-            <dt data-gregorian-reference-age-label>Derived Age Since the Big Bang</dt>
-            <dd class="cu-time-result__number" data-gregorian-reference-age-value></dd>
-            <p class="cu-time-result__note" data-gregorian-reference-age-message></p>
-          </div>
-          <div class="cu-time-result__item">
-            <dt>CU Coordinate-to-Observable-Age Ratio</dt>
-            <dd class="cu-time-result__number" data-gregorian-reference-ratio-value></dd>
-            <p class="cu-time-result__note" data-gregorian-reference-ratio-message></p>
-          </div>
-        </dl>
-        <details data-gregorian-reference-details>
-          <summary>Method and precision details</summary>
-          <p>
-            The aligned coordinate and derived age use the converter’s deterministic model arithmetic.
-            Computational precision, calendar/model precision, and empirical uncertainty are distinct.
-          </p>
-          <p data-gregorian-reference-ratio-exact-row hidden>
-            Exact ratio: <span class="cu-time-result__number" data-gregorian-reference-ratio-exact></span>
-          </p>
-        </details>
-      </section>
-      <p id="gregorian-copy-status" class="cu-time-result__copy-status" role="status" aria-live="polite" data-copy-status="gregorian-cu-time"></p>
-    </section>
     </section>
 
-    <section class="cu-time-direction" aria-labelledby="cu-to-gregorian-title">
+    <section id="cu-to-gregorian" class="cu-time-direction" aria-labelledby="cu-to-gregorian-title">
     <div class="cu-time-direction__header">
       <p class="cu-time-direction__label">Reverse conversion</p>
       <h3 id="cu-to-gregorian-title">CU-Time to Gregorian UTC</h3>
@@ -172,6 +119,76 @@ import ClassificationBadge from './ClassificationBadge.astro';
 
     <button type="submit">Convert CU-Time</button>
     </form>
+    </section>
+  </div>
+
+  <div class="cu-time-results" hidden data-cu-time-results>
+    <section class="cu-time-result" aria-labelledby="gregorian-result-title" aria-live="polite" tabindex="-1" hidden data-gregorian-result>
+      <div class="cu-time-result__header">
+        <div>
+          <p class="cu-time-result__status">Conversion complete</p>
+          <h3 id="gregorian-result-title">CU-Time result</h3>
+        </div>
+        <div class="cu-time-result__actions">
+          <button class="cu-time-result__copy" type="button" data-copy-button data-copy-source="gregorian-cu-time" aria-describedby="gregorian-copy-status">
+            Copy exact value
+          </button>
+          <button class="cu-time-result__return" type="button" data-return-to="gregorian-month">
+            Convert another value
+          </button>
+        </div>
+      </div>
+      <p class="cu-time-result__section-label">Primary converter output</p>
+      <dl class="cu-time-result__grid">
+        <div class="cu-time-result__item cu-time-result__item--primary">
+          <dt>Exact CU-Time</dt>
+          <dd class="cu-time-result__number" data-gregorian-result-cu-time data-copy-value="gregorian-cu-time"></dd>
+          <p class="cu-time-result__note">Fixed-point decimal · no digits hidden</p>
+        </div>
+        <div class="cu-time-result__item cu-time-result__item--context">
+          <dt>Input instant</dt>
+          <dd data-gregorian-result-input></dd>
+        </div>
+        <div class="cu-time-result__item">
+          <dt>Scientific notation</dt>
+          <dd class="cu-time-result__number" data-gregorian-result-exponential></dd>
+        </div>
+      </dl>
+      <section class="cu-time-result__reference" aria-labelledby="gregorian-reference-title">
+        <h4 id="gregorian-reference-title">Observable-Universe Reference</h4>
+        <p class="cu-time-result__reference-intro">
+          These values are derived reference interpretations and do not replace the exact converter output.
+        </p>
+        <dl class="cu-time-result__reference-grid">
+          <div class="cu-time-result__item">
+            <dt>Observable-Universe–Aligned CU Coordinate</dt>
+            <dd class="cu-time-result__number" data-gregorian-reference-coordinate></dd>
+            <p class="cu-time-result__note" data-gregorian-reference-coordinate-exponential></p>
+          </div>
+          <div class="cu-time-result__item">
+            <dt data-gregorian-reference-age-label>Derived Age Since the Big Bang</dt>
+            <dd class="cu-time-result__number" data-gregorian-reference-age-value></dd>
+            <p class="cu-time-result__note" data-gregorian-reference-age-message></p>
+          </div>
+          <div class="cu-time-result__item cu-time-result__item--full">
+            <dt>CU Coordinate-to-Observable-Age Ratio</dt>
+            <dd class="cu-time-result__number" data-gregorian-reference-ratio-value></dd>
+            <p class="cu-time-result__note" data-gregorian-reference-ratio-message></p>
+          </div>
+        </dl>
+        <details data-gregorian-reference-details>
+          <summary>Method and precision details</summary>
+          <p>
+            The aligned coordinate and derived age use the converter’s deterministic model arithmetic.
+            Computational precision, calendar/model precision, and empirical uncertainty are distinct.
+          </p>
+          <p data-gregorian-reference-ratio-exact-row hidden>
+            Exact ratio: <span class="cu-time-result__number" data-gregorian-reference-ratio-exact></span>
+          </p>
+        </details>
+      </section>
+      <p id="gregorian-copy-status" class="cu-time-result__copy-status" role="status" aria-live="polite" data-copy-status="gregorian-cu-time"></p>
+    </section>
 
     <section
       class="cu-time-result"
@@ -186,11 +203,22 @@ import ClassificationBadge from './ClassificationBadge.astro';
           <p class="cu-time-result__status">Conversion complete</p>
           <h3 id="cu-time-result-title">Gregorian UTC result</h3>
         </div>
-        <button class="cu-time-result__copy" type="button" data-copy-button data-copy-source="reverse-gregorian" aria-describedby="reverse-copy-status">
-          Copy date and time
-        </button>
+        <div class="cu-time-result__actions">
+          <button class="cu-time-result__copy" type="button" data-copy-button data-copy-source="reverse-gregorian" aria-describedby="reverse-copy-status">
+            Copy date and time
+          </button>
+          <button class="cu-time-result__return" type="button" data-return-to="cu-time-input">
+            Convert another value
+          </button>
+        </div>
       </div>
+      <p class="cu-time-result__section-label">Primary converter output</p>
       <dl class="cu-time-result__grid">
+        <div class="cu-time-result__item cu-time-result__item--primary">
+          <dt>Corresponding Gregorian instant</dt>
+          <dd data-cu-time-result-gregorian data-copy-value="reverse-gregorian"></dd>
+          <p class="cu-time-result__note">Proleptic Gregorian calendar · UTC</p>
+        </div>
         <div class="cu-time-result__item cu-time-result__item--context">
           <dt>Input CU-Time</dt>
           <dd class="cu-time-result__number" data-cu-time-result-input></dd>
@@ -199,14 +227,12 @@ import ClassificationBadge from './ClassificationBadge.astro';
           <dt>Scientific notation</dt>
           <dd class="cu-time-result__number" data-cu-time-result-exponential></dd>
         </div>
-        <div class="cu-time-result__item cu-time-result__item--primary">
-          <dt>Corresponding Gregorian instant</dt>
-          <dd data-cu-time-result-gregorian data-copy-value="reverse-gregorian"></dd>
-          <p class="cu-time-result__note">Proleptic Gregorian calendar · UTC</p>
-        </div>
       </dl>
       <section class="cu-time-result__reference" aria-labelledby="reverse-reference-title">
         <h4 id="reverse-reference-title">Observable-Universe Reference</h4>
+        <p class="cu-time-result__reference-intro">
+          These values are derived reference interpretations and do not replace the exact converter output.
+        </p>
         <dl class="cu-time-result__reference-grid">
           <div class="cu-time-result__item">
             <dt>Observable-Universe–Aligned CU Coordinate</dt>
@@ -218,7 +244,7 @@ import ClassificationBadge from './ClassificationBadge.astro';
             <dd class="cu-time-result__number" data-reverse-reference-age-value></dd>
             <p class="cu-time-result__note" data-reverse-reference-age-message></p>
           </div>
-          <div class="cu-time-result__item">
+          <div class="cu-time-result__item cu-time-result__item--full">
             <dt>CU Coordinate-to-Observable-Age Ratio</dt>
             <dd class="cu-time-result__number" data-reverse-reference-ratio-value></dd>
             <p class="cu-time-result__note" data-reverse-reference-ratio-message></p>
@@ -237,7 +263,6 @@ import ClassificationBadge from './ClassificationBadge.astro';
       </section>
       <p id="reverse-copy-status" class="cu-time-result__copy-status" role="status" aria-live="polite" data-copy-status="reverse-gregorian"></p>
     </section>
-    </section>
   </div>
 
   <p class="cu-time-converter__methodology">
@@ -249,6 +274,7 @@ import ClassificationBadge from './ClassificationBadge.astro';
 <script>
   import { convertCuTimeForDisplay, convertGregorianForDisplay } from '../lib/cuTime';
 
+  const resultsRegion = document.querySelector<HTMLElement>('[data-cu-time-results]');
   const gregorianForm = document.querySelector<HTMLFormElement>('[data-gregorian-form]');
   const gregorianFields = Array.from(document.querySelectorAll<HTMLInputElement | HTMLSelectElement>('[data-gregorian-field]'));
   const gregorianError = document.querySelector<HTMLElement>('[data-gregorian-error]');
@@ -256,6 +282,16 @@ import ClassificationBadge from './ClassificationBadge.astro';
   const gregorianResultInput = document.querySelector<HTMLElement>('[data-gregorian-result-input]');
   const gregorianResultCuTime = document.querySelector<HTMLElement>('[data-gregorian-result-cu-time]');
   const gregorianResultExponential = document.querySelector<HTMLElement>('[data-gregorian-result-exponential]');
+
+  const form = document.querySelector<HTMLFormElement>('[data-cu-time-form]');
+  const input = document.querySelector<HTMLInputElement>('[data-cu-time-input]');
+  const error = document.querySelector<HTMLElement>('[data-cu-time-error]');
+  const result = document.querySelector<HTMLElement>('[data-cu-time-result]');
+
+  function updateResultsRegionVisibility() {
+    if (!resultsRegion || !gregorianResult || !result) return;
+    resultsRegion.hidden = gregorianResult.hidden && result.hidden;
+  }
 
   interface ObservableReferenceElements {
     coordinate: HTMLElement | null;
@@ -353,6 +389,7 @@ import ClassificationBadge from './ClassificationBadge.astro';
         gregorianError.textContent = converted.error.message;
         gregorianError.hidden = false;
         gregorianResult.hidden = true;
+        updateResultsRegionVisibility();
         field?.focus();
         return;
       }
@@ -362,14 +399,11 @@ import ClassificationBadge from './ClassificationBadge.astro';
       gregorianResultExponential.textContent = converted.value.cuTimeExponential;
       renderObservableUniverseReference(converted.value.observableUniverseReference, gregorianReference);
       gregorianResult.hidden = false;
+      updateResultsRegionVisibility();
       gregorianResult.focus();
     });
   }
 
-  const form = document.querySelector<HTMLFormElement>('[data-cu-time-form]');
-  const input = document.querySelector<HTMLInputElement>('[data-cu-time-input]');
-  const error = document.querySelector<HTMLElement>('[data-cu-time-error]');
-  const result = document.querySelector<HTMLElement>('[data-cu-time-result]');
   const resultInput = document.querySelector<HTMLElement>('[data-cu-time-result-input]');
   const resultExponential = document.querySelector<HTMLElement>('[data-cu-time-result-exponential]');
   const resultGregorian = document.querySelector<HTMLElement>('[data-cu-time-result-gregorian]');
@@ -412,6 +446,7 @@ import ClassificationBadge from './ClassificationBadge.astro';
         error.textContent = converted.error.message;
         error.hidden = false;
         result.hidden = true;
+        updateResultsRegionVisibility();
         input.focus();
         return;
       }
@@ -421,6 +456,7 @@ import ClassificationBadge from './ClassificationBadge.astro';
       resultGregorian.textContent = converted.value.gregorianUtc;
       renderObservableUniverseReference(converted.value.observableUniverseReference, reverseReference);
       result.hidden = false;
+      updateResultsRegionVisibility();
       result.focus();
     });
   }
@@ -445,6 +481,14 @@ import ClassificationBadge from './ClassificationBadge.astro';
       }
     });
   });
+
+  document.querySelectorAll<HTMLButtonElement>('[data-return-to]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const targetId = button.dataset.returnTo;
+      if (!targetId) return;
+      document.getElementById(targetId)?.focus();
+    });
+  });
 </script>
 
 <style>
@@ -463,11 +507,20 @@ import ClassificationBadge from './ClassificationBadge.astro';
   .cu-time-direction__header,
   .cu-time-form,
   .cu-time-form__field,
+  .cu-time-results,
   .cu-time-result,
   .cu-time-result__reference,
   .cu-time-result dl {
     display: grid;
     gap: var(--space-4);
+  }
+
+  .cu-time-results {
+    gap: var(--space-6);
+  }
+
+  .cu-time-results[hidden] {
+    display: none;
   }
 
   .cu-time-converter__eyebrow,
@@ -480,8 +533,22 @@ import ClassificationBadge from './ClassificationBadge.astro';
   .cu-time-result h3,
   .cu-time-result h4,
   .cu-time-result dl,
-  .cu-time-result dd {
+  .cu-time-result dd,
+  .cu-time-result__section-label,
+  .cu-time-result__reference-intro {
     margin: 0;
+  }
+
+  .cu-time-converter__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .cu-time-converter__nav a {
+    color: var(--color-cyan);
+    font-weight: 700;
+    text-underline-offset: 0.2em;
   }
 
   .cu-time-converter__directions {
@@ -533,8 +600,7 @@ import ClassificationBadge from './ClassificationBadge.astro';
   }
 
   .cu-time-converter__intro,
-  .cu-time-converter__methodology,
-  .cu-time-form {
+  .cu-time-converter__methodology {
     max-width: var(--measure-readable);
   }
 
@@ -589,7 +655,9 @@ import ClassificationBadge from './ClassificationBadge.astro';
   .cu-time-form input:focus-visible,
   .cu-time-form select:focus-visible,
   .cu-time-form button:focus-visible,
+  .cu-time-converter__nav a:focus-visible,
   .cu-time-result__copy:focus-visible,
+  .cu-time-result__return:focus-visible,
   .cu-time-result:focus-visible {
     outline: 3px solid var(--color-cyan);
     outline-offset: 3px;
@@ -638,6 +706,13 @@ import ClassificationBadge from './ClassificationBadge.astro';
     gap: var(--space-4);
   }
 
+  .cu-time-result__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--space-2);
+  }
+
   .cu-time-result__header h3,
   .cu-time-result__status,
   .cu-time-result__note,
@@ -645,13 +720,23 @@ import ClassificationBadge from './ClassificationBadge.astro';
     margin: 0;
   }
 
+  .cu-time-result__section-label {
+    color: var(--color-cyan);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
   .cu-time-result__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
   }
 
   .cu-time-result__reference {
-    padding-top: var(--space-4);
+    padding: var(--space-4);
     border-top: 1px solid var(--color-translucent-blue);
+    background: rgb(6 11 23 / 28%);
   }
 
   .cu-time-result__reference h4 {
@@ -659,11 +744,32 @@ import ClassificationBadge from './ClassificationBadge.astro';
     font-size: 1rem;
   }
 
+  .cu-time-result__reference-intro {
+    max-width: var(--measure-readable);
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+
   .cu-time-result__reference-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6) var(--space-4);
+  }
+
+  .cu-time-result__reference-grid .cu-time-result__item {
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .cu-time-result__reference-grid .cu-time-result__item--full {
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-translucent-blue);
   }
 
   .cu-time-result details {
+    margin-top: var(--space-4);
+    padding: var(--space-4);
+    border: 1px solid var(--color-translucent-blue);
+    background: rgb(6 11 23 / 40%);
     color: var(--color-text-muted);
   }
 
@@ -685,9 +791,13 @@ import ClassificationBadge from './ClassificationBadge.astro';
     border-top: 1px solid var(--color-translucent-blue);
   }
 
-  .cu-time-result__item--context,
-  .cu-time-result__item--primary {
+  .cu-time-result__item--primary,
+  .cu-time-result__item--full {
     grid-column: 1 / -1;
+  }
+
+  .cu-time-result__item--context {
+    grid-column: auto;
   }
 
   .cu-time-result__item--primary {
@@ -703,6 +813,7 @@ import ClassificationBadge from './ClassificationBadge.astro';
   }
 
   .cu-time-result__number {
+    overflow-wrap: anywhere;
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     font-size: clamp(0.88rem, 1.6vw, 1rem);
     line-height: 1.6;
@@ -715,7 +826,9 @@ import ClassificationBadge from './ClassificationBadge.astro';
   }
 
   .cu-time-result__copy {
+    box-sizing: border-box;
     flex: 0 0 auto;
+    max-width: 100%;
     padding: var(--space-2) var(--space-3);
     border: 1px solid var(--color-cyan);
     background: transparent;
@@ -726,7 +839,22 @@ import ClassificationBadge from './ClassificationBadge.astro';
     font-weight: 700;
   }
 
-  .cu-time-result__copy:hover {
+  .cu-time-result__return {
+    box-sizing: border-box;
+    flex: 0 0 auto;
+    max-width: 100%;
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-translucent-blue);
+    background: transparent;
+    color: var(--color-text);
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  .cu-time-result__copy:hover,
+  .cu-time-result__return:hover {
     background: var(--color-translucent-blue);
   }
 
@@ -746,6 +874,13 @@ import ClassificationBadge from './ClassificationBadge.astro';
 
   @media (max-width: 64rem) {
     .cu-time-converter__directions {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 60rem) {
+    .cu-time-result__grid,
+    .cu-time-result__reference-grid {
       grid-template-columns: 1fr;
     }
   }
@@ -774,16 +909,13 @@ import ClassificationBadge from './ClassificationBadge.astro';
       flex-direction: column;
     }
 
-    .cu-time-result__copy {
+    .cu-time-result__actions {
       width: 100%;
     }
 
-    .cu-time-result__grid {
-      grid-template-columns: 1fr;
-    }
-
-    .cu-time-result__reference-grid {
-      grid-template-columns: 1fr;
+    .cu-time-result__copy,
+    .cu-time-result__return {
+      width: 100%;
     }
   }
 </style>
