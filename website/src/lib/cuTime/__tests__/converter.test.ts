@@ -25,6 +25,13 @@ describe('CU-Time mathematical core', () => {
     expect(result.value.nasaCuTime.toString()).toBe('3094213000000');
     expect(result.value.cuTime.toString()).toBe(ANCHOR_CU_TIME);
     expect(result.value.yearsSinceBigBang.toString()).toBe('13786999981.453');
+    expect(result.value.observableUniverseReference).toMatchObject({
+      observableAge: { kind: 'elapsed' },
+      coordinateToObservableAgeRatio: { kind: 'available' },
+    });
+    if (result.value.observableUniverseReference.coordinateToObservableAgeRatio.kind === 'available') {
+      expect(result.value.observableUniverseReference.coordinateToObservableAgeRatio.value.toFixed(3)).toBe('224.430');
+    }
   });
 
   it('round-trips the approved anchor', () => {

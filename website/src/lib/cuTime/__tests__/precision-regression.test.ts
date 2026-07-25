@@ -55,7 +55,7 @@ describe('precision and coordinate regression coverage', () => {
     expect(nextSecond.value.cuTime.minus(anchor.value.cuTime).isPositive()).toBe(true);
   });
 
-  it('treats the executable Big Bang coordinate as zero signed model-relative years', () => {
+  it('classifies the executable Big Bang coordinate as a reference boundary without a ratio', () => {
     const converterBigBang = CU_TIME_CONSTANTS.bigBangCuNasa.minus(CU_TIME_CONSTANTS.offset);
     const result = convertCuTimeToGregorian(converterBigBang);
 
@@ -63,9 +63,17 @@ describe('precision and coordinate regression coverage', () => {
     if (!result.ok) return;
     expect(result.value.nasaCuTime.toString()).toBe('3080426000018.547');
     expect(result.value.yearsSinceBigBang.toString()).toBe('0');
+    expect(result.value.observableUniverseReference).toEqual({
+      observableUniverseAlignedCuCoordinate: CU_TIME_CONSTANTS.bigBangCuNasa,
+      observableAge: { kind: 'big-bang-boundary' },
+      coordinateToObservableAgeRatio: {
+        kind: 'not-applicable',
+        reason: 'big-bang-boundary',
+      },
+    });
   });
 
-  it('keeps pre-Big-Bang years signed instead of rejecting or clamping them', () => {
+  it('keeps pre-Big-Bang arithmetic signed internally while exposing a positive interval state', () => {
     const converterBeforeBigBang = CU_TIME_CONSTANTS.bigBangCuNasa
       .minus(CU_TIME_CONSTANTS.offset)
       .minus('1');
@@ -74,6 +82,19 @@ describe('precision and coordinate regression coverage', () => {
     expect(result.ok).toBe(true);
     if (!result.ok) return;
     expect(result.value.yearsSinceBigBang.toString()).toBe('-1');
+    expect(result.value.observableUniverseReference).toMatchObject({
+      observableAge: {
+        kind: 'pre-big-bang-reference-interval',
+        intervalYears: expect.objectContaining({}),
+      },
+      coordinateToObservableAgeRatio: {
+        kind: 'not-applicable',
+        reason: 'pre-big-bang-reference-interval',
+      },
+    });
+    if (result.value.observableUniverseReference.observableAge.kind === 'pre-big-bang-reference-interval') {
+      expect(result.value.observableUniverseReference.observableAge.intervalYears.toString()).toBe('1');
+    }
   });
 
   it('returns a structured range error for a finite CU coordinate beyond calendar support', () => {

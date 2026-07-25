@@ -100,6 +100,36 @@ import ClassificationBadge from './ClassificationBadge.astro';
           <dd class="cu-time-result__number" data-gregorian-result-exponential></dd>
         </div>
       </dl>
+      <section class="cu-time-result__reference" aria-labelledby="gregorian-reference-title">
+        <h4 id="gregorian-reference-title">Observable-Universe Reference</h4>
+        <dl class="cu-time-result__reference-grid">
+          <div class="cu-time-result__item">
+            <dt>Observable-Universe–Aligned CU Coordinate</dt>
+            <dd class="cu-time-result__number" data-gregorian-reference-coordinate></dd>
+            <p class="cu-time-result__note" data-gregorian-reference-coordinate-exponential></p>
+          </div>
+          <div class="cu-time-result__item">
+            <dt data-gregorian-reference-age-label>Derived Age Since the Big Bang</dt>
+            <dd class="cu-time-result__number" data-gregorian-reference-age-value></dd>
+            <p class="cu-time-result__note" data-gregorian-reference-age-message></p>
+          </div>
+          <div class="cu-time-result__item">
+            <dt>CU Coordinate-to-Observable-Age Ratio</dt>
+            <dd class="cu-time-result__number" data-gregorian-reference-ratio-value></dd>
+            <p class="cu-time-result__note" data-gregorian-reference-ratio-message></p>
+          </div>
+        </dl>
+        <details data-gregorian-reference-details>
+          <summary>Method and precision details</summary>
+          <p>
+            The aligned coordinate and derived age use the converter’s deterministic model arithmetic.
+            Computational precision, calendar/model precision, and empirical uncertainty are distinct.
+          </p>
+          <p data-gregorian-reference-ratio-exact-row hidden>
+            Exact ratio: <span class="cu-time-result__number" data-gregorian-reference-ratio-exact></span>
+          </p>
+        </details>
+      </section>
       <p id="gregorian-copy-status" class="cu-time-result__copy-status" role="status" aria-live="polite" data-copy-status="gregorian-cu-time"></p>
     </section>
     </section>
@@ -175,6 +205,36 @@ import ClassificationBadge from './ClassificationBadge.astro';
           <p class="cu-time-result__note">Proleptic Gregorian calendar · UTC</p>
         </div>
       </dl>
+      <section class="cu-time-result__reference" aria-labelledby="reverse-reference-title">
+        <h4 id="reverse-reference-title">Observable-Universe Reference</h4>
+        <dl class="cu-time-result__reference-grid">
+          <div class="cu-time-result__item">
+            <dt>Observable-Universe–Aligned CU Coordinate</dt>
+            <dd class="cu-time-result__number" data-reverse-reference-coordinate></dd>
+            <p class="cu-time-result__note" data-reverse-reference-coordinate-exponential></p>
+          </div>
+          <div class="cu-time-result__item">
+            <dt data-reverse-reference-age-label>Derived Age Since the Big Bang</dt>
+            <dd class="cu-time-result__number" data-reverse-reference-age-value></dd>
+            <p class="cu-time-result__note" data-reverse-reference-age-message></p>
+          </div>
+          <div class="cu-time-result__item">
+            <dt>CU Coordinate-to-Observable-Age Ratio</dt>
+            <dd class="cu-time-result__number" data-reverse-reference-ratio-value></dd>
+            <p class="cu-time-result__note" data-reverse-reference-ratio-message></p>
+          </div>
+        </dl>
+        <details data-reverse-reference-details>
+          <summary>Method and precision details</summary>
+          <p>
+            The aligned coordinate and derived age use the converter’s deterministic model arithmetic.
+            Computational precision, calendar/model precision, and empirical uncertainty are distinct.
+          </p>
+          <p data-reverse-reference-ratio-exact-row hidden>
+            Exact ratio: <span class="cu-time-result__number" data-reverse-reference-ratio-exact></span>
+          </p>
+        </details>
+      </section>
       <p id="reverse-copy-status" class="cu-time-result__copy-status" role="status" aria-live="polite" data-copy-status="reverse-gregorian"></p>
     </section>
     </section>
@@ -196,6 +256,63 @@ import ClassificationBadge from './ClassificationBadge.astro';
   const gregorianResultInput = document.querySelector<HTMLElement>('[data-gregorian-result-input]');
   const gregorianResultCuTime = document.querySelector<HTMLElement>('[data-gregorian-result-cu-time]');
   const gregorianResultExponential = document.querySelector<HTMLElement>('[data-gregorian-result-exponential]');
+
+  interface ObservableReferenceElements {
+    coordinate: HTMLElement | null;
+    coordinateExponential: HTMLElement | null;
+    ageLabel: HTMLElement | null;
+    ageValue: HTMLElement | null;
+    ageMessage: HTMLElement | null;
+    ratioValue: HTMLElement | null;
+    ratioMessage: HTMLElement | null;
+    ratioExact: HTMLElement | null;
+    ratioExactRow: HTMLElement | null;
+    details: HTMLDetailsElement | null;
+  }
+
+  function renderObservableUniverseReference(
+    reference: {
+      observableUniverseAlignedCuCoordinate: string;
+      observableUniverseAlignedCuCoordinateExponential: string;
+      observableAge: { kind: string; label: string; years?: string; intervalYears?: string; message?: string };
+      coordinateToObservableAgeRatio: { kind: string; summary?: string; exact?: string; message?: string };
+    },
+    elements: ObservableReferenceElements,
+  ) {
+    if (!elements.coordinate || !elements.coordinateExponential || !elements.ageLabel || !elements.ageValue
+      || !elements.ageMessage || !elements.ratioValue || !elements.ratioMessage || !elements.ratioExact
+      || !elements.ratioExactRow || !elements.details) return;
+
+    elements.coordinate.textContent = reference.observableUniverseAlignedCuCoordinate;
+    elements.coordinateExponential.textContent = `Scientific notation: ${reference.observableUniverseAlignedCuCoordinateExponential}`;
+    elements.ageLabel.textContent = reference.observableAge.label;
+    elements.ageValue.textContent = reference.observableAge.kind === 'elapsed'
+      ? `${reference.observableAge.years} years`
+      : reference.observableAge.kind === 'pre-big-bang-reference-interval'
+        ? `${reference.observableAge.intervalYears} years`
+        : '';
+    elements.ageMessage.textContent = reference.observableAge.message ?? '';
+    elements.ratioValue.textContent = reference.coordinateToObservableAgeRatio.kind === 'available'
+      ? reference.coordinateToObservableAgeRatio.summary ?? ''
+      : '';
+    elements.ratioMessage.textContent = reference.coordinateToObservableAgeRatio.message ?? '';
+    elements.ratioExact.textContent = reference.coordinateToObservableAgeRatio.exact ?? '';
+    elements.ratioExactRow.hidden = reference.coordinateToObservableAgeRatio.kind !== 'available';
+    elements.details.open = false;
+  }
+
+  const gregorianReference: ObservableReferenceElements = {
+    coordinate: document.querySelector<HTMLElement>('[data-gregorian-reference-coordinate]'),
+    coordinateExponential: document.querySelector<HTMLElement>('[data-gregorian-reference-coordinate-exponential]'),
+    ageLabel: document.querySelector<HTMLElement>('[data-gregorian-reference-age-label]'),
+    ageValue: document.querySelector<HTMLElement>('[data-gregorian-reference-age-value]'),
+    ageMessage: document.querySelector<HTMLElement>('[data-gregorian-reference-age-message]'),
+    ratioValue: document.querySelector<HTMLElement>('[data-gregorian-reference-ratio-value]'),
+    ratioMessage: document.querySelector<HTMLElement>('[data-gregorian-reference-ratio-message]'),
+    ratioExact: document.querySelector<HTMLElement>('[data-gregorian-reference-ratio-exact]'),
+    ratioExactRow: document.querySelector<HTMLElement>('[data-gregorian-reference-ratio-exact-row]'),
+    details: document.querySelector<HTMLDetailsElement>('[data-gregorian-reference-details]'),
+  };
 
   const clearCopyStatus = (source: string) => {
     const status = document.querySelector<HTMLElement>(`[data-copy-status="${source}"]`);
@@ -243,6 +360,7 @@ import ClassificationBadge from './ClassificationBadge.astro';
       gregorianResultInput.textContent = converted.value.gregorianUtc;
       gregorianResultCuTime.textContent = converted.value.cuTime;
       gregorianResultExponential.textContent = converted.value.cuTimeExponential;
+      renderObservableUniverseReference(converted.value.observableUniverseReference, gregorianReference);
       gregorianResult.hidden = false;
       gregorianResult.focus();
     });
@@ -255,6 +373,18 @@ import ClassificationBadge from './ClassificationBadge.astro';
   const resultInput = document.querySelector<HTMLElement>('[data-cu-time-result-input]');
   const resultExponential = document.querySelector<HTMLElement>('[data-cu-time-result-exponential]');
   const resultGregorian = document.querySelector<HTMLElement>('[data-cu-time-result-gregorian]');
+  const reverseReference: ObservableReferenceElements = {
+    coordinate: document.querySelector<HTMLElement>('[data-reverse-reference-coordinate]'),
+    coordinateExponential: document.querySelector<HTMLElement>('[data-reverse-reference-coordinate-exponential]'),
+    ageLabel: document.querySelector<HTMLElement>('[data-reverse-reference-age-label]'),
+    ageValue: document.querySelector<HTMLElement>('[data-reverse-reference-age-value]'),
+    ageMessage: document.querySelector<HTMLElement>('[data-reverse-reference-age-message]'),
+    ratioValue: document.querySelector<HTMLElement>('[data-reverse-reference-ratio-value]'),
+    ratioMessage: document.querySelector<HTMLElement>('[data-reverse-reference-ratio-message]'),
+    ratioExact: document.querySelector<HTMLElement>('[data-reverse-reference-ratio-exact]'),
+    ratioExactRow: document.querySelector<HTMLElement>('[data-reverse-reference-ratio-exact-row]'),
+    details: document.querySelector<HTMLDetailsElement>('[data-reverse-reference-details]'),
+  };
 
   if (form && input && error && result && resultInput && resultExponential && resultGregorian) {
     const clearError = () => {
@@ -289,6 +419,7 @@ import ClassificationBadge from './ClassificationBadge.astro';
       resultInput.textContent = converted.value.inputCuTime;
       resultExponential.textContent = converted.value.inputCuTimeExponential;
       resultGregorian.textContent = converted.value.gregorianUtc;
+      renderObservableUniverseReference(converted.value.observableUniverseReference, reverseReference);
       result.hidden = false;
       result.focus();
     });
@@ -333,6 +464,7 @@ import ClassificationBadge from './ClassificationBadge.astro';
   .cu-time-form,
   .cu-time-form__field,
   .cu-time-result,
+  .cu-time-result__reference,
   .cu-time-result dl {
     display: grid;
     gap: var(--space-4);
@@ -346,6 +478,7 @@ import ClassificationBadge from './ClassificationBadge.astro';
   .cu-time-form__hint,
   .cu-time-form__error,
   .cu-time-result h3,
+  .cu-time-result h4,
   .cu-time-result dl,
   .cu-time-result dd {
     margin: 0;
@@ -516,6 +649,34 @@ import ClassificationBadge from './ClassificationBadge.astro';
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .cu-time-result__reference {
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-translucent-blue);
+  }
+
+  .cu-time-result__reference h4 {
+    color: var(--color-text);
+    font-size: 1rem;
+  }
+
+  .cu-time-result__reference-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .cu-time-result details {
+    color: var(--color-text-muted);
+  }
+
+  .cu-time-result summary {
+    cursor: pointer;
+    color: var(--color-text);
+    font-weight: 700;
+  }
+
+  .cu-time-result details p {
+    margin: var(--space-3) 0 0;
+  }
+
   .cu-time-result__item {
     display: grid;
     gap: var(--space-2);
@@ -618,6 +779,10 @@ import ClassificationBadge from './ClassificationBadge.astro';
     }
 
     .cu-time-result__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .cu-time-result__reference-grid {
       grid-template-columns: 1fr;
     }
   }

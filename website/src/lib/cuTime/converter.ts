@@ -7,9 +7,48 @@ import type {
   CanonicalGregorianUtc,
   CivilGregorianInput,
   ForwardConversionResult,
+  ObservableUniverseReferenceResult,
   ReverseConversionResult,
 } from './types';
 import { parseCuTimeInput, validateCivilGregorianInput } from './validation';
+
+function deriveObservableUniverseReference(
+  nasaCuTime: Decimal,
+  yearsSinceBigBang: Decimal,
+): ObservableUniverseReferenceResult | null {
+  if (yearsSinceBigBang.isZero()) {
+    return {
+      observableUniverseAlignedCuCoordinate: nasaCuTime,
+      observableAge: { kind: 'big-bang-boundary' },
+      coordinateToObservableAgeRatio: {
+        kind: 'not-applicable',
+        reason: 'big-bang-boundary',
+      },
+    };
+  }
+
+  if (yearsSinceBigBang.isPositive()) {
+    const ratio = nasaCuTime.dividedBy(yearsSinceBigBang);
+    if (!ratio.isFinite()) return null;
+    return {
+      observableUniverseAlignedCuCoordinate: nasaCuTime,
+      observableAge: { kind: 'elapsed', years: yearsSinceBigBang },
+      coordinateToObservableAgeRatio: { kind: 'available', value: ratio },
+    };
+  }
+
+  return {
+    observableUniverseAlignedCuCoordinate: nasaCuTime,
+    observableAge: {
+      kind: 'pre-big-bang-reference-interval',
+      intervalYears: yearsSinceBigBang.absoluteValue(),
+    },
+    coordinateToObservableAgeRatio: {
+      kind: 'not-applicable',
+      reason: 'pre-big-bang-reference-interval',
+    },
+  };
+}
 
 export function convertGregorianUtcToCuTime(
   input: CanonicalGregorianUtc,
@@ -26,10 +65,22 @@ export function convertGregorianUtcToCuTime(
     if (![jdn, deltaJdn, deltaYears, nasaCuTime, cuTime, yearsSinceBigBang].every((value) => value.isFinite())) {
       return failure('NONFINITE_CU_RESULT', 'The forward conversion produced a nonfinite result.');
     }
+    const observableUniverseReference = deriveObservableUniverseReference(nasaCuTime, yearsSinceBigBang);
+    if (!observableUniverseReference) {
+      return failure('NONFINITE_CU_RESULT', 'The forward conversion produced a nonfinite result.');
+    }
 
     return {
       ok: true,
-      value: { jdn, deltaJdn, deltaYears, nasaCuTime, cuTime, yearsSinceBigBang },
+      value: {
+        jdn,
+        deltaJdn,
+        deltaYears,
+        nasaCuTime,
+        cuTime,
+        yearsSinceBigBang,
+        observableUniverseReference,
+      },
     };
   } catch {
     return failure('INTERNAL_CONVERSION_ERROR', 'The forward conversion could not be completed.');
@@ -68,7 +119,11 @@ export function convertCuTimeToGregorian(
     const nasaDeltaFromAnchor = nasaCuTime.minus(CU_TIME_CONSTANTS.baseCuNasa);
     const yearsSinceBigBang = CU_TIME_CONSTANTS.nasaUniverseAge.plus(nasaDeltaFromAnchor);
 
-    if (![nasaCuTime, deltaYears, deltaJdn, jdn, yearsSinceBigBang].every((value) => value.isFinite())) {
+    if (![nasaCuTime, deltaYears, yearsSinceBigBang].every((value) => value.isFinite())) {
+      return failure('NONFINITE_CU_RESULT', 'The reverse conversion produced a nonfinite result.');
+    }
+    const observableUniverseReference = deriveObservableUniverseReference(nasaCuTime, yearsSinceBigBang);
+    if (!observableUniverseReference) {
       return failure('NONFINITE_CU_RESULT', 'The reverse conversion produced a nonfinite result.');
     }
 
@@ -81,6 +136,7 @@ export function convertCuTimeToGregorian(
         deltaJdn,
         jdn,
         yearsSinceBigBang,
+        observableUniverseReference,
         ...calendar.value,
       },
     };

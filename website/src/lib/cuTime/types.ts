@@ -32,6 +32,24 @@ export interface CivilGregorianUtc extends UtcTimeInput {
   day: number;
 }
 
+export type ObservableAgeState =
+  | { kind: 'elapsed'; years: Decimal }
+  | { kind: 'big-bang-boundary' }
+  | { kind: 'pre-big-bang-reference-interval'; intervalYears: Decimal };
+
+export type CoordinateToObservableAgeRatioState =
+  | { kind: 'available'; value: Decimal }
+  | {
+      kind: 'not-applicable';
+      reason: 'big-bang-boundary' | 'pre-big-bang-reference-interval';
+    };
+
+export interface ObservableUniverseReferenceResult {
+  observableUniverseAlignedCuCoordinate: Decimal;
+  observableAge: ObservableAgeState;
+  coordinateToObservableAgeRatio: CoordinateToObservableAgeRatioState;
+}
+
 export interface ForwardConversionResult {
   jdn: Decimal;
   deltaJdn: Decimal;
@@ -39,6 +57,7 @@ export interface ForwardConversionResult {
   nasaCuTime: Decimal;
   cuTime: Decimal;
   yearsSinceBigBang: Decimal;
+  observableUniverseReference: ObservableUniverseReferenceResult;
 }
 
 export interface ReverseConversionResult extends CivilGregorianUtc {
@@ -48,6 +67,7 @@ export interface ReverseConversionResult extends CivilGregorianUtc {
   deltaJdn: Decimal;
   jdn: Decimal;
   yearsSinceBigBang: Decimal;
+  observableUniverseReference: ObservableUniverseReferenceResult;
 }
 
 export interface ParsedCuTimeInput {
