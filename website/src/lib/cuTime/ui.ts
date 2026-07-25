@@ -4,12 +4,49 @@ import {
   convertGregorianToCuTime,
   parseAndConvertCuTimeToGregorian,
 } from './converter';
-import type { CivilGregorianInput, CivilGregorianUtc, Era } from './types';
+import type {
+  CivilGregorianInput,
+  CivilGregorianUtc,
+  CoordinateToObservableAgeRatioState,
+  Era,
+  ObservableAgeState,
+  ObservableUniverseReferenceResult,
+} from './types';
+
+export interface ObservableUniverseReferenceDisplay {
+  observableUniverseAlignedCuCoordinate: string;
+  observableUniverseAlignedCuCoordinateExponential: string;
+  observableAge:
+    | { kind: 'elapsed'; label: 'Derived Age Since the Big Bang'; years: string }
+    | {
+        kind: 'big-bang-boundary';
+        label: 'Big Bang reference boundary';
+        message: string;
+      }
+    | {
+        kind: 'pre-big-bang-reference-interval';
+        label: 'Pre-Big-Bang Reference Interval';
+        intervalYears: string;
+        message: string;
+      };
+  coordinateToObservableAgeRatio:
+    | {
+        kind: 'available';
+        label: 'CU Coordinate-to-Observable-Age Ratio';
+        summary: string;
+        exact: string;
+      }
+    | {
+        kind: 'not-applicable';
+        message: string;
+      };
+}
 
 export interface CuTimeDisplayResult {
   inputCuTime: string;
   inputCuTimeExponential: string;
   gregorianUtc: string;
+  observableUniverseReference: ObservableUniverseReferenceDisplay;
 }
 
 export type CuTimeDisplayOutcome =
@@ -30,6 +67,7 @@ export interface GregorianToCuTimeDisplayResult {
   gregorianUtc: string;
   cuTime: string;
   cuTimeExponential: string;
+  observableUniverseReference: ObservableUniverseReferenceDisplay;
 }
 
 export type GregorianToCuTimeDisplayOutcome =
@@ -38,6 +76,59 @@ export type GregorianToCuTimeDisplayOutcome =
 
 function padComponent(value: number): string {
   return String(value).padStart(2, '0');
+}
+
+function formatObservableAge(observableAge: ObservableAgeState): ObservableUniverseReferenceDisplay['observableAge'] {
+  if (observableAge.kind === 'elapsed') {
+    return {
+      kind: 'elapsed',
+      label: 'Derived Age Since the Big Bang',
+      years: observableAge.years.toFixed(),
+    };
+  }
+  if (observableAge.kind === 'big-bang-boundary') {
+    return {
+      kind: 'big-bang-boundary',
+      label: 'Big Bang reference boundary',
+      message: 'The observable-universe elapsed-age comparison begins here within the larger, already-existing CU-Time coordinate.',
+    };
+  }
+  return {
+    kind: 'pre-big-bang-reference-interval',
+    label: 'Pre-Big-Bang Reference Interval',
+    intervalYears: observableAge.intervalYears.toFixed(),
+    message: 'This coordinate is before the adopted observable-universe Big Bang reference within the broader CU-Time coordinate.',
+  };
+}
+
+function formatObservableRatio(
+  ratio: CoordinateToObservableAgeRatioState,
+): ObservableUniverseReferenceDisplay['coordinateToObservableAgeRatio'] {
+  if (ratio.kind === 'available') {
+    return {
+      kind: 'available',
+      label: 'CU Coordinate-to-Observable-Age Ratio',
+      summary: ratio.value.toFixed(3),
+      exact: ratio.value.toFixed(),
+    };
+  }
+  return {
+    kind: 'not-applicable',
+    message: ratio.reason === 'big-bang-boundary'
+      ? 'Ratio not shown at the Big Bang reference boundary.'
+      : 'Ratio not shown before the Big Bang reference boundary.',
+  };
+}
+
+function formatObservableUniverseReference(
+  value: ObservableUniverseReferenceResult,
+): ObservableUniverseReferenceDisplay {
+  return {
+    observableUniverseAlignedCuCoordinate: value.observableUniverseAlignedCuCoordinate.toFixed(),
+    observableUniverseAlignedCuCoordinateExponential: value.observableUniverseAlignedCuCoordinate.toExponential(6),
+    observableAge: formatObservableAge(value.observableAge),
+    coordinateToObservableAgeRatio: formatObservableRatio(value.coordinateToObservableAgeRatio),
+  };
 }
 
 export function formatCivilGregorianUtc(value: CivilGregorianUtc): string {
@@ -58,6 +149,9 @@ export function convertCuTimeForDisplay(raw: string): CuTimeDisplayOutcome {
       inputCuTime: converted.value.inputCuTime.toString(),
       inputCuTimeExponential: converted.value.inputCuTime.toExponential(6),
       gregorianUtc: formatCivilGregorianUtc(converted.value),
+      observableUniverseReference: formatObservableUniverseReference(
+        converted.value.observableUniverseReference,
+      ),
     },
   };
 }
@@ -147,6 +241,9 @@ export function convertGregorianForDisplay(
       }),
       cuTime: converted.value.cuTime.toFixed(),
       cuTimeExponential: converted.value.cuTime.toExponential(6),
+      observableUniverseReference: formatObservableUniverseReference(
+        converted.value.observableUniverseReference,
+      ),
     },
   };
 }

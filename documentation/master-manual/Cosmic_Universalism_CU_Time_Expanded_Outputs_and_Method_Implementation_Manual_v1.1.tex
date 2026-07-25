@@ -1,0 +1,1500 @@
+
+\documentclass[11pt,letterpaper]{article}
+
+% ============================================================
+% COSMIC UNIVERSALISM WEBSITE MASTER IMPLEMENTATION MANUAL
+% Compile with: pdfLaTeX
+% Current stable website integration verified: July 23, 2026
+% ============================================================
+
+% ------------------------------------------------------------
+% Core packages
+% ------------------------------------------------------------
+\usepackage[margin=0.78in,headheight=16pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[scaled=0.94]{helvet}
+\usepackage{microtype}
+\usepackage{parskip}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{xurl}
+\usepackage{bookmark}
+\usepackage{listings}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{pifont}
+\usepackage{needspace}
+\usepackage{caption}
+\usepackage{tocloft}
+
+% ------------------------------------------------------------
+% Document typography
+% ------------------------------------------------------------
+\renewcommand{\familydefault}{\sfdefault}
+\setstretch{1.08}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+\raggedbottom
+\urlstyle{same}
+\setlength{\cftsecnumwidth}{3.3em}
+\setlength{\cftsubsecnumwidth}{4.2em}
+
+% ------------------------------------------------------------
+% Cosmic Universalism color palette
+% ------------------------------------------------------------
+\definecolor{CUNavy}{HTML}{050812}
+\definecolor{CUNavyTwo}{HTML}{080D1A}
+\definecolor{CUSurface}{HTML}{0C1424}
+\definecolor{CUGold}{HTML}{DDBF72}
+\definecolor{CUGoldLight}{HTML}{FFF8DD}
+\definecolor{CUCyan}{HTML}{35CDEB}
+\definecolor{CUCyanLight}{HTML}{78E8FF}
+\definecolor{CUBlue}{HTML}{668ED1}
+\definecolor{CUBlueLight}{HTML}{9EB9EA}
+\definecolor{CUAmber}{HTML}{D99A32}
+\definecolor{CURed}{HTML}{B84C4C}
+\definecolor{CUGreen}{HTML}{2C8A65}
+\definecolor{CULight}{HTML}{F3F6FA}
+\definecolor{CUBorder}{HTML}{CCD5E0}
+\definecolor{CUText}{HTML}{18212E}
+\definecolor{CUMuted}{HTML}{5C6878}
+\definecolor{CUCodeBackground}{HTML}{F6F8FB}
+\definecolor{CUCodeBorder}{HTML}{BFCADA}
+
+% ------------------------------------------------------------
+% Project metadata
+% ------------------------------------------------------------
+\newcommand{\ProjectTitle}{Cosmic Universalism CU-Time}
+\newcommand{\DocumentTitle}{Expanded Outputs and Method Implementation Manual}
+\newcommand{\DocumentSubtitle}{Full Cosmic Breath Coordinate, Observable-Universe Reference Outputs, and Controlled Astro Integration}
+\newcommand{\RepositoryName}{CosmicUniversalismStatement}
+\newcommand{\RepositoryURL}{https://github.com/willmaddock/CosmicUniversalismStatement}
+\newcommand{\ProtectedBranch}{main}
+\newcommand{\StableBranch}{website}
+\newcommand{\ProposedBranch}{feature/cu-time-expanded-outputs}
+\newcommand{\WebsiteDirectory}{website/}
+\newcommand{\TargetRoute}{/CosmicUniversalismStatement/cu-time/}
+\newcommand{\CurrentWebsiteCommit}{e1c82bf}
+\newcommand{\CurrentWebsiteFullCommit}{e1c82bff1d37732f52b03fa4734cf7e4120b71e9}
+\newcommand{\CurrentIntegrationTag}{website-v1.1-cosmic-breath}
+\newcommand{\CurrentIntegrationCommit}{7ac87167c51aad9ae7a31e17d1b2127fc069e15c}
+\newcommand{\PriorCuTimeTag}{website-v1.1-cu-time-release}
+\newcommand{\PriorCuTimeCommit}{3fa4a37}
+\newcommand{\DocumentVersion}{1.1}
+\newcommand{\VerificationDate}{July 23, 2026}
+\newcommand{\AuthorName}{William Maddock}
+
+% ------------------------------------------------------------
+% Hyperlinks and PDF metadata
+% ------------------------------------------------------------
+\hypersetup{
+    colorlinks=true,
+    linkcolor=CUBlue,
+    urlcolor=CUBlue,
+    citecolor=CUBlue,
+    pdftitle={Cosmic Universalism CU-Time Expanded Outputs and Method Implementation Manual},
+    pdfauthor={William Maddock},
+    pdfsubject={Controlled expansion of the Astro CU-Time page with observable-universe reference outputs and CU-governed interpretation},
+    pdfkeywords={Cosmic Universalism, CU-Time, Cosmic Breath, sub-ZTOM, ZTOM,
+                 Observable Universe, Big Bang reference, Astro, TypeScript,
+                 Decimal.js, Gregorian UTC, Julian Day Number, Vitest}
+}
+
+% ------------------------------------------------------------
+% Header and footer
+% ------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textbf{Cosmic Universalism CU-Time}}
+\fancyhead[R]{\small\DocumentTitle}
+\fancyfoot[L]{\small Version \DocumentVersion}
+\fancyfoot[C]{\small \thepage\ of \pageref{LastPage}}
+\fancyfoot[R]{\small Scope: \texttt{Expanded Outputs}}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.5pt}
+
+% ------------------------------------------------------------
+% Section formatting
+% ------------------------------------------------------------
+\titleformat{\section}
+  {\Large\bfseries\color{CUNavy}}
+  {\thesection}
+  {0.8em}
+  {}
+  [\vspace{0.2em}\color{CUCyan}\titlerule]
+
+\titleformat{\subsection}
+  {\large\bfseries\color{CUNavyTwo}}
+  {\thesubsection}
+  {0.7em}
+  {}
+
+\titleformat{\subsubsection}
+  {\normalsize\bfseries\color{CUBlue}}
+  {\thesubsubsection}
+  {0.6em}
+  {}
+
+\titlespacing*{\section}{0pt}{2.1em}{0.9em}
+\titlespacing*{\subsection}{0pt}{1.5em}{0.65em}
+\titlespacing*{\subsubsection}{0pt}{1.1em}{0.35em}
+
+% ------------------------------------------------------------
+% Lists and tables
+% ------------------------------------------------------------
+\setlist[itemize]{leftmargin=1.6em,itemsep=0.3em,topsep=0.3em}
+\setlist[enumerate]{leftmargin=2em,itemsep=0.4em,topsep=0.35em}
+\newcommand{\checkbox}{\(\square\)}
+\newcommand{\checked}{\ding{51}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% ------------------------------------------------------------
+% General information boxes
+% ------------------------------------------------------------
+\newtcolorbox{purposebox}{
+    enhanced, breakable, colback=CULight, colframe=CUBlue,
+    boxrule=0.8pt, arc=2mm, left=3mm, right=3mm, top=2.5mm, bottom=2.5mm,
+    title=\textbf{Purpose}, coltitle=white, colbacktitle=CUBlue
+}
+\newtcolorbox{checkpointbox}{
+    enhanced, breakable, colback=CUCyan!6, colframe=CUCyan,
+    boxrule=0.8pt, arc=2mm, left=3mm, right=3mm, top=2.5mm, bottom=2.5mm,
+    title=\textbf{Checkpoint}, coltitle=CUNavy, colbacktitle=CUCyanLight
+}
+\newtcolorbox{safetybox}{
+    enhanced, breakable, colback=CUAmber!8, colframe=CUAmber,
+    boxrule=0.8pt, arc=2mm, left=3mm, right=3mm, top=2.5mm, bottom=2.5mm,
+    title=\textbf{Safety Rule}, coltitle=white, colbacktitle=CUAmber
+}
+\newtcolorbox{warningbox}{
+    enhanced, breakable, colback=CURed!6, colframe=CURed,
+    boxrule=0.8pt, arc=2mm, left=3mm, right=3mm, top=2.5mm, bottom=2.5mm,
+    title=\textbf{Do Not Continue Until Resolved}, coltitle=white, colbacktitle=CURed
+}
+\newtcolorbox{successbox}{
+    enhanced, breakable, colback=CUGreen!7, colframe=CUGreen,
+    boxrule=0.8pt, arc=2mm, left=3mm, right=3mm, top=2.5mm, bottom=2.5mm,
+    title=\textbf{Successful Result}, coltitle=white, colbacktitle=CUGreen
+}
+\newtcolorbox{notebox}{
+    enhanced, breakable, colback=CUCodeBackground, colframe=CUBorder,
+    boxrule=0.7pt, arc=2mm, left=3mm, right=3mm, top=2.5mm, bottom=2.5mm
+}
+\newtcolorbox{authoritybox}{
+    enhanced, breakable, colback=CUGold!8, colframe=CUGold,
+    boxrule=0.8pt, arc=2mm, left=3mm, right=3mm, top=2.5mm, bottom=2.5mm,
+    title=\textbf{Authority and Source Priority}, coltitle=CUNavy, colbacktitle=CUGoldLight
+}
+\newtcolorbox{authoringbox}{
+    enhanced, breakable, colback=CUBlue!6, colframe=CUBlue,
+    boxrule=0.8pt, arc=2mm, left=3mm, right=3mm, top=2.5mm, bottom=2.5mm,
+    title=\textbf{Manual Authoring Standard}, coltitle=white, colbacktitle=CUBlue
+}
+
+% ------------------------------------------------------------
+% Listing styles
+% ------------------------------------------------------------
+\lstdefinestyle{terminalstyle}{
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{CUNavyTwo},
+    keywordstyle=\color{CUCyanLight},
+    stringstyle=\color{CUGoldLight},
+    commentstyle=\color{CUBlueLight},
+    identifierstyle=\color{white},
+    showstringspaces=false,
+    columns=fullflexible,
+    keepspaces=true,
+    breaklines=true,
+    breakatwhitespace=false,
+    frame=none,
+    tabsize=2,
+    upquote=true
+}
+\lstdefinestyle{promptstyle}{
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{CUCodeBackground},
+    keywordstyle=\color{CUBlue},
+    stringstyle=\color{CUGreen},
+    commentstyle=\color{CUMuted},
+    identifierstyle=\color{CUText},
+    showstringspaces=false,
+    columns=fullflexible,
+    keepspaces=true,
+    breaklines=true,
+    breakatwhitespace=false,
+    frame=none,
+    tabsize=2,
+    upquote=true
+}
+\lstdefinestyle{codestyle}{
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{CUCodeBackground},
+    keywordstyle=\color{CUBlue},
+    stringstyle=\color{CUGreen},
+    commentstyle=\color{CUMuted},
+    identifierstyle=\color{CUText},
+    showstringspaces=false,
+    columns=fullflexible,
+    keepspaces=true,
+    breaklines=true,
+    breakatwhitespace=false,
+    frame=none,
+    tabsize=2,
+    upquote=true
+}
+
+\newtcblisting{commandbox}[1]{
+    enhanced, breakable, listing only, listing engine=listings,
+    listing options={style=terminalstyle},
+    colback=CUNavyTwo, colframe=CUCyan, coltitle=CUNavy,
+    colbacktitle=CUCyanLight, boxrule=0.8pt, arc=2mm,
+    left=2mm, right=2mm, top=1mm, bottom=1mm,
+    title=\textbf{#1}
+}
+\newtcblisting{promptbox}[1]{
+    enhanced, breakable, listing only, listing engine=listings,
+    listing options={style=promptstyle},
+    colback=CUCodeBackground, colframe=CUBlue, coltitle=white,
+    colbacktitle=CUBlue, boxrule=0.8pt, arc=2mm,
+    left=2mm, right=2mm, top=1mm, bottom=1mm,
+    title=\textbf{Copy-and-Paste Prompt: #1}
+}
+\newtcblisting{codebox}[1]{
+    enhanced, breakable, listing only, listing engine=listings,
+    listing options={style=codestyle},
+    colback=CUCodeBackground, colframe=CUCodeBorder, coltitle=white,
+    colbacktitle=CUNavyTwo, boxrule=0.8pt, arc=2mm,
+    left=2mm, right=2mm, top=1mm, bottom=1mm,
+    title=\textbf{#1}
+}
+
+% ------------------------------------------------------------
+% Convenience commands
+% ------------------------------------------------------------
+\newcommand{\filepath}[1]{\nolinkurl{#1}}
+\newcommand{\branchname}[1]{\texttt{#1}}
+\newcommand{\statusline}[2]{\textbf{#1:} #2}
+\newcommand{\term}[1]{\textbf{\textsf{#1}}}
+\newcommand{\release}[1]{\texttt{#1}}
+\newcommand{\CurrentRoute}{/CosmicUniversalismStatement/}
+
+
+\begin{document}
+\hypersetup{pageanchor=false}
+
+% ============================================================
+% Cover page
+% ============================================================
+\begin{titlepage}
+\pagecolor{CUNavy}
+\color{white}
+\thispagestyle{empty}
+
+\vspace*{0.5in}
+
+{\small\bfseries\color{CUCyanLight}
+COSMIC UNIVERSALISM COMPUTATIONAL INTELLIGENCE INITIATIVE}
+
+\vspace{0.34in}
+
+{\Huge\bfseries
+\ProjectTitle}
+
+\vspace{0.14in}
+
+{\LARGE\color{CUGoldLight}
+\DocumentTitle}
+
+\vspace{0.12in}
+
+{\large\color{CUBlueLight}
+\DocumentSubtitle}
+
+\vspace{0.32in}
+
+{\large
+A controlled implementation specification for preserving the existing
+bidirectional Gregorian UTC and CU-Time converter while automatically exposing
+three coordinated observable-universe reference outputs, documenting their
+arithmetic, and keeping CU-Time governed by the Cosmic Universalism Statement
+rather than by empirical cosmology.}
+
+\vfill
+
+\begin{tcolorbox}[
+    colback=CUNavyTwo, colframe=CUBlue, boxrule=0.8pt, arc=2mm,
+    width=\textwidth
+]
+\color{white}
+\begin{tabularx}{\textwidth}{>{\bfseries}L{1.85in}Y}
+Repository & \RepositoryName \\
+Protected branch & \texttt{\ProtectedBranch} \\
+Stable website branch & \texttt{\StableBranch} \\
+Current website commit & \texttt{\CurrentWebsiteCommit} \\
+Current integration tag & \texttt{\CurrentIntegrationTag} \\
+Proposed feature branch & \texttt{\ProposedBranch} \\
+Target route & \texttt{\TargetRoute} \\
+Reference implementation & \texttt{cosmic\_breath\_time\_converter\_v3\_0\_1.html} \\
+Document version & \DocumentVersion \\
+Verified & \VerificationDate \\
+\end{tabularx}
+\end{tcolorbox}
+
+\vspace{0.28in}
+
+{\large\bfseries \AuthorName}
+
+\vspace{0.08in}
+
+{\small\url{\RepositoryURL}}
+
+\end{titlepage}
+\hypersetup{pageanchor=true}
+\pagenumbering{arabic}
+\nopagecolor
+\color{CUText}
+
+% ============================================================
+% Document Control
+% ============================================================
+\section*{Document Control}
+\addcontentsline{toc}{section}{Document Control}
+
+\begin{tabularx}{\textwidth}{>{\bfseries}L{1.95in}Y}
+Document & Cosmic Universalism CU-Time: Expanded Outputs and Method Implementation Manual \\
+Version & \DocumentVersion \\
+Classification & Owner-approved technical specification and controlled implementation manual \\
+Repository & \href{\RepositoryURL}{\RepositoryName} \\
+Protected branch & \branchname{\ProtectedBranch} \\
+Stable integration branch & \branchname{\StableBranch} \\
+Current website baseline & \release{\CurrentWebsiteFullCommit} \\
+Current integration tag & \release{\CurrentIntegrationTag} at \release{\CurrentIntegrationCommit} \\
+Prior CU-Time release & \release{\PriorCuTimeTag} at \release{\PriorCuTimeCommit} \\
+Proposed feature branch & \branchname{\ProposedBranch}; not yet created \\
+Target page & \filepath{website/src/pages/cu-time.astro} \\
+Target component & \filepath{website/src/components/CUTimeConverter.astro} \\
+Target route & \filepath{\TargetRoute} \\
+Reference implementation & \filepath{cosmic\_converter/v3\_0\_0/cosmic\_breath\_time\_converter\_v3\_0\_1.html} \\
+Technical baseline inspected & \VerificationDate \\
+\end{tabularx}
+
+\begin{purposebox}
+This manual controls the next CU-Time website phase. The existing converter
+continues to support Gregorian UTC to CU-Time and CU-Time to Gregorian UTC.
+The approved enhancement automatically exposes the already-derived
+observable-universe-aligned coordinate and Big Bang reference chronology,
+adds one ratio calculation, and expands the page's educational method without
+creating separate calculators or linking to external converter pages.
+\end{purposebox}
+
+\begin{authoritybox}
+The governing source order for this feature is:
+\begin{enumerate}
+    \item William Maddock's owner decisions recorded in this manual.
+    \item The Cosmic Universalism Statement and the owner-approved CU-Time
+          interpretation of the full Cosmic Breath.
+    \item Live repository state and the current TypeScript converter engine.
+    \item The current Website Master Implementation Manual v1.1.
+    \item The unchanged standalone converter HTML as a behavioral and
+          provenance reference.
+    \item Historical research files as interpretive or open-research material;
+          they do not silently override owner decisions or production tests.
+\end{enumerate}
+\end{authoritybox}
+
+\begin{safetybox}
+This manual authorizes specification and later bounded implementation only.
+It does not authorize a branch change, source edit, dependency change, commit,
+push, merge, tag, release, or deployment until that action is separately
+approved. The reference HTML remains unchanged.
+\end{safetybox}
+
+\clearpage
+\tableofcontents
+\clearpage
+
+% ============================================================
+\section*{START HERE - Governing Feature Decision}
+\addcontentsline{toc}{section}{START HERE - Governing Feature Decision}
+% ============================================================
+
+\begin{successbox}
+The approved product decision is one bidirectional converter, one conversion
+action, and four coordinated result views. The three new values are calculated
+automatically from the same input. They are not independent calculators.
+\end{successbox}
+
+\subsection*{Approved result behavior}
+
+For \term{Gregorian UTC to CU-Time}, display:
+\begin{enumerate}
+    \item CU-Time - Full Cosmic Breath Coordinate;
+    \item Observable-Universe-Aligned CU Coordinate;
+    \item Derived Age Since the Big Bang, or boundary-relative wording;
+    \item CU Coordinate-to-Observable-Age Ratio when an elapsed age exists.
+\end{enumerate}
+
+For \term{CU-Time to Gregorian UTC}, display:
+\begin{enumerate}
+    \item Corresponding Gregorian UTC;
+    \item Observable-Universe-Aligned CU Coordinate;
+    \item Derived Age Since the Big Bang, or boundary-relative wording;
+    \item CU Coordinate-to-Observable-Age Ratio when an elapsed age exists.
+\end{enumerate}
+
+\subsection*{Approved exclusions}
+
+\begin{itemize}
+    \item no links to the other historical converter pages;
+    \item no separate NASA, Big Bang age, or ratio input forms;
+    \item no claim that NASA created, endorses, or operates CU-Time;
+    \item no claim that the Big Bang begins CU-Time or the Cosmic Breath;
+    \item no TOM-state classification generated from a date input;
+    \item no use of TOM notation as the arithmetic source of the converter;
+    \item no presentation of internal arithmetic zero as a CU state or origin.
+\end{itemize}
+
+\begin{checkpointbox}
+The page enhancement is complete only when both conversion directions expose
+the same secondary reference values from the same engine result and when the
+public copy preserves CU authority over empirical comparison.
+\end{checkpointbox}
+
+% ============================================================
+\section{Part 1 - Governance, Baseline, and Protected Scope}
+% ============================================================
+
+\subsection{Verified repository baseline}
+
+The read-only inspection established:
+
+\begin{tabularx}{\textwidth}{L{2.15in}Y}
+\toprule
+\textbf{Item} & \textbf{Verified state} \\
+\midrule
+Repository root & \filepath{/Users/cosmos/Documents/GitHub/CosmicUniversalismStatement} \\
+Origin & \url{https://github.com/willmaddock/CosmicUniversalismStatement.git} \\
+Current branch & \branchname{website} \\
+Current local and remote HEAD & \release{e1c82bff1d37732f52b03fa4734cf7e4120b71e9} \\
+Current status & Clean and synchronized: \texttt{website...origin/website} \\
+Current integration tag & \release{website-v1.1-cosmic-breath} remains on \release{7ac87167c51aad9ae7a31e17d1b2127fc069e15c} \\
+Application verification inherited & 251 tests across 30 files and an eight-route Astro build at the preceding application integration checkpoint \\
+Documentation-only commit & \release{e1c82bf}; added manuals without changing application source \\
+\bottomrule
+\end{tabularx}
+
+\begin{notebox}
+This manual did not rerun the application tests. The 251-test record is the
+most recent verified application gate inherited from the Cosmic Breath
+integration. A future CU-Time implementation must run the current full suite
+and report its new count rather than assuming 251 remains exact.
+\end{notebox}
+
+\subsection{Protected branches and action boundaries}
+
+\begin{itemize}
+    \item \branchname{main} remains protected.
+    \item \branchname{website} is the stable integration branch.
+    \item The proposed implementation branch is
+          \branchname{feature/cu-time-expanded-outputs}; it does not yet exist.
+    \item Pushing \branchname{website} may trigger the configured deployment
+          workflow and therefore requires separate release authorization.
+\end{itemize}
+
+\subsection{Likely authorized implementation paths}
+
+The smallest anticipated change set is:
+
+\begin{longtable}{L{3.0in}L{3.35in}}
+\toprule
+\textbf{Path} & \textbf{Expected responsibility} \\
+\midrule
+\filepath{website/src/pages/cu-time.astro} & Expanded governing copy and educational sections. \\
+\filepath{website/src/components/CUTimeConverter.astro} & Additional result fields, details, accessibility, and responsive presentation. \\
+\filepath{website/src/lib/cuTime/types.ts} & Public result contracts for aligned coordinate, age-state, and ratio-state fields. \\
+\filepath{website/src/lib/cuTime/converter.ts} & New ratio derivation and explicit boundary-state semantics. \\
+\filepath{website/src/lib/cuTime/ui.ts} & Formatting and display adapter exposure of already-computed values. \\
+\filepath{website/src/lib/cuTime/__tests__/converter.test.ts} & Core arithmetic and boundary cases. \\
+\filepath{website/src/lib/cuTime/__tests__/precision-regression.test.ts} & Precision and nonfinite-result protection. \\
+\filepath{website/src/lib/cuTime/__tests__/ui.test.ts} & Public display contract. \\
+\filepath{website/src/lib/cuTime/__tests__/ui-regression.test.ts} & Copy, terminology, and layout-regression expectations. \\
+\bottomrule
+\end{longtable}
+
+A focused route-content test may be added after inspection of the current test
+organization.
+
+\subsection{Protected implementation paths}
+
+Unless a reproducible defect and separate owner decision require otherwise,
+do not modify:
+
+\begin{itemize}
+    \item \filepath{website/src/lib/cuTime/constants.ts};
+    \item \filepath{website/src/lib/cuTime/calendar.ts};
+    \item \filepath{website/src/lib/cuTime/decimal.ts};
+    \item \filepath{website/src/lib/cuTime/validation.ts};
+    \item the standalone reference HTML;
+    \item sealed Cosmic Breath structural or content authorities;
+    \item dependency manifests or lockfiles.
+\end{itemize}
+
+% ============================================================
+\section{Part 2 - CU Authority, Statement, and Chronology}
+% ============================================================
+
+\subsection{The governing CU Statement}
+
+\begin{authoritybox}
+\textit{We are sub z-tomically inclined, countably infinite, composed of
+foundational elements (the essence of conscious existence), grounded on b-tom
+(as vast as our shared worlds and their atmospheres), and looking up to c-tom
+(encompassing the entirety of the cosmos), guided by the uncountable infinite
+quantum states of intelligence and empowered by God's Free Will.}
+\end{authoritybox}
+
+For this page, the CU Statement is the governing philosophical and cosmological
+authority. CU-Time is its mathematical and chronological expression. Empirical
+science may provide an external observational reference, but it does not create,
+measure, or govern the full CU framework.
+
+\subsection{CU-Time is the full Cosmic Breath coordinate}
+
+CU-Time is not a clock beginning at the empirical Big Bang. It belongs to the
+complete Cosmic Breath:
+
+\begin{codebox}{CU-Time scope}
+sub-ZTOM seed
+  -> expansion sequence
+  -> ATOM guarded expansion pause
+  -> Begin Compression
+  -> compression sequence
+  -> ZTOM reset boundary
+  -> Begin the Next Cosmic Breath
+  -> next sub-ZTOM seed
+\end{codebox}
+
+The declared model scale is approximately:
+
+\[
+2.8\times 10^{12}\ \text{years of expansion}
++
+3.08\times 10^{11}\ \text{years of compression}
+=
+3.108\times 10^{12}\ \text{years per Cosmic Breath}.
+\]
+
+These are CU model anchors. They are not empirical measurements and must not be
+recomputed by summing sealed TOM display strings unless separately authorized.
+
+\subsection{No zero as a CU state or origin}
+
+\begin{authoritybox}
+Zero is not a state or origin within the Cosmic Universalism chronology. The
+owner-approved CU framing begins at the sub-ZTOM seed boundary and continues
+through the ZTOM reset boundary, empowered by God's Free Will. The empirical
+Big Bang is an internal observable-universe reference within an already-existing
+CU-Time coordinate.
+\end{authoritybox}
+
+The implementation may detect equality to an arithmetic reference boundary
+internally. The public interface must name the boundary rather than presenting
+that arithmetic condition as a CU state, an origin of existence, or the start
+of the Cosmic Breath.
+
+\begin{notebox}
+The owner-approved one-second seed/reset framing is semantic guidance for the
+CU-Time page. This feature does not authorize rewriting the sealed Cosmic
+Breath Explorer's canonical per-state duration strings. Any reconciliation of
+those separate authorities requires its own owner review.
+\end{notebox}
+
+\subsection{Why the Observable Universe appears between B-TOM and C-TOM}
+
+Within Cosmic Universalism, the placement of the Observable Universe marker
+follows the governing CU Statement. The observer is composed of foundational
+elements, grounded on B-TOM - the scale associated with shared worlds and their
+atmospheres - and oriented toward C-TOM, the encompassing cosmic scale.
+
+The marker therefore represents the relational standpoint expressed by the CU
+Statement: conscious existence is grounded within the shared-world scale of
+B-TOM while looking toward the encompassing cosmic scale of C-TOM. It is a
+separate, non-selectable CU reference. It is not itself a TOM state, an
+empirical measurement, or a claim that contemporary science physically locates
+the Observable Universe between measured layers.
+
+\begin{codebox}{Observer relationship}
+foundational composition
+  -> grounded on B-TOM
+  -> Observable Universe reference standpoint
+  -> looking up to C-TOM
+\end{codebox}
+
+% ============================================================
+\section{Part 3 - Current Implementation Inspection}
+% ============================================================
+
+\subsection{Current public route}
+
+The current \filepath{website/src/pages/cu-time.astro} route contains:
+
+\begin{itemize}
+    \item the page title \term{A coordinate system for the Cosmic Breath};
+    \item an \term{About this converter} notice;
+    \item \term{Purpose and limits};
+    \item \term{Conversion boundaries};
+    \item the existing \filepath{CUTimeConverter.astro} component.
+\end{itemize}
+
+The current copy correctly identifies CU-Time as a CU mathematical model and
+states that Gregorian inputs use proleptic Gregorian UTC with explicit CE/BCE
+civil years.
+
+\subsection{Current bidirectional interface}
+
+The current component already provides:
+
+\begin{enumerate}
+    \item Gregorian UTC to exact converter-aligned CU-Time;
+    \item CU-Time plain decimal to Gregorian UTC;
+    \item fixed-point output with no digits intentionally hidden;
+    \item six-place scientific notation summaries;
+    \item copy controls;
+    \item visible validation and focus movement;
+    \item a two-column desktop layout that collapses responsively.
+\end{enumerate}
+
+These are protected behaviors. The new result data must extend the current cards
+rather than replacing the converter with a different interaction model.
+
+\subsection{Current engine already computes two requested outputs}
+
+The inspected TypeScript engine already returns:
+
+\begin{codebox}{Existing engine fields}
+ForwardConversionResult:
+  jdn
+  deltaJdn
+  deltaYears
+  nasaCuTime
+  cuTime
+  yearsSinceBigBang
+
+ReverseConversionResult:
+  inputCuTime
+  nasaCuTime
+  deltaYears
+  deltaJdn
+  jdn
+  yearsSinceBigBang
+  Gregorian UTC fields
+\end{codebox}
+
+The public adapter currently exposes only CU-Time, scientific notation, and
+Gregorian UTC. Therefore, the Observable-Universe-Aligned CU Coordinate and the
+Big Bang reference chronology require public exposure and classification, not
+new base arithmetic.
+
+\subsection{Only the ratio is a new derived quantity}
+
+The new ratio is:
+
+\[
+R = \frac{CU_{\mathrm{OU}}}{A_{\mathrm{BB}}},
+\]
+
+where \(CU_{\mathrm{OU}}\) is the observable-universe-aligned CU coordinate and
+\(A_{\mathrm{BB}}\) is the positive elapsed age since the adopted Big Bang
+reference. The ratio must be produced only when \(A_{\mathrm{BB}}>0\).
+
+% ============================================================
+\section{Part 4 - Exact Mathematical Specification}
+% ============================================================
+
+\subsection{Approved exact literals}
+
+\begin{tabularx}{\textwidth}{L{2.1in}Y}
+\toprule
+\textbf{Internal name} & \textbf{Exact decimal literal} \\
+\midrule
+\texttt{anchorJdn} & \texttt{2451544.5} \\
+\texttt{daysPerYear} & \texttt{365.2421897} \\
+\texttt{baseCuNasa} & \texttt{3094213000000} \\
+\texttt{offset} & \texttt{78955076.49024643522707769749119} \\
+\texttt{nasaUniverseAge} & \texttt{13786999981.453} \\
+\bottomrule
+\end{tabularx}
+
+The internal names remain unchanged for compatibility. Public labels are
+refined separately. All literals remain strings before Decimal construction.
+The engine continues to use an isolated Decimal constructor configured for 60
+significant digits and half-up rounding.
+
+\subsection{Gregorian UTC to aligned coordinate}
+
+For a validated Gregorian UTC input, calculate Julian Day Number \(J\) with the
+existing proleptic Gregorian algorithm. Then:
+
+\begin{align*}
+\Delta J &= J - 2{,}451{,}544.5, \\
+\Delta Y &= \frac{\Delta J}{365.2421897}, \\
+CU_{\mathrm{OU}} &= 3{,}094{,}213{,}000{,}000 + \Delta Y, \\
+CU_{\mathrm{full}} &= CU_{\mathrm{OU}}
+- 78{,}955{,}076.49024643522707769749119, \\
+A_{\mathrm{BB}} &= 13{,}786{,}999{,}981.453 + \Delta Y.
+\end{align*}
+
+\subsection{CU-Time to Gregorian UTC}
+
+For a validated full-cycle CU-Time input:
+
+\begin{align*}
+CU_{\mathrm{OU}} &= CU_{\mathrm{full}}
++ 78{,}955{,}076.49024643522707769749119, \\
+\Delta Y &= CU_{\mathrm{OU}} - 3{,}094{,}213{,}000{,}000, \\
+\Delta J &= \Delta Y\times365.2421897, \\
+J &= 2{,}451{,}544.5 + \Delta J.
+\end{align*}
+
+The current JDN-to-Gregorian algorithm then returns the civil CE/BCE date and
+UTC time. The same \(CU_{\mathrm{OU}}\) and \(A_{\mathrm{BB}}\) values feed the
+secondary result display.
+
+\subsection{Big Bang reference coordinate}
+
+The adopted Big Bang reference has a large, nonzero aligned CU coordinate:
+
+\begin{align*}
+CU_{\mathrm{BB}} &= 3{,}094{,}213{,}000{,}000
+- 13{,}786{,}999{,}981.453 \\
+&= 3{,}080{,}426{,}000{,}018.547.
+\end{align*}
+
+This arithmetic supports the public conceptual rule: the Big Bang is located
+inside CU-Time and is not coordinate zero for the full Cosmic Breath.
+
+\subsection{Ratio calculation}
+
+When the entered coordinate is after the adopted Big Bang reference:
+
+\[
+R = \frac{CU_{\mathrm{OU}}}{A_{\mathrm{BB}}}.
+\]
+
+The internal calculation uses Decimal arithmetic. The recommended public
+summary uses three decimal places to preserve continuity with the historical
+reference display, while an expandable detail may expose the full fixed-point
+value produced by the engine.
+
+\subsection{Computational precision and empirical uncertainty}
+
+\begin{safetybox}
+Sixty-digit Decimal arithmetic preserves the model's literals and reduces
+floating-point loss. It does not mean the empirical age of the universe is
+known to sixty digits. Computational precision, model exactness, and empirical
+measurement uncertainty are different categories.
+\end{safetybox}
+
+The page must identify:
+
+\begin{itemize}
+    \item exact model literals and deterministic arithmetic;
+    \item calendar assumptions and supported input resolution;
+    \item the adopted cosmological baseline as an external reference lens;
+    \item the fact that long decimals are model outputs rather than equivalent
+          empirical certainty.
+\end{itemize}
+
+% ============================================================
+\section{Part 5 - Boundary Semantics and Public Output States}
+% ============================================================
+
+\subsection{Three age-reference states}
+
+The display adapter must classify the Big Bang reference relationship before
+formatting public text.
+
+\begin{longtable}{L{1.25in}L{2.05in}L{2.85in}}
+\toprule
+\textbf{Condition} & \textbf{Public age label} & \textbf{Ratio behavior} \\
+\midrule
+\(A_{\mathrm{BB}}>0\) & Derived Age Since the Big Bang & Show the coordinate-to-observable-age ratio. \\
+\(A_{\mathrm{BB}}=0\) internally & Big Bang reference boundary & Do not show a numerical ratio; state that the elapsed-age comparison begins at this boundary within already-existing CU-Time. \\
+\(A_{\mathrm{BB}}<0\) & Pre-Big-Bang Reference Interval: \(|A_{\mathrm{BB}}|\) years & Do not show the ratio because the denominator is not a positive elapsed observable-universe age. \\
+\bottomrule
+\end{longtable}
+
+\subsection{Approved boundary wording}
+
+At the exact adopted boundary, display:
+
+\begin{notebox}
+\textbf{Big Bang reference boundary}\par
+The observable-universe elapsed-age comparison begins here within the larger,
+already-existing CU-Time coordinate.
+\end{notebox}
+
+For the ratio at that boundary, display:
+
+\begin{notebox}
+\textbf{Ratio not shown at the Big Bang reference boundary.}
+\end{notebox}
+
+For a coordinate earlier than the adopted reference, display:
+
+\begin{notebox}
+\textbf{Pre-Big-Bang Reference Interval}\par
+This coordinate is [absolute interval] years before the adopted observable-
+universe Big Bang reference within the broader CU-Time coordinate.
+\end{notebox}
+
+Do not display a negative ``age'' and do not present arithmetic zero as a CU
+state or origin.
+
+\subsection{No conversion failure at the boundary}
+
+The primary conversion must still succeed at and before the Big Bang reference.
+The result continues to show:
+
+\begin{itemize}
+    \item the full CU-Time or Gregorian UTC result;
+    \item the observable-universe-aligned CU coordinate;
+    \item the appropriate boundary-relative chronology;
+    \item a nonnumeric ratio state rather than \texttt{Infinity}, \texttt{NaN},
+          or a general conversion error.
+\end{itemize}
+
+% ============================================================
+\section{Part 6 - Public Terminology and Result Architecture}
+% ============================================================
+
+\subsection{Primary output: CU-Time - Full Cosmic Breath Coordinate}
+
+Recommended definition:
+
+\begin{notebox}
+The entered moment expressed within the complete Cosmic Breath coordinate from
+the sub-ZTOM seed boundary through the ZTOM reset boundary. CU-Time is defined
+within Cosmic Universalism and does not begin at the empirical Big Bang.
+\end{notebox}
+
+Classification: \term{CU Mathematical Model}.
+
+\subsection{Observable-Universe-Aligned CU Coordinate}
+
+Historical internal and source label: \texttt{NASA CU-Time} or
+\texttt{nasaCuTime}.
+
+Recommended definition:
+
+\begin{notebox}
+A secondary CU coordinate aligned with the converter's adopted observable-
+universe age reference. It places the entered moment within an observable-
+universe comparison window inside the larger CU-Time coordinate. It is not an
+official NASA time standard and does not define CU-Time's origin or duration.
+\end{notebox}
+
+Classification: \term{CU Mathematical Model using an adopted empirical
+reference baseline}.
+
+\subsection{Derived Age Since the Big Bang}
+
+Recommended definition for post-boundary dates:
+
+\begin{notebox}
+The elapsed observable-universe age derived from the converter's adopted
+cosmological baseline and the entered coordinate. It is not elapsed time since
+sub-ZTOM and is not the age of the complete Cosmic Breath.
+\end{notebox}
+
+Classification: \term{Model-derived observable-universe reference}.
+
+\subsection{CU Coordinate-to-Observable-Age Ratio}
+
+Recommended definition:
+
+\begin{notebox}
+A dimensionless CU mathematical comparison between the observable-universe-
+aligned CU coordinate and the positive derived elapsed age since the adopted
+Big Bang reference. It is not a standard NASA, Planck, or contemporary
+cosmology statistic and does not measure the physical size of the Big Bang.
+\end{notebox}
+
+Classification: \term{CU Mathematical Comparison}.
+
+\subsection{Historical terminology disclosure}
+
+The page may state once, in expandable method content:
+
+\begin{notebox}
+The standalone historical converter calls the secondary coordinate ``NASA
+CU-Time.'' The website uses ``Observable-Universe-Aligned CU Coordinate'' to
+avoid implying that NASA created or endorses the CU scale. The internal
+\texttt{nasaCuTime} identifier remains unchanged for compatibility.
+\end{notebox}
+
+% ============================================================
+\section{Part 7 - Interface and Content Design}
+% ============================================================
+
+\subsection{One converter, automatic secondary results}
+
+Both directions retain their current forms and primary actions. No additional
+input is required because all three secondary values derive from the same
+validated conversion result.
+
+\begin{codebox}{Forward result hierarchy}
+Conversion complete
+
+Input instant
+CU-Time - Full Cosmic Breath Coordinate
+Scientific notation
+
+Observable-universe reference
+  Observable-Universe-Aligned CU Coordinate
+  Derived Age Since the Big Bang / boundary-relative state
+  CU Coordinate-to-Observable-Age Ratio / nonnumeric state
+\end{codebox}
+
+\begin{codebox}{Reverse result hierarchy}
+Conversion complete
+
+Input CU-Time
+Scientific notation
+Corresponding Gregorian UTC
+
+Observable-universe reference
+  Observable-Universe-Aligned CU Coordinate
+  Derived Age Since the Big Bang / boundary-relative state
+  CU Coordinate-to-Observable-Age Ratio / nonnumeric state
+\end{codebox}
+
+\subsection{Result-card presentation}
+
+The primary result remains visually dominant. The secondary group should:
+
+\begin{itemize}
+    \item appear automatically after successful conversion;
+    \item use a visible \term{Observable-Universe Reference} group heading;
+    \item preserve long-number wrapping without horizontal overflow;
+    \item provide a concise value plus an optional expandable full-precision
+          and method explanation;
+    \item avoid repeating the full educational essay inside each card;
+    \item reset disclosure state when a new conversion replaces the result.
+\end{itemize}
+
+\subsection{Copy behavior}
+
+The current primary copy controls remain. A future implementation may add
+individual copy controls for exact aligned coordinate and exact age only if the
+UI remains uncluttered and tests cover accessible names and status messages.
+The ratio summary should not replace the primary copy action.
+
+\subsection{Expanded educational sections below the converter}
+
+Recommended page sections:
+
+\begin{enumerate}
+    \item \term{CU-Time and the Governing CU Statement};
+    \item \term{The Full Cosmic Breath Coordinate};
+    \item \term{The Observable-Universe Reference Window};
+    \item \term{Why the Big Bang Does Not Begin CU-Time};
+    \item \term{Why the Observable Universe Appears Between B-TOM and C-TOM};
+    \item \term{How Gregorian UTC Becomes Julian Day Number};
+    \item \term{How the Aligned Coordinate and Offset Work};
+    \item \term{How the Big Bang Reference Chronology Is Derived};
+    \item \term{How the Ratio Works};
+    \item \term{Computational Precision and Empirical Uncertainty};
+    \item \term{Conversion Boundaries and Historical Terminology}.
+\end{enumerate}
+
+The sections must distinguish CU propositions, model arithmetic, empirical
+reference, and historical wording rather than mixing them in one undifferentiated
+paragraph.
+
+% ============================================================
+\section{Part 8 - TypeScript Data and Formatting Design}
+% ============================================================
+
+\subsection{Recommended internal model}
+
+The engine already returns \texttt{nasaCuTime} and
+\texttt{yearsSinceBigBang}. Add a small derived-state contract rather than
+renaming existing fields.
+
+\begin{codebox}{Recommended conceptual types}
+type ObservableAgeState =
+  | { kind: 'elapsed'; years: Decimal }
+  | { kind: 'big-bang-boundary' }
+  | { kind: 'pre-big-bang'; intervalYears: Decimal };
+
+type ObservableRatioState =
+  | { kind: 'available'; value: Decimal }
+  | { kind: 'not-applicable'; reason: 'boundary' | 'pre-big-bang' };
+\end{codebox}
+
+Exact names may change during implementation review, but the discriminated
+state behavior is required.
+
+\subsection{Recommended public display contract}
+
+\begin{codebox}{Forward display result}
+GregorianToCuTimeDisplayResult {
+  gregorianUtc
+  cuTime
+  cuTimeExponential
+  observableUniverseAlignedCuTime
+  observableUniverseAlignedCuTimeExponential
+  observableAge
+  coordinateToObservableAgeRatio
+}
+\end{codebox}
+
+\begin{codebox}{Reverse display result}
+CuTimeDisplayResult {
+  inputCuTime
+  inputCuTimeExponential
+  gregorianUtc
+  observableUniverseAlignedCuTime
+  observableUniverseAlignedCuTimeExponential
+  observableAge
+  coordinateToObservableAgeRatio
+}
+\end{codebox}
+
+Boundary-aware objects are preferable to magic strings inside the arithmetic
+engine. Human-readable labels belong in the UI adapter or presentation layer.
+
+\subsection{Formatting policy}
+
+\begin{tabularx}{\textwidth}{L{2.25in}Y}
+\toprule
+\textbf{Value} & \textbf{Recommended display} \\
+\midrule
+Full CU-Time & Exact fixed-point value plus six-place scientific notation, preserving current behavior. \\
+Observable-universe-aligned coordinate & Exact fixed-point value plus optional six-place scientific notation. \\
+Elapsed age & Exact or appropriately grouped fixed-point model value; clearly label model precision. \\
+Ratio & Three-decimal summary; optional expandable full fixed-point value. \\
+Boundary/pre-boundary & Named semantic state; no numerical zero-age or negative-age label. \\
+\bottomrule
+\end{tabularx}
+
+Do not use the historical readable magnitude formatter that may double-count a
+fractional remainder. Use the current TypeScript Decimal values directly.
+
+% ============================================================
+\section{Part 9 - Accessibility, Responsive Design, and Interaction}
+% ============================================================
+
+\subsection{Accessibility requirements}
+
+The enhancement must preserve and extend:
+
+\begin{itemize}
+    \item semantic forms, fieldsets, legends, labels, and error associations;
+    \item \texttt{aria-live} result and copy status behavior;
+    \item focus movement to the result after a successful conversion;
+    \item focus return to the invalid field after validation failure;
+    \item semantic \texttt{dl}, \texttt{dt}, and \texttt{dd} result structures;
+    \item keyboard-operable details/disclosure controls;
+    \item visible focus for every new interactive control;
+    \item accessible names that distinguish primary and secondary copy actions;
+    \item no meaning conveyed only through color.
+\end{itemize}
+
+\subsection{Responsive requirements}
+
+Verify at approximately 1440, 1024, 768, 390, and 320 pixels. The expanded
+result cards must avoid horizontal overflow and keep long Decimal values
+selectable and readable. At narrow widths, the two converter directions remain
+stacked and the secondary result group must not force fixed-width columns.
+
+\subsection{Progressive disclosure}
+
+Use native \texttt{details}/\texttt{summary} or the established disclosure
+pattern for:
+
+\begin{itemize}
+    \item full-precision secondary values when a concise summary is shown;
+    \item ``How this is calculated'' explanations;
+    \item historical source terminology;
+    \item computational precision versus empirical uncertainty.
+\end{itemize}
+
+Do not hide the existence or classification of the three secondary outputs;
+only their extended method text may be collapsed.
+
+% ============================================================
+\section{Part 10 - Test Plan and Acceptance Criteria}
+% ============================================================
+
+\subsection{Core engine tests}
+
+Add or update tests for:
+
+\begin{itemize}
+    \item forward and reverse aligned-coordinate parity;
+    \item forward and reverse derived-age parity;
+    \item ratio arithmetic using Decimal values;
+    \item ratio state when elapsed age is positive;
+    \item Big Bang reference boundary state without division by zero;
+    \item pre-Big-Bang interval state without negative-age wording;
+    \item no \texttt{Infinity}, \texttt{NaN}, or nonfinite public result;
+    \item unchanged anchor, calendar, CE/BCE, validation, and round-trip behavior.
+\end{itemize}
+
+\subsection{UI adapter tests}
+
+Verify both conversion directions return:
+
+\begin{itemize}
+    \item the unchanged primary result fields;
+    \item exact aligned coordinate and scientific notation;
+    \item a discriminated observable-age display state;
+    \item a discriminated ratio display state;
+    \item canonical labels and historical terminology disclosure;
+    \item no external-converter URLs.
+\end{itemize}
+
+\subsection{Component regression tests}
+
+Verify:
+
+\begin{itemize}
+    \item the three secondary result labels exist in both cards;
+    \item all new data hooks are unique and correctly bound;
+    \item copy controls retain accessible status regions;
+    \item result focus remains intact;
+    \item details controls have correct accessible text;
+    \item the route retains its CU Mathematical Model classification;
+    \item the page states that CU-Time does not begin at the Big Bang;
+    \item the page states why the Observable Universe marker is relationally
+          between B-TOM and C-TOM;
+    \item prohibited external converter links are absent.
+\end{itemize}
+
+\subsection{Reference vectors}
+
+At the arithmetic anchor \texttt{01/01/2000 CE 00:00:00 UTC}:
+
+\begin{tabularx}{\textwidth}{L{2.4in}Y}
+\toprule
+\textbf{Field} & \textbf{Expected value} \\
+\midrule
+JDN & \texttt{2451544.5} \\
+Delta years & \texttt{0} \\
+Observable-universe-aligned CU coordinate & \texttt{3094213000000} \\
+Full CU-Time & \texttt{3094134044923.50975356477292230250881} \\
+Derived elapsed age & \texttt{13786999981.453} \\
+\bottomrule
+\end{tabularx}
+
+For \texttt{07/23/2026 CE 00:00:00 UTC}, the 60-digit engine produces:
+
+\begin{codebox}{July 23, 2026 reference vector}
+Observable-Universe-Aligned CU Coordinate:
+3094213000026.55772053049872513126048647167006073833096395983
+
+Full CU-Time:
+3094134044950.06747409527164743376929647167006073833096395983
+
+Derived Age Since the Big Bang:
+13787000008.0107205304987251312604864716700607383309639598297
+
+Ratio summary:
+224.430
+\end{codebox}
+
+The reference vector must be confirmed by the live TypeScript engine before it
+is committed as a test expectation.
+
+\subsection{Full acceptance gate}
+
+A release candidate must pass:
+
+\begin{commandbox}{CU-Time expanded-output verification gate}
+cd /Users/cosmos/Documents/GitHub/CosmicUniversalismStatement/website || exit 1
+
+npm test
+npm run build
+
+cd ..
+git diff --check
+git status --short --branch
+git diff --stat
+\end{commandbox}
+
+Manual browser acceptance must cover both directions, CE/BCE, boundary states,
+keyboard navigation, copy behavior, desktop/tablet/mobile layouts, and a clean
+browser console.
+
+% ============================================================
+\section{Part 11 - Controlled Implementation Phases}
+% ============================================================
+
+\subsection{Phase 1 - Pure result semantics}
+
+Authorized objective:
+
+\begin{itemize}
+    \item add the ratio derivation;
+    \item add elapsed/boundary/pre-boundary state semantics;
+    \item preserve constants and calendar behavior;
+    \item add focused core tests.
+\end{itemize}
+
+Completion gate: pure tests pass with no component or route edits.
+
+\subsection{Phase 2 - Public display adapter}
+
+Authorized objective:
+
+\begin{itemize}
+    \item expose the existing aligned coordinate and age results;
+    \item format the three semantic age states;
+    \item format the ratio availability state;
+    \item preserve all current display fields and validation outcomes.
+\end{itemize}
+
+Completion gate: UI adapter tests pass and no HTML is yet changed.
+
+\subsection{Phase 3 - Converter result cards}
+
+Authorized objective:
+
+\begin{itemize}
+    \item add the secondary result group to both directions;
+    \item preserve primary visual hierarchy;
+    \item add method disclosures and classifications;
+    \item preserve focus, copy, keyboard, and responsive behavior.
+\end{itemize}
+
+Completion gate: focused component tests and manual browser inspection pass.
+
+\subsection{Phase 4 - Route education}
+
+Authorized objective:
+
+\begin{itemize}
+    \item add CU Statement governance;
+    \item explain full-Cosmic-Breath CU-Time;
+    \item explain the Big Bang as an internal reference boundary;
+    \item explain B-TOM to C-TOM observer placement;
+    \item explain formulas, precision, empirical uncertainty, and historical terminology;
+    \item exclude external converter links.
+\end{itemize}
+
+Completion gate: route-content tests, accessibility review, and source-boundary
+review pass.
+
+\subsection{Phase 5 - Full acceptance}
+
+Run the complete test/build gate, inspect the full diff, verify no protected
+file changed, and perform manual browser acceptance. Do not commit or push
+without separate owner authorization.
+
+% ============================================================
+\section{Part 12 - Copy-and-Paste Implementation Prompts}
+% ============================================================
+
+\subsection{Feature-branch preflight prompt}
+
+\begin{promptbox}{CU-Time Expanded Outputs Preflight}
+Repository:
+/Users/cosmos/Documents/GitHub/CosmicUniversalismStatement
+
+Protected branch:
+main
+
+Stable branch:
+website
+
+Expected website baseline:
+e1c82bff1d37732f52b03fa4734cf7e4120b71e9
+
+Proposed feature branch:
+feature/cu-time-expanded-outputs
+
+Before any edit:
+
+1. Verify origin, branch, HEAD, and worktree.
+2. Confirm website is at the expected baseline.
+3. Confirm the feature branch does not already exist locally or remotely.
+4. Inspect only the authorized CU-Time paths.
+5. Report the smallest phase-one file set and tests.
+
+Do not edit, install dependencies, commit, push, merge, tag, release,
+or deploy.
+\end{promptbox}
+
+\subsection{Phase-one implementation prompt}
+
+\begin{promptbox}{Implement CU-Time Result Semantics Only}
+Implement only the pure CU-Time result semantics approved by the
+CU-Time Expanded Outputs and Method Implementation Manual v1.1.
+
+Required behavior:
+
+- preserve all exact constants;
+- preserve Gregorian/JDN algorithms;
+- preserve current forward and reverse primary results;
+- calculate coordinate-to-observable-age ratio only when the derived
+  elapsed age is positive;
+- represent the exact Big Bang arithmetic boundary as a named boundary
+  state, not a public zero-age CU state;
+- represent earlier coordinates as a positive pre-Big-Bang reference
+  interval, not a negative age;
+- do not emit Infinity or NaN;
+- do not edit the Astro route or component in this phase.
+
+Add focused tests.
+
+Do not commit, push, merge, tag, release, or deploy.
+\end{promptbox}
+
+\subsection{Final review prompt}
+
+\begin{promptbox}{Final CU-Time Expanded Outputs Review}
+Perform a final no-edit release-candidate review of the CU-Time expanded
+outputs feature.
+
+Verify:
+
+1. repository branch, HEAD, and worktree;
+2. exact constants and Decimal precision unchanged;
+3. Gregorian and reverse calendar behavior unchanged;
+4. aligned coordinate and age values match in both directions;
+5. ratio behavior for positive elapsed age;
+6. named Big Bang boundary behavior;
+7. pre-Big-Bang interval behavior;
+8. no Infinity, NaN, negative-age label, or zero-as-CU-origin copy;
+9. primary result hierarchy preserved;
+10. both result cards expose all approved secondary values;
+11. CU Statement governance and full-Cosmic-Breath interpretation;
+12. B-TOM/C-TOM Observable Universe explanation;
+13. no external converter links;
+14. accessibility, keyboard, focus, copy, and responsive behavior;
+15. focused and full test results;
+16. Astro build and eight-route output;
+17. no protected or unrelated file changes;
+18. deployment implications of any later website push.
+
+Do not edit, commit, push, merge, tag, release, or deploy.
+\end{promptbox}
+
+% ============================================================
+\section{Part 13 - Commit, Merge, and Deployment Boundaries}
+% ============================================================
+
+\subsection{Commit boundary}
+
+After full acceptance, an explicit owner authorization may permit staging only
+the verified CU-Time feature files. Use exact paths and inspect the staged diff.
+The commit must not include the reference HTML, sealed Cosmic Breath ledgers,
+manual source files unless separately approved, or unrelated documentation.
+
+\subsection{Merge boundary}
+
+A future merge should use an explicit non-fast-forward merge into
+\branchname{website} only after post-feature verification. Because pushes to
+\branchname{website} may publish GitHub Pages, merge/push authorization must be
+clear about deployment consequences.
+
+\subsection{Tag boundary}
+
+Do not move \release{website-v1.1-cosmic-breath}. A CU-Time expanded-output tag,
+GitHub Release, or deployment record requires a new owner-approved name and a
+separate action.
+
+% ============================================================
+\section{Appendix A - Source Authority Record}
+% ============================================================
+
+\begin{longtable}{L{2.35in}L{1.30in}L{2.55in}}
+\toprule
+\textbf{Source} & \textbf{Role} & \textbf{Use in this manual} \\
+\midrule
+Owner decisions in this workflow & Governing authority & Product scope, terminology, no-zero CU ontology, Big Bang boundary semantics, B-TOM/C-TOM explanation. \\
+CU Statement & Canonical CU framing & Governs CU-Time meaning and observer relationship. \\
+Live CU-Time TypeScript engine & Production arithmetic & Establishes current constants, fields, calendar path, and already-computed aligned coordinate/age. \\
+Website Master Manual v1.1 & Governance and house style & Current branch/release discipline, classifications, testing, and LaTeX standard. \\
+Cosmic Breath Time Converter Manual v1.0 & Historical implementation authority & Preserves exact-literal, parity, module, test, and unchanged-reference rules. \\
+Standalone converter HTML v3.0.1 & Behavioral and provenance reference & Establishes historical labels and output relationships; remains unchanged. \\
+Time Calculation and CU Framework files & Historical/open CU research & May inform context but do not silently override sealed authorities, owner decisions, or production arithmetic. \\
+\bottomrule
+\end{longtable}
+
+% ============================================================
+\section{Appendix B - Owner Decision Record}
+% ============================================================
+
+\begin{longtable}{L{0.9in}L{5.35in}}
+\toprule
+\textbf{ID} & \textbf{Approved decision} \\
+\midrule
+CTE-OD-01 & Preserve one bidirectional converter; calculate all secondary outputs automatically. \\
+CTE-OD-02 & Add Observable-Universe-Aligned CU Coordinate, Derived Age Since the Big Bang, and CU Coordinate-to-Observable-Age Ratio. \\
+CTE-OD-03 & Exclude links and calls to action for other converter pages. \\
+CTE-OD-04 & CU-Time is the full sub-ZTOM-to-ZTOM Cosmic Breath coordinate and does not begin at the Big Bang. \\
+CTE-OD-05 & The CU Statement governs the page; empirical science is a secondary observational lens. \\
+CTE-OD-06 & The Observable Universe marker is relationally between B-TOM and C-TOM because the observer is composed of foundational elements, grounded on B-TOM, and looking up to C-TOM. \\
+CTE-OD-07 & Zero is not a CU state or origin; the public page names the Big Bang reference boundary rather than displaying a zero-age CU state. \\
+CTE-OD-08 & Before the adopted Big Bang reference, display a positive pre-Big-Bang reference interval rather than a negative age. \\
+CTE-OD-09 & Do not show a ratio at or before the adopted Big Bang reference boundary. \\
+CTE-OD-10 & Preserve the original reference HTML and exact constants; do not silently alter converter mathematics. \\
+\bottomrule
+\end{longtable}
+
+% ============================================================
+\section{Appendix C - Final Acceptance Checklist}
+% ============================================================
+
+\begin{itemize}
+    \item[\checkbox] Correct feature branch and clean starting baseline.
+    \item[\checkbox] Exact constants and Decimal precision unchanged.
+    \item[\checkbox] Existing forward and reverse conversions preserved.
+    \item[\checkbox] Aligned coordinate exposed in both directions.
+    \item[\checkbox] Big Bang chronology exposed with three semantic states.
+    \item[\checkbox] Ratio available only for positive elapsed age.
+    \item[\checkbox] No numerical zero-age CU state, negative-age label, Infinity, or NaN.
+    \item[\checkbox] No external converter links.
+    \item[\checkbox] CU Statement and full Cosmic Breath explanation present.
+    \item[\checkbox] B-TOM/C-TOM Observable Universe explanation present.
+    \item[\checkbox] Computational precision separated from empirical uncertainty.
+    \item[\checkbox] Accessibility and responsive acceptance complete.
+    \item[\checkbox] Focused tests and full suite pass.
+    \item[\checkbox] Astro production build passes with expected routes.
+    \item[\checkbox] No unrelated or protected files changed.
+    \item[\checkbox] No commit, push, merge, tag, release, or deployment without separate authorization.
+\end{itemize}
+
+% ============================================================
+\section{Appendix D - Manual Revision Record}
+% ============================================================
+
+\begin{tabularx}{\textwidth}{L{0.75in}L{1.25in}Y}
+\toprule
+\textbf{Version} & \textbf{Date} & \textbf{Revision} \\
+\midrule
+1.0 & July 19, 2026 & Historical Cosmic Breath Time Converter migration manual establishing parity, exact constants, TypeScript extraction, validation, tests, and Astro integration. \\
+1.1 & July 23, 2026 & Adds the owner-approved expanded-output specification: one automatic bidirectional result model, observable-universe-aligned coordinate, Big Bang boundary-relative chronology, ratio semantics, CU Statement governance, full-Cosmic-Breath interpretation, B-TOM/C-TOM observer placement, updated implementation phases, and acceptance tests. \\
+\bottomrule
+\end{tabularx}
+
+
+
+\end{document}

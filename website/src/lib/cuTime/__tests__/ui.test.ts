@@ -6,6 +6,21 @@ import {
 } from '..';
 
 const ANCHOR_CU_TIME = '3094134044923.50975356477292230250881';
+const ANCHOR_REFERENCE = {
+  observableUniverseAlignedCuCoordinate: '3094213000000',
+  observableUniverseAlignedCuCoordinateExponential: '3.094213e+12',
+  observableAge: {
+    kind: 'elapsed',
+    label: 'Derived Age Since the Big Bang',
+    years: '13786999981.453',
+  },
+  coordinateToObservableAgeRatio: {
+    kind: 'available',
+    label: 'CU Coordinate-to-Observable-Age Ratio',
+    summary: '224.430',
+    exact: '224.429752967469255696500492159497688263016147400751467748004',
+  },
+};
 
 describe('CU-Time interface adapter', () => {
   it('formats the approved reverse anchor as canonical UTC', () => {
@@ -15,6 +30,7 @@ describe('CU-Time interface adapter', () => {
         inputCuTime: ANCHOR_CU_TIME,
         inputCuTimeExponential: '3.094134e+12',
         gregorianUtc: '01/01/2000 CE 00:00:00 UTC',
+        observableUniverseReference: ANCHOR_REFERENCE,
       },
     });
   });
@@ -62,13 +78,14 @@ describe('Gregorian interface adapter', () => {
     second: '0',
   };
 
-  it('formats the approved forward anchor without exposing NASA fields', () => {
+  it('formats the approved forward anchor with the observable-universe reference', () => {
     expect(convertGregorianForDisplay(anchorInput)).toEqual({
       ok: true,
       value: {
         gregorianUtc: '01/01/2000 CE 00:00:00 UTC',
         cuTime: ANCHOR_CU_TIME,
         cuTimeExponential: '3.094134e+12',
+        observableUniverseReference: ANCHOR_REFERENCE,
       },
     });
   });
