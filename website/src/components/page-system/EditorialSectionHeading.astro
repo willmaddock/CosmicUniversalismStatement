@@ -1,0 +1,92 @@
+---
+type HeadingLevel = 'h2' | 'h3' | 'h4';
+
+interface Props {
+  title: string;
+  headingLevel?: HeadingLevel;
+  headingId?: string;
+  eyebrow?: string;
+  sectionNumber?: string;
+  lead?: string;
+}
+
+const {
+  title,
+  headingLevel = 'h2',
+  headingId,
+  eyebrow,
+  sectionNumber,
+  lead,
+} = Astro.props;
+const Heading = headingLevel;
+---
+
+<header class="editorial-section-heading">
+  {
+    (eyebrow || sectionNumber) && (
+      <div class="editorial-section-heading__context">
+        {sectionNumber && (
+          <span class="editorial-section-heading__number" aria-hidden="true">
+            {sectionNumber}
+          </span>
+        )}
+        {eyebrow && <p class="editorial-section-heading__eyebrow">{eyebrow}</p>}
+      </div>
+    )
+  }
+  <Heading id={headingId}>{title}</Heading>
+  {lead && <p class="editorial-section-heading__lead">{lead}</p>}
+</header>
+
+<style>
+  .editorial-section-heading {
+    max-width: var(--measure-readable);
+  }
+
+  .editorial-section-heading__context {
+    display: flex;
+    margin-bottom: var(--space-3);
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-4);
+  }
+
+  .editorial-section-heading__number,
+  .editorial-section-heading__eyebrow {
+    color: var(--color-amber);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  .editorial-section-heading__eyebrow {
+    margin: 0;
+  }
+
+  .editorial-section-heading :global(h2),
+  .editorial-section-heading :global(h3),
+  .editorial-section-heading :global(h4) {
+    max-width: 22ch;
+    margin: 0;
+    overflow-wrap: anywhere;
+    color: var(--color-white-gold);
+    font-size: clamp(1.75rem, 4vw, 3rem);
+  }
+
+  .editorial-section-heading :global(h3) {
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+  }
+
+  .editorial-section-heading :global(h4) {
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  }
+
+  .editorial-section-heading__lead {
+    max-width: var(--measure-readable);
+    margin: var(--space-4) 0 0;
+    color: var(--color-text-muted);
+    font-size: clamp(1rem, 2vw, 1.125rem);
+  }
+</style>

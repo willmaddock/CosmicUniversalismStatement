@@ -1,6 +1,10 @@
 ---
 import ClassificationBadge from '../components/ClassificationBadge.astro';
 import ContentSection from '../components/ContentSection.astro';
+import ContinuationNavigation from '../components/page-system/ContinuationNavigation.astro';
+import EditorialSectionHeading from '../components/page-system/EditorialSectionHeading.astro';
+import EpistemicCallout from '../components/page-system/EpistemicCallout.astro';
+import SourceProvenancePanel from '../components/page-system/SourceProvenancePanel.astro';
 import ContentPageLayout from '../layouts/ContentPageLayout.astro';
 ---
 
@@ -11,31 +15,63 @@ import ContentPageLayout from '../layouts/ContentPageLayout.astro';
   title="A map for inquiry, not a claim of completion"
   description="Cosmic Universalism is an evolving philosophical and computational framework for examining consciousness, existence, time, and cosmic-scale structure."
 >
-  <div class="content-grid">
-    <ContentSection id="philosophical-inquiry" title="Philosophical inquiry" variant="card">
-      <ClassificationBadge slot="context" classification="philosophical-interpretation" />
-      <p>
-        The framework asks how meaning, consciousness, and responsibility might be
-        understood across scales larger than an individual life or civilization.
-      </p>
+  <section class="framework-categories" aria-labelledby="framework-categories-title">
+    <EditorialSectionHeading
+      eyebrow="Framework orientation"
+      title="Three complementary disciplines"
+      headingId="framework-categories-title"
+      lead="Philosophical inquiry, computational expression, and research discipline remain distinct throughout this overview."
+    />
+
+    <div class="content-grid">
+      <ContentSection
+        id="philosophical-inquiry"
+        title="Philosophical inquiry"
+        variant="card"
+        headingLevel="h3"
+      >
+        <ClassificationBadge slot="context" classification="philosophical-interpretation" />
+        <p>
+          The framework asks how meaning, consciousness, and responsibility might be
+          understood across scales larger than an individual life or civilization.
+        </p>
+      </ContentSection>
+
+      <ContentSection
+        id="computational-expression"
+        title="Computational expression"
+        variant="card"
+        headingLevel="h3"
+      >
+        <ClassificationBadge slot="context" classification="cu-mathematical-model" />
+        <p>
+          Formal models provide a language for exploring the framework’s internal
+          relationships. They remain CU models unless independently validated.
+        </p>
+        <p>
+          A CU mathematical model can be examined for internal consistency, assumptions,
+          and consequences without being treated as an established description of nature.
+        </p>
+      </ContentSection>
+    </div>
+
+    <EpistemicCallout
+      kind="boundary"
+      label="Philosophical interpretation boundary"
+    >
       <p>
         Questions of meaning and responsibility are presented here as philosophical
         interpretations. They do not function as empirical findings or as substitutes
         for scientific evidence.
       </p>
-    </ContentSection>
-    <ContentSection id="computational-expression" title="Computational expression" variant="card">
-      <ClassificationBadge slot="context" classification="cu-mathematical-model" />
-      <p>
-        Formal models provide a language for exploring the framework’s internal
-        relationships. They remain CU models unless independently validated.
-      </p>
-      <p>
-        A CU mathematical model can be examined for internal consistency, assumptions,
-        and consequences without being treated as an established description of nature.
-      </p>
-    </ContentSection>
-    <ContentSection id="research-discipline" title="Research discipline" variant="card">
+    </EpistemicCallout>
+
+    <SourceProvenancePanel
+      id="research-discipline"
+      title="Research discipline"
+      headingLevel="h3"
+      eyebrow="Method and provenance"
+    >
       <p>
         Empirical references, mathematical models, theoretical propositions, and
         open questions are labeled separately so their evidentiary roles stay clear.
@@ -45,18 +81,42 @@ import ContentPageLayout from '../layouts/ContentPageLayout.astro';
         calculated within the CU framework, what is being proposed, and what remains
         unresolved.
       </p>
-    </ContentSection>
-  </div>
+    </SourceProvenancePanel>
+  </section>
+
+  <ContinuationNavigation
+    ariaLabel="Continue from Framework"
+    title="Continue to Cosmic Breath"
+    description="Explore Cosmic Structure and the TOM framework"
+    path="cosmic-breath/"
+  />
 </ContentPageLayout>
 
 <style>
+  .framework-categories {
+    display: grid;
+    gap: var(--space-8);
+  }
+
   .content-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-4);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6);
+  }
+
+  .content-grid :global(.content-section) {
+    max-width: none;
+    height: 100%;
+  }
+
+  .framework-categories :global(.epistemic-callout),
+  .framework-categories :global(.source-provenance-panel) {
+    max-width: none;
   }
 
   @media (max-width: 48rem) {
-    .content-grid { grid-template-columns: 1fr; }
+    .content-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

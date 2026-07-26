@@ -12,6 +12,22 @@
   --color-highlight: var(--color-amber);
   --color-text-muted: var(--color-muted-gray);
   --color-surface-translucent: var(--color-translucent-blue);
+  --color-panel-quiet: var(--color-surface-translucent);
+  --color-panel-feature:
+    color-mix(
+      in srgb,
+      var(--color-surface-translucent) 72%,
+      var(--color-background)
+    );
+  --color-border-quiet: var(--color-translucent-blue);
+  --color-border-section:
+    color-mix(in srgb, var(--color-cyan) 32%, transparent);
+  --color-border-feature:
+    color-mix(in srgb, var(--color-cyan) 56%, transparent);
+  --color-callout-boundary-accent: var(--color-amber);
+  --color-callout-method-accent: var(--color-cyan);
+  --color-callout-caution-accent: var(--color-white-gold);
+  --color-callout-context-accent: var(--color-muted-gray);
 
   --font-family-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
@@ -28,6 +44,7 @@
   --space-6: 1.5rem;
   --space-8: 2rem;
   --space-12: 3rem;
+  --space-editorial-section: clamp(var(--space-12), 7vw, 6rem);
 
   --focus-ring-width: 0.1875rem;
   --focus-ring-offset: 0.1875rem;

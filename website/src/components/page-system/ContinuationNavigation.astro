@@ -1,0 +1,106 @@
+---
+import { sitePath } from '../../config/site';
+
+interface Props {
+  ariaLabel: string;
+  title: string;
+  description: string;
+  path: string;
+}
+
+const {
+  ariaLabel,
+  title,
+  description,
+  path,
+} = Astro.props;
+---
+
+<nav class="continuation-navigation" aria-label={ariaLabel}>
+  <a href={sitePath(path)}>
+    <span class="continuation-navigation__cue">Continue</span>
+    <span class="continuation-navigation__content">
+      <strong>{title}</strong>
+      <span>{description}</span>
+    </span>
+    <span class="continuation-navigation__direction" aria-hidden="true">
+      Forward →
+    </span>
+  </a>
+</nav>
+
+<style>
+  .continuation-navigation {
+    max-width: var(--measure-readable);
+    margin-top: var(--space-editorial-section);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--color-border-section);
+  }
+
+  .continuation-navigation a {
+    display: grid;
+    min-height: 2.75rem;
+    padding: var(--space-6);
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-4);
+    border: 1px solid var(--color-border-feature);
+    background: var(--color-panel-feature);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .continuation-navigation a:hover {
+    border-color: var(--color-cyan);
+    background: var(--color-panel-quiet);
+  }
+
+  .continuation-navigation__cue {
+    color: var(--color-amber);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .continuation-navigation__content {
+    display: grid;
+    min-width: 0;
+    gap: var(--space-1);
+  }
+
+  .continuation-navigation__content strong {
+    overflow-wrap: anywhere;
+    color: var(--color-white-gold);
+    font-family: var(--font-family-serif);
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    line-height: var(--line-height-heading);
+  }
+
+  .continuation-navigation__content > span {
+    color: var(--color-text-muted);
+  }
+
+  .continuation-navigation__direction {
+    color: var(--color-cyan);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 48rem) {
+    .continuation-navigation a {
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+
+    .continuation-navigation__direction {
+      white-space: normal;
+    }
+  }
+
+  @media (max-width: 36rem) {
+    .continuation-navigation a {
+      padding: var(--space-4);
+    }
+  }
+</style>
