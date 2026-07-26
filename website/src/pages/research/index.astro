@@ -1,86 +1,105 @@
 ---
 import ClassificationBadge from '../../components/ClassificationBadge.astro';
 import ResearchIndexSection from '../../components/ResearchIndexSection.astro';
-import ResearchLegend from '../../components/ResearchLegend.astro';
 import ResearchProvenanceGuide from '../../components/ResearchProvenanceGuide.astro';
+import ResearchStatusBadge from '../../components/ResearchStatusBadge.astro';
+import ResearchObservatory from '../../components/research/ResearchObservatory.astro';
+import {
+  allResearchClassifications,
+  allResearchStatuses,
+} from '../../data/research-taxonomy';
 import ContentPageLayout from '../../layouts/ContentPageLayout.astro';
 ---
 
 <ContentPageLayout
   metaTitle="Research | Cosmic Universalism"
-  metaDescription="The Cosmic Universalism research index and claim classification approach."
-  eyebrow="Research"
-  title="Trace each claim to the kind of support it has"
-  description="The research index separates established sources from CU-authored models and propositions, making the framework easier to examine, question, and revise."
+  metaDescription="Explore the Cosmic Universalism Research Observatory, its research areas, relationships, classifications, sources, and open questions."
+  eyebrow="COSMIC UNIVERSALISM RESEARCH"
+  title="Research, Philosophy & Open Questions"
+  description="Explore relationships among Cosmic Breath, CU-Time, consciousness, artificial intelligence and alignment, Free Will, ethics and memory, empirical science, sources and methods, open questions, and historical research. Classifications and lifecycle statuses distinguish areas with different authority, evidence, and stages of development."
 >
+  <ResearchObservatory />
+
   <nav class="research-index-navigation" aria-label="Research index sections">
     <p>On this page</p>
     <ul>
-      <li><a href="#research-classifications">Research classification vocabulary</a></li>
-      <li><a href="#research-statuses">Research status vocabulary</a></li>
-      <li><a href="#research-pathways">Research pathways</a></li>
-      <li><a href="#open-questions">Open questions</a></li>
-      <li><a href="#historical-record">Historical and superseded material</a></li>
-      <li><a href="#source-provenance">Source and provenance standard</a></li>
+      <li><a href="#research-observatory">CU Research Observatory</a></li>
+      <li><a href="#research-labels">Research labels</a></li>
+      <li><a href="#open-questions">Open Questions</a></li>
+      <li><a href="#historical-record">Historical Archive</a></li>
+      <li><a href="#source-provenance">Sources &amp; Methods</a></li>
     </ul>
   </nav>
 
-  <ResearchLegend variant="complete" />
+  <section
+    class="research-labels"
+    id="research-labels"
+    aria-labelledby="research-labels-title"
+  >
+    <header class="research-labels__header">
+      <h2 id="research-labels-title">Understanding research labels</h2>
+      <p>
+        Research entries use two separate kinds of labels so readers can identify
+        both the material’s purpose and its present state.
+      </p>
+    </header>
 
-  <ResearchIndexSection id="research-pathways" title="Research pathways">
-    <div class="research-groups">
-      <article>
-        <ClassificationBadge classification="empirical-reference" />
-        <h3>Scientific context</h3>
+    <div class="research-labels__groups">
+      <section aria-labelledby="research-classifications">
+        <h3 id="research-classifications">Classifications</h3>
         <p>
-          Observations, measurements, and published research belong here as external
-          references. Their inclusion does not make a CU interpretation empirical.
+          Classifications describe what kind of material an entry contains.
         </p>
-      </article>
-      <article>
-        <div class="research-groups__classifications">
-          <ClassificationBadge classification="cu-mathematical-model" />
-          <ClassificationBadge classification="cu-theoretical-proposition" />
-        </div>
-        <h3>Framework work</h3>
+        <ul class="research-labels__list" role="list">
+          {
+            allResearchClassifications.map((classification) => (
+              <li>
+                <ClassificationBadge
+                  classification={classification}
+                  showDescription={true}
+                />
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section aria-labelledby="research-statuses">
+        <h3 id="research-statuses">Lifecycle statuses</h3>
         <p>
-          CU mathematical models and theoretical propositions are identified by their
-          own classifications and evaluated on their stated assumptions.
+          Lifecycle statuses describe an entry’s current research or editorial state.
+          A status does not change its classification or establish scientific validity.
         </p>
-      </article>
-      <article>
-        <div class="research-groups__classifications">
-          <ClassificationBadge classification="philosophical-interpretation" />
-          <ClassificationBadge classification="open-question" />
-        </div>
-        <h3>Interpretive and unresolved work</h3>
-        <p>
-          Philosophical interpretations address questions of meaning and significance
-          without being presented as empirical conclusions. Open questions identify
-          unresolved definitions, contradictions, or research problems that require
-          further work.
-        </p>
-      </article>
+        <ul class="research-labels__list" role="list">
+          {
+            allResearchStatuses.map((status) => (
+              <li>
+                <ResearchStatusBadge status={status} showDescription={true} />
+              </li>
+            ))
+          }
+        </ul>
+      </section>
     </div>
-  </ResearchIndexSection>
+  </section>
 
   <ResearchIndexSection
     id="open-questions"
-    title="Open questions"
+    title="Open Questions"
     description="Unresolved problems are retained as questions to encourage falsifiability, clearer definitions, and productive criticism."
     classification="open-question"
   />
 
   <ResearchIndexSection
     id="historical-record"
-    title="Historical and superseded material"
-    description="Earlier interpretations will remain available as part of the project record. Historical / Superseded identifies the material’s editorial classification; Superseded or Archived describes its research lifecycle."
+    title="Historical Archive"
+    description="The archive preserves historical, superseded, and archived material as part of the project record. Historical / Superseded identifies the material’s classification; Superseded or Archived describes its research lifecycle."
   />
 
   <ResearchIndexSection
     id="source-provenance"
-    title="Source and provenance standard"
-    description="Future research entries will identify their original CU repository file separately from external empirical references, together with version, last-reviewed date, and revision history."
+    title="Sources, Methods & Provenance"
+    description="Future research entries will identify their original CU repository source separately from external empirical references, together with version, last-reviewed date, and revision history."
   >
     <ResearchProvenanceGuide />
     <p class="research-provenance-note">
@@ -122,29 +141,51 @@ import ContentPageLayout from '../../layouts/ContentPageLayout.astro';
     font-weight: 600;
   }
 
-  :global(.research-legend--complete) {
+  .research-labels {
     margin-top: var(--space-12);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--color-translucent-blue);
     scroll-margin-top: var(--space-6);
   }
 
-  .research-groups {
+  .research-labels__header {
+    max-width: var(--measure-readable);
+  }
+
+  .research-labels__header h2 {
+    margin: 0;
+    color: var(--color-white-gold);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+  }
+
+  .research-labels__groups {
     display: grid;
+    margin-top: var(--space-6);
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-4);
+    gap: var(--space-6);
   }
 
-  article {
-    padding: var(--space-6);
-    border: 1px solid var(--color-translucent-blue);
-    background: var(--color-surface-translucent);
+  .research-labels__groups > section {
+    min-width: 0;
     scroll-margin-top: var(--space-6);
   }
 
-  .research-groups__classifications {
-    display: flex;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: var(--space-2);
+  .research-labels__groups h3 {
+    margin: 0;
+    color: var(--color-white-gold);
+    font-size: 1.375rem;
+  }
+
+  .research-labels__list {
+    display: grid;
+    margin: var(--space-4) 0 0;
+    padding: 0;
+    gap: var(--space-3);
+    list-style: none;
+  }
+
+  .research-labels__list li {
+    min-width: 0;
   }
 
   .research-provenance-note {
@@ -152,14 +193,13 @@ import ContentPageLayout from '../../layouts/ContentPageLayout.astro';
     margin-top: var(--space-8);
   }
 
-  h3 { margin: var(--space-4) 0 0; font-size: 1.375rem; }
   p { margin-block: var(--space-4) 0; }
 
   @media (max-width: 48rem) {
-    .research-groups { grid-template-columns: 1fr; }
+    .research-labels__groups { grid-template-columns: 1fr; }
   }
 
   @media (max-width: 36rem) {
-    article { padding: var(--space-4); }
+    .research-index-navigation { padding: var(--space-4); }
   }
 </style>

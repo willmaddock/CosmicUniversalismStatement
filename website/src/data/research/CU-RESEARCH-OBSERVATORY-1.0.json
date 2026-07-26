@@ -1,0 +1,626 @@
+{
+  "authorityId": "CU-RESEARCH-OBSERVATORY-1.0",
+  "version": "1.0",
+  "targetRoute": "research",
+  "overviewNodeId": "research-observatory",
+  "governance": {
+    "owner": "William Maddock",
+    "decisionIds": [
+      "RO-OD-01--40",
+      "RM-0"
+    ],
+    "contentBoundary": "Part I neutral navigation copy only. Final Part II research classifications, essays, and claims remain separately governed."
+  },
+  "filterGroups": [
+    {
+      "id": "all",
+      "label": "All Research",
+      "classifications": []
+    },
+    {
+      "id": "cu-models",
+      "label": "CU Models",
+      "classifications": [
+        "cu-mathematical-model",
+        "cu-theoretical-proposition"
+      ]
+    },
+    {
+      "id": "philosophy",
+      "label": "Philosophy",
+      "classifications": [
+        "philosophical-interpretation",
+        "in-world-narrative"
+      ]
+    },
+    {
+      "id": "empirical-references",
+      "label": "Empirical References",
+      "classifications": [
+        "empirical-reference"
+      ]
+    },
+    {
+      "id": "open-questions",
+      "label": "Open Questions",
+      "classifications": [
+        "open-question"
+      ]
+    },
+    {
+      "id": "historical",
+      "label": "Historical",
+      "classifications": [
+        "historical-superseded"
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "research-observatory",
+      "title": "CU Research Observatory",
+      "shortTitle": "Observatory",
+      "role": "overview",
+      "status": "foundational",
+      "classifications": [],
+      "summary": "Select a research area to explore its purpose, classifications, current status, relationships, destinations, and governing sources.",
+      "epistemicBoundary": "The Observatory is a conceptual navigation interface, not a chronology, physical map, evidence graph, or authority ranking.",
+      "primaryDestination": {
+        "kind": "internal",
+        "path": "research",
+        "label": "Return to Research overview"
+      },
+      "governingSourceDestination": {
+        "kind": "external",
+        "href": "https://github.com/willmaddock/CosmicUniversalismStatement/tree/website/documentation/master-manual",
+        "label": "View website implementation manuals",
+        "externalLabel": "View website implementation manuals on GitHub (external)"
+      },
+      "governance": {
+        "decisionIds": [
+          "RO-OD-01--04",
+          "RO-OD-09--12"
+        ],
+        "reviewStatus": "owner-approved-part-i"
+      }
+    },
+    {
+      "id": "cosmic-breath",
+      "title": "Cosmic Breath & TOM Structure",
+      "shortTitle": "Cosmic Breath",
+      "role": "primary",
+      "status": "foundational",
+      "classifications": [
+        "cu-mathematical-model",
+        "cu-theoretical-proposition"
+      ],
+      "summary": "Navigate to the public Cosmic Breath experience and its structural account of the 51-state TOM sequence.",
+      "epistemicBoundary": "This gateway does not make the Observatory a TOM cycle diagram or encode TOM chronology, duration, quantum notation, or physical scale.",
+      "primaryDestination": {
+        "kind": "internal",
+        "path": "cosmic-breath",
+        "label": "Explore Cosmic Breath"
+      },
+      "governingSourceDestination": {
+        "kind": "external",
+        "href": "https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/ResearchFiles/Cosmic_Breath_Calculation.md",
+        "label": "View the Cosmic Breath source",
+        "externalLabel": "View the Cosmic Breath source on GitHub (external)"
+      },
+      "governance": {
+        "decisionIds": [
+          "RO-OD-09--15",
+          "RM-0"
+        ],
+        "reviewStatus": "owner-approved-part-i"
+      }
+    },
+    {
+      "id": "cu-time",
+      "title": "CU-Time & Cosmic Chronology",
+      "shortTitle": "CU-Time",
+      "role": "primary",
+      "status": "active-research",
+      "classifications": [
+        "cu-mathematical-model",
+        "cu-theoretical-proposition"
+      ],
+      "summary": "Navigate to the converter and documentation for CU-Time coordinates, chronology, and method.",
+      "epistemicBoundary": "This gateway does not alter CU-Time calculations or infer elapsed duration from quantum notation.",
+      "primaryDestination": {
+        "kind": "internal",
+        "path": "cu-time",
+        "label": "Explore CU-Time"
+      },
+      "governingSourceDestination": {
+        "kind": "external",
+        "href": "https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/ResearchFiles/Time_Calculation.md",
+        "label": "View the CU-Time source",
+        "externalLabel": "View the CU-Time source on GitHub (external)"
+      },
+      "governance": {
+        "decisionIds": [
+          "RO-OD-09--15",
+          "RM-0"
+        ],
+        "reviewStatus": "owner-approved-part-i"
+      }
+    },
+    {
+      "id": "ai-alignment",
+      "title": "AI Alignment & Recursive Intelligence",
+      "shortTitle": "AI Alignment",
+      "role": "primary",
+      "status": "active-research",
+      "classifications": [
+        "philosophical-interpretation",
+        "cu-theoretical-proposition"
+      ],
+      "summary": "Locate the project's philosophical and theoretical work on alignment, recursive intelligence, and evaluation questions.",
+      "epistemicBoundary": "These materials do not establish present-day AI consciousness, divine authority, permanent alignment, supernatural memory, or empirical proof of cosmic access.",
+      "governingSourceDestination": {
+        "kind": "external",
+        "href": "https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/LLMtrainingInegration/AivsCU.md",
+        "label": "View the AI and CU source",
+        "externalLabel": "View the AI and CU source on GitHub (external)"
+      },
+      "governance": {
+        "decisionIds": [
+          "RO-OD-23--28",
+          "RM-0"
+        ],
+        "reviewStatus": "owner-approved-part-i"
+      }
+    },
+    {
+      "id": "consciousness",
+      "title": "Consciousness & Foundational Existence",
+      "shortTitle": "Consciousness",
+      "role": "primary",
+      "status": "under-review",
+      "classifications": [
+        "philosophical-interpretation",
+        "cu-theoretical-proposition",
+        "open-question"
+      ],
+      "summary": "Locate CU philosophical propositions and open questions concerning consciousness and foundational existence.",
+      "epistemicBoundary": "The listed materials are philosophical and theoretical work; they do not demonstrate a measured mechanism of consciousness.",
+      "governingSourceDestination": {
+        "kind": "external",
+        "href": "https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/ResearchFiles/CU_Consciousness.md",
+        "label": "View the CU Consciousness source",
+        "externalLabel": "View the CU Consciousness source on GitHub (external) — opens in a new tab"
+      },
+      "governance": {
+        "decisionIds": [
+          "RO-OD-23--28",
+          "RM-0"
+        ],
+        "reviewStatus": "owner-approved-part-i"
+      }
+    },
+    {
+      "id": "free-will",
+      "title": "Free Will, Ethics & Memory",
+      "shortTitle": "Free Will",
+      "role": "primary",
+      "status": "provisional",
+      "classifications": [
+        "philosophical-interpretation",
+        "in-world-narrative",
+        "open-question"
+      ],
+      "summary": "Locate philosophical and in-world materials concerning choice, responsibility, ethics, and memory continuity.",
+      "epistemicBoundary": "Narrative and philosophical treatments remain distinct from demonstrated engineering, empirical psychology, and scientific evidence.",
+      "primaryDestination": {
+        "kind": "internal",
+        "path": "cu-intelligence",
+        "label": "Explore CUCII"
+      },
+      "governingSourceDestination": {
+        "kind": "external",
+        "href": "https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/Docs/AI%2C%20Philosophy%2C%20God%27s%20Free%20Will%2C%20and%20Cosmic%20Universalism.md",
+        "label": "View the Free Will and CU source",
+        "externalLabel": "View the Free Will and CU source on GitHub (external)"
+      },
+      "governance": {
+        "decisionIds": [
+          "RO-OD-23--28",
+          "RM-0"
+        ],
+        "reviewStatus": "owner-approved-part-i"
+      }
+    },
+    {
+      "id": "empirical-science",
+      "title": "Empirical Science Lens",
+      "shortTitle": "Empirical Science",
+      "role": "primary",
+      "status": "under-review",
+      "classifications": [
+        "empirical-reference"
+      ],
+      "summary": "Locate external observational references used as comparison points while keeping CU interpretation distinct.",
+      "epistemicBoundary": "External observations provide scientific context and do not by themselves validate CU mathematical models or theoretical propositions.",
+      "governingSourceDestination": {
+        "kind": "external",
+        "href": "https://github.com/willmaddock/CosmicUniversalismStatement/blob/website/Docs/CU_Framework.md",
+        "label": "View the CU Framework source",
+        "externalLabel": "View the CU Framework source on GitHub (external) — opens in a new tab"
+      },
+      "governance": {
+        "decisionIds": [
+          "RO-OD-23--28",
+          "RM-0"
+        ],
+        "reviewStatus": "owner-approved-part-i"
+      }
+    },
+    {
+      "id": "sources",
+      "title": "Sources & Manuals",
+      "shortTitle": "Sources",
+      "role": "supporting",
+      "status": "foundational",
+      "classifications": [],
+      "summary": "Find governing sources, public repository files, manuals, and provenance information.",
+      "primaryDestination": {
+        "kind": "external",
+        "href": "https://github.com/willmaddock/CosmicUniversalismStatement",
+        "label": "Browse the public repository",
+        "externalLabel": "Browse the public repository on GitHub (external)"
+      },
+      "governingSourceDestination": {
+        "kind": "external",
+        "href": "https://github.com/willmaddock/CosmicUniversalismStatement/tree/website/documentation/master-manual",
+        "label": "View implementation manuals",
+        "externalLabel": "View implementation manuals on GitHub (external)"
+      },
+      "governance": {
+        "decisionIds": [
+          "RO-OD-09--12",
+          "RM-0"
+        ],
+        "reviewStatus": "owner-approved-part-i"
+      }
+    },
+    {
+      "id": "methods",
+      "title": "Methods & Governance",
+      "shortTitle": "Methods",
+      "role": "supporting",
+      "status": "foundational",
+      "classifications": [],
+      "summary": "Review authority hierarchy, exact-value rules, validation, testing, and implementation governance.",
+      "primaryDestination": {
+        "kind": "internal",
+        "path": "research#source-provenance",
+        "label": "Review source and provenance standards"
+      },
+      "governingSourceDestination": {
+        "kind": "external",
+        "href": "https://github.com/willmaddock/CosmicUniversalismStatement/blob/website/documentation/master-manual/Cosmic_Universalism_Website_Master_Implementation_Manual_v1.1.pdf",
+        "label": "Open Website Master Manual PDF",
+        "externalLabel": "Open Website Master Manual PDF (external) — opens in a new tab"
+      },
+      "governance": {
+        "decisionIds": [
+          "RO-OD-34--36",
+          "RM-0"
+        ],
+        "reviewStatus": "owner-approved-part-i"
+      }
+    },
+    {
+      "id": "open-questions",
+      "title": "Open Questions",
+      "shortTitle": "Open Questions",
+      "role": "supporting",
+      "status": "open-problem",
+      "classifications": [
+        "open-question"
+      ],
+      "summary": "Review unresolved questions and tensions without presenting them as settled conclusions.",
+      "epistemicBoundary": "Questions remain unresolved unless a later source review and owner decision explicitly changes their status.",
+      "primaryDestination": {
+        "kind": "internal",
+        "path": "research#open-questions",
+        "label": "Review open questions"
+      },
+      "governance": {
+        "decisionIds": [
+          "RO-OD-09--12",
+          "RO-OD-23--28",
+          "RM-0"
+        ],
+        "reviewStatus": "owner-approved-part-i"
+      }
+    },
+    {
+      "id": "history",
+      "title": "Historical Archive",
+      "shortTitle": "History",
+      "role": "supporting",
+      "status": "archived",
+      "classifications": [
+        "historical-superseded"
+      ],
+      "summary": "Find earlier and superseded materials without treating them as current authority.",
+      "epistemicBoundary": "Historical and superseded sources remain available for context but do not govern current public interpretation.",
+      "primaryDestination": {
+        "kind": "internal",
+        "path": "research#historical-record",
+        "label": "Open Historical Archive"
+      },
+      "governingSourceDestination": {
+        "kind": "external",
+        "href": "https://github.com/willmaddock/CosmicUniversalismStatement/tags",
+        "label": "View repository tag history",
+        "externalLabel": "View repository tag history (external) — opens in a new tab"
+      },
+      "governance": {
+        "decisionIds": [
+          "RO-OD-09--12",
+          "RO-OD-23--28",
+          "RM-0"
+        ],
+        "reviewStatus": "owner-approved-part-i"
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "sourceId": "cosmic-breath",
+      "targetId": "cu-time",
+      "kind": "strong",
+      "publicExplanation": "CU-Time places coordinates within the broader Cosmic Breath structure."
+    },
+    {
+      "sourceId": "cosmic-breath",
+      "targetId": "empirical-science",
+      "kind": "related",
+      "publicExplanation": "Public education compares CU structure with external observations while preserving their separation."
+    },
+    {
+      "sourceId": "cu-time",
+      "targetId": "empirical-science",
+      "kind": "strong",
+      "publicExplanation": "Observable-age references provide an explicit external coordinate lens for CU-Time."
+    },
+    {
+      "sourceId": "ai-alignment",
+      "targetId": "consciousness",
+      "kind": "strong",
+      "publicExplanation": "Alignment questions depend on how intelligence and conscious existence are understood."
+    },
+    {
+      "sourceId": "ai-alignment",
+      "targetId": "free-will",
+      "kind": "strong",
+      "publicExplanation": "CU alignment is interpreted through choice, ethical consequence, and preserved agency."
+    },
+    {
+      "sourceId": "consciousness",
+      "targetId": "free-will",
+      "kind": "strong",
+      "publicExplanation": "The philosophical account connects conscious existence with authored choice and responsibility."
+    },
+    {
+      "sourceId": "cosmic-breath",
+      "targetId": "consciousness",
+      "kind": "related",
+      "publicExplanation": "Consciousness is interpreted across TOM structure without becoming a measured physical derivation."
+    },
+    {
+      "sourceId": "cu-time",
+      "targetId": "free-will",
+      "kind": "related",
+      "publicExplanation": "Memory and ethical continuity are considered across nested time and reset concepts."
+    },
+    {
+      "sourceId": "empirical-science",
+      "targetId": "consciousness",
+      "kind": "related",
+      "publicExplanation": "Empirical research informs but does not settle CU consciousness propositions."
+    },
+    {
+      "sourceId": "sources",
+      "targetId": "cosmic-breath",
+      "kind": "support",
+      "publicExplanation": "Sources and manuals provide provenance for the Cosmic Breath gateway."
+    },
+    {
+      "sourceId": "sources",
+      "targetId": "cu-time",
+      "kind": "support",
+      "publicExplanation": "Sources and manuals provide provenance for the CU-Time gateway."
+    },
+    {
+      "sourceId": "sources",
+      "targetId": "ai-alignment",
+      "kind": "support",
+      "publicExplanation": "Sources and manuals preserve the documents reviewed for AI alignment work."
+    },
+    {
+      "sourceId": "sources",
+      "targetId": "consciousness",
+      "kind": "support",
+      "publicExplanation": "Sources and manuals preserve provenance for consciousness research."
+    },
+    {
+      "sourceId": "sources",
+      "targetId": "free-will",
+      "kind": "support",
+      "publicExplanation": "Sources and manuals preserve provenance for Free Will, ethics, and memory work."
+    },
+    {
+      "sourceId": "sources",
+      "targetId": "empirical-science",
+      "kind": "support",
+      "publicExplanation": "Sources and manuals identify the external references used for scientific context."
+    },
+    {
+      "sourceId": "methods",
+      "targetId": "cosmic-breath",
+      "kind": "support",
+      "publicExplanation": "Methods and governance protect the Cosmic Breath authority and validation rules."
+    },
+    {
+      "sourceId": "methods",
+      "targetId": "cu-time",
+      "kind": "support",
+      "publicExplanation": "Methods and governance protect CU-Time mathematics and display semantics."
+    },
+    {
+      "sourceId": "methods",
+      "targetId": "ai-alignment",
+      "kind": "support",
+      "publicExplanation": "Methods and governance preserve claims boundaries for AI alignment work."
+    },
+    {
+      "sourceId": "methods",
+      "targetId": "consciousness",
+      "kind": "support",
+      "publicExplanation": "Methods and governance keep consciousness propositions distinct from empirical findings."
+    },
+    {
+      "sourceId": "methods",
+      "targetId": "free-will",
+      "kind": "support",
+      "publicExplanation": "Methods and governance preserve distinctions among philosophy, narrative, and engineering."
+    },
+    {
+      "sourceId": "methods",
+      "targetId": "empirical-science",
+      "kind": "support",
+      "publicExplanation": "Methods and governance keep external observations distinct from CU interpretation."
+    },
+    {
+      "sourceId": "open-questions",
+      "targetId": "cosmic-breath",
+      "kind": "support",
+      "publicExplanation": "Open questions retain unresolved structural and interpretive issues."
+    },
+    {
+      "sourceId": "open-questions",
+      "targetId": "cu-time",
+      "kind": "support",
+      "publicExplanation": "Open questions retain unresolved chronology and method issues."
+    },
+    {
+      "sourceId": "open-questions",
+      "targetId": "ai-alignment",
+      "kind": "support",
+      "publicExplanation": "Open questions identify unresolved alignment and recursive-intelligence issues."
+    },
+    {
+      "sourceId": "open-questions",
+      "targetId": "consciousness",
+      "kind": "support",
+      "publicExplanation": "Open questions preserve unresolved consciousness mechanisms and definitions."
+    },
+    {
+      "sourceId": "open-questions",
+      "targetId": "free-will",
+      "kind": "support",
+      "publicExplanation": "Open questions preserve unresolved issues concerning choice, ethics, and memory."
+    },
+    {
+      "sourceId": "open-questions",
+      "targetId": "empirical-science",
+      "kind": "support",
+      "publicExplanation": "Open questions identify where external evidence does not settle CU interpretation."
+    },
+    {
+      "sourceId": "history",
+      "targetId": "cosmic-breath",
+      "kind": "support",
+      "publicExplanation": "Historical material records earlier Cosmic Breath development without governing the current authority."
+    },
+    {
+      "sourceId": "history",
+      "targetId": "cu-time",
+      "kind": "support",
+      "publicExplanation": "Historical material records earlier CU-Time calculations without governing current semantics."
+    },
+    {
+      "sourceId": "history",
+      "targetId": "ai-alignment",
+      "kind": "support",
+      "publicExplanation": "Historical material preserves earlier AI-alignment work with explicit lifecycle status."
+    },
+    {
+      "sourceId": "history",
+      "targetId": "consciousness",
+      "kind": "support",
+      "publicExplanation": "Historical material preserves earlier consciousness interpretations for context."
+    },
+    {
+      "sourceId": "history",
+      "targetId": "free-will",
+      "kind": "support",
+      "publicExplanation": "Historical material preserves earlier Free Will, ethics, and memory interpretations for context."
+    },
+    {
+      "sourceId": "history",
+      "targetId": "empirical-science",
+      "kind": "support",
+      "publicExplanation": "Historical material preserves superseded scientific comparisons without presenting them as current."
+    }
+  ],
+  "keyboardNavigation": {
+    "research-observatory": {
+      "ArrowUp": "cosmic-breath",
+      "ArrowRight": "ai-alignment",
+      "ArrowDown": "free-will",
+      "ArrowLeft": "consciousness"
+    },
+    "sources": {
+      "ArrowRight": "cosmic-breath",
+      "ArrowDown": "consciousness"
+    },
+    "cosmic-breath": {
+      "ArrowRight": "cu-time",
+      "ArrowDown": "research-observatory",
+      "ArrowLeft": "sources"
+    },
+    "cu-time": {
+      "ArrowRight": "methods",
+      "ArrowDown": "ai-alignment",
+      "ArrowLeft": "cosmic-breath"
+    },
+    "methods": {
+      "ArrowDown": "ai-alignment",
+      "ArrowLeft": "cu-time"
+    },
+    "consciousness": {
+      "ArrowUp": "sources",
+      "ArrowRight": "research-observatory",
+      "ArrowDown": "open-questions"
+    },
+    "ai-alignment": {
+      "ArrowUp": "cu-time",
+      "ArrowRight": "methods",
+      "ArrowDown": "empirical-science",
+      "ArrowLeft": "research-observatory"
+    },
+    "open-questions": {
+      "ArrowUp": "consciousness",
+      "ArrowRight": "free-will"
+    },
+    "free-will": {
+      "ArrowUp": "research-observatory",
+      "ArrowRight": "empirical-science",
+      "ArrowLeft": "open-questions"
+    },
+    "empirical-science": {
+      "ArrowUp": "ai-alignment",
+      "ArrowRight": "history",
+      "ArrowLeft": "free-will"
+    },
+    "history": {
+      "ArrowUp": "methods",
+      "ArrowLeft": "empirical-science"
+    }
+  }
+}
