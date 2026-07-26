@@ -8,7 +8,6 @@ const frameworkSource = readSource('../../../pages/framework.astro');
 const protectedRouteSources = [
   '../../../pages/index.astro',
   '../../../pages/cosmic-breath.astro',
-  '../../../pages/cu-intelligence.astro',
   '../../../pages/research/index.astro',
   '../../../pages/media.astro',
   '../../../pages/about.astro',
