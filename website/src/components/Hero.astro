@@ -2,6 +2,8 @@
 import { sitePath } from '../config/site';
 import BreathSummary from './BreathSummary.astro';
 import CosmicBreathDiagram from './CosmicBreathDiagram.astro';
+import EpistemicCallout from './page-system/EpistemicCallout.astro';
+import FullWidthFeaturePanel from './page-system/FullWidthFeaturePanel.astro';
 import ResearchLegend from './ResearchLegend.astro';
 ---
 
@@ -36,23 +38,31 @@ import ResearchLegend from './ResearchLegend.astro';
         </a>
       </div>
 
-      <p class="hero__research-status">
-        <span class="hero__status-marker" aria-hidden="true"></span>
-        Scientific references distinguished from CU theoretical propositions.
-      </p>
+      <div class="hero__epistemic-orientation">
+        <EpistemicCallout kind="boundary" label="Research boundary">
+          <p class="hero__research-status">
+            <span class="hero__status-marker" aria-hidden="true"></span>
+            Scientific references distinguished from CU theoretical propositions.
+          </p>
+        </EpistemicCallout>
+      </div>
     </div>
 
-    <div class="hero__diagram">
-      <CosmicBreathDiagram />
-    </div>
+    <FullWidthFeaturePanel ariaLabel="Cosmic Breath structural overview">
+      <div class="hero__feature">
+        <div class="hero__diagram">
+          <CosmicBreathDiagram />
+        </div>
 
-    <div class="hero__summary">
-      <BreathSummary />
-    </div>
+        <div class="hero__summary">
+          <BreathSummary />
+        </div>
 
-    <div class="hero__research_legend">
-      <ResearchLegend />
-    </div>
+        <div class="hero__research_legend">
+          <ResearchLegend />
+        </div>
+      </div>
+    </FullWidthFeaturePanel>
   </div>
 </section>
 
@@ -78,16 +88,24 @@ import ResearchLegend from './ResearchLegend.astro';
     width: min(100%, 54rem);
   }
 
+  .hero__epistemic-orientation {
+    margin-top: var(--space-8);
+  }
+
+  .hero__feature {
+    display: grid;
+    min-width: 0;
+    gap: var(--space-8);
+  }
+
   .hero__diagram {
-    margin-top: var(--space-12);
+    display: flex;
+    justify-content: center;
   }
 
-  .hero__summary {
-    margin-top: var(--space-8);
-  }
-
+  .hero__summary,
   .hero__research_legend {
-    margin-top: var(--space-8);
+    min-width: 0;
   }
 
   .hero h1 {
@@ -159,7 +177,7 @@ import ResearchLegend from './ResearchLegend.astro';
 
   .hero__research-status {
     display: flex;
-    margin-block: var(--space-8) 0;
+    margin: 0;
     align-items: baseline;
     gap: var(--space-2);
     color: var(--color-text-muted);
@@ -185,6 +203,10 @@ import ResearchLegend from './ResearchLegend.astro';
 
     .hero__actions {
       flex-direction: column;
+    }
+
+    .hero__feature {
+      gap: var(--space-6);
     }
 
     .hero__link {

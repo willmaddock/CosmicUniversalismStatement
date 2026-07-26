@@ -6,7 +6,6 @@ const readSource = (relativePath: string) =>
 
 const frameworkSource = readSource('../../../pages/framework.astro');
 const protectedRouteSources = [
-  '../../../pages/index.astro',
   '../../../pages/cosmic-breath.astro',
   '../../../pages/media.astro',
   '../../../pages/about.astro',
