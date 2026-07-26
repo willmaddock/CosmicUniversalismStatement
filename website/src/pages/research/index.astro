@@ -3,12 +3,47 @@ import ClassificationBadge from '../../components/ClassificationBadge.astro';
 import ResearchIndexSection from '../../components/ResearchIndexSection.astro';
 import ResearchProvenanceGuide from '../../components/ResearchProvenanceGuide.astro';
 import ResearchStatusBadge from '../../components/ResearchStatusBadge.astro';
+import BackToTop from '../../components/page-system/BackToTop.astro';
+import ContinuationNavigation from '../../components/page-system/ContinuationNavigation.astro';
+import EditorialSectionHeading from '../../components/page-system/EditorialSectionHeading.astro';
+import EpistemicCallout from '../../components/page-system/EpistemicCallout.astro';
+import FullWidthFeaturePanel from '../../components/page-system/FullWidthFeaturePanel.astro';
+import PageGuide from '../../components/page-system/PageGuide.astro';
+import SourceProvenancePanel from '../../components/page-system/SourceProvenancePanel.astro';
 import ResearchObservatory from '../../components/research/ResearchObservatory.astro';
 import {
   allResearchClassifications,
   allResearchStatuses,
 } from '../../data/research-taxonomy';
 import ContentPageLayout from '../../layouts/ContentPageLayout.astro';
+
+const pageGuideGroups = [
+  {
+    label: 'Research sections',
+    links: [
+      {
+        label: 'CU Research Observatory',
+        targetId: 'research-observatory',
+      },
+      {
+        label: 'Research labels',
+        targetId: 'research-labels',
+      },
+      {
+        label: 'Open Questions',
+        targetId: 'open-questions',
+      },
+      {
+        label: 'Historical Archive',
+        targetId: 'historical-record',
+      },
+      {
+        label: 'Sources & Methods',
+        targetId: 'source-provenance',
+      },
+    ],
+  },
+] as const;
 ---
 
 <ContentPageLayout
@@ -18,31 +53,32 @@ import ContentPageLayout from '../../layouts/ContentPageLayout.astro';
   title="Research, Philosophy & Open Questions"
   description="Explore relationships among Cosmic Breath, CU-Time, consciousness, artificial intelligence and alignment, Free Will, ethics and memory, empirical science, sources and methods, open questions, and historical research. Classifications and lifecycle statuses distinguish areas with different authority, evidence, and stages of development."
 >
-  <ResearchObservatory />
+  <span id="research-page-top" class="research-page-top" aria-hidden="true"></span>
 
-  <nav class="research-index-navigation" aria-label="Research index sections">
-    <p>On this page</p>
-    <ul>
-      <li><a href="#research-observatory">CU Research Observatory</a></li>
-      <li><a href="#research-labels">Research labels</a></li>
-      <li><a href="#open-questions">Open Questions</a></li>
-      <li><a href="#historical-record">Historical Archive</a></li>
-      <li><a href="#source-provenance">Sources &amp; Methods</a></li>
-    </ul>
-  </nav>
+  <PageGuide
+    id="research-page-guide"
+    ariaLabel="Research page guide"
+    title="Explore Research"
+    groups={pageGuideGroups}
+  />
+
+  <FullWidthFeaturePanel
+    id="research-observatory-feature"
+    ariaLabel="CU Research Observatory feature"
+  >
+    <ResearchObservatory />
+  </FullWidthFeaturePanel>
 
   <section
     class="research-labels"
     id="research-labels"
     aria-labelledby="research-labels-title"
   >
-    <header class="research-labels__header">
-      <h2 id="research-labels-title">Understanding research labels</h2>
-      <p>
-        Research entries use two separate kinds of labels so readers can identify
-        both the material’s purpose and its present state.
-      </p>
-    </header>
+    <EditorialSectionHeading
+      title="Understanding research labels"
+      headingId="research-labels-title"
+      lead="Research entries use two separate kinds of labels so readers can identify both the material’s purpose and its present state."
+    />
 
     <div class="research-labels__groups">
       <section aria-labelledby="research-classifications">
@@ -96,77 +132,66 @@ import ContentPageLayout from '../../layouts/ContentPageLayout.astro';
     description="The archive preserves historical, superseded, and archived material as part of the project record. Historical / Superseded identifies the material’s classification; Superseded or Archived describes its research lifecycle."
   />
 
-  <ResearchIndexSection
+  <SourceProvenancePanel
     id="source-provenance"
     title="Sources, Methods & Provenance"
-    description="Future research entries will identify their original CU repository source separately from external empirical references, together with version, last-reviewed date, and revision history."
+    headingLevel="h2"
   >
-    <ResearchProvenanceGuide />
-    <p class="research-provenance-note">
-      Where empirical material is cited, the external reference should remain distinct
-      from the CU claim that interprets or uses it. A reader should be able to identify
-      which source supports the empirical context and which statements originate within
-      the CU framework.
+    <p>
+      Future research entries will identify their original CU repository source
+      separately from external empirical references, together with version,
+      last-reviewed date, and revision history.
     </p>
-  </ResearchIndexSection>
+    <ResearchProvenanceGuide />
+    <EpistemicCallout kind="method" label="Source distinction">
+      <p>
+        Where empirical material is cited, the external reference should remain distinct
+        from the CU claim that interprets or uses it. A reader should be able to identify
+        which source supports the empirical context and which statements originate within
+        the CU framework.
+      </p>
+    </EpistemicCallout>
+  </SourceProvenancePanel>
+
+  <BackToTop
+    id="research-back-to-top"
+    targetId="research-page-top"
+    revealAfterId="research-observatory"
+  />
+
+  <ContinuationNavigation
+    ariaLabel="Continue from Research"
+    title="Continue to Media"
+    description="Explore CU publications, media, and public communication"
+    path="media/"
+  />
 </ContentPageLayout>
 
 <style>
-  .research-index-navigation {
-    padding: var(--space-6);
-    border: 1px solid var(--color-translucent-blue);
-    background: var(--color-surface-translucent);
-  }
-
-  .research-index-navigation p {
-    margin: 0;
-    color: var(--color-white-gold);
-    font-weight: 700;
-  }
-
-  .research-index-navigation ul {
-    display: flex;
-    margin: var(--space-4) 0 0;
-    padding: 0;
-    flex-wrap: wrap;
-    gap: var(--space-2) var(--space-6);
-    list-style: none;
-  }
-
-  .research-index-navigation a {
-    display: inline-flex;
-    min-height: 2.75rem;
-    align-items: center;
-    font-size: 0.875rem;
-    font-weight: 600;
-  }
-
-  .research-labels {
-    margin-top: var(--space-12);
-    padding-top: var(--space-8);
-    border-top: 1px solid var(--color-translucent-blue);
+  .research-page-top {
+    display: block;
     scroll-margin-top: var(--space-6);
   }
 
-  .research-labels__header {
-    max-width: var(--measure-readable);
-  }
-
-  .research-labels__header h2 {
-    margin: 0;
-    color: var(--color-white-gold);
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
+  .research-labels {
+    margin-top: var(--space-editorial-section);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--color-border-section);
+    scroll-margin-top: var(--space-6);
   }
 
   .research-labels__groups {
     display: grid;
-    margin-top: var(--space-6);
+    margin-top: var(--space-8);
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-6);
   }
 
   .research-labels__groups > section {
     min-width: 0;
+    padding: var(--space-6);
+    border: 1px solid var(--color-border-quiet);
+    background: var(--color-panel-quiet);
     scroll-margin-top: var(--space-6);
   }
 
@@ -188,8 +213,13 @@ import ContentPageLayout from '../../layouts/ContentPageLayout.astro';
     min-width: 0;
   }
 
-  .research-provenance-note {
-    max-width: var(--measure-readable);
+  :global(#source-provenance.source-provenance-panel) {
+    margin-top: var(--space-editorial-section);
+    scroll-margin-top: var(--space-6);
+  }
+
+  :global(#source-provenance .research-provenance-guide),
+  :global(#source-provenance .epistemic-callout) {
     margin-top: var(--space-8);
   }
 
@@ -200,6 +230,12 @@ import ContentPageLayout from '../../layouts/ContentPageLayout.astro';
   }
 
   @media (max-width: 36rem) {
-    .research-index-navigation { padding: var(--space-4); }
+    .research-labels {
+      padding-top: var(--space-6);
+    }
+
+    .research-labels__groups > section {
+      padding: var(--space-4);
+    }
   }
 </style>
