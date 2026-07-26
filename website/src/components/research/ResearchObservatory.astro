@@ -1,0 +1,1726 @@
+---
+import ClassificationBadge from '../ClassificationBadge.astro';
+import ResearchStatusBadge from '../ResearchStatusBadge.astro';
+import {
+  publicResearchRegistry,
+  serializePublicResearchRegistry,
+  type PublicResearchDestination,
+  type PublicResearchNode,
+  type ResearchKeyboardKey,
+} from '../../lib/research/research-observatory';
+import {
+  applyResearchFilter,
+  createNeutralResearchState,
+  createResearchStateFromFragment,
+  getMatchingResearchNodeIds,
+  getResearchKeyboardNeighbor,
+  getResearchRelationships,
+  parseResearchFragment,
+  restoreCentralObservatoryState,
+  selectResearchNode,
+} from '../../lib/research/research-observatory-state';
+import {
+  researchClassifications,
+  researchStatuses,
+} from '../../data/research-taxonomy';
+
+const overview = publicResearchRegistry.nodes.find(
+  (node) => node.id === publicResearchRegistry.overviewNodeId,
+);
+
+if (!overview || overview.role !== 'overview') {
+  throw new Error('Research Observatory public projection is missing its overview');
+}
+
+const researchNodes = publicResearchRegistry.nodes.filter(
+  (node) => node.role !== 'overview',
+);
+const nodeById = new Map(
+  publicResearchRegistry.nodes.map((node) => [node.id, node]),
+);
+const collections = [
+  {
+    id: 'primary-research-areas',
+    eyebrow: 'Primary areas',
+    title: 'Research areas',
+    nodes: researchNodes.filter((node) => node.role === 'primary'),
+  },
+  {
+    id: 'supporting-research-areas',
+    eyebrow: 'Supporting areas',
+    title: 'Sources, methods, questions, and history',
+    nodes: researchNodes.filter((node) => node.role === 'supporting'),
+  },
+] as const;
+
+const neutralState = createNeutralResearchState(publicResearchRegistry);
+const validFragmentNodeIds = researchNodes
+  .map((node) => node.id)
+  .filter(
+    (nodeId) =>
+      parseResearchFragment(`#${nodeId}`, publicResearchRegistry) === nodeId,
+  );
+const keyboardNavigation = Object.fromEntries(
+  Object.entries(publicResearchRegistry.keyboardNavigation).map(
+    ([nodeId, neighbors]) => [
+      nodeId,
+      Object.fromEntries(
+        Object.keys(neighbors).map((key) => [
+          key,
+          getResearchKeyboardNeighbor(
+            nodeId,
+            key as ResearchKeyboardKey,
+            publicResearchRegistry,
+          ),
+        ]),
+      ),
+    ],
+  ),
+);
+const browserPublicRegistry = {
+  ...publicResearchRegistry,
+  keyboardNavigation,
+};
+const serializedPublicRegistry =
+  serializePublicResearchRegistry(browserPublicRegistry);
+const selectionStates = Object.fromEntries(
+  publicResearchRegistry.filterGroups.map((filter) => {
+    const filteredNeutral = applyResearchFilter(
+      neutralState,
+      filter.id,
+      publicResearchRegistry,
+    );
+    return [
+      filter.id,
+      Object.fromEntries(
+        publicResearchRegistry.nodes.map((node) => [
+          node.id,
+          selectResearchNode(
+            filteredNeutral,
+            node.id,
+            publicResearchRegistry,
+          ),
+        ]),
+      ),
+    ];
+  }),
+);
+const filterStates = Object.fromEntries(
+  publicResearchRegistry.nodes.map((node) => {
+    const selected = selectResearchNode(
+      neutralState,
+      node.id,
+      publicResearchRegistry,
+    );
+    return [
+      node.id,
+      Object.fromEntries(
+        publicResearchRegistry.filterGroups.map((filter) => [
+          filter.id,
+          applyResearchFilter(
+            selected,
+            filter.id,
+            publicResearchRegistry,
+          ),
+        ]),
+      ),
+    ];
+  }),
+);
+const overviewStates = Object.fromEntries(
+  publicResearchRegistry.filterGroups.map((filter) => [
+    filter.id,
+    restoreCentralObservatoryState(
+      applyResearchFilter(
+        neutralState,
+        filter.id,
+        publicResearchRegistry,
+      ),
+      publicResearchRegistry,
+    ),
+  ]),
+);
+const fragmentStates = Object.fromEntries(
+  validFragmentNodeIds.map((nodeId) => [
+    nodeId,
+    createResearchStateFromFragment(
+      `#${nodeId}`,
+      publicResearchRegistry,
+    ),
+  ]),
+);
+const serializedStateContract = JSON.stringify({
+  neutralState,
+  selectionStates,
+  filterStates,
+  overviewStates,
+  fragmentStates,
+})
+  .replace(/</g, '\\u003c')
+  .replace(/\u2028/g, '\\u2028')
+  .replace(/\u2029/g, '\\u2029');
+
+const destinationAttributes = (destination: PublicResearchDestination) => ({
+  target: destination.external ? '_blank' : undefined,
+  rel: destination.external ? destination.rel : undefined,
+});
+
+const destinationLabel = (destination: PublicResearchDestination) =>
+  destination.external
+    ? destination.externalLabel
+    : destination.label;
+
+const classificationLabels = (node: PublicResearchNode) =>
+  node.classifications
+    .map((classification) => researchClassifications[classification].label)
+    .join(', ');
+
+const relationshipKindLabel = (kind: string) =>
+  `${kind.charAt(0).toUpperCase()}${kind.slice(1)}`;
+
+interface AuthoredNodePosition {
+  readonly x: number;
+  readonly y: number;
+}
+
+const authoredNodePositions: Readonly<Record<string, AuthoredNodePosition>> = {
+  'research-observatory': { x: 50, y: 49 },
+  'cosmic-breath': { x: 18, y: 15 },
+  'cu-time': { x: 50, y: 11 },
+  'ai-alignment': { x: 82, y: 15 },
+  'consciousness': { x: 12, y: 48 },
+  'free-will': { x: 88, y: 48 },
+  'empirical-science': { x: 50, y: 87 },
+  'sources': { x: 20, y: 75 },
+  'methods': { x: 80, y: 75 },
+  'open-questions': { x: 26, y: 92 },
+  'history': { x: 74, y: 92 },
+};
+
+for (const node of publicResearchRegistry.nodes) {
+  if (!authoredNodePositions[node.id]) {
+    throw new Error(`Research Observatory map position missing for ${node.id}`);
+  }
+}
+
+const nodePositionStyle = (nodeId: string) => {
+  const position = authoredNodePositions[nodeId];
+  return `--node-x: ${position.x}%; --node-y: ${position.y}%;`;
+};
+
+const relationshipPaths = publicResearchRegistry.relationships.map(
+  (relationship, index) => {
+    const source = authoredNodePositions[relationship.sourceId];
+    const target = authoredNodePositions[relationship.targetId];
+    const x1 = source.x * 10;
+    const y1 = source.y * 7.2;
+    const x2 = target.x * 10;
+    const y2 = target.y * 7.2;
+    const deltaX = x2 - x1;
+    const deltaY = y2 - y1;
+    const distance = Math.hypot(deltaX, deltaY) || 1;
+    const offset = ((index % 5) - 2) * 7;
+    const controlX = (x1 + x2) / 2 - (deltaY / distance) * offset;
+    const controlY = (y1 + y2) / 2 + (deltaX / distance) * offset;
+
+    return {
+      ...relationship,
+      path: `M ${x1} ${y1} Q ${controlX} ${controlY} ${x2} ${y2}`,
+    };
+  },
+);
+---
+
+<section
+  id="research-observatory"
+  class="research-observatory"
+  aria-labelledby="research-observatory-title"
+  data-research-observatory
+  data-selected-node-id={neutralState.selectedNodeId}
+  data-filter-id={neutralState.filterId}
+  data-valid-fragment-node-ids={JSON.stringify(validFragmentNodeIds)}
+>
+  <header class="research-observatory__overview">
+    <p class="research-observatory__eyebrow">Conceptual research navigation</p>
+    <h2 id="research-observatory-title">{overview.title}</h2>
+    <p class="research-observatory__summary">{overview.summary}</p>
+    {
+      overview.epistemicBoundary && (
+        <p class="research-observatory__boundary">
+          {overview.epistemicBoundary}
+        </p>
+      )
+    }
+  </header>
+
+  <aside
+    class="research-observatory__geometry-boundary"
+    aria-labelledby="research-observatory-geometry-title"
+  >
+    <h3 id="research-observatory-geometry-title">
+      How to read the Observatory
+    </h3>
+    <p>
+      The Observatory is a conceptual navigation system. Visual position, distance,
+      size, brightness, and connection layout do not represent chronology, physical
+      scale, TOM duration, scientific certainty, authority rank, moral value,
+      research importance, or completion percentage.
+    </p>
+  </aside>
+
+  <div
+    class="research-observatory__enhancement"
+    data-enhancement-controls
+    hidden
+  >
+    <div
+      class="research-observatory__view-controls"
+      role="group"
+      aria-label="Research Observatory view"
+    >
+      <span>View</span>
+      <button type="button" data-view-control="map" aria-pressed="false">
+        Map
+      </button>
+      <button type="button" data-view-control="cards" aria-pressed="true">
+        Cards
+      </button>
+    </div>
+
+    <div
+      class="research-observatory__filters"
+      role="group"
+      aria-label="Filter research areas"
+    >
+      <span>Filter</span>
+      {
+        publicResearchRegistry.filterGroups.map((filter) => {
+          const matches = getMatchingResearchNodeIds(
+            filter.id,
+            publicResearchRegistry,
+          );
+          return (
+            <button
+              type="button"
+              data-filter-control={filter.id}
+              data-matching-node-ids={JSON.stringify(matches)}
+              aria-pressed={filter.id === neutralState.filterId ? 'true' : 'false'}
+            >
+              {filter.label}
+            </button>
+          );
+        })
+      }
+    </div>
+
+    <p class="research-observatory__live-region" aria-live="polite" aria-atomic="true">
+      <span data-match-announcement></span>
+    </p>
+    <p class="research-observatory__live-region" aria-live="polite" aria-atomic="true">
+      <span data-selection-announcement></span>
+    </p>
+    <p class="research-observatory__live-region" aria-live="polite" aria-atomic="true">
+      <span data-view-announcement></span>
+    </p>
+  </div>
+
+  <div class="research-observatory__workspace" data-observatory-workspace>
+  <section
+    class="research-observatory__map"
+    aria-labelledby="research-observatory-map-title"
+    data-map-panel
+    hidden
+  >
+    <header class="research-observatory__collection-heading">
+      <p>Conceptual map</p>
+      <h3 id="research-observatory-map-title">Research area navigation</h3>
+    </header>
+    <p class="research-observatory__map-instructions" id="research-map-instructions">
+      Use Tab to reach a node, Arrow keys to move between nodes, Enter or Space
+      to select, Home to return to the Observatory, and Escape to restore the
+      neutral overview.
+    </p>
+
+    <div
+      class="research-observatory__map-grid"
+      role="group"
+      aria-label="Research Observatory conceptual map"
+      aria-describedby="research-map-instructions"
+      data-map-controls
+      data-authored-node-count={publicResearchRegistry.nodes.length}
+    >
+      <svg
+        class="research-observatory__relationship-layer"
+        viewBox="0 0 1000 720"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+        focusable="false"
+        tabindex="-1"
+        data-relationship-layer
+        data-relationship-count={relationshipPaths.length}
+      >
+        {
+          relationshipPaths.map((relationship) => (
+            <path
+              class:list={[
+                'research-relationship',
+                `research-relationship--${relationship.kind}`,
+              ]}
+              d={relationship.path}
+              data-relationship-source={relationship.sourceId}
+              data-relationship-target={relationship.targetId}
+              data-relationship-kind={relationship.kind}
+              data-direct="false"
+              data-unrelated="false"
+              data-filtered-outside="false"
+              tabindex="-1"
+            />
+          ))
+        }
+      </svg>
+
+      <button
+        type="button"
+        class="research-map-node research-map-node--overview"
+        data-map-node-id={overview.id}
+        data-map-role="overview"
+        data-related="false"
+        style={nodePositionStyle(overview.id)}
+        aria-pressed="true"
+      >
+        <span class="research-map-node__context">Navigation center</span>
+        <span>{overview.shortTitle}</span>
+        <span class="research-observatory__visually-hidden">
+          Restore the neutral CU Research Observatory overview.
+        </span>
+      </button>
+      {
+        researchNodes.map((node) => (
+          <button
+            type="button"
+            class:list={[
+              'research-map-node',
+              `research-map-node--${node.role}`,
+            ]}
+            data-map-node-id={node.id}
+            data-map-role={node.role}
+            data-related="false"
+            style={nodePositionStyle(node.id)}
+            data-accessible-base={`${node.title}. Research status: ${
+              researchStatuses[node.status].label
+            }. Classifications: ${classificationLabels(node)}.`}
+            data-matching="true"
+            aria-pressed="false"
+            aria-label={`${node.title}. Research status: ${
+              researchStatuses[node.status].label
+            }. Classifications: ${classificationLabels(node)}. Matches current filter.`}
+          >
+            <span>{node.shortTitle}</span>
+          </button>
+        ))
+      }
+    </div>
+
+    <aside
+      class="research-observatory__relationship-legend"
+      aria-labelledby="research-relationship-legend-title"
+    >
+      <h4 id="research-relationship-legend-title">Relationship legend</h4>
+      <ul role="list">
+        <li>
+          <span
+            class="research-relationship-swatch research-relationship-swatch--strong"
+            aria-hidden="true"
+          ></span>
+          <span>Strong connection</span>
+        </li>
+        <li>
+          <span
+            class="research-relationship-swatch research-relationship-swatch--related"
+            aria-hidden="true"
+          ></span>
+          <span>Related connection</span>
+        </li>
+        <li>
+          <span
+            class="research-relationship-swatch research-relationship-swatch--support"
+            aria-hidden="true"
+          ></span>
+          <span>Support/context</span>
+        </li>
+      </ul>
+      <p>
+        Line color and pattern identify relationship type only. They do not
+        indicate authority, certainty, value, importance, duration, or chronology.
+      </p>
+    </aside>
+  </section>
+
+  <div class="research-observatory__collections" data-cards-panel>
+    {
+      collections.map((collection) => (
+        <section
+          class="research-observatory__collection"
+          aria-labelledby={`${collection.id}-title`}
+        >
+          <header class="research-observatory__collection-heading">
+            <p>{collection.eyebrow}</p>
+            <h3 id={`${collection.id}-title`}>{collection.title}</h3>
+          </header>
+
+          <ul class="research-observatory__cards" role="list">
+            {collection.nodes.map((node) => (
+              <li data-card-node-id={node.id} data-matching="true">
+                <article
+                  class:list={[
+                    'research-card',
+                    `research-card--${node.role}`,
+                  ]}
+                  aria-labelledby={`${node.id}-card-title`}
+                  data-card-article
+                  data-selected="false"
+                >
+                  <header class="research-card__header">
+                    <h4 id={`${node.id}-card-title`}>{node.title}</h4>
+                    <ResearchStatusBadge status={node.status} />
+                  </header>
+
+                  {node.classifications.length > 0 && (
+                    <div
+                      class="research-card__classifications"
+                      aria-label={`${node.title} classifications`}
+                    >
+                      {node.classifications.map((classification) => (
+                        <ClassificationBadge classification={classification} />
+                      ))}
+                    </div>
+                  )}
+
+                  <p class="research-card__summary">{node.summary}</p>
+
+                  {node.epistemicBoundary && (
+                    <aside
+                      class="research-card__boundary"
+                      aria-label={`${node.title} epistemic boundary`}
+                    >
+                      <p>
+                        <strong>Boundary:</strong> {node.epistemicBoundary}
+                      </p>
+                    </aside>
+                  )}
+
+                  <button
+                    type="button"
+                    class="research-card__select"
+                    data-select-node={node.id}
+                    aria-pressed="false"
+                    hidden
+                  >
+                    Show {node.shortTitle} details
+                  </button>
+
+                  <ul class="research-card__actions" role="list">
+                    {node.primaryDestination && (
+                      <li class="research-card__action research-card__action--primary">
+                        <a
+                          href={node.primaryDestination.href}
+                          {...destinationAttributes(node.primaryDestination)}
+                        >
+                          {destinationLabel(node.primaryDestination)}
+                        </a>
+                      </li>
+                    )}
+                    {node.governingSourceDestination && (
+                      <li class="research-card__action research-card__action--source">
+                        <a
+                          href={node.governingSourceDestination.href}
+                          {...destinationAttributes(node.governingSourceDestination)}
+                        >
+                          {destinationLabel(node.governingSourceDestination)}
+                        </a>
+                      </li>
+                    )}
+                  </ul>
+                </article>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+
+  <section
+    class="research-observatory__detail"
+    aria-live="off"
+    data-detail-panel
+    hidden
+  >
+    <div data-detail-body></div>
+  </section>
+  </div>
+
+  <template data-detail-template={overview.id}>
+    <article aria-labelledby="research-observatory-detail-title">
+      <p class="research-observatory__detail-eyebrow">Observatory overview</p>
+      <h3 id="research-observatory-detail-title">{overview.title}</h3>
+      <p>{overview.summary}</p>
+      <p>
+        This conceptual navigation system connects research areas without
+        assigning chronology, physical scale, certainty, rank, value,
+        importance, or completion through its geometry.
+      </p>
+      {overview.epistemicBoundary && (
+        <aside class="research-card__boundary">
+          <p><strong>Boundary:</strong> {overview.epistemicBoundary}</p>
+        </aside>
+      )}
+    </article>
+  </template>
+
+  {
+    researchNodes.map((node) => {
+      const relationships = getResearchRelationships(
+        node.id,
+        publicResearchRegistry,
+      );
+      return (
+        <template data-detail-template={node.id}>
+          <article aria-labelledby="research-observatory-detail-title">
+            <p class="research-observatory__detail-eyebrow">Selected research area</p>
+            <h3 id="research-observatory-detail-title">{node.title}</h3>
+            <div class="research-card__detail-status">
+              <ResearchStatusBadge status={node.status} />
+            </div>
+            {node.classifications.length > 0 && (
+              <div
+                class="research-card__classifications"
+                aria-label={`${node.title} classifications`}
+              >
+                {node.classifications.map((classification) => (
+                  <ClassificationBadge classification={classification} />
+                ))}
+              </div>
+            )}
+            <p>{node.summary}</p>
+            {node.epistemicBoundary && (
+              <aside class="research-card__boundary">
+                <p><strong>Boundary:</strong> {node.epistemicBoundary}</p>
+              </aside>
+            )}
+            <aside
+              class="research-observatory__outside-filter"
+              data-outside-filter-notice
+              hidden
+            >
+              <p>
+                This selected area is outside the current filter. Its details
+                remain available.
+              </p>
+              <button type="button" data-restore-all-research>
+                Restore All Research
+              </button>
+            </aside>
+            <ul class="research-card__actions" role="list">
+              {node.primaryDestination && (
+                <li class="research-card__action research-card__action--primary">
+                  <a
+                    href={node.primaryDestination.href}
+                    {...destinationAttributes(node.primaryDestination)}
+                  >
+                    {destinationLabel(node.primaryDestination)}
+                  </a>
+                </li>
+              )}
+              {node.governingSourceDestination && (
+                <li class="research-card__action research-card__action--source">
+                  <a
+                    href={node.governingSourceDestination.href}
+                    {...destinationAttributes(node.governingSourceDestination)}
+                  >
+                    {destinationLabel(node.governingSourceDestination)}
+                  </a>
+                </li>
+              )}
+            </ul>
+            <section class="research-observatory__relationships">
+              <h4>Approved relationships</h4>
+              {relationships.length > 0 ? (
+                <ul>
+                  {relationships.map((relationship) => {
+                    const relatedId =
+                      relationship.sourceId === node.id
+                        ? relationship.targetId
+                        : relationship.sourceId;
+                    const relatedNode = nodeById.get(relatedId);
+                    return (
+                      <li>
+                        <strong>
+                          {relatedNode?.title ?? relatedId}
+                          {' — '}
+                          {relationshipKindLabel(relationship.kind)}
+                        </strong>
+                        <span>{relationship.publicExplanation}</span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              ) : (
+                <p>No approved relationships are recorded.</p>
+              )}
+            </section>
+          </article>
+        </template>
+      );
+    })
+  }
+
+  <script
+    type="application/json"
+    data-research-public-registry
+    set:html={serializedPublicRegistry}
+  ></script>
+  <script
+    type="application/json"
+    data-research-state-contract
+    set:html={serializedStateContract}
+  ></script>
+</section>
+
+<script>
+  type ObservatoryState = {
+    selectedNodeId: string;
+    filterId: string;
+    selectedOutsideFilter: boolean;
+  };
+
+  type PublicNode = {
+    id: string;
+    title: string;
+    role: 'overview' | 'primary' | 'supporting';
+  };
+
+  type PublicRegistry = {
+    overviewNodeId: string;
+    nodes: PublicNode[];
+    relationships: Array<{
+      sourceId: string;
+      targetId: string;
+      kind: 'strong' | 'related' | 'support';
+    }>;
+    keyboardNavigation: Record<string, Partial<Record<string, string>>>;
+  };
+
+  type StateContract = {
+    neutralState: ObservatoryState;
+    selectionStates: Record<string, Record<string, ObservatoryState>>;
+    filterStates: Record<string, Record<string, ObservatoryState>>;
+    overviewStates: Record<string, ObservatoryState>;
+    fragmentStates: Record<string, ObservatoryState>;
+  };
+
+  const enhanceResearchObservatory = (root: HTMLElement) => {
+    const registryElement = root.querySelector<HTMLScriptElement>(
+      '[data-research-public-registry]',
+    );
+    const stateContractElement = root.querySelector<HTMLScriptElement>(
+      '[data-research-state-contract]',
+    );
+    const enhancementControls = root.querySelector<HTMLElement>(
+      '[data-enhancement-controls]',
+    );
+    const mapPanel = root.querySelector<HTMLElement>('[data-map-panel]');
+    const cardsPanel = root.querySelector<HTMLElement>('[data-cards-panel]');
+    const detailPanel = root.querySelector<HTMLElement>('[data-detail-panel]');
+    const detailBody = root.querySelector<HTMLElement>('[data-detail-body]');
+    const mapControls = root.querySelector<HTMLElement>('[data-map-controls]');
+    const relationshipElements = Array.from(
+      root.querySelectorAll<SVGPathElement>('[data-relationship-source]'),
+    );
+
+    if (
+      !registryElement
+      || !stateContractElement
+      || !enhancementControls
+      || !mapPanel
+      || !cardsPanel
+      || !detailPanel
+      || !detailBody
+      || !mapControls
+    ) {
+      return;
+    }
+
+    const registry = JSON.parse(
+      registryElement.textContent ?? '',
+    ) as PublicRegistry;
+    const stateContract = JSON.parse(
+      stateContractElement.textContent ?? '',
+    ) as StateContract;
+    const validFragmentNodeIds = new Set<string>(
+      JSON.parse(root.dataset.validFragmentNodeIds ?? '[]'),
+    );
+    const nodes = new Map(registry.nodes.map((node) => [node.id, node]));
+    const filterControls = Array.from(
+      root.querySelectorAll<HTMLButtonElement>('[data-filter-control]'),
+    );
+    const matchingNodeIds = new Map(
+      filterControls.map((control) => [
+        control.dataset.filterControl ?? '',
+        new Set<string>(
+          JSON.parse(control.dataset.matchingNodeIds ?? '[]'),
+        ),
+      ]),
+    );
+
+    if (
+      registry.nodes.length !== 11
+      || !nodes.has(registry.overviewNodeId)
+      || validFragmentNodeIds.size !== 10
+      || matchingNodeIds.size !== 6
+      || relationshipElements.length !== registry.relationships.length
+    ) {
+      return;
+    }
+
+    let state: ObservatoryState = stateContract.neutralState;
+    let activeView = window.matchMedia('(max-width: 48rem)').matches
+      ? 'cards'
+      : 'map';
+
+    const getFragmentNodeId = (value: string): string | null => {
+      const hashIndex = value.lastIndexOf('#');
+      const encodedFragment = (
+        hashIndex >= 0 ? value.slice(hashIndex + 1) : value
+      ).trim();
+      if (encodedFragment.length === 0) return null;
+      try {
+        const fragment = decodeURIComponent(encodedFragment);
+        return validFragmentNodeIds.has(fragment) ? fragment : null;
+      } catch {
+        return null;
+      }
+    };
+
+    const getMatches = (filterId: string) =>
+      matchingNodeIds.get(filterId) ?? matchingNodeIds.get('all') ?? new Set();
+
+    const withSelection = (nodeId: string): ObservatoryState => {
+      return stateContract.selectionStates[state.filterId]?.[nodeId]
+        ?? stateContract.overviewStates[state.filterId]
+        ?? stateContract.neutralState;
+    };
+
+    const withFilter = (filterId: string): ObservatoryState => {
+      return stateContract.filterStates[state.selectedNodeId]?.[filterId]
+        ?? stateContract.filterStates[state.selectedNodeId]?.all
+        ?? stateContract.neutralState;
+    };
+
+    const restoreOverview = (): ObservatoryState =>
+      stateContract.overviewStates[state.filterId]
+      ?? stateContract.neutralState;
+
+    const replaceDetail = () => {
+      const template = root.querySelector<HTMLTemplateElement>(
+        `template[data-detail-template="${state.selectedNodeId}"]`,
+      );
+      if (!template) return;
+      detailBody.replaceChildren(template.content.cloneNode(true));
+      const outsideNotice = detailBody.querySelector<HTMLElement>(
+        '[data-outside-filter-notice]',
+      );
+      if (outsideNotice) {
+        outsideNotice.hidden = !state.selectedOutsideFilter;
+      }
+    };
+
+    const render = (
+      announceSelection = false,
+      announceFilter = false,
+      announceView = false,
+    ) => {
+      const matches = getMatches(state.filterId);
+      root.dataset.selectedNodeId = state.selectedNodeId;
+      root.dataset.filterId = state.filterId;
+      root.dataset.selectedOutsideFilter = String(
+        state.selectedOutsideFilter,
+      );
+      root.dataset.view = activeView;
+
+      mapPanel.hidden = activeView !== 'map';
+      cardsPanel.hidden = activeView !== 'cards';
+      detailPanel.hidden = false;
+
+      root
+        .querySelectorAll<HTMLButtonElement>('[data-view-control]')
+        .forEach((control) => {
+          control.setAttribute(
+            'aria-pressed',
+            String(control.dataset.viewControl === activeView),
+          );
+        });
+
+      filterControls.forEach((control) => {
+        control.setAttribute(
+          'aria-pressed',
+          String(control.dataset.filterControl === state.filterId),
+        );
+      });
+
+      const hasResearchSelection =
+        state.selectedNodeId !== registry.overviewNodeId;
+      const relatedNodeIds = new Set<string>();
+      if (hasResearchSelection) {
+        registry.relationships.forEach((relationship) => {
+          if (relationship.sourceId === state.selectedNodeId) {
+            relatedNodeIds.add(relationship.targetId);
+          }
+          if (relationship.targetId === state.selectedNodeId) {
+            relatedNodeIds.add(relationship.sourceId);
+          }
+        });
+      }
+
+      relationshipElements.forEach((relationship) => {
+        const sourceId = relationship.dataset.relationshipSource ?? '';
+        const targetId = relationship.dataset.relationshipTarget ?? '';
+        const isDirect =
+          hasResearchSelection
+          && (
+            sourceId === state.selectedNodeId
+            || targetId === state.selectedNodeId
+          );
+        const isUnrelated = hasResearchSelection && !isDirect;
+        const isFilteredOutside =
+          !matches.has(sourceId) && !matches.has(targetId);
+        relationship.dataset.direct = String(isDirect);
+        relationship.dataset.unrelated = String(isUnrelated);
+        relationship.dataset.filteredOutside = String(isFilteredOutside);
+      });
+
+      root
+        .querySelectorAll<HTMLButtonElement>('[data-map-node-id]')
+        .forEach((control) => {
+          const nodeId = control.dataset.mapNodeId ?? '';
+          const isOverview = nodeId === registry.overviewNodeId;
+          const isMatching = isOverview || matches.has(nodeId);
+          const isSelected = nodeId === state.selectedNodeId;
+          const isRelated = relatedNodeIds.has(nodeId);
+          control.dataset.matching = String(isMatching);
+          control.dataset.related = String(isRelated);
+          control.setAttribute('aria-pressed', String(isSelected));
+          const accessibleBase = control.dataset.accessibleBase;
+          if (accessibleBase) {
+            control.setAttribute(
+              'aria-label',
+              `${accessibleBase} ${
+                isMatching
+                  ? 'Matches current filter.'
+                  : 'Outside current filter.'
+              }`,
+            );
+          }
+        });
+
+      root
+        .querySelectorAll<HTMLElement>('[data-card-node-id]')
+        .forEach((card) => {
+          const nodeId = card.dataset.cardNodeId ?? '';
+          const isMatching = matches.has(nodeId);
+          card.dataset.matching = String(isMatching);
+          card.hidden = !isMatching;
+          const article = card.querySelector<HTMLElement>('[data-card-article]');
+          article?.setAttribute(
+            'data-selected',
+            String(nodeId === state.selectedNodeId),
+          );
+        });
+
+      root
+        .querySelectorAll<HTMLButtonElement>('[data-select-node]')
+        .forEach((control) => {
+          control.hidden = false;
+          control.setAttribute(
+            'aria-pressed',
+            String(control.dataset.selectNode === state.selectedNodeId),
+          );
+        });
+
+      replaceDetail();
+
+      const selectedNode = nodes.get(state.selectedNodeId);
+      const matchAnnouncement = root.querySelector<HTMLElement>(
+        '[data-match-announcement]',
+      );
+      const selectionAnnouncement = root.querySelector<HTMLElement>(
+        '[data-selection-announcement]',
+      );
+      const viewAnnouncement = root.querySelector<HTMLElement>(
+        '[data-view-announcement]',
+      );
+      if (matchAnnouncement && announceFilter) {
+        matchAnnouncement.textContent =
+          `${matches.size} research ${matches.size === 1 ? 'area matches' : 'areas match'} the active filter.`;
+      }
+      if (selectionAnnouncement && announceSelection && selectedNode) {
+        selectionAnnouncement.textContent =
+          state.selectedNodeId === registry.overviewNodeId
+            ? 'CU Research Observatory overview selected.'
+            : `${selectedNode.title} selected.${
+              state.selectedOutsideFilter
+                ? ' This area is outside the current filter.'
+                : ''
+            }`;
+      }
+      if (viewAnnouncement && announceView) {
+        viewAnnouncement.textContent =
+          `${activeView === 'map' ? 'Map' : 'Cards'} view selected.`;
+      }
+    };
+
+    const updateHistory = (nodeId: string) => {
+      const url = new URL(window.location.href);
+      url.hash = nodeId === registry.overviewNodeId
+        ? ''
+        : encodeURIComponent(nodeId);
+      if (url.href === window.location.href) return;
+      window.history.pushState(
+        { researchObservatoryNodeId: nodeId },
+        '',
+        url,
+      );
+    };
+
+    const selectNode = (nodeId: string, updateUrl = true) => {
+      state = withSelection(nodeId);
+      render(true);
+      if (updateUrl) updateHistory(state.selectedNodeId);
+    };
+
+    const restoreNeutral = (updateUrl = true) => {
+      state = restoreOverview();
+      render(true);
+      if (updateUrl) updateHistory(registry.overviewNodeId);
+    };
+
+    const syncFromLocation = () => {
+      const fragmentNodeId = getFragmentNodeId(window.location.hash);
+      const nextState = fragmentNodeId
+        ? withSelection(fragmentNodeId)
+        : restoreOverview();
+      const selectionChanged =
+        nextState.selectedNodeId !== state.selectedNodeId;
+      state = nextState;
+      render(selectionChanged);
+    };
+
+    root.addEventListener('click', (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+
+      const viewControl = target.closest<HTMLButtonElement>(
+        '[data-view-control]',
+      );
+      if (viewControl && root.contains(viewControl)) {
+        activeView = viewControl.dataset.viewControl === 'map'
+          ? 'map'
+          : 'cards';
+        render(false, false, true);
+        return;
+      }
+
+      const filterControl = target.closest<HTMLButtonElement>(
+        '[data-filter-control]',
+      );
+      if (filterControl && root.contains(filterControl)) {
+        state = withFilter(filterControl.dataset.filterControl ?? 'all');
+        render(state.selectedOutsideFilter, true);
+        return;
+      }
+
+      const selectControl = target.closest<HTMLButtonElement>(
+        '[data-select-node], [data-map-node-id]',
+      );
+      if (selectControl && root.contains(selectControl)) {
+        const nodeId =
+          selectControl.dataset.selectNode
+          ?? selectControl.dataset.mapNodeId
+          ?? registry.overviewNodeId;
+        if (nodeId === registry.overviewNodeId) {
+          restoreNeutral();
+        } else {
+          selectNode(nodeId);
+        }
+        return;
+      }
+
+      const restoreAll = target.closest<HTMLButtonElement>(
+        '[data-restore-all-research]',
+      );
+      if (restoreAll && root.contains(restoreAll)) {
+        state = withFilter('all');
+        render(false, true);
+        const allResearchControl = root.querySelector<HTMLButtonElement>(
+          '[data-filter-control="all"]',
+        );
+        allResearchControl?.focus();
+      }
+    });
+
+    mapControls.addEventListener('keydown', (event) => {
+      const target = event.target;
+      if (!(target instanceof HTMLButtonElement)) return;
+      const nodeId = target.dataset.mapNodeId;
+      if (!nodeId) return;
+
+      if (
+        event.key === 'ArrowUp'
+        || event.key === 'ArrowRight'
+        || event.key === 'ArrowDown'
+        || event.key === 'ArrowLeft'
+      ) {
+        event.preventDefault();
+        const neighborId =
+          registry.keyboardNavigation[nodeId]?.[event.key] ?? nodeId;
+        const neighbor = root.querySelector<HTMLButtonElement>(
+          `[data-map-node-id="${neighborId}"]`,
+        );
+        if (neighbor && neighborId !== nodeId) {
+          neighbor.focus();
+        }
+        return;
+      }
+
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        if (nodeId === registry.overviewNodeId) {
+          restoreNeutral();
+        } else {
+          selectNode(nodeId);
+        }
+        return;
+      }
+
+      if (event.key === 'Home') {
+        event.preventDefault();
+        restoreNeutral();
+        root
+          .querySelector<HTMLButtonElement>(
+            `[data-map-node-id="${registry.overviewNodeId}"]`,
+          )
+          ?.focus();
+        return;
+      }
+
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        restoreNeutral();
+      }
+    });
+
+    window.addEventListener('popstate', syncFromLocation);
+    window.addEventListener('hashchange', syncFromLocation);
+
+    const initialFragmentNodeId = getFragmentNodeId(window.location.hash);
+    if (initialFragmentNodeId) {
+      state =
+        stateContract.fragmentStates[initialFragmentNodeId]
+        ?? stateContract.neutralState;
+    }
+    render();
+    enhancementControls.hidden = false;
+    root.dataset.enhanced = 'true';
+  };
+
+  document
+    .querySelectorAll<HTMLElement>('[data-research-observatory]')
+    .forEach((root) => {
+      try {
+        enhanceResearchObservatory(root);
+      } catch {
+        // The complete server-rendered card fallback remains visible.
+      }
+    });
+</script>
+
+<style>
+  .research-observatory {
+    scroll-margin-top: var(--space-6);
+  }
+
+  .research-observatory [hidden] {
+    display: none !important;
+  }
+
+  .research-observatory__visually-hidden,
+  .research-observatory__live-region {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .research-observatory__overview {
+    max-width: var(--measure-readable);
+  }
+
+  .research-observatory__eyebrow,
+  .research-observatory__collection-heading > p,
+  .research-observatory__detail-eyebrow {
+    margin: 0;
+    color: var(--color-cyan);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .research-observatory h2 {
+    margin: var(--space-3) 0 0;
+    color: var(--color-white-gold);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .research-observatory__summary {
+    margin-block: var(--space-6) 0;
+    font-size: clamp(1.0625rem, 2vw, 1.25rem);
+  }
+
+  .research-observatory__boundary {
+    margin-block: var(--space-4) 0;
+    color: var(--color-text-muted);
+  }
+
+  .research-observatory__geometry-boundary {
+    max-width: var(--measure-readable);
+    margin-top: var(--space-8);
+    padding: var(--space-6);
+    border-left: 0.25rem solid var(--color-amber);
+    background: var(--color-surface-translucent);
+  }
+
+  .research-observatory__geometry-boundary h3,
+  .research-observatory__geometry-boundary p {
+    margin: 0;
+  }
+
+  .research-observatory__geometry-boundary p {
+    margin-top: var(--space-3);
+  }
+
+  .research-observatory__enhancement {
+    display: grid;
+    margin-top: var(--space-8);
+    padding: var(--space-4);
+    border: 1px solid var(--color-translucent-blue);
+    border-radius: 0.5rem;
+    background:
+      linear-gradient(
+        135deg,
+        var(--color-surface-translucent),
+        transparent 72%
+      );
+    gap: var(--space-4);
+  }
+
+  .research-observatory__view-controls,
+  .research-observatory__filters {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .research-observatory__view-controls > span,
+  .research-observatory__filters > span {
+    margin-right: var(--space-2);
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .research-observatory__enhancement button,
+  .research-map-node,
+  .research-card__select,
+  .research-observatory__outside-filter button {
+    min-height: 2.75rem;
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid var(--color-translucent-blue);
+    border-radius: 0.25rem;
+    background: var(--color-background);
+    color: var(--color-white-gold);
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  .research-observatory__enhancement button[aria-pressed='true'] {
+    border-color: var(--color-cyan);
+    background: var(--color-surface-translucent);
+    color: var(--color-cyan);
+  }
+
+  .research-observatory__workspace {
+    display: grid;
+    margin-top: var(--space-12);
+    grid-template-areas:
+      'map'
+      'cards'
+      'detail';
+    gap: var(--space-8);
+  }
+
+  .research-observatory__map,
+  .research-observatory__detail {
+    min-width: 0;
+    padding: var(--space-6);
+    border: 1px solid var(--color-translucent-blue);
+    border-radius: 0.5rem;
+    background: color-mix(
+      in srgb,
+      var(--color-surface-translucent) 56%,
+      var(--color-background)
+    );
+  }
+
+  .research-observatory__map {
+    grid-area: map;
+  }
+
+  .research-observatory__detail {
+    grid-area: detail;
+    align-self: start;
+  }
+
+  .research-observatory__collections {
+    grid-area: cards;
+  }
+
+  .research-observatory[data-enhanced='true'][data-view='map']
+    .research-observatory__workspace {
+    grid-template-columns: minmax(0, 3fr) minmax(19rem, 2fr);
+    grid-template-areas: 'map detail';
+    align-items: start;
+  }
+
+  .research-observatory[data-enhanced='true'][data-view='cards']
+    .research-observatory__workspace {
+    grid-template-areas:
+      'cards'
+      'detail';
+  }
+
+  .research-observatory__map-instructions {
+    max-width: var(--measure-readable);
+    color: var(--color-text-muted);
+  }
+
+  .research-observatory__map-grid {
+    position: relative;
+    display: block;
+    min-height: 45rem;
+    margin-top: var(--space-8);
+    isolation: isolate;
+  }
+
+  .research-observatory__relationship-layer {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .research-relationship {
+    fill: none;
+    stroke: var(--color-muted-gray);
+    stroke-linecap: round;
+    stroke-width: 1.75;
+    opacity: 0.24;
+    pointer-events: none;
+    transition: opacity 140ms ease;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .research-relationship--strong {
+    stroke: var(--color-cyan);
+  }
+
+  .research-relationship--related {
+    stroke: var(--color-white-gold);
+    stroke-dasharray: 10 8;
+  }
+
+  .research-relationship--support {
+    stroke: var(--color-muted-gray);
+    stroke-dasharray: 2 9;
+  }
+
+  .research-relationship[data-unrelated='true'] {
+    opacity: 0.07;
+  }
+
+  .research-relationship[data-filtered-outside='true'] {
+    opacity: 0.05;
+  }
+
+  .research-relationship[data-direct='true'] {
+    opacity: 0.9;
+  }
+
+  .research-observatory__relationship-legend {
+    margin-top: var(--space-6);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-translucent-blue);
+  }
+
+  .research-observatory__relationship-legend h4,
+  .research-observatory__relationship-legend p {
+    margin: 0;
+  }
+
+  .research-observatory__relationship-legend ul {
+    display: flex;
+    margin: var(--space-3) 0 0;
+    padding: 0;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-6);
+    list-style: none;
+  }
+
+  .research-observatory__relationship-legend li {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+
+  .research-observatory__relationship-legend p {
+    max-width: var(--measure-readable);
+    margin-top: var(--space-3);
+    color: var(--color-text-muted);
+    font-size: 0.8125rem;
+  }
+
+  .research-relationship-swatch {
+    display: inline-block;
+    width: 2.75rem;
+    height: 0;
+    border-top: 0.125rem solid var(--color-cyan);
+  }
+
+  .research-relationship-swatch--related {
+    border-color: var(--color-white-gold);
+    border-top-style: dashed;
+  }
+
+  .research-relationship-swatch--support {
+    border-color: var(--color-muted-gray);
+    border-top-style: dotted;
+  }
+
+  .research-map-node {
+    position: absolute;
+    z-index: 1;
+    top: var(--node-y);
+    left: var(--node-x);
+    width: clamp(8rem, 18%, 11rem);
+    min-width: 0;
+    min-height: 5.5rem;
+    translate: -50% -50%;
+    overflow-wrap: anywhere;
+    box-shadow: 0 0.5rem 1.5rem rgb(0 0 0 / 24%);
+    text-align: left;
+    transition:
+      border-color 140ms ease,
+      box-shadow 140ms ease,
+      opacity 140ms ease;
+  }
+
+  .research-map-node__context {
+    display: block;
+    margin-bottom: var(--space-1);
+    color: var(--color-text-muted);
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .research-map-node--overview {
+    width: clamp(10rem, 23%, 13rem);
+    border-color: var(--color-amber);
+    border-style: double;
+    border-width: 0.1875rem;
+    border-radius: 999px;
+    text-align: center;
+  }
+
+  .research-map-node--primary {
+    border-top-color: var(--color-cyan);
+  }
+
+  .research-map-node--supporting {
+    border-top-color: var(--color-amber);
+  }
+
+  .research-map-node[data-matching='false'] {
+    border-style: dashed;
+    color: var(--color-text-muted);
+    opacity: 0.55;
+  }
+
+  .research-map-node[data-matching='false']:focus-visible {
+    opacity: 1;
+  }
+
+  .research-map-node[data-related='true'] {
+    border-color: var(--color-white-gold);
+    box-shadow: 0 0 0 0.125rem var(--color-translucent-blue);
+  }
+
+  .research-map-node[aria-pressed='true'] {
+    border-color: var(--color-cyan);
+    box-shadow:
+      0 0 0 0.1875rem var(--color-translucent-blue),
+      0 0.75rem 2rem rgb(0 0 0 / 32%);
+    opacity: 1;
+  }
+
+  .research-observatory__collections {
+    display: grid;
+    gap: var(--space-12);
+  }
+
+  .research-observatory__collection {
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--color-translucent-blue);
+  }
+
+  .research-observatory__collection-heading h3,
+  .research-observatory__detail h3 {
+    margin: var(--space-2) 0 0;
+    color: var(--color-white-gold);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+  }
+
+  .research-observatory__cards {
+    display: grid;
+    margin: var(--space-8) 0 0;
+    padding: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6);
+    list-style: none;
+  }
+
+  .research-observatory__cards > li {
+    min-width: 0;
+  }
+
+  .research-card {
+    display: flex;
+    min-width: 0;
+    height: 100%;
+    padding: var(--space-6);
+    border: 1px solid var(--color-translucent-blue);
+    background: var(--color-surface-translucent);
+    flex-direction: column;
+  }
+
+  .research-card[data-selected='true'] {
+    border-color: var(--color-cyan);
+  }
+
+  .research-card--primary {
+    border-top-color: var(--color-cyan);
+  }
+
+  .research-card--supporting {
+    border-top-color: var(--color-amber);
+  }
+
+  .research-card__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .research-card h4 {
+    min-width: 0;
+    margin: 0;
+    color: var(--color-white-gold);
+    font-size: clamp(1.25rem, 2.5vw, 1.625rem);
+  }
+
+  .research-card__classifications {
+    display: flex;
+    margin-top: var(--space-4);
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .research-card__summary,
+  .research-observatory__detail article > p {
+    margin-block: var(--space-4) 0;
+  }
+
+  .research-card__boundary,
+  .research-observatory__outside-filter {
+    margin-top: var(--space-4);
+    padding: var(--space-4);
+    border-left: 0.1875rem solid var(--color-amber);
+    background: var(--color-background);
+    color: var(--color-text-muted);
+  }
+
+  .research-card__boundary p,
+  .research-observatory__outside-filter p {
+    margin: 0;
+  }
+
+  .research-card__boundary strong {
+    color: var(--color-white-gold);
+  }
+
+  .research-card__select {
+    align-self: flex-start;
+    margin-top: var(--space-6);
+  }
+
+  .research-card__actions {
+    display: flex;
+    margin: auto 0 0;
+    padding: var(--space-6) 0 0;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-6);
+    list-style: none;
+  }
+
+  .research-card__actions a {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    overflow-wrap: anywhere;
+    font-weight: 700;
+  }
+
+  .research-card__action--primary a {
+    padding-inline: var(--space-3);
+    border: 1px solid var(--color-cyan);
+    border-radius: 0.25rem;
+    background: var(--color-surface-translucent);
+  }
+
+  .research-card__action--source a {
+    color: var(--color-text-muted);
+  }
+
+  .research-card__detail-status {
+    margin-top: var(--space-4);
+  }
+
+  .research-observatory__outside-filter button {
+    margin-top: var(--space-4);
+  }
+
+  .research-observatory__relationships {
+    margin-top: var(--space-8);
+  }
+
+  .research-observatory__relationships h4 {
+    margin: 0;
+    color: var(--color-white-gold);
+  }
+
+  .research-observatory__relationships ul {
+    display: grid;
+    margin-block: var(--space-4) 0;
+    padding-left: var(--space-6);
+    gap: var(--space-3);
+  }
+
+  .research-observatory__relationships li span {
+    display: block;
+    color: var(--color-text-muted);
+  }
+
+  @media (max-width: 72rem) {
+    .research-observatory[data-enhanced='true'][data-view='map']
+      .research-observatory__workspace {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas:
+        'map'
+        'detail';
+    }
+  }
+
+  @media (max-width: 64rem) {
+    .research-observatory__map-grid {
+      display: grid;
+      min-height: 0;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-4);
+    }
+
+    .research-observatory__relationship-layer {
+      display: none;
+    }
+
+    .research-map-node {
+      position: static;
+      width: auto;
+      translate: none;
+    }
+
+    .research-map-node--overview {
+      width: auto;
+      grid-column: span 3;
+    }
+  }
+
+  @media (max-width: 48rem) {
+    .research-observatory__cards,
+    .research-observatory__map-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .research-map-node--overview {
+      grid-column: auto;
+    }
+  }
+
+  @media (max-width: 36rem) {
+    .research-observatory__geometry-boundary,
+    .research-card,
+    .research-observatory__map,
+    .research-observatory__detail {
+      padding: var(--space-4);
+    }
+
+    .research-card__header {
+      flex-direction: column;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .research-observatory *,
+    .research-observatory *::before,
+    .research-observatory *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+
+    .research-relationship {
+      stroke-dashoffset: 0 !important;
+    }
+  }
+</style>
