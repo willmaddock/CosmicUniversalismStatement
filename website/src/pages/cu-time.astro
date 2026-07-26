@@ -1,8 +1,45 @@
 ---
 import ClassificationBadge from '../components/ClassificationBadge.astro';
 import ContentSection from '../components/ContentSection.astro';
-import ContentPageLayout from '../layouts/ContentPageLayout.astro';
 import CUTimeConverter from '../components/CUTimeConverter.astro';
+import BackToTop from '../components/page-system/BackToTop.astro';
+import ContinuationNavigation from '../components/page-system/ContinuationNavigation.astro';
+import EditorialSectionHeading from '../components/page-system/EditorialSectionHeading.astro';
+import EpistemicCallout from '../components/page-system/EpistemicCallout.astro';
+import FullWidthFeaturePanel from '../components/page-system/FullWidthFeaturePanel.astro';
+import PageGuide from '../components/page-system/PageGuide.astro';
+import SourceProvenancePanel from '../components/page-system/SourceProvenancePanel.astro';
+import ContentPageLayout from '../layouts/ContentPageLayout.astro';
+
+const pageGuideGroups = [
+  {
+    label: 'Convert',
+    links: [
+      {
+        label: 'Open the CU-Time converter',
+        targetId: 'cu-time-converter-feature',
+      },
+    ],
+  },
+  {
+    label: 'Understand the result',
+    links: [
+      {
+        label: 'Read the CU-Time model context',
+        targetId: 'cu-time-understand-result',
+      },
+    ],
+  },
+  {
+    label: 'Method, limits, and sources',
+    links: [
+      {
+        label: 'Review boundaries and method',
+        targetId: 'cu-time-method-limits',
+      },
+    ],
+  },
+] as const;
 ---
 
 <ContentPageLayout
@@ -12,6 +49,15 @@ import CUTimeConverter from '../components/CUTimeConverter.astro';
   title="A coordinate system for the Cosmic Breath"
   description="CU-Time is the framework’s proposed notation for locating dates and events within its deep-time model."
 >
+  <span id="cu-time-page-top" class="cu-time-page-top" aria-hidden="true"></span>
+
+  <PageGuide
+    id="cu-time-page-guide"
+    ariaLabel="CU-Time page guide"
+    title="Explore CU-Time"
+    groups={pageGuideGroups}
+  />
+
   <ContentSection
     id="cu-time-context"
     title="About this converter"
@@ -22,19 +68,38 @@ import CUTimeConverter from '../components/CUTimeConverter.astro';
       cosmic phases. The converter below translates between a proleptic Gregorian UTC
       date and a converter-aligned CU-Time value.
     </p>
+  </ContentSection>
 
+  <EpistemicCallout kind="boundary" label="Converter boundary">
     <p>
       This tool implements the documented mathematical constants and calendar rules.
       It does not generate phase classifications or empirical cosmology claims.
     </p>
-  </ContentSection>
+  </EpistemicCallout>
 
-  <div class="cu-time-converter-breakout">
+  <FullWidthFeaturePanel
+    id="cu-time-converter-feature"
+    ariaLabel="CU-Time converter feature"
+  >
     <CUTimeConverter />
-  </div>
+  </FullWidthFeaturePanel>
 
-  <div class="cu-time-details">
-    <ContentSection id="cu-time-purpose-limits" title="Purpose and limits">
+  <section
+    id="cu-time-understand-result"
+    class="cu-time-editorial-group"
+    aria-labelledby="cu-time-understand-result-title"
+  >
+    <EditorialSectionHeading
+      eyebrow="Understand the result"
+      title="Reading CU-Time as a model"
+      headingId="cu-time-understand-result-title"
+    />
+
+    <ContentSection
+      id="cu-time-purpose-limits"
+      title="Purpose and limits"
+      headingLevel="h3"
+    >
       <ClassificationBadge
         slot="context"
         classification="cu-mathematical-model"
@@ -48,15 +113,11 @@ import CUTimeConverter from '../components/CUTimeConverter.astro';
       </p>
     </ContentSection>
 
-    <ContentSection id="cu-time-documentation" title="Conversion boundaries">
-      <p>
-        Gregorian inputs use explicit civil CE/BCE years and UTC. CU-Time inputs use plain
-        decimal notation. The proleptic Gregorian calendar has no public civil year zero,
-        and the original reference converter remains unchanged as historical evidence.
-      </p>
-    </ContentSection>
-
-    <ContentSection id="cu-time-full-coordinate" title="CU-Time and the full Cosmic Breath coordinate">
+    <ContentSection
+      id="cu-time-full-coordinate"
+      title="CU-Time and the full Cosmic Breath coordinate"
+      headingLevel="h3"
+    >
       <p>
         CU-Time is the framework’s full Cosmic Breath coordinate, spanning from the sub-ZTOM seed boundary
         through the ZTOM reset boundary. The empirical Big Bang is an internal observable-universe reference
@@ -64,7 +125,11 @@ import CUTimeConverter from '../components/CUTimeConverter.astro';
       </p>
     </ContentSection>
 
-    <ContentSection id="cu-time-observable-reference" title="The Observable-Universe Reference">
+    <ContentSection
+      id="cu-time-observable-reference"
+      title="The Observable-Universe Reference"
+      headingLevel="h3"
+    >
       <p>
         The Observable-Universe–Aligned CU Coordinate is a subordinate CU mathematical reference aligned with
         the converter’s adopted observable-universe age baseline. The derived age is not time elapsed since
@@ -77,30 +142,82 @@ import CUTimeConverter from '../components/CUTimeConverter.astro';
         non-selectable, not a TOM state, and not an empirical measurement.
       </p>
     </ContentSection>
+  </section>
 
-    <ContentSection id="cu-time-precision" title="Method, precision, and uncertainty">
+  <section
+    id="cu-time-method-limits"
+    class="cu-time-editorial-group"
+    aria-labelledby="cu-time-method-limits-title"
+  >
+    <EditorialSectionHeading
+      eyebrow="Method, limits, and sources"
+      title="Conversion method and boundaries"
+      headingId="cu-time-method-limits-title"
+    />
+
+    <ContentSection
+      id="cu-time-documentation"
+      title="Conversion boundaries"
+      headingLevel="h3"
+    >
+      <p>
+        Gregorian inputs use explicit civil CE/BCE years and UTC. CU-Time inputs use plain
+        decimal notation. The proleptic Gregorian calendar has no public civil year zero,
+        and the original reference converter remains unchanged as historical evidence.
+      </p>
+    </ContentSection>
+
+    <SourceProvenancePanel
+      id="cu-time-precision"
+      title="Method, precision, and uncertainty"
+      headingLevel="h3"
+      eyebrow="Method and provenance"
+    >
       <p>
         The converter uses deterministic Decimal arithmetic and documented calendar/model assumptions.
         Computational precision, calendar/model precision, and empirical uncertainty are distinct: long decimal
         results do not imply equivalent empirical certainty.
       </p>
-    </ContentSection>
-  </div>
+    </SourceProvenancePanel>
+  </section>
+
+  <BackToTop
+    targetId="cu-time-page-top"
+    revealAfterId="cu-time-converter-feature"
+  />
+
+  <ContinuationNavigation
+    ariaLabel="Continue from CU-Time"
+    title="Continue to CU Intelligence"
+    description="Explore CUCII, alignment, and recursive intelligence"
+    path="cu-intelligence/"
+  />
 </ContentPageLayout>
 
 <style>
-  .cu-time-converter-breakout {
-    width: min(112rem, calc(100vw - clamp(2rem, 6vw, 6rem)));
-    max-width: none;
-    min-width: 0;
-    margin-left: 50%;
-    transform: translateX(-50%);
+  .cu-time-page-top {
+    display: block;
+    scroll-margin-top: var(--space-6);
   }
 
-  .cu-time-details {
+  .cu-time-editorial-group {
     display: grid;
-    width: min(100%, 48rem);
-    margin-top: var(--space-12);
-    gap: var(--space-12);
+    width: min(100%, var(--measure-readable));
+    margin-top: var(--space-editorial-section);
+    padding-top: var(--space-8);
+    gap: clamp(var(--space-8), 6vw, var(--space-12));
+    border-top: 1px solid var(--color-border-section);
+    scroll-margin-top: var(--space-6);
+  }
+
+  :global(.content-page-layout__content > .epistemic-callout) {
+    margin-top: var(--space-6);
+  }
+
+  @media (max-width: 36rem) {
+    .cu-time-editorial-group {
+      padding-top: var(--space-6);
+      gap: var(--space-8);
+    }
   }
 </style>

@@ -1,0 +1,158 @@
+---
+export interface PageGuideLink {
+  label: string;
+  targetId: string;
+}
+
+export interface PageGuideGroup {
+  label: string;
+  links: readonly PageGuideLink[];
+}
+
+interface Props {
+  ariaLabel: string;
+  title: string;
+  groups: readonly PageGuideGroup[];
+  eyebrow?: string;
+  id?: string;
+  headingId?: string;
+}
+
+const {
+  ariaLabel,
+  title,
+  groups,
+  eyebrow = 'On this page',
+  id,
+  headingId: suppliedHeadingId,
+} = Astro.props;
+const headingId = suppliedHeadingId ?? (id ? `${id}-title` : undefined);
+const fragmentIdPattern = /^[A-Za-z][A-Za-z0-9_-]*$/;
+
+if (!ariaLabel.trim() || !title.trim() || !headingId || groups.length === 0) {
+  throw new Error(
+    'PageGuide requires a label, title, heading ID, and at least one group.',
+  );
+}
+
+for (const group of groups) {
+  if (!group.label.trim() || group.links.length === 0) {
+    throw new Error('Every PageGuide group requires a label and at least one link.');
+  }
+
+  for (const link of group.links) {
+    if (!link.label.trim() || !fragmentIdPattern.test(link.targetId)) {
+      throw new Error('PageGuide links require descriptive labels and valid fragment target IDs.');
+    }
+  }
+}
+---
+
+<section id={id} class="page-guide" aria-labelledby={headingId}>
+  <header class="page-guide__header">
+    <p class="page-guide__eyebrow">{eyebrow}</p>
+    <h2 id={headingId}>{title}</h2>
+  </header>
+
+  <nav aria-label={ariaLabel}>
+    <ul class="page-guide__groups">
+      {
+        groups.map((group) => (
+          <li class="page-guide__group">
+            <h3>{group.label}</h3>
+            <ul>
+              {group.links.map((link) => (
+                <li>
+                  <a href={`#${link.targetId}`}>{link.label}</a>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</section>
+
+<style>
+  .page-guide {
+    max-width: var(--measure-readable);
+    margin-bottom: var(--space-8);
+    padding: var(--space-6);
+    border: 1px solid var(--color-border-section);
+    background: var(--color-panel-quiet);
+  }
+
+  .page-guide__header {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-4);
+  }
+
+  .page-guide__eyebrow {
+    margin: 0;
+    color: var(--color-cyan);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .page-guide h2 {
+    margin: 0;
+    color: var(--color-white-gold);
+    font-size: 1.25rem;
+  }
+
+  .page-guide__groups,
+  .page-guide__group ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .page-guide__groups {
+    display: grid;
+    margin-top: var(--space-4);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+    gap: var(--space-4);
+  }
+
+  .page-guide__group {
+    min-width: 0;
+  }
+
+  .page-guide__group h3 {
+    margin: 0 0 var(--space-1);
+    color: var(--color-amber);
+    font-family: var(--font-family-sans);
+    font-size: 0.8125rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .page-guide__group a {
+    display: flex;
+    min-height: 2.75rem;
+    align-items: center;
+    overflow-wrap: anywhere;
+    color: var(--color-white-gold);
+    font-weight: 700;
+    text-underline-offset: 0.2em;
+  }
+
+  .page-guide__group a:hover {
+    color: var(--color-cyan);
+  }
+
+  @media (max-width: 36rem) {
+    .page-guide {
+      padding: var(--space-4);
+    }
+
+    .page-guide__groups {
+      gap: var(--space-3);
+    }
+  }
+</style>

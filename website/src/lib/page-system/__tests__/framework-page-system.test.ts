@@ -8,7 +8,6 @@ const frameworkSource = readSource('../../../pages/framework.astro');
 const protectedRouteSources = [
   '../../../pages/index.astro',
   '../../../pages/cosmic-breath.astro',
-  '../../../pages/cu-time.astro',
   '../../../pages/cu-intelligence.astro',
   '../../../pages/research/index.astro',
   '../../../pages/media.astro',
@@ -77,7 +76,7 @@ describe('Framework page-system demonstration', () => {
     );
   });
 
-  it('keeps page-system adoption out of every protected route', () => {
+  it('keeps page-system adoption out of routes not authorized for harmonization', () => {
     protectedRouteSources.forEach((source) => {
       expect(source).not.toContain('/page-system/');
       expect(source).not.toContain('ContinuationNavigation');

@@ -1,0 +1,114 @@
+---
+type HeadingLevel = 'h2' | 'h3' | 'h4';
+
+interface Props {
+  id?: string;
+  ariaLabel?: string;
+  eyebrow?: string;
+  title?: string;
+  lead?: string;
+  headingLevel?: HeadingLevel;
+  headingId?: string;
+}
+
+const {
+  id,
+  ariaLabel,
+  eyebrow,
+  title,
+  lead,
+  headingLevel = 'h2',
+  headingId: suppliedHeadingId,
+} = Astro.props;
+const headingId = suppliedHeadingId ?? (id && title ? `${id}-title` : undefined);
+const Heading = headingLevel;
+
+if (title && !headingId) {
+  throw new Error('FullWidthFeaturePanel requires a heading ID when a title is supplied.');
+}
+
+if (!title && !ariaLabel?.trim()) {
+  throw new Error('FullWidthFeaturePanel requires a title or accessible label.');
+}
+---
+
+<section
+  id={id}
+  class="full-width-feature-panel"
+  aria-label={title ? undefined : ariaLabel}
+  aria-labelledby={title ? headingId : undefined}
+>
+  {
+    (eyebrow || title || lead) && (
+      <header class="full-width-feature-panel__header">
+        {eyebrow && <p class="full-width-feature-panel__eyebrow">{eyebrow}</p>}
+        {title && <Heading id={headingId}>{title}</Heading>}
+        {lead && <p class="full-width-feature-panel__lead">{lead}</p>}
+      </header>
+    )
+  }
+
+  <div class="full-width-feature-panel__content">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .full-width-feature-panel {
+    width: min(112rem, calc(100vw - clamp(2rem, 6vw, 6rem)));
+    max-width: none;
+    min-width: 0;
+    margin-top: var(--space-editorial-section);
+    margin-left: 50%;
+    padding: clamp(var(--space-4), 3vw, var(--space-8));
+    overflow: hidden;
+    border: 1px solid var(--color-border-feature);
+    background:
+      linear-gradient(
+        145deg,
+        var(--color-panel-feature),
+        var(--color-background)
+      );
+    transform: translateX(-50%);
+  }
+
+  .full-width-feature-panel__header {
+    max-width: var(--measure-readable);
+    margin: 0 auto var(--space-8);
+  }
+
+  .full-width-feature-panel__eyebrow {
+    margin: 0;
+    color: var(--color-amber);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .full-width-feature-panel :global(h2),
+  .full-width-feature-panel :global(h3),
+  .full-width-feature-panel :global(h4) {
+    margin: var(--space-2) 0 0;
+    overflow-wrap: anywhere;
+    color: var(--color-white-gold);
+    font-family: var(--font-family-serif);
+  }
+
+  .full-width-feature-panel__lead {
+    margin: var(--space-4) 0 0;
+    color: var(--color-text-muted);
+  }
+
+  .full-width-feature-panel__content {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  @media (max-width: 36rem) {
+    .full-width-feature-panel {
+      width: calc(100vw - var(--space-4));
+      padding: var(--space-3);
+    }
+  }
+</style>
