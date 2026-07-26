@@ -1,5 +1,7 @@
 ---
-import ContentSection from '../components/ContentSection.astro';
+import ContinuationNavigation from '../components/page-system/ContinuationNavigation.astro';
+import EditorialSectionHeading from '../components/page-system/EditorialSectionHeading.astro';
+import EpistemicCallout from '../components/page-system/EpistemicCallout.astro';
 import ContentPageLayout from '../layouts/ContentPageLayout.astro';
 ---
 
@@ -10,39 +12,143 @@ import ContentPageLayout from '../layouts/ContentPageLayout.astro';
   title="Different ways into a large framework"
   description="The media library will gather accessible explanations, visual narratives, and conversations about Cosmic Universalism."
 >
-  <ContentSection id="media-clarity" title="Clarity before volume" variant="panel">
-    <p>
-      Future media will identify whether it explains source science, CU mathematics,
-      a theoretical proposition, or an open question. This foundation keeps those
-      categories visible before the library grows.
-    </p>
-  </ContentSection>
+  <section
+    id="media-clarity"
+    class="media-foundation"
+    aria-labelledby="media-clarity-title"
+  >
+    <EditorialSectionHeading
+      eyebrow="Foundation"
+      title="Clarity before volume"
+      headingId="media-clarity-title"
+    />
+
+    <div class="media-foundation__body">
+      <EpistemicCallout kind="context" label="Forthcoming">
+        <p>
+          Future media will identify whether it explains source science, CU mathematics,
+          a theoretical proposition, or an open question. This foundation keeps those
+          categories visible before the library grows.
+        </p>
+      </EpistemicCallout>
+    </div>
+  </section>
 
   <div class="media-details">
-    <ContentSection id="media-planned-formats" title="Planned formats">
-      <p>
-        Future entries may include written explainers, diagram walkthroughs, recorded
-        conversations, and other educational formats. Each entry should state its subject,
-        classification, and source basis before asking the audience to evaluate its
-        conclusions.
-      </p>
-    </ContentSection>
+    <section
+      id="media-planned-formats"
+      class="media-detail"
+      aria-labelledby="media-planned-formats-title"
+    >
+      <EditorialSectionHeading
+        eyebrow="Forthcoming"
+        title="Planned formats"
+        headingId="media-planned-formats-title"
+      />
 
-    <ContentSection id="media-publication-standard" title="Publication standard">
-      <p>
-        Media that discusses established scientific material should identify the external
-        source separately from any CU interpretation. Media that presents CU mathematics
-        or theoretical propositions should name that classification directly. Unresolved
-        issues should remain visibly labeled as open questions.
-      </p>
-    </ContentSection>
+      <div class="media-detail__body">
+        <p>
+          Future entries may include written explainers, diagram walkthroughs, recorded
+          conversations, and other educational formats. Each entry should state its subject,
+          classification, and source basis before asking the audience to evaluate its
+          conclusions.
+        </p>
+      </div>
+    </section>
+
+    <section
+      id="media-publication-standard"
+      class="media-detail media-detail--standard"
+      aria-labelledby="media-publication-standard-title"
+    >
+      <EditorialSectionHeading
+        eyebrow="Foundation"
+        title="Publication standard"
+        headingId="media-publication-standard-title"
+      />
+
+      <div class="media-detail__body">
+        <p>
+          Media that discusses established scientific material should identify the external
+          source separately from any CU interpretation. Media that presents CU mathematics
+          or theoretical propositions should name that classification directly. Unresolved
+          issues should remain visibly labeled as open questions.
+        </p>
+      </div>
+    </section>
   </div>
+
+  <ContinuationNavigation
+    ariaLabel="Continue from Media"
+    title="Continue to About"
+    description="Learn about the project, its authorship, and its public commitments"
+    path="about/"
+  />
 </ContentPageLayout>
 
 <style>
+  .media-foundation {
+    padding: clamp(var(--space-6), 5vw, var(--space-12));
+    border: 1px solid var(--color-border-feature);
+    background:
+      linear-gradient(
+        145deg,
+        var(--color-panel-feature),
+        var(--color-background)
+      );
+  }
+
+  .media-foundation__body {
+    margin-top: var(--space-8);
+  }
+
+  .media-foundation :global(.epistemic-callout) {
+    max-width: none;
+  }
+
   .media-details {
     display: grid;
-    margin-top: var(--space-12);
-    gap: var(--space-12);
+    margin-top: var(--space-editorial-section);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6);
+  }
+
+  .media-detail {
+    min-width: 0;
+    padding: clamp(var(--space-6), 4vw, var(--space-8));
+    border: 1px solid var(--color-border-quiet);
+    background: var(--color-panel-quiet);
+  }
+
+  .media-detail--standard {
+    border-color: var(--color-border-feature);
+    background: var(--color-panel-feature);
+  }
+
+  .media-detail__body {
+    margin-top: var(--space-6);
+    color: var(--color-text-muted);
+  }
+
+  .media-detail__body p {
+    margin: 0;
+  }
+
+  @media (max-width: 48rem) {
+    .media-details {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (max-width: 36rem) {
+    .media-foundation,
+    .media-detail {
+      padding: var(--space-4);
+    }
+
+    .media-foundation__body,
+    .media-detail__body {
+      margin-top: var(--space-4);
+    }
   }
 </style>
