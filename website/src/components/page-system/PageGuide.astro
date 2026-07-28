@@ -59,6 +59,7 @@ for (const group of groups) {
       {
         groups.map((group) => (
           <li class="page-guide__group">
+            <span class="page-guide__group-number" aria-hidden="true"></span>
             <h3>{group.label}</h3>
             <ul>
               {group.links.map((link) => (
@@ -76,18 +77,28 @@ for (const group of groups) {
 
 <style>
   .page-guide {
-    max-width: var(--measure-readable);
+    width: 100%;
     margin-bottom: var(--space-8);
-    padding: var(--space-6);
-    border: 1px solid var(--color-border-section);
-    background: var(--color-panel-quiet);
+    padding: clamp(var(--space-6), 4vw, var(--space-8));
+    border: 1px solid var(--color-border-feature);
+    border-radius: 1rem;
+    background:
+      radial-gradient(
+        circle at 8% 0%,
+        color-mix(in srgb, var(--color-cyan) 12%, transparent),
+        transparent 24rem
+      ),
+      var(--color-panel-feature);
+    box-shadow: 0 1.5rem 3.5rem rgb(0 5 16 / 18%);
   }
 
   .page-guide__header {
-    display: flex;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: var(--space-2) var(--space-4);
+    display: grid;
+    padding-bottom: var(--space-6);
+    grid-template-columns: minmax(7rem, 0.35fr) minmax(0, 1fr);
+    align-items: end;
+    gap: var(--space-3) var(--space-6);
+    border-bottom: 1px solid var(--color-border-section);
   }
 
   .page-guide__eyebrow {
@@ -102,7 +113,9 @@ for (const group of groups) {
   .page-guide h2 {
     margin: 0;
     color: var(--color-white-gold);
-    font-size: 1.25rem;
+    font-family: var(--font-family-serif);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    line-height: var(--line-height-heading);
   }
 
   .page-guide__groups,
@@ -114,22 +127,60 @@ for (const group of groups) {
 
   .page-guide__groups {
     display: grid;
-    margin-top: var(--space-4);
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
-    gap: var(--space-4);
+    margin-top: var(--space-6);
+    counter-reset: page-guide-group;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    gap: var(--space-6);
   }
 
   .page-guide__group {
+    display: grid;
+    max-width: none;
     min-width: 0;
+    padding: var(--space-4);
+    counter-increment: page-guide-group;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-content: start;
+    gap: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-border-section);
+    border-radius: 0.75rem;
+    background: var(--color-panel-quiet);
+  }
+
+  .page-guide__group-number {
+    display: inline-grid;
+    width: 2.25rem;
+    height: 2.25rem;
+    grid-row: 1 / span 2;
+    place-items: center;
+    color: var(--color-white-gold);
+    font-family: var(--font-family-serif);
+    font-size: 0.875rem;
+    font-weight: 700;
+    border: 1px solid var(--color-cyan);
+    border-radius: 50%;
+  }
+
+  .page-guide__group-number::before {
+    content: counter(page-guide-group, decimal-leading-zero);
   }
 
   .page-guide__group h3 {
-    margin: 0 0 var(--space-1);
+    margin: 0;
     color: var(--color-amber);
     font-family: var(--font-family-sans);
     font-size: 0.8125rem;
     letter-spacing: 0.06em;
+    line-height: 1.35;
     text-transform: uppercase;
+  }
+
+  .page-guide__group ul {
+    grid-column: 2;
+  }
+
+  .page-guide__group li {
+    max-width: none;
   }
 
   .page-guide__group a {
@@ -140,19 +191,36 @@ for (const group of groups) {
     color: var(--color-white-gold);
     font-weight: 700;
     text-underline-offset: 0.2em;
+    border-top: 1px solid var(--color-border-quiet);
   }
 
   .page-guide__group a:hover {
     color: var(--color-cyan);
   }
 
+  .page-guide__group a:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-cyan);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  @media (max-width: 48rem) {
+    .page-guide__header {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
   @media (max-width: 36rem) {
     .page-guide {
       padding: var(--space-4);
+      border-radius: 0.75rem;
     }
 
     .page-guide__groups {
       gap: var(--space-3);
+    }
+
+    .page-guide__group {
+      padding: var(--space-3);
     }
   }
 </style>
