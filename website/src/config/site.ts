@@ -54,7 +54,8 @@ export const primaryAction: NavigationItem = {
 };
 
 export function normalizePathname(pathname: string): string {
-  const normalizedPathname = pathname.replace(/\/+$/, '');
+  const pathnameOnly = pathname.split(/[?#]/, 1)[0] ?? '';
+  const normalizedPathname = pathnameOnly.replace(/\/+$/, '');
 
   return normalizedPathname || '/';
 }
@@ -62,18 +63,28 @@ export function normalizePathname(pathname: string): string {
 export function isCurrentPath(
   pathname: string,
   href: string,
+  basePath = import.meta.env.BASE_URL,
 ): boolean {
   if (!href.startsWith('/')) return false;
 
-  const currentPathname = normalizePathname(pathname);
+  const normalizeFromBase = (value: string): string => {
+    const normalizedValue = normalizePathname(value);
+    const normalizedBase = normalizePathname(basePath);
 
-  const base = import.meta.env.BASE_URL;
-  const targetPathname = normalizePathname(
-    href.replace(base, '/'),
-  );
+    if (normalizedBase === '/') return normalizedValue;
+    if (normalizedValue === normalizedBase) return '/';
+    if (normalizedValue.startsWith(`${normalizedBase}/`)) {
+      return normalizedValue.slice(normalizedBase.length) || '/';
+    }
+
+    return normalizedValue;
+  };
+
+  const currentPathname = normalizeFromBase(pathname);
+  const targetPathname = normalizeFromBase(href);
 
   if (targetPathname === '/') {
-    return currentPathname === '/';
+    return currentPathname === targetPathname;
   }
 
   return (

@@ -1,5 +1,8 @@
 ---
-import ContentSection from '../components/ContentSection.astro';
+import ContinuationNavigation from '../components/page-system/ContinuationNavigation.astro';
+import EditorialSectionHeading from '../components/page-system/EditorialSectionHeading.astro';
+import EpistemicCallout from '../components/page-system/EpistemicCallout.astro';
+import SourceProvenancePanel from '../components/page-system/SourceProvenancePanel.astro';
 import ContentPageLayout from '../layouts/ContentPageLayout.astro';
 ---
 
@@ -10,41 +13,143 @@ import ContentPageLayout from '../layouts/ContentPageLayout.astro';
   title="An open framework built for examination"
   description="The Cosmic Universalism Computational Intelligence Initiative develops and documents the framework in public, inviting careful reading, critique, and continued research."
 >
-  <ContentSection id="about-purpose" title="Purpose">
-    <p>
-      The project explores how philosophical ideas, computational formalisms, and
-      cosmological questions can be expressed together without obscuring the
-      difference between evidence and speculation.
-    </p>
-    <p>
-      The website is a guide to that work: what the framework proposes, what it
-      references, how its models are described, and which questions remain open.
-    </p>
-  </ContentSection>
+  <section
+    id="about-purpose"
+    class="about-purpose"
+    aria-labelledby="about-purpose-title"
+  >
+    <EditorialSectionHeading
+      eyebrow="Project identity"
+      title="Purpose"
+      headingId="about-purpose-title"
+    />
+
+    <div class="about-purpose__body">
+      <p>
+        The project explores how philosophical ideas, computational formalisms, and
+        cosmological questions can be expressed together without obscuring the
+        difference between evidence and speculation.
+      </p>
+      <p>
+        The website is a guide to that work: what the framework proposes, what it
+        references, how its models are described, and which questions remain open.
+      </p>
+    </div>
+  </section>
 
   <div class="about-details">
-    <ContentSection id="about-public-documentation" title="Public documentation">
-      <p>
-        The initiative presents the framework for examination rather than as a completed
-        scientific account. Public pages should make assumptions, classifications,
-        limitations, and unresolved questions easier to locate.
-      </p>
-    </ContentSection>
+    <section
+      id="about-public-documentation"
+      class="about-detail"
+      aria-labelledby="about-public-documentation-title"
+    >
+      <EditorialSectionHeading
+        eyebrow="Public commitment"
+        title="Public documentation"
+        headingId="about-public-documentation-title"
+      />
 
-    <ContentSection id="about-revision-critique" title="Revision and critique">
+      <div class="about-detail__body">
+        <EpistemicCallout kind="boundary" label="Framework boundary">
+          <p>
+            The initiative presents the framework for examination rather than as a completed
+            scientific account. Public pages should make assumptions, classifications,
+            limitations, and unresolved questions easier to locate.
+          </p>
+        </EpistemicCallout>
+      </div>
+    </section>
+
+    <SourceProvenancePanel
+      id="about-revision-critique"
+      eyebrow="Revision record"
+      title="Revision and critique"
+      headingId="about-revision-critique-title"
+    >
       <p>
         Critique is part of the documentation process. When an interpretation changes,
         the project should preserve enough provenance to show what changed, why it changed,
         and whether earlier material is historical, superseded, or archived.
       </p>
-    </ContentSection>
+    </SourceProvenancePanel>
   </div>
+
+  <ContinuationNavigation
+    ariaLabel="Return from About to Home"
+    title="Return to Home"
+    description="Revisit the Cosmic Universalism overview and choose another path"
+    path="/"
+  />
 </ContentPageLayout>
 
 <style>
+  .about-purpose {
+    padding: clamp(var(--space-6), 5vw, var(--space-12));
+    border: 1px solid var(--color-border-feature);
+    background:
+      linear-gradient(
+        145deg,
+        var(--color-panel-feature),
+        var(--color-background)
+      );
+  }
+
+  .about-purpose__body {
+    max-width: var(--measure-readable);
+    margin-top: var(--space-6);
+  }
+
+  .about-purpose__body p {
+    margin: 0;
+  }
+
+  .about-purpose__body p + p {
+    margin-top: var(--space-4);
+  }
+
   .about-details {
     display: grid;
-    margin-top: var(--space-12);
-    gap: var(--space-12);
+    margin-top: var(--space-editorial-section);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: var(--space-6);
+  }
+
+  .about-detail {
+    min-width: 0;
+    padding: clamp(var(--space-6), 4vw, var(--space-8));
+    border: 1px solid var(--color-border-quiet);
+    background: var(--color-panel-quiet);
+  }
+
+  .about-detail__body {
+    margin-top: var(--space-6);
+  }
+
+  .about-detail :global(.epistemic-callout),
+  .about-details :global(.source-provenance-panel) {
+    max-width: none;
+  }
+
+  .about-details :global(.source-provenance-panel) {
+    min-width: 0;
+  }
+
+  @media (max-width: 48rem) {
+    .about-details {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (max-width: 36rem) {
+    .about-purpose,
+    .about-detail {
+      padding: var(--space-4);
+    }
+
+    .about-purpose__body,
+    .about-detail__body {
+      margin-top: var(--space-4);
+    }
   }
 </style>

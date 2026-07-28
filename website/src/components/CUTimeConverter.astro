@@ -2,7 +2,17 @@
 import ClassificationBadge from './ClassificationBadge.astro';
 ---
 
-<section class="cu-time-converter" aria-labelledby="cu-time-converter-title">
+<p class="cu-time-converter__fallback" data-cu-time-fallback>
+  JavaScript is required to use the CU-Time converter. The explanatory material
+  on this page remains available.
+</p>
+
+<section
+  class="cu-time-converter"
+  aria-labelledby="cu-time-converter-title"
+  hidden
+  data-cu-time-interface
+>
   <div class="cu-time-converter__header">
     <p class="cu-time-converter__eyebrow">CU-Time Tool</p>
     <h2 id="cu-time-converter-title">Gregorian UTC and CU-Time converter</h2>
@@ -274,6 +284,8 @@ import ClassificationBadge from './ClassificationBadge.astro';
 <script>
   import { convertCuTimeForDisplay, convertGregorianForDisplay } from '../lib/cuTime';
 
+  const converterInterface = document.querySelector<HTMLElement>('[data-cu-time-interface]');
+  const converterFallback = document.querySelector<HTMLElement>('[data-cu-time-fallback]');
   const resultsRegion = document.querySelector<HTMLElement>('[data-cu-time-results]');
   const gregorianForm = document.querySelector<HTMLFormElement>('[data-gregorian-form]');
   const gregorianFields = Array.from(document.querySelectorAll<HTMLInputElement | HTMLSelectElement>('[data-gregorian-field]'));
@@ -489,11 +501,44 @@ import ClassificationBadge from './ClassificationBadge.astro';
       document.getElementById(targetId)?.focus();
     });
   });
+
+  if (
+    converterInterface
+    && converterFallback
+    && resultsRegion
+    && gregorianForm
+    && gregorianFields.length === 7
+    && gregorianError
+    && gregorianResult
+    && gregorianResultInput
+    && gregorianResultCuTime
+    && gregorianResultExponential
+    && Object.values(gregorianReference).every(Boolean)
+    && form
+    && input
+    && error
+    && result
+    && resultInput
+    && resultExponential
+    && resultGregorian
+    && Object.values(reverseReference).every(Boolean)
+  ) {
+    converterInterface.hidden = false;
+    converterFallback.hidden = true;
+  }
 </script>
 
 <style>
+  .cu-time-converter__fallback {
+    margin-top: var(--space-12);
+    padding: var(--space-4);
+    border: 1px solid var(--color-translucent-blue);
+    color: var(--color-text-muted);
+  }
+
   .cu-time-converter {
     display: grid;
+    min-width: 0;
     gap: var(--space-6);
     margin-top: var(--space-12);
     padding: var(--space-8);
@@ -517,6 +562,20 @@ import ClassificationBadge from './ClassificationBadge.astro';
 
   .cu-time-results {
     gap: var(--space-6);
+  }
+
+  .cu-time-converter__header,
+  .cu-time-converter__directions,
+  .cu-time-direction,
+  .cu-time-direction__header,
+  .cu-time-form,
+  .cu-time-form__field {
+    min-width: 0;
+  }
+
+  .cu-time-converter__header,
+  .cu-time-direction {
+    overflow-wrap: anywhere;
   }
 
   .cu-time-results[hidden] {
@@ -602,6 +661,7 @@ import ClassificationBadge from './ClassificationBadge.astro';
   .cu-time-converter__intro,
   .cu-time-converter__methodology {
     max-width: var(--measure-readable);
+    overflow-wrap: anywhere;
   }
 
   .cu-time-form label,
@@ -619,6 +679,7 @@ import ClassificationBadge from './ClassificationBadge.astro';
 
   .cu-time-form fieldset {
     display: grid;
+    min-width: 0;
     gap: var(--space-3);
     margin: 0;
     padding: 0;
@@ -628,6 +689,7 @@ import ClassificationBadge from './ClassificationBadge.astro';
   .cu-time-form__date-grid,
   .cu-time-form__time-grid {
     display: grid;
+    min-width: 0;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--space-3);
   }
@@ -638,7 +700,10 @@ import ClassificationBadge from './ClassificationBadge.astro';
 
   .cu-time-form input,
   .cu-time-form select {
+    box-sizing: border-box;
     width: 100%;
+    min-width: 0;
+    max-width: 100%;
     padding: var(--space-3) var(--space-4);
     border: 1px solid var(--color-translucent-blue);
     border-radius: 0;
@@ -892,7 +957,7 @@ import ClassificationBadge from './ClassificationBadge.astro';
 
     .cu-time-form__date-grid,
     .cu-time-form__time-grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
     }
 
     .cu-time-form__field--year {

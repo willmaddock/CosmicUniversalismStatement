@@ -3,15 +3,18 @@ interface Props {
   id: string;
   title: string;
   variant?: 'plain' | 'panel' | 'notice' | 'card';
+  headingLevel?: 'h2' | 'h3' | 'h4';
 }
 
 const {
   id,
   title,
   variant = 'plain',
+  headingLevel = 'h2',
 } = Astro.props;
 const titleId = `${id}-title`;
 const hasContext = Astro.slots.has('context');
+const Heading = headingLevel;
 ---
 
 <section
@@ -26,7 +29,7 @@ const hasContext = Astro.slots.has('context');
       </div>
     )
   }
-  <h2 id={titleId}>{title}</h2>
+  <Heading id={titleId}>{title}</Heading>
   <div class="content-section__body">
     <slot />
   </div>
@@ -67,12 +70,16 @@ const hasContext = Astro.slots.has('context');
     gap: var(--space-2);
   }
 
-  h2 {
+  .content-section :global(h2),
+  .content-section :global(h3),
+  .content-section :global(h4) {
     margin: 0;
     font-size: clamp(1.75rem, 4vw, 2.5rem);
   }
 
-  .content-section--card h2 {
+  .content-section--card :global(h2),
+  .content-section--card :global(h3),
+  .content-section--card :global(h4) {
     font-size: 1.375rem;
   }
 

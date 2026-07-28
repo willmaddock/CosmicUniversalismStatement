@@ -1,0 +1,164 @@
+---
+import { sitePath } from '../../config/site';
+
+type HeadingLevel = 'h2' | 'h3' | 'h4';
+
+type SourceLink =
+  | {
+      kind: 'internal';
+      label: string;
+      path: string;
+    }
+  | {
+      kind: 'external';
+      label: string;
+      href: string;
+      disclosure: string;
+    };
+
+interface Props {
+  title: string;
+  headingLevel?: HeadingLevel;
+  headingId?: string;
+  id?: string;
+  eyebrow?: string;
+  links?: readonly SourceLink[];
+}
+
+const {
+  title,
+  headingLevel = 'h2',
+  headingId: suppliedHeadingId,
+  id,
+  eyebrow = 'Sources, method, and provenance',
+  links = [],
+} = Astro.props;
+const headingId = suppliedHeadingId ?? (id ? `${id}-title` : undefined);
+const Heading = headingLevel;
+---
+
+<section
+  id={id}
+  class="source-provenance-panel"
+  aria-labelledby={headingId}
+>
+  <header>
+    <p class="source-provenance-panel__eyebrow">{eyebrow}</p>
+    <Heading id={headingId}>{title}</Heading>
+  </header>
+
+  <div class="source-provenance-panel__body">
+    <slot />
+  </div>
+
+  {
+    links.length > 0 && (
+      <ul class="source-provenance-panel__links">
+        {links.map((link) => (
+          <li>
+            {link.kind === 'internal' ? (
+              <a href={sitePath(link.path)}>{link.label}</a>
+            ) : (
+              <a
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span>{link.label}</span>
+                <span class="source-provenance-panel__disclosure">
+                  {link.disclosure}
+                </span>
+              </a>
+            )}
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</section>
+
+<style>
+  .source-provenance-panel {
+    max-width: var(--measure-readable);
+    padding: var(--space-8);
+    border: 1px solid var(--color-border-section);
+    background:
+      linear-gradient(
+        145deg,
+        var(--color-panel-feature),
+        var(--color-panel-quiet)
+      );
+  }
+
+  .source-provenance-panel__eyebrow {
+    margin: 0;
+    color: var(--color-cyan);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .source-provenance-panel :global(h2),
+  .source-provenance-panel :global(h3),
+  .source-provenance-panel :global(h4) {
+    margin: var(--space-2) 0 0;
+    overflow-wrap: anywhere;
+    color: var(--color-white-gold);
+  }
+
+  .source-provenance-panel :global(h2) {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+  }
+
+  .source-provenance-panel :global(h3) {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+  }
+
+  .source-provenance-panel :global(h4) {
+    font-size: clamp(1.25rem, 2.5vw, 1.625rem);
+  }
+
+  .source-provenance-panel__body {
+    margin-top: var(--space-4);
+  }
+
+  .source-provenance-panel__body :global(p) {
+    margin: 0;
+  }
+
+  .source-provenance-panel__body :global(p + p) {
+    margin-top: var(--space-4);
+  }
+
+  .source-provenance-panel__links {
+    display: grid;
+    margin: var(--space-6) 0 0;
+    padding: var(--space-6) 0 0;
+    gap: var(--space-3);
+    border-top: 1px solid var(--color-border-quiet);
+    list-style: none;
+  }
+
+  .source-provenance-panel__links a {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    overflow-wrap: anywhere;
+    font-weight: 700;
+  }
+
+  .source-provenance-panel__disclosure {
+    color: var(--color-text-muted);
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+
+  @media (max-width: 36rem) {
+    .source-provenance-panel {
+      padding: var(--space-6);
+    }
+  }
+</style>

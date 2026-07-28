@@ -48,13 +48,18 @@ describe('Research Observatory route foundation', () => {
     );
   });
 
-  it('places the static Observatory before the on-this-page navigation', () => {
+  it('places one shared page guide before the full-width Observatory feature', () => {
     expect(routeSource).toContain(
       "import ResearchObservatory from '../../components/research/ResearchObservatory.astro';",
     );
+    expect(routeSource.match(/<PageGuide\b/g)).toHaveLength(1);
+    expect(routeSource.match(/<FullWidthFeaturePanel\b/g)).toHaveLength(1);
     expect(routeSource.indexOf('<ResearchObservatory />')).toBeGreaterThan(-1);
-    expect(routeSource.indexOf('<ResearchObservatory />')).toBeLessThan(
-      routeSource.indexOf('<nav class="research-index-navigation"'),
+    expect(routeSource.indexOf('<PageGuide')).toBeLessThan(
+      routeSource.indexOf('<FullWidthFeaturePanel'),
+    );
+    expect(routeSource.indexOf('<ResearchObservatory />')).toBeGreaterThan(
+      routeSource.indexOf('<FullWidthFeaturePanel'),
     );
   });
 
@@ -272,20 +277,35 @@ describe('Research Observatory route foundation', () => {
   });
 
   it('provides exactly the five approved major on-this-page destinations', () => {
-    const navigation = routeSource.slice(
-      routeSource.indexOf('<nav class="research-index-navigation"'),
-      routeSource.indexOf('</nav>') + '</nav>'.length,
-    );
-    const destinations = [...navigation.matchAll(
-      /<a href="(#[^"]+)">([^<]+(?:&amp;[^<]+)?)<\/a>/g,
-    )].map((match) => [match[1], match[2]]);
+    const destinations = [
+      ['research-observatory', 'CU Research Observatory'],
+      ['research-labels', 'Research labels'],
+      ['open-questions', 'Open Questions'],
+      ['historical-record', 'Historical Archive'],
+      ['source-provenance', 'Sources & Methods'],
+    ] as const;
 
+    expect(routeSource.match(/targetId:/g)).toHaveLength(5);
+    destinations.forEach(([targetId, label]) => {
+      expect(routeSource).toContain(`targetId: '${targetId}'`);
+      expect(routeSource).toContain(`label: '${label}'`);
+    });
+    expect(new Set(destinations.map(([targetId]) => targetId)).size).toBe(5);
+    expect(routeSource).not.toContain(
+      '<nav class="research-index-navigation"',
+    );
+    expect(routeSource).toContain(
+      'ariaLabel="Research page guide"',
+    );
+    expect(routeSource).toContain(
+      'title="Explore Research"',
+    );
     expect(destinations).toEqual([
-      ['#research-observatory', 'CU Research Observatory'],
-      ['#research-labels', 'Research labels'],
-      ['#open-questions', 'Open Questions'],
-      ['#historical-record', 'Historical Archive'],
-      ['#source-provenance', 'Sources &amp; Methods'],
+      ['research-observatory', 'CU Research Observatory'],
+      ['research-labels', 'Research labels'],
+      ['open-questions', 'Open Questions'],
+      ['historical-record', 'Historical Archive'],
+      ['source-provenance', 'Sources & Methods'],
     ]);
   });
 

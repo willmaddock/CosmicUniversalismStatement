@@ -1,0 +1,81 @@
+---
+type CalloutKind = 'boundary' | 'method' | 'caution' | 'context';
+type CalloutElement = 'aside' | 'section';
+
+interface Props {
+  kind: CalloutKind;
+  label: string;
+  as?: CalloutElement;
+  id?: string;
+}
+
+const {
+  kind,
+  label,
+  as = 'aside',
+  id,
+} = Astro.props;
+const Container = as;
+---
+
+<Container
+  id={id}
+  class:list={['epistemic-callout', `epistemic-callout--${kind}`]}
+  aria-label={label}
+>
+  <p class="epistemic-callout__label">{label}</p>
+  <div class="epistemic-callout__body">
+    <slot />
+  </div>
+</Container>
+
+<style>
+  .epistemic-callout {
+    --epistemic-callout-accent: var(--color-callout-context-accent);
+
+    max-width: var(--measure-readable);
+    padding: var(--space-6);
+    border: 1px solid var(--color-border-quiet);
+    border-left: 0.25rem solid var(--epistemic-callout-accent);
+    background: var(--color-panel-quiet);
+  }
+
+  .epistemic-callout--boundary {
+    --epistemic-callout-accent: var(--color-callout-boundary-accent);
+  }
+
+  .epistemic-callout--method {
+    --epistemic-callout-accent: var(--color-callout-method-accent);
+  }
+
+  .epistemic-callout--caution {
+    --epistemic-callout-accent: var(--color-callout-caution-accent);
+  }
+
+  .epistemic-callout__label {
+    margin: 0;
+    color: var(--epistemic-callout-accent);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .epistemic-callout__body {
+    margin-top: var(--space-3);
+  }
+
+  .epistemic-callout__body :global(p) {
+    margin: 0;
+  }
+
+  .epistemic-callout__body :global(p + p) {
+    margin-top: var(--space-4);
+  }
+
+  @media (max-width: 36rem) {
+    .epistemic-callout {
+      padding: var(--space-4);
+    }
+  }
+</style>

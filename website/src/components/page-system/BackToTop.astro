@@ -1,0 +1,125 @@
+---
+interface Props {
+  targetId: string;
+  revealAfterId: string;
+  label?: string;
+  id?: string;
+}
+
+const {
+  targetId,
+  revealAfterId,
+  label = 'Back to top',
+  id,
+} = Astro.props;
+const fragmentIdPattern = /^[A-Za-z][A-Za-z0-9_-]*$/;
+
+if (!fragmentIdPattern.test(targetId) || !fragmentIdPattern.test(revealAfterId)) {
+  throw new Error('BackToTop requires valid target and reveal-after IDs.');
+}
+---
+
+<div
+  id={id}
+  class="back-to-top-shell"
+  data-page-system-back-to-top
+  data-target-id={targetId}
+  data-reveal-after-id={revealAfterId}
+>
+  <a class="back-to-top" href={`#${targetId}`}>{label}</a>
+</div>
+
+<script>
+  document
+    .querySelectorAll<HTMLElement>('[data-page-system-back-to-top]')
+    .forEach((root) => {
+      if (root.dataset.enhanced === 'true') return;
+
+      const control = root.querySelector<HTMLAnchorElement>('.back-to-top');
+      const targetId = root.dataset.targetId;
+      const revealAfterId = root.dataset.revealAfterId;
+      const target = targetId ? document.getElementById(targetId) : null;
+      const revealAfter = revealAfterId
+        ? document.getElementById(revealAfterId)
+        : null;
+
+      if (!control || !target || !revealAfter) return;
+
+      root.dataset.enhanced = 'true';
+      control.hidden = true;
+
+      const update = () => {
+        const rootBounds = root.getBoundingClientRect();
+        const isDocked =
+          rootBounds.top < window.innerHeight && rootBounds.bottom > 0;
+        const hasMeaningfulScroll =
+          revealAfter.getBoundingClientRect().bottom < 0;
+        const retainsFocus = document.activeElement === control;
+        const isVisible = hasMeaningfulScroll || retainsFocus;
+
+        control.hidden = !isVisible;
+        root.toggleAttribute('data-visible', isVisible);
+        root.toggleAttribute('data-docked', isDocked);
+      };
+
+      let scheduled = false;
+      const scheduleUpdate = () => {
+        if (scheduled) return;
+        scheduled = true;
+        window.requestAnimationFrame(() => {
+          scheduled = false;
+          update();
+        });
+      };
+
+      window.addEventListener('scroll', scheduleUpdate, { passive: true });
+      window.addEventListener('resize', scheduleUpdate);
+      control.addEventListener('blur', scheduleUpdate);
+      update();
+    });
+</script>
+
+<style>
+  .back-to-top-shell {
+    min-height: 2.75rem;
+    margin-top: var(--space-8);
+  }
+
+  .back-to-top {
+    display: inline-flex;
+    min-height: 2.75rem;
+    padding: var(--space-2) var(--space-4);
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-border-feature);
+    background: var(--color-panel-feature);
+    color: var(--color-white-gold);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .back-to-top[hidden] {
+    display: none;
+  }
+
+  .back-to-top:hover {
+    border-color: var(--color-cyan);
+    background: var(--color-panel-quiet);
+  }
+
+  .back-to-top-shell[data-enhanced="true"]:not([data-docked]) .back-to-top {
+    position: fixed;
+    z-index: 40;
+    right: max(var(--space-4), env(safe-area-inset-right));
+    bottom: max(var(--space-4), env(safe-area-inset-bottom));
+    max-width: calc(100vw - (2 * var(--space-4)));
+    box-shadow: 0 0.5rem 1.5rem rgb(0 0 0 / 42%);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .back-to-top {
+      scroll-behavior: auto;
+      transition: none;
+    }
+  }
+</style>

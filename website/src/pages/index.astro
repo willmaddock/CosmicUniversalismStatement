@@ -4,6 +4,7 @@ import StatementPreview from '../components/StatementPreview.astro';
 import ResearchPreview from '../components/ResearchPreview.astro';
 import CUTimeInvitation from '../components/CUTimeInvitation.astro';
 import OpenQuestionsPreview from '../components/OpenQuestionsPreview.astro';
+import ContinuationNavigation from '../components/page-system/ContinuationNavigation.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
@@ -12,8 +13,99 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   description="A philosophical and computational framework exploring consciousness, time, existence, and the full Cosmic Breath."
 >
   <Hero />
-  <StatementPreview />
-  <ResearchPreview />
-  <CUTimeInvitation />
-  <OpenQuestionsPreview />
+
+  <div class="home-editorial-journey">
+    <div class="home-editorial-journey__chapter home-editorial-journey__chapter--framework">
+      <StatementPreview />
+    </div>
+
+    <div class="home-editorial-journey__chapter home-editorial-journey__chapter--research">
+      <ResearchPreview />
+    </div>
+
+    <div class="home-editorial-journey__chapter home-editorial-journey__chapter--time">
+      <CUTimeInvitation />
+    </div>
+
+    <div class="home-editorial-journey__chapter home-editorial-journey__chapter--questions">
+      <OpenQuestionsPreview />
+    </div>
+  </div>
+
+  <div class="home-continuation">
+    <ContinuationNavigation
+      ariaLabel="Continue from Home"
+      title="Continue to Framework"
+      description="Explore the philosophical, mathematical, and empirical foundations"
+      path="framework/"
+    />
+  </div>
 </BaseLayout>
+
+<style>
+  .home-editorial-journey {
+    position: relative;
+    background:
+      linear-gradient(
+        180deg,
+        transparent,
+        color-mix(in srgb, var(--color-translucent-blue) 12%, transparent) 48%,
+        transparent
+      );
+  }
+
+  .home-editorial-journey__chapter {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .home-editorial-journey__chapter::before {
+    position: absolute;
+    z-index: 1;
+    width: clamp(0.25rem, 0.5vw, 0.5rem);
+    height: clamp(3rem, 8vw, 6rem);
+    inset-block-start: 0;
+    inset-inline-start: max(var(--space-4), calc((100% - 90rem) / 2));
+    background: var(--color-cyan);
+    content: "";
+    pointer-events: none;
+  }
+
+  .home-editorial-journey__chapter--research::before {
+    background: var(--color-amber);
+  }
+
+  .home-editorial-journey__chapter--time::before {
+    background: var(--color-white-gold);
+  }
+
+  .home-editorial-journey__chapter--questions::before {
+    background: var(--color-muted-gray);
+  }
+
+  .home-continuation {
+    width: min(100% - (2 * var(--space-6)), 90rem);
+    margin-inline: auto;
+    padding-bottom: clamp(var(--space-12), 8vw, 7rem);
+  }
+
+  @media (max-width: 36rem) {
+    .home-editorial-journey__chapter::before {
+      width: 0.25rem;
+      height: var(--space-8);
+      inset-inline-start: var(--space-4);
+    }
+
+    .home-continuation {
+      width: min(100% - (2 * var(--space-4)), 90rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-editorial-journey *,
+    .home-continuation * {
+      scroll-behavior: auto;
+      transition-duration: 0.01ms;
+    }
+  }
+</style>

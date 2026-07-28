@@ -1,8 +1,45 @@
 ---
 import ClassificationBadge from '../components/ClassificationBadge.astro';
 import ContentSection from '../components/ContentSection.astro';
-import ContentPageLayout from '../layouts/ContentPageLayout.astro';
 import CUTimeConverter from '../components/CUTimeConverter.astro';
+import BackToTop from '../components/page-system/BackToTop.astro';
+import ContinuationNavigation from '../components/page-system/ContinuationNavigation.astro';
+import EditorialSectionHeading from '../components/page-system/EditorialSectionHeading.astro';
+import EpistemicCallout from '../components/page-system/EpistemicCallout.astro';
+import FullWidthFeaturePanel from '../components/page-system/FullWidthFeaturePanel.astro';
+import PageGuide from '../components/page-system/PageGuide.astro';
+import SourceProvenancePanel from '../components/page-system/SourceProvenancePanel.astro';
+import ContentPageLayout from '../layouts/ContentPageLayout.astro';
+
+const pageGuideGroups = [
+  {
+    label: 'Convert',
+    links: [
+      {
+        label: 'Open the CU-Time converter',
+        targetId: 'cu-time-converter-feature',
+      },
+    ],
+  },
+  {
+    label: 'Understand the result',
+    links: [
+      {
+        label: 'Read the CU-Time model context',
+        targetId: 'cu-time-understand-result',
+      },
+    ],
+  },
+  {
+    label: 'Method, limits, and sources',
+    links: [
+      {
+        label: 'Review boundaries and method',
+        targetId: 'cu-time-method-limits',
+      },
+    ],
+  },
+] as const;
 ---
 
 <ContentPageLayout
@@ -12,6 +49,15 @@ import CUTimeConverter from '../components/CUTimeConverter.astro';
   title="A coordinate system for the Cosmic Breath"
   description="CU-Time is the framework’s proposed notation for locating dates and events within its deep-time model."
 >
+  <span id="cu-time-page-top" class="cu-time-page-top" aria-hidden="true"></span>
+
+  <PageGuide
+    id="cu-time-page-guide"
+    ariaLabel="CU-Time page guide"
+    title="Explore CU-Time"
+    groups={pageGuideGroups}
+  />
+
   <ContentSection
     id="cu-time-context"
     title="About this converter"
@@ -22,19 +68,40 @@ import CUTimeConverter from '../components/CUTimeConverter.astro';
       cosmic phases. The converter below translates between a proleptic Gregorian UTC
       date and a converter-aligned CU-Time value.
     </p>
+  </ContentSection>
 
+  <EpistemicCallout kind="boundary" label="Converter boundary">
     <p>
       This tool implements the documented mathematical constants and calendar rules.
       It does not generate phase classifications or empirical cosmology claims.
     </p>
-  </ContentSection>
+  </EpistemicCallout>
 
-  <div class="cu-time-converter-breakout">
+  <FullWidthFeaturePanel
+    id="cu-time-converter-feature"
+    ariaLabel="CU-Time converter feature"
+  >
+    <span class="route-chapter-marker" aria-hidden="true">01</span>
     <CUTimeConverter />
-  </div>
+  </FullWidthFeaturePanel>
 
-  <div class="cu-time-details">
-    <ContentSection id="cu-time-purpose-limits" title="Purpose and limits">
+  <section
+    id="cu-time-understand-result"
+    class="cu-time-editorial-group"
+    aria-labelledby="cu-time-understand-result-title"
+  >
+    <span class="route-chapter-marker" aria-hidden="true">02</span>
+    <EditorialSectionHeading
+      eyebrow="Understand the result"
+      title="Reading CU-Time as a model"
+      headingId="cu-time-understand-result-title"
+    />
+
+    <ContentSection
+      id="cu-time-purpose-limits"
+      title="Purpose and limits"
+      headingLevel="h3"
+    >
       <ClassificationBadge
         slot="context"
         classification="cu-mathematical-model"
@@ -48,15 +115,11 @@ import CUTimeConverter from '../components/CUTimeConverter.astro';
       </p>
     </ContentSection>
 
-    <ContentSection id="cu-time-documentation" title="Conversion boundaries">
-      <p>
-        Gregorian inputs use explicit civil CE/BCE years and UTC. CU-Time inputs use plain
-        decimal notation. The proleptic Gregorian calendar has no public civil year zero,
-        and the original reference converter remains unchanged as historical evidence.
-      </p>
-    </ContentSection>
-
-    <ContentSection id="cu-time-full-coordinate" title="CU-Time and the full Cosmic Breath coordinate">
+    <ContentSection
+      id="cu-time-full-coordinate"
+      title="CU-Time and the full Cosmic Breath coordinate"
+      headingLevel="h3"
+    >
       <p>
         CU-Time is the framework’s full Cosmic Breath coordinate, spanning from the sub-ZTOM seed boundary
         through the ZTOM reset boundary. The empirical Big Bang is an internal observable-universe reference
@@ -64,7 +127,11 @@ import CUTimeConverter from '../components/CUTimeConverter.astro';
       </p>
     </ContentSection>
 
-    <ContentSection id="cu-time-observable-reference" title="The Observable-Universe Reference">
+    <ContentSection
+      id="cu-time-observable-reference"
+      title="The Observable-Universe Reference"
+      headingLevel="h3"
+    >
       <p>
         The Observable-Universe–Aligned CU Coordinate is a subordinate CU mathematical reference aligned with
         the converter’s adopted observable-universe age baseline. The derived age is not time elapsed since
@@ -77,30 +144,197 @@ import CUTimeConverter from '../components/CUTimeConverter.astro';
         non-selectable, not a TOM state, and not an empirical measurement.
       </p>
     </ContentSection>
+  </section>
 
-    <ContentSection id="cu-time-precision" title="Method, precision, and uncertainty">
+  <section
+    id="cu-time-method-limits"
+    class="cu-time-editorial-group"
+    aria-labelledby="cu-time-method-limits-title"
+  >
+    <span class="route-chapter-marker" aria-hidden="true">03</span>
+    <EditorialSectionHeading
+      eyebrow="Method, limits, and sources"
+      title="Conversion method and boundaries"
+      headingId="cu-time-method-limits-title"
+    />
+
+    <ContentSection
+      id="cu-time-documentation"
+      title="Conversion boundaries"
+      headingLevel="h3"
+    >
+      <p>
+        Gregorian inputs use explicit civil CE/BCE years and UTC. CU-Time inputs use plain
+        decimal notation. The proleptic Gregorian calendar has no public civil year zero,
+        and the original reference converter remains unchanged as historical evidence.
+      </p>
+    </ContentSection>
+
+    <SourceProvenancePanel
+      id="cu-time-precision"
+      title="Method, precision, and uncertainty"
+      headingLevel="h3"
+      eyebrow="Method and provenance"
+    >
       <p>
         The converter uses deterministic Decimal arithmetic and documented calendar/model assumptions.
         Computational precision, calendar/model precision, and empirical uncertainty are distinct: long decimal
         results do not imply equivalent empirical certainty.
       </p>
-    </ContentSection>
-  </div>
+    </SourceProvenancePanel>
+  </section>
+
+  <BackToTop
+    targetId="cu-time-page-top"
+    revealAfterId="cu-time-converter-feature"
+  />
+
+  <ContinuationNavigation
+    ariaLabel="Continue from CU-Time"
+    title="Continue to CU Intelligence"
+    description="Explore CUCII, alignment, and recursive intelligence"
+    path="cu-intelligence/"
+  />
 </ContentPageLayout>
 
 <style>
-  .cu-time-converter-breakout {
-    width: min(112rem, calc(100vw - clamp(2rem, 6vw, 6rem)));
-    max-width: none;
-    min-width: 0;
-    margin-left: 50%;
-    transform: translateX(-50%);
+  .cu-time-page-top {
+    display: block;
+    scroll-margin-top: var(--space-6);
   }
 
-  .cu-time-details {
+  :global(.content-page-layout__content) {
+    background:
+      radial-gradient(circle at 92% 10%, rgb(81 201 226 / 7%), transparent 24rem),
+      radial-gradient(circle at 8% 54%, rgb(230 194 111 / 5%), transparent 28rem);
+  }
+
+  .route-chapter-marker {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    gap: var(--space-3);
+    color: var(--color-amber);
+    font-family: var(--font-family-serif);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    line-height: 1;
+  }
+
+  .route-chapter-marker::after {
+    width: clamp(3rem, 10vw, 7rem);
+    height: 1px;
+    background: linear-gradient(90deg, var(--color-cyan), transparent);
+    content: '';
+  }
+
+  :global(#cu-time-converter-feature.full-width-feature-panel) {
+    position: relative;
+    border-block: 1px solid var(--color-border-feature);
+    background:
+      linear-gradient(135deg, rgb(81 201 226 / 8%), transparent 42%),
+      linear-gradient(315deg, rgb(230 194 111 / 6%), transparent 38%),
+      var(--color-panel-feature);
+    box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 24%);
+  }
+
+  :global(#cu-time-converter-feature.full-width-feature-panel::before) {
+    position: absolute;
+    top: 0;
+    right: clamp(var(--space-4), 6vw, var(--space-12));
+    left: clamp(var(--space-4), 6vw, var(--space-12));
+    height: 0.1875rem;
+    background: linear-gradient(90deg, var(--color-cyan), transparent 68%);
+    content: '';
+  }
+
+  :global(#cu-time-converter-feature .route-chapter-marker) {
+    margin: 0 auto var(--space-6);
+  }
+
+  :global(#cu-time-converter-feature .cu-time-converter) {
+    border-color: var(--color-border-feature);
+    background:
+      linear-gradient(145deg, rgb(10 35 62 / 92%), rgb(6 18 38 / 96%));
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 5%),
+      0 1rem 2.5rem rgb(0 0 0 / 22%);
+  }
+
+  :global(#cu-time-converter-feature .cu-time-direction) {
+    border-top: 0.1875rem solid var(--color-cyan);
+    background:
+      linear-gradient(160deg, rgb(81 201 226 / 6%), transparent 46%),
+      var(--color-panel-quiet);
+  }
+
+  :global(#cu-time-converter-feature .cu-time-direction:nth-of-type(even)) {
+    border-top-color: var(--color-amber);
+    background:
+      linear-gradient(160deg, rgb(230 194 111 / 6%), transparent 46%),
+      var(--color-panel-quiet);
+  }
+
+  :global(#cu-time-converter-feature .cu-time-results) {
+    padding: clamp(var(--space-4), 3vw, var(--space-6));
+    border: 1px solid var(--color-border-feature);
+    background:
+      linear-gradient(145deg, rgb(81 201 226 / 7%), transparent 44%),
+      rgb(6 18 38 / 72%);
+  }
+
+  .cu-time-editorial-group {
+    position: relative;
     display: grid;
-    width: min(100%, 48rem);
-    margin-top: var(--space-12);
-    gap: var(--space-12);
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: var(--space-editorial-section);
+    padding: clamp(var(--space-6), 5vw, var(--space-10));
+    gap: clamp(var(--space-8), 6vw, var(--space-12));
+    border: 1px solid var(--color-border-section);
+    background:
+      linear-gradient(135deg, rgb(81 201 226 / 5%), transparent 36%),
+      var(--color-panel-quiet);
+    scroll-margin-top: var(--space-6);
+  }
+
+  .cu-time-editorial-group:nth-of-type(even) {
+    background:
+      linear-gradient(135deg, rgb(230 194 111 / 5%), transparent 36%),
+      var(--color-panel-quiet);
+  }
+
+  .cu-time-editorial-group::before {
+    position: absolute;
+    top: -1px;
+    left: clamp(var(--space-6), 5vw, var(--space-10));
+    width: clamp(5rem, 18vw, 10rem);
+    height: 0.1875rem;
+    background: var(--color-cyan);
+    content: '';
+  }
+
+  .cu-time-editorial-group:nth-of-type(even)::before {
+    background: var(--color-amber);
+  }
+
+  :global(.content-page-layout__content > .epistemic-callout) {
+    margin-top: var(--space-6);
+  }
+
+  @media (max-width: 36rem) {
+    .route-chapter-marker::after {
+      width: 2.5rem;
+    }
+
+    .cu-time-editorial-group {
+      padding: var(--space-5);
+      gap: var(--space-8);
+    }
+
+    :global(#cu-time-converter-feature .cu-time-results) {
+      padding: var(--space-4);
+    }
   }
 </style>

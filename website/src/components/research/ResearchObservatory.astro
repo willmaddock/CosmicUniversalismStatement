@@ -340,6 +340,11 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
       to select, Home to return to the Observatory, and Escape to restore the
       neutral overview.
     </p>
+    <p class="research-observatory__structured-map-note">
+      On smaller screens, Map uses a structured layout instead of the desktop
+      relationship geometry. All research areas remain available, and the selected
+      panel preserves relationship details.
+    </p>
 
     <div
       class="research-observatory__map-grid"
@@ -571,7 +576,10 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
         importance, or completion through its geometry.
       </p>
       {overview.epistemicBoundary && (
-        <aside class="research-card__boundary">
+        <aside
+          class="research-card__boundary"
+          aria-label={`${overview.title} epistemic boundary`}
+        >
           <p><strong>Boundary:</strong> {overview.epistemicBoundary}</p>
         </aside>
       )}
@@ -604,7 +612,10 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
             )}
             <p>{node.summary}</p>
             {node.epistemicBoundary && (
-              <aside class="research-card__boundary">
+              <aside
+                class="research-card__boundary"
+                aria-label={`${node.title} epistemic boundary`}
+              >
                 <p><strong>Boundary:</strong> {node.epistemicBoundary}</p>
               </aside>
             )}
@@ -1146,6 +1157,7 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
 
 <style>
   .research-observatory {
+    min-width: 0;
     scroll-margin-top: var(--space-6);
   }
 
@@ -1167,6 +1179,8 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
 
   .research-observatory__overview {
     max-width: var(--measure-readable);
+    padding-bottom: var(--space-8);
+    border-bottom: 1px solid var(--color-border-section);
   }
 
   .research-observatory__eyebrow,
@@ -1200,8 +1214,9 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
     max-width: var(--measure-readable);
     margin-top: var(--space-8);
     padding: var(--space-6);
-    border-left: 0.25rem solid var(--color-amber);
-    background: var(--color-surface-translucent);
+    border: 1px solid var(--color-border-quiet);
+    border-left: 0.25rem solid var(--color-callout-boundary-accent);
+    background: var(--color-panel-quiet);
   }
 
   .research-observatory__geometry-boundary h3,
@@ -1216,16 +1231,15 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
   .research-observatory__enhancement {
     display: grid;
     margin-top: var(--space-8);
-    padding: var(--space-4);
-    border: 1px solid var(--color-translucent-blue);
-    border-radius: 0.5rem;
+    padding: clamp(var(--space-4), 3vw, var(--space-6));
+    border: 1px solid var(--color-border-feature);
     background:
       linear-gradient(
         135deg,
-        var(--color-surface-translucent),
-        transparent 72%
+        var(--color-panel-feature),
+        var(--color-panel-quiet) 72%
       );
-    gap: var(--space-4);
+    gap: var(--space-5);
   }
 
   .research-observatory__view-controls,
@@ -1233,15 +1247,16 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: var(--space-2);
+    gap: var(--space-3);
   }
 
   .research-observatory__view-controls > span,
   .research-observatory__filters > span {
-    margin-right: var(--space-2);
-    color: var(--color-text-muted);
-    font-size: 0.875rem;
+    min-width: 3.5rem;
+    color: var(--color-amber);
+    font-size: 0.8125rem;
     font-weight: 700;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
   }
 
@@ -1251,8 +1266,7 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
   .research-observatory__outside-filter button {
     min-height: 2.75rem;
     padding: var(--space-2) var(--space-4);
-    border: 1px solid var(--color-translucent-blue);
-    border-radius: 0.25rem;
+    border: 1px solid var(--color-border-quiet);
     background: var(--color-background);
     color: var(--color-white-gold);
     cursor: pointer;
@@ -1261,8 +1275,9 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
 
   .research-observatory__enhancement button[aria-pressed='true'] {
     border-color: var(--color-cyan);
-    background: var(--color-surface-translucent);
+    background: var(--color-panel-feature);
     color: var(--color-cyan);
+    box-shadow: inset 0 -0.1875rem 0 var(--color-cyan);
   }
 
   .research-observatory__workspace {
@@ -1278,23 +1293,26 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
   .research-observatory__map,
   .research-observatory__detail {
     min-width: 0;
-    padding: var(--space-6);
-    border: 1px solid var(--color-translucent-blue);
-    border-radius: 0.5rem;
-    background: color-mix(
-      in srgb,
-      var(--color-surface-translucent) 56%,
-      var(--color-background)
-    );
+    padding: clamp(var(--space-4), 3vw, var(--space-8));
+    border: 1px solid var(--color-border-section);
+    background:
+      linear-gradient(
+        145deg,
+        var(--color-panel-feature),
+        var(--color-background)
+      );
   }
 
   .research-observatory__map {
     grid-area: map;
+    overflow: hidden;
   }
 
   .research-observatory__detail {
     grid-area: detail;
     align-self: start;
+    border-top: 0.25rem solid var(--color-cyan);
+    box-shadow: 0 1rem 2.5rem rgb(0 0 0 / 18%);
   }
 
   .research-observatory__collections {
@@ -1317,6 +1335,16 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
 
   .research-observatory__map-instructions {
     max-width: var(--measure-readable);
+    color: var(--color-text-muted);
+  }
+
+  .research-observatory__structured-map-note {
+    display: none;
+    max-width: var(--measure-readable);
+    margin: var(--space-4) 0 0;
+    padding: var(--space-4);
+    border-left: 0.1875rem solid var(--color-cyan);
+    background: var(--color-panel-quiet);
     color: var(--color-text-muted);
   }
 
@@ -1377,8 +1405,9 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
 
   .research-observatory__relationship-legend {
     margin-top: var(--space-6);
-    padding-top: var(--space-4);
-    border-top: 1px solid var(--color-translucent-blue);
+    padding: var(--space-4);
+    border: 1px solid var(--color-border-quiet);
+    background: var(--color-panel-quiet);
   }
 
   .research-observatory__relationship-legend h4,
@@ -1437,6 +1466,12 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
     min-height: 5.5rem;
     translate: -50% -50%;
     overflow-wrap: anywhere;
+    background:
+      linear-gradient(
+        145deg,
+        var(--color-panel-feature),
+        var(--color-background)
+      );
     box-shadow: 0 0.5rem 1.5rem rgb(0 0 0 / 24%);
     text-align: left;
     transition:
@@ -1501,7 +1536,7 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
 
   .research-observatory__collection {
     padding-top: var(--space-8);
-    border-top: 1px solid var(--color-translucent-blue);
+    border-top: 1px solid var(--color-border-section);
   }
 
   .research-observatory__collection-heading h3,
@@ -1529,21 +1564,27 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
     min-width: 0;
     height: 100%;
     padding: var(--space-6);
-    border: 1px solid var(--color-translucent-blue);
-    background: var(--color-surface-translucent);
+    border: 1px solid var(--color-border-quiet);
+    background:
+      linear-gradient(
+        145deg,
+        var(--color-panel-feature),
+        var(--color-panel-quiet)
+      );
     flex-direction: column;
   }
 
   .research-card[data-selected='true'] {
     border-color: var(--color-cyan);
+    box-shadow: 0 0 0 0.125rem var(--color-translucent-blue);
   }
 
   .research-card--primary {
-    border-top-color: var(--color-cyan);
+    border-top: 0.25rem solid var(--color-cyan);
   }
 
   .research-card--supporting {
-    border-top-color: var(--color-amber);
+    border-top: 0.25rem solid var(--color-amber);
   }
 
   .research-card__header {
@@ -1577,8 +1618,9 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
   .research-observatory__outside-filter {
     margin-top: var(--space-4);
     padding: var(--space-4);
-    border-left: 0.1875rem solid var(--color-amber);
-    background: var(--color-background);
+    border: 1px solid var(--color-border-quiet);
+    border-left: 0.1875rem solid var(--color-callout-boundary-accent);
+    background: var(--color-panel-quiet);
     color: var(--color-text-muted);
   }
 
@@ -1602,6 +1644,7 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
     padding: var(--space-6) 0 0;
     flex-wrap: wrap;
     gap: var(--space-3) var(--space-6);
+    border-top: 1px solid var(--color-border-quiet);
     list-style: none;
   }
 
@@ -1616,8 +1659,7 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
   .research-card__action--primary a {
     padding-inline: var(--space-3);
     border: 1px solid var(--color-cyan);
-    border-radius: 0.25rem;
-    background: var(--color-surface-translucent);
+    background: var(--color-panel-feature);
   }
 
   .research-card__action--source a {
@@ -1634,6 +1676,8 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
 
   .research-observatory__relationships {
     margin-top: var(--space-8);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-border-section);
   }
 
   .research-observatory__relationships h4 {
@@ -1644,12 +1688,20 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
   .research-observatory__relationships ul {
     display: grid;
     margin-block: var(--space-4) 0;
-    padding-left: var(--space-6);
+    padding: 0;
     gap: var(--space-3);
+    list-style: none;
+  }
+
+  .research-observatory__relationships li {
+    padding: var(--space-3) var(--space-4);
+    border-left: 0.1875rem solid var(--color-translucent-blue);
+    background: var(--color-panel-quiet);
   }
 
   .research-observatory__relationships li span {
     display: block;
+    margin-top: var(--space-1);
     color: var(--color-text-muted);
   }
 
@@ -1664,11 +1716,15 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
   }
 
   @media (max-width: 64rem) {
+    .research-observatory__structured-map-note {
+      display: block;
+    }
+
     .research-observatory__map-grid {
       display: grid;
       min-height: 0;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: var(--space-4);
+      gap: var(--space-3);
     }
 
     .research-observatory__relationship-layer {
@@ -1678,12 +1734,23 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
     .research-map-node {
       position: static;
       width: auto;
+      min-height: 5rem;
       translate: none;
+      box-shadow: none;
     }
 
     .research-map-node--overview {
       width: auto;
       grid-column: span 3;
+      border-radius: 0;
+    }
+
+    .research-map-node--primary {
+      border-left: 0.25rem solid var(--color-cyan);
+    }
+
+    .research-map-node--supporting {
+      border-left: 0.25rem solid var(--color-amber);
     }
   }
 
@@ -1695,6 +1762,16 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
 
     .research-map-node--overview {
       grid-column: auto;
+    }
+
+    .research-observatory__view-controls,
+    .research-observatory__filters {
+      align-items: stretch;
+    }
+
+    .research-observatory__view-controls > span,
+    .research-observatory__filters > span {
+      width: 100%;
     }
   }
 
@@ -1708,6 +1785,15 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
 
     .research-card__header {
       flex-direction: column;
+    }
+
+    .research-card__actions {
+      display: grid;
+      gap: var(--space-2);
+    }
+
+    .research-card__actions a {
+      width: 100%;
     }
   }
 

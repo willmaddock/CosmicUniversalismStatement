@@ -1,8 +1,12 @@
 ---
 import type { CuciiConversation } from '../../lib/cucii/types';
 
-interface Props { conversation: CuciiConversation }
-const { conversation } = Astro.props;
+interface Props {
+  conversation: CuciiConversation;
+  headingLevel?: 'h3' | 'h4';
+}
+const { conversation, headingLevel = 'h3' } = Astro.props;
+const Heading = headingLevel;
 const platformLabel = conversation.platform === 'chatgpt' ? 'ChatGPT' : conversation.platform === 'claude' ? 'Claude' : 'Grok';
 ---
 
@@ -11,7 +15,7 @@ const platformLabel = conversation.platform === 'chatgpt' ? 'ChatGPT' : conversa
     <span class="conversation-card__platform">{platformLabel}</span>
     <span>{conversation.mode}</span>
   </div>
-  <h3>{conversation.title}</h3>
+  <Heading>{conversation.title}</Heading>
   <dl>
     <div><dt>Role-play</dt><dd>{conversation.rolePlay}</dd></div>
     <div><dt>Menu</dt><dd>{conversation.menuMode}</dd></div>
@@ -27,7 +31,7 @@ const platformLabel = conversation.platform === 'chatgpt' ? 'ChatGPT' : conversa
   .conversation-card { display: grid; grid-template-rows: auto auto auto auto 1fr auto auto; gap: var(--space-3); min-width: 0; padding: var(--space-6); border: 1px solid var(--color-translucent-blue); background: var(--color-surface-translucent); }
   .conversation-card__topline { display: flex; justify-content: space-between; gap: var(--space-3); color: var(--color-text-muted); font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; }
   .conversation-card__platform { color: var(--color-cyan); font-weight: 700; }
-  h3 { margin: 0; color: var(--color-white-gold); font-size: 1.35rem; }
+  h3, h4 { margin: 0; color: var(--color-white-gold); font-size: 1.35rem; }
   p { margin: 0; }
   dl { display: grid; gap: var(--space-2); margin: 0; }
   dl div { display: grid; grid-template-columns: 7rem 1fr; gap: var(--space-3); }

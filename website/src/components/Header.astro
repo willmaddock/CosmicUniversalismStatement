@@ -9,7 +9,7 @@ import {
 const currentPathname = Astro.url.pathname;
 ---
 
-<header class="site-header">
+<header class="site-header" data-site-header>
   <div class="site-header__inner">
     <a
       class="site-identity"
@@ -21,7 +21,23 @@ const currentPathname = Astro.url.pathname;
       <span class="site-identity__initiative">Computational Intelligence Initiative</span>
     </a>
 
-    <div class="site-header__navigation-region">
+    <button
+      class="site-header__menu-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="site-navigation"
+      hidden
+      data-site-menu-toggle
+    >
+      <span>Menu</span>
+      <span aria-hidden="true">＋</span>
+    </button>
+
+    <div
+      id="site-navigation"
+      class="site-header__navigation-region"
+      data-site-navigation
+    >
       <nav class="primary-navigation" aria-label="Primary navigation">
         <ul class="primary-navigation__list">
           {
@@ -53,6 +69,98 @@ const currentPathname = Astro.url.pathname;
     </div>
   </div>
 </header>
+
+<script>
+  const mobileHeaderQuery = window.matchMedia('(max-width: 64rem)');
+
+  document.querySelectorAll<HTMLElement>('[data-site-header]').forEach((header) => {
+    if (header.dataset.enhanced === 'true') return;
+
+    const toggle = header.querySelector<HTMLButtonElement>('[data-site-menu-toggle]');
+    const navigation = header.querySelector<HTMLElement>('[data-site-navigation]');
+    const identity = header.querySelector<HTMLAnchorElement>('.site-identity');
+
+    if (!toggle || !navigation || !identity) return;
+
+    let collapseAfterFocusLeaves = false;
+
+    const menuIsOpen = () => toggle.getAttribute('aria-expanded') === 'true';
+
+    const setMenuOpen = (
+      open: boolean,
+      restoreFocusIfNeeded = false,
+    ) => {
+      const focusWasInside = navigation.contains(document.activeElement);
+
+      toggle.setAttribute('aria-expanded', String(open));
+      navigation.hidden = mobileHeaderQuery.matches ? !open : false;
+
+      if (!open && restoreFocusIfNeeded && focusWasInside) {
+        toggle.focus();
+      }
+    };
+
+    const synchronizeForViewport = () => {
+      if (!mobileHeaderQuery.matches) {
+        const focusWasOnToggle = document.activeElement === toggle;
+        collapseAfterFocusLeaves = false;
+        toggle.setAttribute('aria-expanded', 'false');
+        navigation.hidden = false;
+        if (focusWasOnToggle) {
+          identity.focus({ preventScroll: true });
+        }
+        toggle.hidden = true;
+        return;
+      }
+
+      toggle.hidden = false;
+
+      if (navigation.contains(document.activeElement)) {
+        collapseAfterFocusLeaves = true;
+        setMenuOpen(true);
+        return;
+      }
+
+      collapseAfterFocusLeaves = false;
+      setMenuOpen(false);
+    };
+
+    toggle.addEventListener('click', () => {
+      collapseAfterFocusLeaves = false;
+      setMenuOpen(!menuIsOpen(), true);
+    });
+
+    header.addEventListener('keydown', (event) => {
+      if (
+        event.key !== 'Escape' ||
+        !mobileHeaderQuery.matches ||
+        !menuIsOpen()
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+      collapseAfterFocusLeaves = false;
+      setMenuOpen(false, true);
+      toggle.focus();
+    });
+
+    navigation.addEventListener('focusout', (event) => {
+      if (!collapseAfterFocusLeaves || !mobileHeaderQuery.matches) return;
+
+      const nextTarget = event.relatedTarget;
+      if (nextTarget instanceof Node && navigation.contains(nextTarget)) return;
+
+      collapseAfterFocusLeaves = false;
+      setMenuOpen(false);
+    });
+
+    header.dataset.enhanced = 'true';
+    toggle.hidden = false;
+    mobileHeaderQuery.addEventListener('change', synchronizeForViewport);
+    synchronizeForViewport();
+  });
+</script>
 
 <style>
   .site-header {
@@ -104,6 +212,26 @@ const currentPathname = Astro.url.pathname;
     align-items: center;
     justify-content: flex-end;
     gap: var(--space-6);
+  }
+
+  .site-header__menu-toggle {
+    display: none;
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    padding-inline: var(--space-4);
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    border: 1px solid var(--color-amber);
+    border-radius: 0.25rem;
+    background: var(--color-surface-translucent);
+    color: var(--color-white-gold);
+    font-weight: 700;
+  }
+
+  .site-header__menu-toggle:hover {
+    background: var(--color-amber);
+    color: var(--color-deep-navy-black);
   }
 
   .primary-navigation__list {
@@ -162,9 +290,13 @@ const currentPathname = Astro.url.pathname;
   .site-header__action[aria-current='page'] {
     border-color: var(--color-cyan);
     color: var(--color-cyan);
+    text-decoration: underline;
+    text-decoration-thickness: 0.125rem;
+    text-underline-offset: 0.35em;
   }
 
   .site-identity:focus-visible,
+  .site-header__menu-toggle:focus-visible,
   .primary-navigation a:focus-visible,
   .site-header__action:focus-visible {
     outline: var(--focus-ring-width) solid var(--color-cyan);
@@ -186,11 +318,70 @@ const currentPathname = Astro.url.pathname;
     .primary-navigation__list {
       justify-content: flex-start;
     }
+
+    .site-header[data-enhanced='true'] .site-header__inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+    .site-header[data-enhanced='true'] .site-identity {
+      min-width: 0;
+    }
+
+    .site-header[data-enhanced='true'] .site-header__menu-toggle {
+      display: inline-flex;
+    }
+
+    .site-header[data-enhanced='true'] .site-header__navigation-region {
+      width: 100%;
+      padding: var(--space-4);
+      grid-column: 1 / -1;
+      gap: var(--space-2);
+      border: 1px solid var(--color-translucent-blue);
+      background: var(--color-background);
+    }
+
+    .site-header[data-enhanced='true'] .site-header__navigation-region[hidden] {
+      display: none;
+    }
+
+    .site-header[data-enhanced='true'] .primary-navigation,
+    .site-header[data-enhanced='true'] .primary-navigation__list {
+      width: 100%;
+    }
+
+    .site-header[data-enhanced='true'] .primary-navigation__list {
+      align-items: stretch;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .site-header[data-enhanced='true'] .primary-navigation a,
+    .site-header[data-enhanced='true'] .site-header__action {
+      width: 100%;
+      padding-inline: var(--space-3);
+    }
   }
 
   @media (max-width: 36rem) {
     .site-header__inner {
       width: min(100% - (2 * var(--space-4)), 90rem);
+    }
+
+    .site-header[data-enhanced='true'] .site-identity__name {
+      font-size: 0.875rem;
+      letter-spacing: 0.08em;
+      overflow-wrap: anywhere;
+    }
+
+    .site-header[data-enhanced='true'] .site-identity__initiative {
+      font-size: 0.6875rem;
+    }
+
+    .site-header[data-enhanced='true'] .site-header__navigation-region {
+      padding: var(--space-2);
     }
 
     .primary-navigation,
