@@ -71,10 +71,10 @@ describe('Framework page-system demonstration', () => {
     );
   });
 
-  it('keeps page-system adoption out of routes not authorized for harmonization', () => {
+  it('keeps Cosmic Breath adoption limited to its authorized continuation', () => {
     protectedRouteSources.forEach((source) => {
-      expect(source).not.toContain('/page-system/');
-      expect(source).not.toContain('ContinuationNavigation');
+      expect(source.match(/\/page-system\//g)).toHaveLength(1);
+      expect(source.match(/<ContinuationNavigation\b/g)).toHaveLength(1);
       expect(source).not.toContain('EditorialSectionHeading');
       expect(source).not.toContain('EpistemicCallout');
       expect(source).not.toContain('SourceProvenancePanel');

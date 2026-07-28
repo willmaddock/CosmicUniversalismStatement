@@ -576,7 +576,10 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
         importance, or completion through its geometry.
       </p>
       {overview.epistemicBoundary && (
-        <aside class="research-card__boundary">
+        <aside
+          class="research-card__boundary"
+          aria-label={`${overview.title} epistemic boundary`}
+        >
           <p><strong>Boundary:</strong> {overview.epistemicBoundary}</p>
         </aside>
       )}
@@ -609,7 +612,10 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
             )}
             <p>{node.summary}</p>
             {node.epistemicBoundary && (
-              <aside class="research-card__boundary">
+              <aside
+                class="research-card__boundary"
+                aria-label={`${node.title} epistemic boundary`}
+              >
                 <p><strong>Boundary:</strong> {node.epistemicBoundary}</p>
               </aside>
             )}

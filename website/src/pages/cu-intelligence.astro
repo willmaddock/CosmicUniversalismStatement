@@ -120,7 +120,17 @@ const pageGuideGroups = [
 
   <FullWidthFeaturePanel id="prompt-studio-feature" ariaLabel="Explore CUCII Prompt Studio">
     <span class="route-chapter-marker" aria-hidden="true">03</span>
-    <section id="prompt-studio" class="studio-section" aria-labelledby="prompt-studio-title">
+    <p class="studio-fallback" data-cucii-studio-fallback>
+      JavaScript is required to generate a prompt in the Prompt Studio. The
+      explanatory material on this page remains available.
+    </p>
+    <section
+      id="prompt-studio"
+      class="studio-section"
+      aria-labelledby="prompt-studio-title"
+      hidden
+      data-cucii-studio-interface
+    >
     <div class="studio-heading">
       <p class="studio-eyebrow">Local tool</p>
       <h2 id="prompt-studio-title" tabindex="-1">CUCII Prompt Studio</h2>
@@ -238,7 +248,7 @@ const pageGuideGroups = [
       <textarea id="prompt-text" readonly aria-label="Generated CUCII prompt"></textarea>
       <div class="studio-actions"><button type="button" id="copy-prompt" class="cucii-button" disabled>Copy Full Operating Prompt</button><button type="button" id="download-txt" class="cucii-button cucii-button--secondary" disabled>Download .txt</button><button type="button" id="download-md" class="cucii-button cucii-button--secondary" disabled>Download .md</button></div>
       <section class="platform-links" aria-labelledby="platform-links-title">
-        <h5 id="platform-links-title">Choose an AI Platform</h5>
+        <h4 id="platform-links-title">Choose an AI Platform</h4>
         <p>Most tested: ChatGPT and Grok. Project-author tested: Claude, Gemini, DeepSeek, and Alexa+.</p>
         <div class="platform-link-grid">
           {cuciiPlatforms.map((platform) => (
@@ -299,7 +309,9 @@ const pageGuideGroups = [
   import type { CuciiMenuItem, CuciiPromptConfig } from '../lib/cucii/types';
 
   const form = document.querySelector<HTMLFormElement>('#cucii-studio-form');
-  if (form) {
+  const studioInterface = document.querySelector<HTMLElement>('[data-cucii-studio-interface]');
+  const studioFallback = document.querySelector<HTMLElement>('[data-cucii-studio-fallback]');
+  if (form && studioInterface && studioFallback) {
     const preview = document.querySelector<HTMLElement>('#prompt-preview');
     const promptText = document.querySelector<HTMLTextAreaElement>('#prompt-text');
     const errors = document.querySelector<HTMLElement>('#studio-errors');
@@ -457,6 +469,8 @@ const pageGuideGroups = [
     document.querySelector('#download-txt')?.addEventListener('click', () => generated && downloadCuciiPrompt(generated, 'txt'));
     document.querySelector('#download-md')?.addEventListener('click', () => generated && downloadCuciiPrompt(generated, 'md'));
     renderMenu(); showConditional();
+    studioInterface.hidden = false;
+    studioFallback.hidden = true;
   }
 </script>
 
@@ -601,7 +615,7 @@ const pageGuideGroups = [
   .studio-usage-guidance h4 { margin-bottom: var(--space-3); }
   .studio-usage-guidance h5 { margin-bottom: var(--space-2); font-size: 1rem; }
   .platform-links { margin-top: var(--space-5); }
-  .platform-links h5 { margin: 0; color: var(--color-white-gold); font-size: 1.1rem; }
+  .platform-links h4 { margin: 0; color: var(--color-white-gold); font-size: 1.1rem; }
   .platform-links > p { margin: var(--space-2) 0 var(--space-4); color: var(--color-cyan); }
   .platform-link-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-3); }
   .platform-link-card { display: grid; gap: .35rem; min-width: 0; min-height: 8rem; padding: var(--space-4); border: 1px solid var(--color-translucent-blue); border-radius: .35rem; background: rgb(6 18 38 / 72%); color: var(--color-text); text-decoration: none; overflow-wrap: anywhere; }

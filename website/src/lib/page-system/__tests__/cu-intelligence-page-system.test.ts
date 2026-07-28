@@ -19,7 +19,7 @@ describe('CU Intelligence page-system adoption', () => {
     expect(scriptSource).toBeDefined();
     expect(
       createHash('sha256').update(scriptSource ?? '').digest('hex'),
-    ).toBe('fdc89dbe782d82c5cd62bcb37e58e4706dbb7f99151cb2ff045000d51249bce3');
+    ).toBe('156dcde83296bb36111fb08d91182dea0d7bd952549e48e770763c4d03a42b84');
   });
 
   it('uses unique real guide targets around the intact studio', () => {
@@ -39,7 +39,7 @@ describe('CU Intelligence page-system adoption', () => {
     expect(countLiteralId(routeSource, 'prompt-studio')).toBe(1);
     expect(
       routeSource.match(
-        /<FullWidthFeaturePanel[^>]*>[\s\S]*?<section id="prompt-studio"[\s\S]*?<\/FullWidthFeaturePanel>/g,
+        /<FullWidthFeaturePanel[^>]*>[\s\S]*?<section[\s\S]*?id="prompt-studio"[\s\S]*?<\/FullWidthFeaturePanel>/g,
       ),
     ).toHaveLength(1);
     expect(routeSource.indexOf('<PageGuide')).toBeLessThan(

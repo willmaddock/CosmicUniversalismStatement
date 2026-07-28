@@ -659,7 +659,6 @@ The CU and NASA Time Converters differ in their theoretical bases and time scale
                     Papa.parse(csvText, {
                         header: true,
                         complete: (results) => {
-                            console.log('Parsed CSV data:', results.data);
                             setResults(results.data);
                         },
                         error: (error) => console.error('Papa Parse error:', error)

@@ -166,15 +166,15 @@ const protectedGroups = {
 } as const;
 
 const baselineGroupDigests = {
-  shared: '7f066fafccdaf6bb89e1d94fe13fe342b942c241b97ebeed64a350a741703a2a',
+  shared: '5d699f46c7409fad040c1e6dc654bfe560b58f9c51dcc28aee7f7f2df4a5b5ac',
   cosmicBreath:
-    '9bb911832a6ff34b4a7049a45ded74617b71abf6261ebdd33be856e2ad018520',
-  cuTime: 'faf85aed3caa2df245bee778d3c1f15f0763f922bb4d4565edf781eebe28cb77',
-  cucii: '9032404fc985b934c2d4b64f42a02634130e28ab5d6b872bcdc0196a5a1f8ba1',
+    '9d34a804e22cea2e0a66f01629eefafc41941a8b944f63fd7d646bde3c13954b',
+  cuTime: '4be55635476f513a3fa1b93c2111c41cfd53cd2cf3a1377fc00eacde43abc5f9',
+  cucii: '4fccddc9566ec4e753060e7179472318dbfc906dd3c632cbf3f5256810f7ac86',
   research:
-    '7da5dea04e2a20f15c3ea618e841bf34971338f966c50d9d8e506c5de87fa606',
+    '56eb2d9d0216ecce01b0f41d7109d16b2833f75132a2e515d91b62f7e9e13e77',
   existingTests:
-    '457de1e1cfc3cf3da9a6965ec8da1b073a3bb2a6c5df775d46e947ec52530f30',
+    '6ed26235a1477f88a79b3553cc6e3c37d1163cdf800fb723b88cc9187e2994a8',
 } as const;
 
 describe('major-route graphical parity', () => {
@@ -191,7 +191,7 @@ describe('major-route graphical parity', () => {
       '910c3a567f905c66768e0151b208f41b13dfad395c0c3ca64dc37474e96f3a5b',
     );
     expect(digest(normalizeRouteContent(cuIntelligenceRoute))).toBe(
-      'f73c99a0d364169e774cd2cd10267318a17d0101f57f7e421f2b092e2252502d',
+      'df41cd60fa5d27a772ca8669342563f1873b592881dd0a5ec9233c6610764fe2',
     );
     expect(digest(normalizeRouteContent(researchRoute))).toBe(
       '55c98766e2703efd76807030f23cb05356218546e50cc3f2685c2359deca3ba9',
@@ -201,12 +201,12 @@ describe('major-route graphical parity', () => {
   it('preserves every protected browser script body by exact extraction', () => {
     expect(scriptBodies(cuTimeConverter)).toHaveLength(1);
     expect(digest(scriptBodies(cuTimeConverter)[0])).toBe(
-      'c2618e30a1d47e9f4e87de8d666ba48db37353fc3dca2c81278c4fafa7c305bc',
+      '2e892cdcbdefd969c0e99462c04f0244a806b301cccad7da8226bbc842f97361',
     );
 
     expect(scriptBodies(cuIntelligenceRoute)).toHaveLength(1);
     expect(digest(scriptBodies(cuIntelligenceRoute)[0])).toBe(
-      'a9bc063dd2f9e6bcfab199bda664eb9b13176a58f7c3bd70d8d87a69f4d73562',
+      '1abe5e35a4388fef0616d6c5031f1f897346fb84a7b38882d0fb62a22e0103e0',
     );
 
     expect(scriptBodies(researchObservatory)).toHaveLength(3);
@@ -309,7 +309,7 @@ describe('major-route graphical parity', () => {
     }
   });
 
-  it('advances only the six authorized route digests to the final route bytes', () => {
+  it('advances the authorized route digests to the defect-corrected bytes', () => {
     for (const testSource of [mobileHeaderTest, visualParityNavigationTest]) {
       for (const contract of routeDigestContracts) {
         expect(testSource).toContain(
@@ -319,12 +319,12 @@ describe('major-route graphical parity', () => {
     }
 
     expect(digest(normalizeAuthorizedRouteDigests(mobileHeaderTest))).toBe(
-      '9ae88e7f2e348469a79cd19c319feab32a98ffbd3c4cf3ae2bdd9abd889e1b79',
+      '946cd38930533a6b56639fbcdda69adda0fb09277086eeef4957763525554aa9',
     );
     expect(
       digest(normalizeAuthorizedRouteDigests(visualParityNavigationTest)),
     ).toBe(
-      'cbd6bb1b047d41779e532f083cbd6320769650bba4f7225e5f581648a5dd8301',
+      '858773deeafbae53f239d9d0a676a7be7da783399e3cb46a2c7c921ab36d7714',
     );
   });
 });

@@ -5,6 +5,7 @@ import CosmicBreathEducation from '../components/CosmicBreathEducation.astro';
 import CosmicBreathEmpiricalScience from '../components/CosmicBreathEmpiricalScience.astro';
 import CosmicBreathPageGuide from '../components/CosmicBreathPageGuide.astro';
 import CosmicBreathTheoryAndMethod from '../components/CosmicBreathTheoryAndMethod.astro';
+import ContinuationNavigation from '../components/page-system/ContinuationNavigation.astro';
 import ContentPageLayout from '../layouts/ContentPageLayout.astro';
 ---
 
@@ -46,6 +47,12 @@ import ContentPageLayout from '../layouts/ContentPageLayout.astro';
   <CosmicBreathEducation />
   <CosmicBreathTheoryAndMethod />
   <CosmicBreathEmpiricalScience />
+  <ContinuationNavigation
+    ariaLabel="Continue from Cosmic Breath"
+    title="Continue to CU-Time"
+    description="A proposed deep-time coordinate system"
+    path="cu-time/"
+  />
 </ContentPageLayout>
 
 <style>

@@ -78,8 +78,9 @@ const currentPathname = Astro.url.pathname;
 
     const toggle = header.querySelector<HTMLButtonElement>('[data-site-menu-toggle]');
     const navigation = header.querySelector<HTMLElement>('[data-site-navigation]');
+    const identity = header.querySelector<HTMLAnchorElement>('.site-identity');
 
-    if (!toggle || !navigation) return;
+    if (!toggle || !navigation || !identity) return;
 
     let collapseAfterFocusLeaves = false;
 
@@ -101,11 +102,18 @@ const currentPathname = Astro.url.pathname;
 
     const synchronizeForViewport = () => {
       if (!mobileHeaderQuery.matches) {
+        const focusWasOnToggle = document.activeElement === toggle;
         collapseAfterFocusLeaves = false;
         toggle.setAttribute('aria-expanded', 'false');
         navigation.hidden = false;
+        if (focusWasOnToggle) {
+          identity.focus({ preventScroll: true });
+        }
+        toggle.hidden = true;
         return;
       }
+
+      toggle.hidden = false;
 
       if (navigation.contains(document.activeElement)) {
         collapseAfterFocusLeaves = true;
@@ -219,10 +227,6 @@ const currentPathname = Astro.url.pathname;
     background: var(--color-surface-translucent);
     color: var(--color-white-gold);
     font-weight: 700;
-  }
-
-  .site-header__menu-toggle:focus {
-    display: inline-flex;
   }
 
   .site-header__menu-toggle:hover {
