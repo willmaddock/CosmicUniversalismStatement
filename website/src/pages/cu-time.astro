@@ -81,6 +81,7 @@ const pageGuideGroups = [
     id="cu-time-converter-feature"
     ariaLabel="CU-Time converter feature"
   >
+    <span class="route-chapter-marker" aria-hidden="true">01</span>
     <CUTimeConverter />
   </FullWidthFeaturePanel>
 
@@ -89,6 +90,7 @@ const pageGuideGroups = [
     class="cu-time-editorial-group"
     aria-labelledby="cu-time-understand-result-title"
   >
+    <span class="route-chapter-marker" aria-hidden="true">02</span>
     <EditorialSectionHeading
       eyebrow="Understand the result"
       title="Reading CU-Time as a model"
@@ -149,6 +151,7 @@ const pageGuideGroups = [
     class="cu-time-editorial-group"
     aria-labelledby="cu-time-method-limits-title"
   >
+    <span class="route-chapter-marker" aria-hidden="true">03</span>
     <EditorialSectionHeading
       eyebrow="Method, limits, and sources"
       title="Conversion method and boundaries"
@@ -200,14 +203,120 @@ const pageGuideGroups = [
     scroll-margin-top: var(--space-6);
   }
 
+  :global(.content-page-layout__content) {
+    background:
+      radial-gradient(circle at 92% 10%, rgb(81 201 226 / 7%), transparent 24rem),
+      radial-gradient(circle at 8% 54%, rgb(230 194 111 / 5%), transparent 28rem);
+  }
+
+  .route-chapter-marker {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    gap: var(--space-3);
+    color: var(--color-amber);
+    font-family: var(--font-family-serif);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    line-height: 1;
+  }
+
+  .route-chapter-marker::after {
+    width: clamp(3rem, 10vw, 7rem);
+    height: 1px;
+    background: linear-gradient(90deg, var(--color-cyan), transparent);
+    content: '';
+  }
+
+  :global(#cu-time-converter-feature.full-width-feature-panel) {
+    position: relative;
+    border-block: 1px solid var(--color-border-feature);
+    background:
+      linear-gradient(135deg, rgb(81 201 226 / 8%), transparent 42%),
+      linear-gradient(315deg, rgb(230 194 111 / 6%), transparent 38%),
+      var(--color-panel-feature);
+    box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 24%);
+  }
+
+  :global(#cu-time-converter-feature.full-width-feature-panel::before) {
+    position: absolute;
+    top: 0;
+    right: clamp(var(--space-4), 6vw, var(--space-12));
+    left: clamp(var(--space-4), 6vw, var(--space-12));
+    height: 0.1875rem;
+    background: linear-gradient(90deg, var(--color-cyan), transparent 68%);
+    content: '';
+  }
+
+  :global(#cu-time-converter-feature .route-chapter-marker) {
+    margin: 0 auto var(--space-6);
+  }
+
+  :global(#cu-time-converter-feature .cu-time-converter) {
+    border-color: var(--color-border-feature);
+    background:
+      linear-gradient(145deg, rgb(10 35 62 / 92%), rgb(6 18 38 / 96%));
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 5%),
+      0 1rem 2.5rem rgb(0 0 0 / 22%);
+  }
+
+  :global(#cu-time-converter-feature .cu-time-direction) {
+    border-top: 0.1875rem solid var(--color-cyan);
+    background:
+      linear-gradient(160deg, rgb(81 201 226 / 6%), transparent 46%),
+      var(--color-panel-quiet);
+  }
+
+  :global(#cu-time-converter-feature .cu-time-direction:nth-of-type(even)) {
+    border-top-color: var(--color-amber);
+    background:
+      linear-gradient(160deg, rgb(230 194 111 / 6%), transparent 46%),
+      var(--color-panel-quiet);
+  }
+
+  :global(#cu-time-converter-feature .cu-time-results) {
+    padding: clamp(var(--space-4), 3vw, var(--space-6));
+    border: 1px solid var(--color-border-feature);
+    background:
+      linear-gradient(145deg, rgb(81 201 226 / 7%), transparent 44%),
+      rgb(6 18 38 / 72%);
+  }
+
   .cu-time-editorial-group {
+    position: relative;
     display: grid;
-    width: min(100%, var(--measure-readable));
+    width: 100%;
+    box-sizing: border-box;
     margin-top: var(--space-editorial-section);
-    padding-top: var(--space-8);
+    padding: clamp(var(--space-6), 5vw, var(--space-10));
     gap: clamp(var(--space-8), 6vw, var(--space-12));
-    border-top: 1px solid var(--color-border-section);
+    border: 1px solid var(--color-border-section);
+    background:
+      linear-gradient(135deg, rgb(81 201 226 / 5%), transparent 36%),
+      var(--color-panel-quiet);
     scroll-margin-top: var(--space-6);
+  }
+
+  .cu-time-editorial-group:nth-of-type(even) {
+    background:
+      linear-gradient(135deg, rgb(230 194 111 / 5%), transparent 36%),
+      var(--color-panel-quiet);
+  }
+
+  .cu-time-editorial-group::before {
+    position: absolute;
+    top: -1px;
+    left: clamp(var(--space-6), 5vw, var(--space-10));
+    width: clamp(5rem, 18vw, 10rem);
+    height: 0.1875rem;
+    background: var(--color-cyan);
+    content: '';
+  }
+
+  .cu-time-editorial-group:nth-of-type(even)::before {
+    background: var(--color-amber);
   }
 
   :global(.content-page-layout__content > .epistemic-callout) {
@@ -215,9 +324,17 @@ const pageGuideGroups = [
   }
 
   @media (max-width: 36rem) {
+    .route-chapter-marker::after {
+      width: 2.5rem;
+    }
+
     .cu-time-editorial-group {
-      padding-top: var(--space-6);
+      padding: var(--space-5);
       gap: var(--space-8);
+    }
+
+    :global(#cu-time-converter-feature .cu-time-results) {
+      padding: var(--space-4);
     }
   }
 </style>

@@ -20,9 +20,9 @@ const protectedDigests = new Map([
   ['../../../pages/index.astro', 'f78dc57be535dd5bd83eac1aaa98d8882d7b8d04f5df5a304435ce6e6b60fcff'],
   ['../../../pages/framework.astro', '16fcffe3ce0fb7632756626221d3a8a984f85e28c61df717aec3f850dbf3e8ac'],
   ['../../../pages/cosmic-breath.astro', 'a79e79bdcc3fff0c243c230592c9d198f4aa684ec6e1295c07b2bfe4ceeba28a'],
-  ['../../../pages/cu-time.astro', '72180f351cf051066b96a771e7a542364a2858cf64c76afd629e65086cc800ee'],
-  ['../../../pages/cu-intelligence.astro', '26acbe37fb1a64d0bb44ce3c67b9f108d814ee66e50f9967b770bb972b6e49df'],
-  ['../../../pages/research/index.astro', 'ecff1649b871789bf98ae7093482db989051a7303d1eec5abebb76d8ca53a214'],
+  ['../../../pages/cu-time.astro', 'dc557e235883cb18b33766d2d818139b58eb202fcd5d0be3daa1909bbae4c0d3'],
+  ['../../../pages/cu-intelligence.astro', '96f0de97e001c027a674148f3df1bf26ed2c03d3b1a76079719c69f00e484b89'],
+  ['../../../pages/research/index.astro', '01c875f6b5e41a9e0807ced06fa08735e8465bb1fe6f39120cd30d59c7d6d47b'],
   ['../../../pages/media.astro', '00d48d13e4f36382d57620d169b3d265fe06dc76c75d52540149e409aecf28ff'],
   ['../../../pages/about.astro', '1de1e76e3e27c940af0a09ad0923771b9b1b7b5891060ea6c02022812c27b4d5'],
 ] as const);
