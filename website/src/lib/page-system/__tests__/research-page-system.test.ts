@@ -13,6 +13,9 @@ const routeSource = readSource('../../../pages/research/index.astro');
 const componentSource = readSource(
   '../../../components/research/ResearchObservatory.astro',
 );
+const provenanceComponentSource = readSource(
+  '../../../components/research/CosmicBreathProvenance.astro',
+);
 const scriptSource = componentSource.match(
   /<script>\n([\s\S]*?)\n<\/script>/,
 )?.[1];
@@ -23,7 +26,7 @@ const countLiteralId = (source: string, id: string) =>
 const protectedDigests = new Map([
   [
     '../../../data/research/CU-RESEARCH-OBSERVATORY-1.0.json',
-    '9dfc25548d0dc7f1665d8d880b1523f04565f70e63fee2f273093036a2b8071b',
+    'a67a68ded1a9847710b9d9ce79144f9645a1f3ee1c90eee6ca7204c00b511279',
   ],
   [
     '../../research/research-observatory.ts',
@@ -35,7 +38,7 @@ const protectedDigests = new Map([
   ],
   [
     '../../research/__tests__/research-observatory-authority.test.ts',
-    'a1be27e7c35568ca3faa3e4e4974c364ed7a7df24f70d2e4736a678f3f1ebcd4',
+    '391183aa2b06a0221baffc3a5132db8d7e0e923f0c4549610a25ef2e23db8b8a',
   ],
   [
     '../../research/__tests__/research-observatory-state.test.ts',
@@ -115,6 +118,16 @@ describe('Research page-system adoption', () => {
     expect(routeSource).toContain('<EpistemicCallout');
     expect(routeSource).toContain('label="Source distinction"');
     expect(routeSource).toContain('headingLevel="h2"');
+    expect(routeSource.match(/<CosmicBreathProvenance \/>/g)).toHaveLength(1);
+    expect(
+      countLiteralId(provenanceComponentSource, 'cosmic-breath-provenance'),
+    ).toBe(1);
+    expect(provenanceComponentSource).toContain(
+      'Cosmic Breath sources and provenance',
+    );
+    expect(provenanceComponentSource).toContain(
+      'scroll-margin-top: var(--space-6)',
+    );
   });
 
   it('preserves authority counts, controls, detail templates, and live regions', () => {
@@ -223,6 +236,36 @@ describe('Research page-system adoption', () => {
     );
   });
 
+  it('keeps non-node fragments outside Observatory state synchronization', () => {
+    const historyFunction = componentSource.slice(
+      componentSource.indexOf('const syncFromLocation = () =>'),
+      componentSource.indexOf("root.addEventListener('click'"),
+    );
+    const provenanceGuard =
+      'if (!fragmentNodeId && locationHash.slice(1).trim().length > 0)';
+    const guardReturn = historyFunction.indexOf('return;');
+
+    expect(historyFunction).toContain(
+      'const locationHash = window.location.hash;',
+    );
+    expect(historyFunction).toContain(
+      'const fragmentNodeId = getFragmentNodeId(locationHash);',
+    );
+    expect(historyFunction).toContain(provenanceGuard);
+    expect(guardReturn).toBeGreaterThan(
+      historyFunction.indexOf(provenanceGuard),
+    );
+    expect(guardReturn).toBeLessThan(historyFunction.indexOf('restoreOverview()'));
+    expect(guardReturn).toBeLessThan(
+      historyFunction.indexOf('render(selectionChanged)'),
+    );
+    expect(historyFunction).toContain('? withSelection(fragmentNodeId)');
+    expect(historyFunction).toContain(': restoreOverview()');
+    expect(historyFunction).not.toMatch(
+      /scrollTo|scrollIntoView|setTimeout|\.focus\(|location\.hash\s*=|replaceState/,
+    );
+  });
+
   it('keeps all protected authority, projection, state, and test files byte-identical', () => {
     for (const [relativePath, expectedDigest] of protectedDigests) {
       expect(digest(readSource(relativePath)), relativePath).toBe(expectedDigest);
@@ -232,7 +275,7 @@ describe('Research page-system adoption', () => {
   it('keeps the embedded Observatory interaction script byte-identical', () => {
     expect(scriptSource).toBeDefined();
     expect(digest(scriptSource ?? '')).toBe(
-      '61f08a97a4633ea006e81cee56d54ef24f8a5d4ce1fa8b2c766d7ca604ac34f8',
+      '598627b067e870f949370b02cd38b02b0d705caafee9be8185b739e34a2edee6',
     );
   });
 

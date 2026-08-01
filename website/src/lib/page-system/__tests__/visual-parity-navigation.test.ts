@@ -44,7 +44,7 @@ const protectedDigests = new Map([
   ['../../../pages/cosmic-breath.astro', 'a0ed45ef3aff558f297bff50893dc1b3ca82e75cc7756b16be050bf7a2a511bc'],
   ['../../../pages/cu-time.astro', 'dc557e235883cb18b33766d2d818139b58eb202fcd5d0be3daa1909bbae4c0d3'],
   ['../../../pages/cu-intelligence.astro', '6f371ba4beffa261e5183db7795b649354760f9939da323df2f29a280fdc90c7'],
-  ['../../../pages/research/index.astro', '01c875f6b5e41a9e0807ced06fa08735e8465bb1fe6f39120cd30d59c7d6d47b'],
+  ['../../../pages/research/index.astro', '5c778a30758adb2114e020fc9db8d7dd2c2f55b98503a1ec52c86b21c87d5273'],
   ['../../../pages/media.astro', '00d48d13e4f36382d57620d169b3d265fe06dc76c75d52540149e409aecf28ff'],
   ['../../../pages/about.astro', '1de1e76e3e27c940af0a09ad0923771b9b1b7b5891060ea6c02022812c27b4d5'],
 ] as const);

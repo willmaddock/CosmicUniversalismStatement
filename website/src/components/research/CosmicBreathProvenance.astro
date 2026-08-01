@@ -1,0 +1,200 @@
+---
+import { COSMIC_BREATH_PUBLIC_SOURCE_RECORD_PROJECTION } from '../../lib/research/cosmic-breath-provenance';
+
+const values = (value: string | readonly string[]) =>
+  typeof value === 'string' ? [value] : value;
+---
+
+<section
+  id="cosmic-breath-provenance"
+  class="cosmic-breath-provenance"
+  aria-labelledby="cosmic-breath-provenance-title"
+>
+  <h3 id="cosmic-breath-provenance-title">
+    Cosmic Breath sources and provenance
+  </h3>
+
+  <ol class="cosmic-breath-provenance__records" role="list">
+    {
+      COSMIC_BREATH_PUBLIC_SOURCE_RECORD_PROJECTION.map((record) => {
+        const recordHeadingId =
+          `cosmic-breath-provenance-${record.stableSourceRecordId.toLowerCase()}-title`;
+
+        return (
+          <li data-source-record-id={record.stableSourceRecordId}>
+            <article aria-labelledby={recordHeadingId}>
+              <h4 id={recordHeadingId}>{record.publicTitle}</h4>
+              <dl>
+                <div>
+                  <dt>Record ID</dt>
+                  <dd>{record.stableSourceRecordId}</dd>
+                </div>
+                <div>
+                  <dt>Source role</dt>
+                  <dd>{record.approvedSourceRole}</dd>
+                </div>
+                <div>
+                  <dt>Approved scope</dt>
+                  <dd>
+                    <ul role="list">
+                      {values(record.approvedScope).map((value) => <li>{value}</li>)}
+                    </ul>
+                  </dd>
+                </div>
+                <div>
+                  <dt>Not established by this source</dt>
+                  <dd>
+                    <ul role="list">
+                      {values(record.explicitNonScope).map((value) => <li>{value}</li>)}
+                    </ul>
+                  </dd>
+                </div>
+                <div>
+                  <dt>Source type</dt>
+                  <dd>{record.sourceType}</dd>
+                </div>
+                {
+                  record.filenameOrExternalIdentity && (
+                    <div>
+                      <dt>Source identity</dt>
+                      <dd>{record.filenameOrExternalIdentity}</dd>
+                    </div>
+                  )
+                }
+                {
+                  record.immutableRefOrStableIdentifier && (
+                    <div>
+                      <dt>Stable reference</dt>
+                      <dd>{record.immutableRefOrStableIdentifier}</dd>
+                    </div>
+                  )
+                }
+                {
+                  record.currentnessStatement && (
+                    <div>
+                      <dt>Currentness</dt>
+                      <dd>{record.currentnessStatement}</dd>
+                    </div>
+                  )
+                }
+                {
+                  record.protectedAuthorityRelationship && (
+                    <div>
+                      <dt>Protected authority relationship</dt>
+                      <dd>{record.protectedAuthorityRelationship}</dd>
+                    </div>
+                  )
+                }
+                {
+                  record.publicProjectionRelationship && (
+                    <div>
+                      <dt>Public projection relationship</dt>
+                      <dd>{record.publicProjectionRelationship}</dd>
+                    </div>
+                  )
+                }
+                {
+                  record.originalExternalAuthority && (
+                    <div>
+                      <dt>Original external authority</dt>
+                      <dd>{record.originalExternalAuthority}</dd>
+                    </div>
+                  )
+                }
+                <div>
+                  <dt>Limitations</dt>
+                  <dd>
+                    <ul role="list">
+                      {values(record.limitations).map((value) => <li>{value}</li>)}
+                    </ul>
+                  </dd>
+                </div>
+                <div>
+                  <dt>Access state</dt>
+                  <dd>{record.accessState}</dd>
+                </div>
+                {
+                  record.licensingNotice && (
+                    <div>
+                      <dt>Licensing</dt>
+                      <dd>{record.licensingNotice}</dd>
+                    </div>
+                  )
+                }
+                <div>
+                  <dt>Epistemic label</dt>
+                  <dd>{record.epistemicLabel}</dd>
+                </div>
+              </dl>
+            </article>
+          </li>
+        );
+      })
+    }
+  </ol>
+</section>
+
+<style>
+  .cosmic-breath-provenance {
+    min-width: 0;
+    scroll-margin-top: var(--space-6);
+  }
+
+  .cosmic-breath-provenance__records {
+    display: grid;
+    margin-block: var(--space-6) 0;
+    padding-inline-start: 1.5rem;
+    gap: var(--space-6);
+  }
+
+  .cosmic-breath-provenance__records > li,
+  .cosmic-breath-provenance article,
+  .cosmic-breath-provenance dl,
+  .cosmic-breath-provenance dl > div,
+  .cosmic-breath-provenance dd {
+    min-width: 0;
+  }
+
+  .cosmic-breath-provenance article {
+    padding: var(--space-6);
+    border: 1px solid var(--color-border-quiet);
+    background: var(--color-panel-quiet);
+  }
+
+  .cosmic-breath-provenance dl {
+    display: grid;
+    margin: var(--space-5) 0 0;
+    gap: var(--space-4);
+  }
+
+  .cosmic-breath-provenance dl > div {
+    display: grid;
+    grid-template-columns: minmax(8rem, 12rem) minmax(0, 1fr);
+    gap: var(--space-2) var(--space-5);
+  }
+
+  .cosmic-breath-provenance dt {
+    color: var(--color-white-gold);
+    font-weight: 700;
+  }
+
+  .cosmic-breath-provenance dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .cosmic-breath-provenance dd ul {
+    margin: 0;
+    padding-inline-start: 1.25rem;
+  }
+
+  @media (max-width: 48rem) {
+    .cosmic-breath-provenance article {
+      padding: var(--space-5);
+    }
+
+    .cosmic-breath-provenance dl > div {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

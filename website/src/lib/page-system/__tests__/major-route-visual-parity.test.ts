@@ -125,6 +125,7 @@ const protectedGroups = {
   cosmicBreath: [
     'website/src/pages/cosmic-breath.astro',
     ...componentFiles.filter((path) =>
+      dirname(path) === 'website/src/components' &&
       relative(dirname(path), path).startsWith('CosmicBreath'),
     ),
     ...walk('website/src/data/cosmic-breath'),
@@ -172,9 +173,9 @@ const baselineGroupDigests = {
   cuTime: '4be55635476f513a3fa1b93c2111c41cfd53cd2cf3a1377fc00eacde43abc5f9',
   cucii: '4fccddc9566ec4e753060e7179472318dbfc906dd3c632cbf3f5256810f7ac86',
   research:
-    '56eb2d9d0216ecce01b0f41d7109d16b2833f75132a2e515d91b62f7e9e13e77',
+    '1dbfccabf6e1bda9513151fab4596ca736d017105b344e9da55416b7cd0f0ec6',
   existingTests:
-    '6ed26235a1477f88a79b3553cc6e3c37d1163cdf800fb723b88cc9187e2994a8',
+    '2d592f508a8aea1b1454fe16e78a86737e1bbaf1437d7f76a785b3e9469c7a8b',
 } as const;
 
 describe('major-route graphical parity', () => {
@@ -194,7 +195,7 @@ describe('major-route graphical parity', () => {
       'df41cd60fa5d27a772ca8669342563f1873b592881dd0a5ec9233c6610764fe2',
     );
     expect(digest(normalizeRouteContent(researchRoute))).toBe(
-      '55c98766e2703efd76807030f23cb05356218546e50cc3f2685c2359deca3ba9',
+      '31812a96ae67de2df79d3e51249a85b7cd7dca93b6ea0175ef55ee58c3c9dd35',
     );
   });
 
@@ -213,7 +214,7 @@ describe('major-route graphical parity', () => {
     expect(scriptBodies(researchObservatory).map(digest)).toEqual([
       'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
       'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
-      '1314ab0f21271b53fbd1197746af8b61572993b5dae68c2d15d138bdbdc797d3',
+      'e481cd8bfc6d458865cf8aa2df819f1ab5f0d785428bb1fa8b61875fe2c94225',
     ]);
   });
 

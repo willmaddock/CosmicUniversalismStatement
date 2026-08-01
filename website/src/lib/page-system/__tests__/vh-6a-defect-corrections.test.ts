@@ -46,7 +46,7 @@ describe('VH-6A confirmed defect corrections', () => {
         ['CosmicBreathEmpiricalScience.astro', '960a1bb7f3ec0e8f5bd5f58351d4b96ff4cc1b658355cdacd82b07b7ad632370'],
         ['CUTimeConverter.astro', '771db5fef68427b3c95b2f29036225f47be7e7792d5e0817f456f37639de8bef'],
         ['cu-intelligence.astro', '6f371ba4beffa261e5183db7795b649354760f9939da323df2f29a280fdc90c7'],
-        ['ResearchObservatory.astro', '63ab5bbc612f531dce320acf8e176a679c84f7b4187b75fee249c715e2ff97c1'],
+        ['ResearchObservatory.astro', '8efbf606156c8cd794e01a23ce0c7148850dc1b4f7a927b67932f86a9a251ad2'],
         ['legacy converter', 'ac5f7dbc028389281864f9d3cbe5fe9e524a5dbe9e55d56a7b9a6745d0adb344'],
       ]),
     );

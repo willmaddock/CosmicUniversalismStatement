@@ -102,10 +102,9 @@
         "label": "Explore Cosmic Breath"
       },
       "governingSourceDestination": {
-        "kind": "external",
-        "href": "https://github.com/willmaddock/CosmicUniversalismStatement/blob/main/ResearchFiles/Cosmic_Breath_Calculation.md",
-        "label": "View the Cosmic Breath source",
-        "externalLabel": "View the Cosmic Breath source on GitHub (external)"
+        "kind": "internal",
+        "path": "research#cosmic-breath-provenance",
+        "label": "Review Cosmic Breath sources and provenance"
       },
       "governance": {
         "decisionIds": [
