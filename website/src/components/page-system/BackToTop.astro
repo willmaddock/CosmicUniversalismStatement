@@ -42,6 +42,10 @@ if (!fragmentIdPattern.test(targetId) || !fragmentIdPattern.test(revealAfterId))
       const revealAfter = revealAfterId
         ? document.getElementById(revealAfterId)
         : null;
+      const mainContent = document.getElementById('main-content');
+      const reducedMotionQuery = window.matchMedia(
+        '(prefers-reduced-motion: reduce)',
+      );
 
       if (!control || !target || !revealAfter) return;
 
@@ -72,6 +76,27 @@ if (!fragmentIdPattern.test(targetId) || !fragmentIdPattern.test(revealAfterId))
         });
       };
 
+      const returnToTop = (event: Event) => {
+        event.preventDefault();
+
+        mainContent?.focus({ preventScroll: true });
+
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: reducedMotionQuery.matches ? 'auto' : 'smooth',
+        });
+
+        scheduleUpdate();
+      };
+
+      control.addEventListener('click', returnToTop);
+      control.addEventListener('keydown', (event) => {
+        if (event.key !== ' ') return;
+
+        event.preventDefault();
+        control.click();
+      });
       window.addEventListener('scroll', scheduleUpdate, { passive: true });
       window.addEventListener('resize', scheduleUpdate);
       control.addEventListener('blur', scheduleUpdate);

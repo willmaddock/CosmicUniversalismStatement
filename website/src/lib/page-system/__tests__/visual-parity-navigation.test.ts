@@ -27,7 +27,7 @@ const routeSources = {
 } as const;
 
 const protectedDigests = new Map([
-  ['../../../components/page-system/BackToTop.astro', '96b25b7b8d604658af0fd7b48c6eebf6578487ec0ea776e536f697823ac3aa69'],
+  ['../../../components/page-system/BackToTop.astro', '25a5fe8a0e32db9a79ee5b68bf5001462568137271b205ed3cbfa023faafa6cd'],
   ['../../../components/page-system/FullWidthFeaturePanel.astro', '278ec5d072f44f0aeafdd86c93f9204871f6bb97d6b1e21120e7150c51f56a7c'],
   ['../../../components/page-system/EditorialSectionHeading.astro', 'd411f8bf19241e7c8e7895cd1f66b2bb5792e3e7e091798dab7baa42790f0ab4'],
   ['../../../components/page-system/EpistemicCallout.astro', 'a2b4221d8b813d3b6247b8003b6e73e83017a0f439ca4cf0f0abcfc6a2fdc7c2'],
@@ -43,7 +43,7 @@ const protectedDigests = new Map([
   ['../../../pages/framework.astro', '16fcffe3ce0fb7632756626221d3a8a984f85e28c61df717aec3f850dbf3e8ac'],
   ['../../../pages/cosmic-breath.astro', 'a0ed45ef3aff558f297bff50893dc1b3ca82e75cc7756b16be050bf7a2a511bc'],
   ['../../../pages/cu-time.astro', 'dc557e235883cb18b33766d2d818139b58eb202fcd5d0be3daa1909bbae4c0d3'],
-  ['../../../pages/cu-intelligence.astro', '6f371ba4beffa261e5183db7795b649354760f9939da323df2f29a280fdc90c7'],
+  ['../../../pages/cu-intelligence.astro', '74470433295ab4e7082db998000e5e923f6c311e1b1c9cec1fa22c44f669570e'],
   ['../../../pages/research/index.astro', '01c875f6b5e41a9e0807ced06fa08735e8465bb1fe6f39120cd30d59c7d6d47b'],
   ['../../../pages/media.astro', '00d48d13e4f36382d57620d169b3d265fe06dc76c75d52540149e409aecf28ff'],
   ['../../../pages/about.astro', '1de1e76e3e27c940af0a09ad0923771b9b1b7b5891060ea6c02022812c27b4d5'],

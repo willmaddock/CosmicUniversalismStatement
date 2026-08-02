@@ -65,7 +65,7 @@ describe('long-page shared primitives', () => {
     expect(backToTopSource).toContain('scroll-behavior: auto');
     expect(backToTopSource).not.toContain('scrollIntoView');
     expect(backToTopSource).not.toContain('history.');
-    expect(backToTopSource).not.toContain('.focus(');
+    expect(backToTopSource).toContain("mainContent?.focus({ preventScroll: true });");
     expect(backToTopSource).not.toMatch(/CU-Time|Cosmic Breath|converter/i);
   });
 });

@@ -271,7 +271,7 @@ describe('CU Intelligence page-system adoption', () => {
   it('adds the stable Back to top target and exact Research continuation', () => {
     expect(countLiteralId(routeSource, 'cucii-page-top')).toBe(1);
     expect(routeSource).toContain('targetId="cucii-page-top"');
-    expect(routeSource).toContain('revealAfterId="prompt-studio-feature"');
+    expect(routeSource).toContain('revealAfterId="cucii-page-guide"');
     expect(routeSource).toContain('title="Continue to Research"');
     expect(routeSource).toContain(
       'description="Explore the CU Research Observatory, open questions, and governing sources"',

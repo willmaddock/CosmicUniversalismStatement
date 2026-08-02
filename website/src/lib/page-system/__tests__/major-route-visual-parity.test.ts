@@ -166,15 +166,15 @@ const protectedGroups = {
 } as const;
 
 const baselineGroupDigests = {
-  shared: '5d699f46c7409fad040c1e6dc654bfe560b58f9c51dcc28aee7f7f2df4a5b5ac',
+  shared: 'b84746777bbb340f5362cbfc3753dcbee8c9fef522d03dbec8990ef83f15e3ce',
   cosmicBreath:
     '9d34a804e22cea2e0a66f01629eefafc41941a8b944f63fd7d646bde3c13954b',
   cuTime: '4be55635476f513a3fa1b93c2111c41cfd53cd2cf3a1377fc00eacde43abc5f9',
-  cucii: '4fccddc9566ec4e753060e7179472318dbfc906dd3c632cbf3f5256810f7ac86',
+  cucii: 'f4f304e7b7936103dfd2e9ef7039be5107329637da879a21fde5d4cfa9cb4b9a',
   research:
     '56eb2d9d0216ecce01b0f41d7109d16b2833f75132a2e515d91b62f7e9e13e77',
   existingTests:
-    '6ed26235a1477f88a79b3553cc6e3c37d1163cdf800fb723b88cc9187e2994a8',
+    'dc7d2f3b39f8c26dd162654fdf08847f376183f53a2e82491ec6bf0109438afb',
 } as const;
 
 describe('major-route graphical parity', () => {
@@ -191,7 +191,7 @@ describe('major-route graphical parity', () => {
       '910c3a567f905c66768e0151b208f41b13dfad395c0c3ca64dc37474e96f3a5b',
     );
     expect(digest(normalizeRouteContent(cuIntelligenceRoute))).toBe(
-      'df41cd60fa5d27a772ca8669342563f1873b592881dd0a5ec9233c6610764fe2',
+      'c5f5f8abc332a389f1ffc3c9102b718e1971b600654f9fa49a13e9e1de19b2f8',
     );
     expect(digest(normalizeRouteContent(researchRoute))).toBe(
       '55c98766e2703efd76807030f23cb05356218546e50cc3f2685c2359deca3ba9',
@@ -324,7 +324,7 @@ describe('major-route graphical parity', () => {
     expect(
       digest(normalizeAuthorizedRouteDigests(visualParityNavigationTest)),
     ).toBe(
-      '858773deeafbae53f239d9d0a676a7be7da783399e3cb46a2c7c921ab36d7714',
+      '3cd7420da6458cc783c6ec96f6498a4b6afb4694c3461f1aae21dc9d5ca61bd4',
     );
   });
 });
