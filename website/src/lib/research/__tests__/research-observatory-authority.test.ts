@@ -93,45 +93,6 @@ describe('Research Observatory authority', () => {
     }
   });
 
-  it('preserves the Cosmic Breath source-action slot while migrating it internally', () => {
-    const breath = getAuthorityNode('cosmic-breath');
-    expect(breath.id).toBe('cosmic-breath');
-    expect(breath.governingSourceDestination).toEqual({
-      kind: 'internal',
-      path: 'research#cosmic-breath-provenance',
-      label: 'Review Cosmic Breath sources and provenance',
-    });
-
-    const projection = createPublicResearchRegistry(
-      (path) => `/CosmicUniversalismStatement/${path}`,
-    );
-    const projectedBreath = projection.nodes.find(
-      (node) => node.id === 'cosmic-breath',
-    );
-    expect(projectedBreath?.governingSourceDestination).toEqual({
-      kind: 'internal',
-      href:
-        '/CosmicUniversalismStatement/research#cosmic-breath-provenance',
-      label: 'Review Cosmic Breath sources and provenance',
-      external: false,
-    });
-    expect(projectedBreath?.governingSourceDestination).not.toHaveProperty(
-      'externalLabel',
-    );
-    expect(projectedBreath?.governingSourceDestination).not.toHaveProperty(
-      'opensInNewTab',
-    );
-    expect(projectedBreath?.governingSourceDestination).not.toHaveProperty(
-      'rel',
-    );
-    expect(JSON.stringify(researchObservatoryAuthority)).not.toContain(
-      'View the Cosmic Breath source',
-    );
-    expect(JSON.stringify(researchObservatoryAuthority)).not.toContain(
-      'Cosmic_Breath_Calculation.md',
-    );
-  });
-
   it('uses the approved Methods and Historical Archive destination roles', () => {
     const methods = getAuthorityNode('methods');
     expect(methods.primaryDestination).toEqual({

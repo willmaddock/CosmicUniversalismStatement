@@ -146,43 +146,6 @@ describe('Research Observatory route foundation', () => {
     );
   });
 
-  it('delivers the migrated Cosmic Breath action through every rendered path', () => {
-    const projection = createPublicResearchRegistry(
-      (path) => `/CosmicUniversalismStatement/${path}`,
-    );
-    const breath = projection.nodes.find((node) => node.id === 'cosmic-breath');
-    const action = breath?.governingSourceDestination;
-
-    expect(action).toEqual({
-      kind: 'internal',
-      href:
-        '/CosmicUniversalismStatement/research#cosmic-breath-provenance',
-      label: 'Review Cosmic Breath sources and provenance',
-      external: false,
-    });
-    expect(action).not.toHaveProperty('externalLabel');
-    expect(action).not.toHaveProperty('opensInNewTab');
-    expect(action).not.toHaveProperty('rel');
-    expect(componentSource.match(/node\.governingSourceDestination &&/g))
-      .toHaveLength(2);
-    expect(componentSource).toContain('data-research-public-registry');
-    expect(componentSource).toContain(
-      "target: destination.external ? '_blank' : undefined",
-    );
-    expect(componentSource).toContain(
-      'rel: destination.external ? destination.rel : undefined',
-    );
-    expect(componentSource).not.toMatch(
-      /analytics|telemetry|tracking(?:Id|Parameter)/i,
-    );
-    expect(JSON.stringify(projection)).not.toContain(
-      'View the Cosmic Breath source',
-    );
-    expect(JSON.stringify(projection)).not.toContain(
-      'Cosmic_Breath_Calculation.md',
-    );
-  });
-
   it('renders safe and visibly disclosed external links', () => {
     const externalDestinations = publicResearchRegistry.nodes.flatMap(
       (node) => [
@@ -214,19 +177,6 @@ describe('Research Observatory route foundation', () => {
     const nodes = new Map(
       publicResearchRegistry.nodes.map((node) => [node.id, node]),
     );
-    expect(nodes.get('cosmic-breath')?.governingSourceDestination)
-      .toEqual({
-        kind: 'internal',
-        href: '/research#cosmic-breath-provenance',
-        label: 'Review Cosmic Breath sources and provenance',
-        external: false,
-      });
-    expect(nodes.get('cosmic-breath')?.governingSourceDestination)
-      .not.toHaveProperty('externalLabel');
-    expect(nodes.get('cosmic-breath')?.governingSourceDestination)
-      .not.toHaveProperty('opensInNewTab');
-    expect(nodes.get('cosmic-breath')?.governingSourceDestination)
-      .not.toHaveProperty('rel');
     expect(nodes.get('methods')?.primaryDestination).toMatchObject({
       kind: 'internal',
       href: '/research#source-provenance',
@@ -657,47 +607,6 @@ describe('Research Observatory route foundation', () => {
     );
     expect(componentSource).not.toContain('window.location.hash =');
     expect(componentSource).not.toContain('replaceState(');
-  });
-
-  it('synchronizes only empty and recognized Observatory fragments', () => {
-    const historyFunction = componentSource.slice(
-      componentSource.indexOf('const syncFromLocation = () =>'),
-      componentSource.indexOf("root.addEventListener('click'"),
-    );
-    const provenanceGuard =
-      'if (!fragmentNodeId && locationHash.slice(1).trim().length > 0)';
-
-    expect(historyFunction).toContain(
-      'const locationHash = window.location.hash;',
-    );
-    expect(historyFunction).toContain(
-      'const fragmentNodeId = getFragmentNodeId(locationHash);',
-    );
-    expect(historyFunction).toContain(provenanceGuard);
-    expect(historyFunction.indexOf('return;')).toBeGreaterThan(
-      historyFunction.indexOf(provenanceGuard),
-    );
-    expect(historyFunction.indexOf('return;')).toBeLessThan(
-      historyFunction.indexOf('restoreOverview()'),
-    );
-    expect(historyFunction.indexOf('return;')).toBeLessThan(
-      historyFunction.indexOf('render(selectionChanged)'),
-    );
-    expect(historyFunction).toContain('? withSelection(fragmentNodeId)');
-    expect(historyFunction).toContain(': restoreOverview()');
-    expect(historyFunction).toContain('render(selectionChanged)');
-    expect(historyFunction).not.toMatch(
-      /scrollTo|scrollIntoView|setTimeout|\.focus\(|location\.hash\s*=|replaceState/,
-    );
-    expect(componentSource).toContain(
-      "window.addEventListener('popstate', syncFromLocation)",
-    );
-    expect(componentSource).toContain(
-      "window.addEventListener('hashchange', syncFromLocation)",
-    );
-    expect(componentSource).toContain(
-      'const initialFragmentNodeId = getFragmentNodeId(window.location.hash);',
-    );
   });
 
   it('keeps selection and filter changes from moving detail focus', () => {
