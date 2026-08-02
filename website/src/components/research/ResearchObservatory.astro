@@ -1016,7 +1016,11 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
     };
 
     const syncFromLocation = () => {
-      const fragmentNodeId = getFragmentNodeId(window.location.hash);
+      const locationHash = window.location.hash;
+      const fragmentNodeId = getFragmentNodeId(locationHash);
+      if (!fragmentNodeId && locationHash.slice(1).trim().length > 0) {
+        return;
+      }
       const nextState = fragmentNodeId
         ? withSelection(fragmentNodeId)
         : restoreOverview();

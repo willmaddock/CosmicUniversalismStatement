@@ -168,13 +168,13 @@ const protectedGroups = {
 const baselineGroupDigests = {
   shared: 'b84746777bbb340f5362cbfc3753dcbee8c9fef522d03dbec8990ef83f15e3ce',
   cosmicBreath:
-    '9d34a804e22cea2e0a66f01629eefafc41941a8b944f63fd7d646bde3c13954b',
+    '1329151a2cec20879ff2e90b73935e5254a3f97293909ea5e0512d058774f182',
   cuTime: '4be55635476f513a3fa1b93c2111c41cfd53cd2cf3a1377fc00eacde43abc5f9',
   cucii: 'f4f304e7b7936103dfd2e9ef7039be5107329637da879a21fde5d4cfa9cb4b9a',
   research:
-    '56eb2d9d0216ecce01b0f41d7109d16b2833f75132a2e515d91b62f7e9e13e77',
+    '2da4f297947f5ed22174ad8f0f00e23e9fd66707c76226a6ed7527acb2981bf2',
   existingTests:
-    'dc7d2f3b39f8c26dd162654fdf08847f376183f53a2e82491ec6bf0109438afb',
+    '90dc134a11e6cf4c3eb018c19747b01bd3165b783164b204556fc61bfcf3cafd',
 } as const;
 
 describe('major-route graphical parity', () => {
@@ -194,7 +194,7 @@ describe('major-route graphical parity', () => {
       'c5f5f8abc332a389f1ffc3c9102b718e1971b600654f9fa49a13e9e1de19b2f8',
     );
     expect(digest(normalizeRouteContent(researchRoute))).toBe(
-      '55c98766e2703efd76807030f23cb05356218546e50cc3f2685c2359deca3ba9',
+      '31812a96ae67de2df79d3e51249a85b7cd7dca93b6ea0175ef55ee58c3c9dd35',
     );
   });
 
@@ -213,7 +213,7 @@ describe('major-route graphical parity', () => {
     expect(scriptBodies(researchObservatory).map(digest)).toEqual([
       'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
       'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
-      '1314ab0f21271b53fbd1197746af8b61572993b5dae68c2d15d138bdbdc797d3',
+      'e481cd8bfc6d458865cf8aa2df819f1ab5f0d785428bb1fa8b61875fe2c94225',
     ]);
   });
 
