@@ -1,0 +1,697 @@
+---
+import { COSMIC_BREATH_PUBLIC_SOURCE_RECORD_PROJECTION } from '../../lib/research/cosmic-breath-provenance';
+
+const values = (value: string | readonly string[]) =>
+  typeof value === 'string' ? [value] : value;
+---
+
+<section
+  id="cosmic-breath-provenance"
+  class="cosmic-breath-provenance"
+  aria-labelledby="cosmic-breath-provenance-title"
+  data-cosmic-breath-provenance
+>
+  <header class="cosmic-breath-provenance__header">
+    <div>
+      <p class="cosmic-breath-provenance__eyebrow">Governed source registry</p>
+      <h3 id="cosmic-breath-provenance-title">
+        Cosmic Breath sources and provenance
+      </h3>
+      <p>
+        Public-facing source records governed within the Cosmic Universalism
+        project and used by the Cosmic Breath research area.
+      </p>
+    </div>
+
+    <p class="cosmic-breath-provenance__count">
+      <strong>{COSMIC_BREATH_PUBLIC_SOURCE_RECORD_PROJECTION.length}</strong>
+      published source records
+    </p>
+  </header>
+
+  <p class="cosmic-breath-provenance__governance-note">
+    Governed and published through the Cosmic Universalism project. This
+    status does not represent external scientific, academic, or governmental
+    endorsement.
+  </p>
+
+  <div
+    class="cosmic-breath-provenance__scope-controls"
+    data-provenance-scope-controls
+    hidden
+  >
+    <div
+      class="cosmic-breath-provenance__scope-buttons"
+      role="group"
+      aria-label="Sources shown"
+    >
+      <span>Sources shown</span>
+      <button
+        type="button"
+        data-provenance-scope="selected"
+        aria-pressed="false"
+      >
+        Selected research area
+      </button>
+      <button
+        type="button"
+        data-provenance-scope="all"
+        aria-pressed="true"
+      >
+        All available sources
+      </button>
+    </div>
+
+    <p
+      class="cosmic-breath-provenance__scope-status"
+      data-provenance-scope-status
+      aria-live="polite"
+    >
+      Showing all currently published source records.
+    </p>
+  </div>
+
+  <div
+    class="cosmic-breath-provenance__empty-state"
+    data-provenance-empty-state
+    hidden
+  >
+    <h4 data-provenance-empty-title>
+      Select a research area
+    </h4>
+    <p data-provenance-empty-description>
+      Select a research area in the Observatory to view its mapped public
+      source records. Choose “All available sources” to browse the complete
+      currently published registry.
+    </p>
+  </div>
+
+  <div class="cosmic-breath-provenance__table-heading" aria-hidden="true">
+    <span>Record</span>
+    <span>Source role</span>
+    <span>Scope and identity</span>
+  </div>
+
+  <ol class="cosmic-breath-provenance__records" role="list">
+    {
+      COSMIC_BREATH_PUBLIC_SOURCE_RECORD_PROJECTION.map((record) => {
+        const recordHeadingId =
+          `cosmic-breath-provenance-${record.stableSourceRecordId.toLowerCase()}-title`;
+        const recordDetailId =
+          `cosmic-breath-provenance-${record.stableSourceRecordId.toLowerCase()}-details`;
+
+        return (
+          <li data-source-record-id={record.stableSourceRecordId}>
+            <article aria-labelledby={recordHeadingId}>
+              <div class="cosmic-breath-provenance__summary">
+                <div class="cosmic-breath-provenance__identity">
+                  <span class="cosmic-breath-provenance__record-label">
+                    Record ID
+                  </span>
+                  <strong>{record.stableSourceRecordId}</strong>
+                </div>
+
+                <div class="cosmic-breath-provenance__role">
+                  <span class="cosmic-breath-provenance__mobile-label">
+                    Source role
+                  </span>
+                  <span>{record.approvedSourceRole}</span>
+                </div>
+
+                <div class="cosmic-breath-provenance__scope">
+                  <h4 id={recordHeadingId}>{record.publicTitle}</h4>
+
+                  <p>
+                    <strong>Approved scope:</strong>{' '}
+                    {values(record.approvedScope).join('; ')}
+                  </p>
+
+                  {
+                    record.filenameOrExternalIdentity && (
+                      <p class="cosmic-breath-provenance__source-identity">
+                        <strong>Source identity:</strong>{' '}
+                        <span>{record.filenameOrExternalIdentity}</span>
+                      </p>
+                    )
+                  }
+                </div>
+
+              </div>
+
+              <details
+                id={recordDetailId}
+                class="cosmic-breath-provenance__technical"
+              >
+                <summary>
+                  View technical provenance
+                  <span class="cosmic-breath-provenance__summary-id">
+                    {record.stableSourceRecordId}
+                  </span>
+                </summary>
+
+                <dl>
+                  <div>
+                    <dt>Record ID</dt>
+                    <dd>{record.stableSourceRecordId}</dd>
+                  </div>
+
+                  <div>
+                    <dt>Source role</dt>
+                    <dd>{record.approvedSourceRole}</dd>
+                  </div>
+
+                  <div>
+                    <dt>Approved scope</dt>
+                    <dd>
+                      <ul role="list">
+                        {values(record.approvedScope).map((value) => (
+                          <li>{value}</li>
+                        ))}
+                      </ul>
+                    </dd>
+                  </div>
+
+                  <div>
+                    <dt>Not established by this source</dt>
+                    <dd>
+                      <ul role="list">
+                        {values(record.explicitNonScope).map((value) => (
+                          <li>{value}</li>
+                        ))}
+                      </ul>
+                    </dd>
+                  </div>
+
+                  <div>
+                    <dt>Source type</dt>
+                    <dd>{record.sourceType}</dd>
+                  </div>
+
+                  {
+                    record.filenameOrExternalIdentity && (
+                      <div>
+                        <dt>Source identity</dt>
+                        <dd>{record.filenameOrExternalIdentity}</dd>
+                      </div>
+                    )
+                  }
+
+                  {
+                    record.immutableRefOrStableIdentifier && (
+                      <div>
+                        <dt>Stable reference</dt>
+                        <dd>{record.immutableRefOrStableIdentifier}</dd>
+                      </div>
+                    )
+                  }
+
+                  {
+                    record.currentnessStatement && (
+                      <div>
+                        <dt>Currentness</dt>
+                        <dd>{record.currentnessStatement}</dd>
+                      </div>
+                    )
+                  }
+
+                  {
+                    record.protectedAuthorityRelationship && (
+                      <div>
+                        <dt>Protected authority relationship</dt>
+                        <dd>{record.protectedAuthorityRelationship}</dd>
+                      </div>
+                    )
+                  }
+
+                  {
+                    record.publicProjectionRelationship && (
+                      <div>
+                        <dt>Public projection relationship</dt>
+                        <dd>{record.publicProjectionRelationship}</dd>
+                      </div>
+                    )
+                  }
+
+                  {
+                    record.originalExternalAuthority && (
+                      <div>
+                        <dt>Original external authority</dt>
+                        <dd>{record.originalExternalAuthority}</dd>
+                      </div>
+                    )
+                  }
+
+                  <div>
+                    <dt>Limitations</dt>
+                    <dd>
+                      <ul role="list">
+                        {values(record.limitations).map((value) => (
+                          <li>{value}</li>
+                        ))}
+                      </ul>
+                    </dd>
+                  </div>
+
+                  <div>
+                    <dt>Access state</dt>
+                    <dd>{record.accessState}</dd>
+                  </div>
+
+                  {
+                    record.licensingNotice && (
+                      <div>
+                        <dt>Licensing</dt>
+                        <dd>{record.licensingNotice}</dd>
+                      </div>
+                    )
+                  }
+
+                  <div>
+                    <dt>Epistemic label</dt>
+                    <dd>{record.epistemicLabel}</dd>
+                  </div>
+                </dl>
+              </details>
+            </article>
+          </li>
+        );
+      })
+    }
+  </ol>
+</section>
+
+<style>
+  .cosmic-breath-provenance {
+    min-width: 0;
+    scroll-margin-top: var(--space-6);
+  }
+
+  .cosmic-breath-provenance [hidden] {
+    display: none !important;
+  }
+
+  .cosmic-breath-provenance__header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-6);
+    align-items: end;
+  }
+
+  .cosmic-breath-provenance__eyebrow {
+    margin: 0;
+    color: var(--color-cyan);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .cosmic-breath-provenance__header h3 {
+    margin: var(--space-2) 0 0;
+    color: var(--color-white-gold);
+  }
+
+  .cosmic-breath-provenance__header > div > p:last-child {
+    max-width: var(--measure-readable);
+    margin: var(--space-3) 0 0;
+    color: var(--color-text-muted);
+  }
+
+  .cosmic-breath-provenance__count {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    text-align: right;
+  }
+
+  .cosmic-breath-provenance__governance-note {
+    max-width: var(--measure-readable);
+    margin: var(--space-4) 0 0;
+    padding-inline-start: var(--space-3);
+    border-inline-start: 0.1875rem solid var(--color-border-feature);
+    color: var(--color-text-muted);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+  }
+
+  .cosmic-breath-provenance__count strong {
+    display: block;
+    color: var(--color-cyan);
+    font-size: 1.5rem;
+  }
+
+  .cosmic-breath-provenance__scope-controls {
+    display: grid;
+    margin-top: var(--space-6);
+    padding: var(--space-4);
+    border: 1px solid var(--color-border-feature);
+    background: var(--color-panel-quiet);
+    gap: var(--space-3);
+  }
+
+  .cosmic-breath-provenance__scope-buttons {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .cosmic-breath-provenance__scope-buttons > span {
+    margin-right: var(--space-2);
+    color: var(--color-amber);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .cosmic-breath-provenance__scope-buttons button {
+    min-height: 2.75rem;
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid var(--color-border-quiet);
+    background: var(--color-background);
+    color: var(--color-white-gold);
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  .cosmic-breath-provenance__scope-buttons button[aria-pressed='true'] {
+    border-color: var(--color-cyan);
+    background: var(--color-panel-feature);
+    color: var(--color-cyan);
+    box-shadow: inset 0 -0.1875rem 0 var(--color-cyan);
+  }
+
+  .cosmic-breath-provenance__scope-status {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+
+  .cosmic-breath-provenance__empty-state {
+    margin-top: var(--space-6);
+    padding: var(--space-6);
+    border: 1px solid var(--color-border-quiet);
+    border-left: 0.25rem solid var(--color-amber);
+    background: var(--color-panel-quiet);
+  }
+
+  .cosmic-breath-provenance__empty-state h4,
+  .cosmic-breath-provenance__empty-state p {
+    margin: 0;
+  }
+
+  .cosmic-breath-provenance__empty-state p {
+    margin-top: var(--space-3);
+    color: var(--color-text-muted);
+  }
+
+  .cosmic-breath-provenance__table-heading,
+  .cosmic-breath-provenance__summary {
+    display: grid;
+    grid-template-columns:
+      minmax(7rem, 0.55fr)
+      minmax(10rem, 0.85fr)
+      minmax(0, 2.6fr);
+    gap: var(--space-4);
+  }
+
+  .cosmic-breath-provenance__table-heading {
+    margin-top: var(--space-6);
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-border-quiet);
+    background: var(--color-background);
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .cosmic-breath-provenance__records {
+    display: grid;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    gap: var(--space-3);
+    list-style: none;
+  }
+
+  .cosmic-breath-provenance__records > li,
+  .cosmic-breath-provenance article,
+  .cosmic-breath-provenance__summary {
+    width: 100%;
+    box-sizing: border-box;
+    justify-self: stretch;
+  }
+
+  .cosmic-breath-provenance__records > li {
+    max-width: none;
+  }
+
+  .cosmic-breath-provenance__records > li,
+  .cosmic-breath-provenance article,
+  .cosmic-breath-provenance dl,
+  .cosmic-breath-provenance dl > div,
+  .cosmic-breath-provenance dd {
+    min-width: 0;
+  }
+
+  .cosmic-breath-provenance article {
+    border: 1px solid var(--color-border-quiet);
+    background:
+      linear-gradient(
+        145deg,
+        var(--color-panel-feature),
+        var(--color-panel-quiet)
+      );
+  }
+
+  .cosmic-breath-provenance__summary {
+    padding: var(--space-4);
+    align-items: start;
+  }
+
+  .cosmic-breath-provenance__identity,
+  .cosmic-breath-provenance__role {
+    min-width: 0;
+  }
+
+  .cosmic-breath-provenance__record-label,
+  .cosmic-breath-provenance__mobile-label {
+    display: none;
+    color: var(--color-text-muted);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .cosmic-breath-provenance__identity strong {
+    color: var(--color-amber);
+    font-size: 1.125rem;
+  }
+
+  .cosmic-breath-provenance__role {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+
+  .cosmic-breath-provenance__scope {
+    min-width: 0;
+  }
+
+  .cosmic-breath-provenance__scope h4 {
+    margin: 0;
+    color: var(--color-white-gold);
+    font-size: 1rem;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  .cosmic-breath-provenance__scope p {
+    margin: var(--space-2) 0 0;
+    color: var(--color-text-muted);
+    font-size: 0.8125rem;
+  }
+
+  .cosmic-breath-provenance__scope strong {
+    color: var(--color-white-gold);
+  }
+
+  .cosmic-breath-provenance__source-identity span {
+    overflow-wrap: anywhere;
+  }
+
+  .cosmic-breath-provenance__technical {
+    border-top: 1px solid var(--color-border-quiet);
+  }
+
+  .cosmic-breath-provenance__technical summary {
+    display: flex;
+    min-height: 2.75rem;
+    padding: var(--space-3) var(--space-4);
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    color: var(--color-cyan);
+    cursor: pointer;
+    font-size: 0.8125rem;
+    font-weight: 700;
+  }
+
+  .cosmic-breath-provenance__technical summary:hover,
+  .cosmic-breath-provenance__technical summary:focus-visible {
+    background: rgb(255 255 255 / 4%);
+  }
+
+  .cosmic-breath-provenance__summary-id {
+    color: var(--color-text-muted);
+    font-weight: 400;
+  }
+
+  .cosmic-breath-provenance dl {
+    display: grid;
+    margin: 0;
+    padding: var(--space-5);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4) var(--space-6);
+    border-top: 1px solid var(--color-border-quiet);
+    background: var(--color-background);
+  }
+
+  .cosmic-breath-provenance dl > div {
+    display: grid;
+    grid-template-columns: minmax(8rem, 12rem) minmax(0, 1fr);
+    gap: var(--space-2) var(--space-4);
+  }
+
+  .cosmic-breath-provenance dt {
+    color: var(--color-white-gold);
+    font-weight: 700;
+  }
+
+  .cosmic-breath-provenance dd {
+    margin: 0;
+    color: var(--color-text-muted);
+    overflow-wrap: anywhere;
+  }
+
+  .cosmic-breath-provenance dd ul {
+    margin: 0;
+    padding-inline-start: 1.25rem;
+  }
+
+  @media (max-width: 64rem) {
+    .cosmic-breath-provenance__table-heading {
+      display: none;
+    }
+
+    .cosmic-breath-provenance__records {
+      margin-top: var(--space-6);
+    }
+
+    .cosmic-breath-provenance__summary {
+      grid-template-columns:
+        minmax(6.5rem, 0.55fr)
+        minmax(9rem, 0.85fr)
+        minmax(0, 2.4fr);
+      align-items: start;
+    }
+
+    .cosmic-breath-provenance__record-label,
+    .cosmic-breath-provenance__mobile-label {
+      display: block;
+      margin-bottom: var(--space-1);
+    }
+
+    .cosmic-breath-provenance dl {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (max-width: 48rem) {
+    .cosmic-breath-provenance__header {
+      grid-template-columns: minmax(0, 1fr);
+      align-items: start;
+    }
+
+    .cosmic-breath-provenance__count {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-2);
+      text-align: left;
+    }
+
+    .cosmic-breath-provenance__count strong {
+      display: inline;
+      font-size: 1.25rem;
+    }
+
+    .cosmic-breath-provenance__summary {
+      padding: var(--space-4);
+      grid-template-columns:
+        minmax(6.5rem, auto)
+        minmax(0, 1fr);
+      gap: var(--space-3) var(--space-4);
+    }
+
+    .cosmic-breath-provenance__identity {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .cosmic-breath-provenance__scope {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+    }
+
+    .cosmic-breath-provenance__role {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+
+    .cosmic-breath-provenance__scope p {
+      display: none;
+    }
+
+    .cosmic-breath-provenance__technical summary {
+      padding-block: var(--space-3);
+    }
+
+    .cosmic-breath-provenance dl {
+      padding: var(--space-4);
+    }
+
+    .cosmic-breath-provenance dl > div {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (max-width: 36rem) {
+    .cosmic-breath-provenance__summary {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .cosmic-breath-provenance__identity,
+    .cosmic-breath-provenance__scope,
+    .cosmic-breath-provenance__role {
+      grid-column: 1;
+      grid-row: auto;
+    }
+
+    .cosmic-breath-provenance__role {
+      display: grid;
+      grid-template-columns: minmax(5.5rem, auto) minmax(0, 1fr);
+      gap: var(--space-3);
+      align-items: baseline;
+    }
+
+    .cosmic-breath-provenance__technical summary {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+  }
+</style>

@@ -1,6 +1,7 @@
 ---
 import ClassificationBadge from '../ClassificationBadge.astro';
 import ResearchStatusBadge from '../ResearchStatusBadge.astro';
+import ResearchRelationshipMatrix from './ResearchRelationshipMatrix.astro';
 import {
   publicResearchRegistry,
   serializePublicResearchRegistry,
@@ -341,9 +342,8 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
       neutral overview.
     </p>
     <p class="research-observatory__structured-map-note">
-      On smaller screens, Map uses a structured layout instead of the desktop
-      relationship geometry. All research areas remain available, and the selected
-      panel preserves relationship details.
+      On this screen, the map uses a structured layout. All research areas and
+      relationship details remain available.
     </p>
 
     <div
@@ -460,6 +460,8 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
       </p>
     </aside>
   </section>
+
+  <ResearchRelationshipMatrix />
 
   <div class="research-observatory__collections" data-cards-panel>
     {
@@ -654,24 +656,42 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
                 </li>
               )}
             </ul>
-            <section class="research-observatory__relationships">
-              <h4>Approved relationships</h4>
+            <section
+              class="research-observatory__relationship-summary"
+              aria-labelledby={`${node.id}-relationship-summary-title`}
+            >
+              <header>
+                <h4 id={`${node.id}-relationship-summary-title`}>
+                  Approved relationships
+                </h4>
+                <p>Derived from the governed relationship matrix.</p>
+              </header>
+
               {relationships.length > 0 ? (
-                <ul>
+                <ul role="list">
                   {relationships.map((relationship) => {
                     const relatedId =
                       relationship.sourceId === node.id
                         ? relationship.targetId
                         : relationship.sourceId;
                     const relatedNode = nodeById.get(relatedId);
+
                     return (
                       <li>
-                        <strong>
+                        <span class="research-observatory__relationship-name">
                           {relatedNode?.title ?? relatedId}
-                          {' — '}
+                        </span>
+                        <span
+                          class:list={[
+                            'research-observatory__relationship-kind',
+                            `research-observatory__relationship-kind--${relationship.kind}`,
+                          ]}
+                        >
                           {relationshipKindLabel(relationship.kind)}
-                        </strong>
-                        <span>{relationship.publicExplanation}</span>
+                        </span>
+                        <span class="research-observatory__relationship-explanation">
+                          {relationship.publicExplanation}
+                        </span>
                       </li>
                     );
                   })}
@@ -748,6 +768,47 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
     const relationshipElements = Array.from(
       root.querySelectorAll<SVGPathElement>('[data-relationship-source]'),
     );
+    const matrixRows = Array.from(
+      root.querySelectorAll<HTMLElement>('[data-matrix-row-id]'),
+    );
+    const matrixColumns = Array.from(
+      root.querySelectorAll<HTMLElement>('[data-matrix-column-id]'),
+    );
+    const matrixCells = Array.from(
+      root.querySelectorAll<HTMLElement>('[data-matrix-cell]'),
+    );
+    const provenanceRoot = document.querySelector<HTMLElement>(
+      '[data-cosmic-breath-provenance]',
+    );
+    const provenanceControls = provenanceRoot?.querySelector<HTMLElement>(
+      '[data-provenance-scope-controls]',
+    ) ?? null;
+    const provenanceStatus = provenanceRoot?.querySelector<HTMLElement>(
+      '[data-provenance-scope-status]',
+    ) ?? null;
+    const provenanceRecords = provenanceRoot?.querySelector<HTMLElement>(
+      '.cosmic-breath-provenance__records',
+    ) ?? null;
+    const provenanceTableHeading = provenanceRoot?.querySelector<HTMLElement>(
+      '.cosmic-breath-provenance__table-heading',
+    ) ?? null;
+    const provenanceEmptyState = provenanceRoot?.querySelector<HTMLElement>(
+      '[data-provenance-empty-state]',
+    ) ?? null;
+    const provenanceEmptyTitle = provenanceRoot?.querySelector<HTMLElement>(
+      '[data-provenance-empty-title]',
+    ) ?? null;
+    const provenanceEmptyDescription =
+      provenanceRoot?.querySelector<HTMLElement>(
+        '[data-provenance-empty-description]',
+      ) ?? null;
+    const provenanceScopeButtons = provenanceRoot
+      ? Array.from(
+          provenanceRoot.querySelectorAll<HTMLButtonElement>(
+            '[data-provenance-scope]',
+          ),
+        )
+      : [];
 
     if (
       !registryElement
@@ -798,6 +859,7 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
     let activeView = window.matchMedia('(max-width: 48rem)').matches
       ? 'cards'
       : 'map';
+    let activeProvenanceScope: 'selected' | 'all' = 'selected';
 
     const getFragmentNodeId = (value: string): string | null => {
       const hashIndex = value.lastIndexOf('#');
@@ -844,6 +906,70 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
       if (outsideNotice) {
         outsideNotice.hidden = !state.selectedOutsideFilter;
       }
+    };
+
+    const renderProvenance = () => {
+      if (
+        !provenanceControls
+        || !provenanceStatus
+        || !provenanceRecords
+        || !provenanceTableHeading
+        || !provenanceEmptyState
+        || !provenanceEmptyTitle
+        || !provenanceEmptyDescription
+        || provenanceScopeButtons.length !== 2
+      ) {
+        return;
+      }
+
+      const hasResearchSelection =
+        state.selectedNodeId !== registry.overviewNodeId;
+      const selectedHasPublishedSources =
+        state.selectedNodeId === 'cosmic-breath';
+      const showRecords =
+        activeProvenanceScope === 'all'
+        || selectedHasPublishedSources;
+
+      provenanceRecords.hidden = !showRecords;
+      provenanceTableHeading.hidden = !showRecords;
+      provenanceEmptyState.hidden = showRecords;
+
+      provenanceScopeButtons.forEach((button) => {
+        button.setAttribute(
+          'aria-pressed',
+          String(
+            button.dataset.provenanceScope === activeProvenanceScope
+          ),
+        );
+      });
+
+      if (activeProvenanceScope === 'all') {
+        provenanceStatus.textContent =
+          'Showing all currently published source records.';
+      } else if (selectedHasPublishedSources) {
+        provenanceStatus.textContent =
+          'Showing public source records mapped to Cosmic Breath.';
+      } else if (hasResearchSelection) {
+        const selectedNode = nodes.get(state.selectedNodeId);
+        const selectedTitle =
+          selectedNode?.title ?? 'the selected research area';
+
+        provenanceStatus.textContent =
+          `No published source mapping currently exists for ${selectedTitle}.`;
+        provenanceEmptyTitle.textContent =
+          `No mapped public sources for ${selectedTitle}`;
+        provenanceEmptyDescription.textContent =
+          'No public source records are currently mapped to this research area. Choose “All available sources” to browse the complete currently published registry.';
+      } else {
+        provenanceStatus.textContent =
+          'Select a research area to view its mapped public sources.';
+        provenanceEmptyTitle.textContent =
+          'Select a research area';
+        provenanceEmptyDescription.textContent =
+          'Select a research area in the Observatory to view its mapped public source records. Choose “All available sources” to browse the complete currently published registry.';
+      }
+
+      provenanceControls.hidden = false;
     };
 
     const render = (
@@ -910,6 +1036,36 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
         relationship.dataset.filteredOutside = String(isFilteredOutside);
       });
 
+      matrixRows.forEach((row) => {
+        row.dataset.selected = String(
+          hasResearchSelection
+          && row.dataset.matrixRowId === state.selectedNodeId,
+        );
+      });
+
+      matrixColumns.forEach((column) => {
+        column.dataset.selected = String(
+          hasResearchSelection
+          && column.dataset.matrixColumnId === state.selectedNodeId,
+        );
+      });
+
+      matrixCells.forEach((cell) => {
+        const sourceId = cell.dataset.matrixSourceId ?? '';
+        const targetId = cell.dataset.matrixTargetId ?? '';
+        const isDirect =
+          hasResearchSelection
+          && (
+            sourceId === state.selectedNodeId
+            || targetId === state.selectedNodeId
+          );
+
+        cell.dataset.direct = String(isDirect);
+        cell.dataset.unrelated = String(
+          hasResearchSelection && !isDirect,
+        );
+      });
+
       root
         .querySelectorAll<HTMLButtonElement>('[data-map-node-id]')
         .forEach((control) => {
@@ -959,6 +1115,7 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
         });
 
       replaceDetail();
+      renderProvenance();
 
       const selectedNode = nodes.get(state.selectedNodeId);
       const matchAnnouncement = root.querySelector<HTMLElement>(
@@ -1016,7 +1173,11 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
     };
 
     const syncFromLocation = () => {
-      const fragmentNodeId = getFragmentNodeId(window.location.hash);
+      const locationHash = window.location.hash;
+      const fragmentNodeId = getFragmentNodeId(locationHash);
+      if (!fragmentNodeId && locationHash.slice(1).trim().length > 0) {
+        return;
+      }
       const nextState = fragmentNodeId
         ? withSelection(fragmentNodeId)
         : restoreOverview();
@@ -1077,6 +1238,24 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
         );
         allResearchControl?.focus();
       }
+    });
+
+    provenanceRoot?.addEventListener('click', (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+
+      const scopeControl = target.closest<HTMLButtonElement>(
+        '[data-provenance-scope]',
+      );
+      if (!scopeControl || !provenanceRoot.contains(scopeControl)) {
+        return;
+      }
+
+      activeProvenanceScope =
+        scopeControl.dataset.provenanceScope === 'selected'
+          ? 'selected'
+          : 'all';
+      renderProvenance();
     });
 
     mapControls.addEventListener('keydown', (event) => {
@@ -1282,19 +1461,36 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
 
   .research-observatory__workspace {
     display: grid;
+    min-width: 0;
     margin-top: var(--space-12);
+    padding: clamp(var(--space-3), 1.5vw, var(--space-4));
     grid-template-areas:
       'map'
+      'matrix'
       'cards'
       'detail';
-    gap: var(--space-8);
+    gap: clamp(var(--space-4), 2vw, var(--space-6));
+    border: 1px solid var(--color-border-feature);
+    border-radius: 1rem;
+    background:
+      linear-gradient(
+        145deg,
+        color-mix(
+          in srgb,
+          var(--color-panel-feature) 76%,
+          var(--color-background)
+        ),
+        var(--color-background)
+      );
+    box-shadow: 0 1.25rem 3rem rgb(0 0 0 / 22%);
   }
 
   .research-observatory__map,
   .research-observatory__detail {
     min-width: 0;
     padding: clamp(var(--space-4), 3vw, var(--space-8));
-    border: 1px solid var(--color-border-section);
+    border: 1px solid var(--color-border-quiet);
+    border-radius: 0.875rem;
     background:
       linear-gradient(
         145deg,
@@ -1312,17 +1508,27 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
     grid-area: detail;
     align-self: start;
     border-top: 0.25rem solid var(--color-cyan);
-    box-shadow: 0 1rem 2.5rem rgb(0 0 0 / 18%);
+    box-shadow: 0 0.75rem 2rem rgb(0 0 0 / 20%);
   }
 
   .research-observatory__collections {
     grid-area: cards;
   }
 
+  .research-observatory__workspace :global(.research-matrix) {
+    grid-area: matrix;
+    min-width: 0;
+    margin-top: 0;
+  }
+
   .research-observatory[data-enhanced='true'][data-view='map']
     .research-observatory__workspace {
-    grid-template-columns: minmax(0, 3fr) minmax(19rem, 2fr);
-    grid-template-areas: 'map detail';
+    grid-template-columns:
+      minmax(0, 1.42fr)
+      minmax(20rem, 1fr);
+    grid-template-areas:
+      'map detail'
+      'matrix matrix';
     align-items: start;
   }
 
@@ -1330,7 +1536,8 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
     .research-observatory__workspace {
     grid-template-areas:
       'cards'
-      'detail';
+      'detail'
+      'matrix';
   }
 
   .research-observatory__map-instructions {
@@ -1341,11 +1548,11 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
   .research-observatory__structured-map-note {
     display: none;
     max-width: var(--measure-readable);
-    margin: var(--space-4) 0 0;
-    padding: var(--space-4);
-    border-left: 0.1875rem solid var(--color-cyan);
-    background: var(--color-panel-quiet);
+    margin: var(--space-3) 0 0;
+    padding-left: var(--space-3);
+    border-left: 0.125rem solid var(--color-cyan);
     color: var(--color-text-muted);
+    font-size: 0.8125rem;
   }
 
   .research-observatory__map-grid {
@@ -1546,6 +1753,14 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
     font-size: clamp(1.5rem, 3vw, 2rem);
   }
 
+  .research-observatory__detail article {
+    min-width: 0;
+  }
+
+  .research-observatory__detail article > * {
+    max-width: 100%;
+  }
+
   .research-observatory__cards {
     display: grid;
     margin: var(--space-8) 0 0;
@@ -1674,34 +1889,80 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
     margin-top: var(--space-4);
   }
 
-  .research-observatory__relationships {
+  .research-observatory__relationship-summary {
     margin-top: var(--space-8);
     padding-top: var(--space-6);
     border-top: 1px solid var(--color-border-section);
   }
 
-  .research-observatory__relationships h4 {
+  .research-observatory__relationship-summary header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .research-observatory__relationship-summary h4,
+  .research-observatory__relationship-summary header p {
     margin: 0;
+  }
+
+  .research-observatory__relationship-summary h4 {
     color: var(--color-white-gold);
   }
 
-  .research-observatory__relationships ul {
+  .research-observatory__relationship-summary header p {
+    color: var(--color-text-muted);
+    font-size: 0.8125rem;
+  }
+
+  .research-observatory__relationship-summary ul {
     display: grid;
     margin-block: var(--space-4) 0;
     padding: 0;
-    gap: var(--space-3);
+    border: 1px solid var(--color-border-quiet);
     list-style: none;
   }
 
-  .research-observatory__relationships li {
-    padding: var(--space-3) var(--space-4);
-    border-left: 0.1875rem solid var(--color-translucent-blue);
+  .research-observatory__relationship-summary li {
+    display: grid;
+    min-width: 0;
+    padding: var(--space-3);
+    grid-template-columns: minmax(9rem, 0.9fr) minmax(5rem, auto) minmax(12rem, 1.4fr);
+    gap: var(--space-3);
+    align-items: start;
+    border-bottom: 1px solid var(--color-border-quiet);
     background: var(--color-panel-quiet);
   }
 
-  .research-observatory__relationships li span {
-    display: block;
-    margin-top: var(--space-1);
+  .research-observatory__relationship-summary li:last-child {
+    border-bottom: 0;
+  }
+
+  .research-observatory__relationship-name {
+    color: var(--color-white-gold);
+    font-weight: 700;
+  }
+
+  .research-observatory__relationship-kind {
+    font-size: 0.8125rem;
+    font-weight: 700;
+  }
+
+  .research-observatory__relationship-kind--strong {
+    color: var(--color-cyan);
+  }
+
+  .research-observatory__relationship-kind--related {
+    color: var(--color-white-gold);
+  }
+
+  .research-observatory__relationship-kind--support {
+    color: var(--color-text-muted);
+  }
+
+  .research-observatory__relationship-explanation {
+    min-width: 0;
     color: var(--color-text-muted);
   }
 
@@ -1711,7 +1972,13 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
       grid-template-columns: minmax(0, 1fr);
       grid-template-areas:
         'map'
-        'detail';
+        'detail'
+        'matrix';
+    }
+
+    .research-observatory__workspace {
+      padding: var(--space-3);
+      border-radius: 0.875rem;
     }
   }
 
@@ -1723,7 +1990,7 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
     .research-observatory__map-grid {
       display: grid;
       min-height: 0;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: var(--space-3);
     }
 
@@ -1741,7 +2008,7 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
 
     .research-map-node--overview {
       width: auto;
-      grid-column: span 3;
+      grid-column: span 2;
       border-radius: 0;
     }
 
@@ -1760,18 +2027,114 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
       grid-template-columns: 1fr;
     }
 
+    .research-observatory__relationship-summary header {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .research-observatory__relationship-summary li {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-2);
+    }
+
     .research-map-node--overview {
       grid-column: auto;
     }
 
-    .research-observatory__view-controls,
-    .research-observatory__filters {
-      align-items: stretch;
+    .research-observatory__enhancement {
+      padding: var(--space-4);
+      gap: var(--space-4);
+      overflow: hidden;
     }
 
-    .research-observatory__view-controls > span,
-    .research-observatory__filters > span {
+    .research-observatory__view-controls {
+      display: grid;
+      grid-template-columns: auto repeat(2, minmax(5.5rem, 1fr));
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .research-observatory__view-controls > span {
+      min-width: 0;
+      width: auto;
+      padding-right: var(--space-1);
+    }
+
+    .research-observatory__view-controls button {
       width: 100%;
+      padding-inline: var(--space-3);
+    }
+
+    .research-observatory__filters {
+      position: relative;
+      display: grid;
+      min-width: 0;
+      grid-template-columns: minmax(0, 1fr);
+      align-items: stretch;
+      gap: var(--space-2);
+    }
+
+    .research-observatory__filters::after {
+      position: absolute;
+      z-index: 2;
+      width: 2.5rem;
+      pointer-events: none;
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          color-mix(
+            in srgb,
+            var(--color-deep-navy-black) 94%,
+            transparent
+          )
+        );
+      content: '';
+      inset: 1.625rem 0 0 auto;
+    }
+
+    .research-observatory__filters > span {
+      min-width: 0;
+      width: auto;
+    }
+
+    .research-observatory__filters {
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
+      scrollbar-width: thin;
+    }
+
+    .research-observatory__filters > button {
+      grid-row: 2;
+      width: max-content;
+      min-width: max-content;
+      padding-inline: var(--space-3);
+      white-space: nowrap;
+    }
+
+    .research-observatory__filters > button:nth-of-type(1) {
+      grid-column: 1;
+    }
+
+    .research-observatory__filters > button:nth-of-type(2) {
+      grid-column: 2;
+    }
+
+    .research-observatory__filters > button:nth-of-type(3) {
+      grid-column: 3;
+    }
+
+    .research-observatory__filters > button:nth-of-type(4) {
+      grid-column: 4;
+    }
+
+    .research-observatory__filters > button:nth-of-type(5) {
+      grid-column: 5;
+    }
+
+    .research-observatory__filters > button:nth-of-type(6) {
+      grid-column: 6;
+      margin-right: var(--space-6);
     }
   }
 
@@ -1781,6 +2144,17 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
     .research-observatory__map,
     .research-observatory__detail {
       padding: var(--space-4);
+    }
+
+    .research-observatory__workspace {
+      margin-inline: calc(var(--space-2) * -1);
+      padding: var(--space-2);
+      border-radius: 0.75rem;
+    }
+
+    .research-observatory__map,
+    .research-observatory__detail {
+      border-radius: 0.625rem;
     }
 
     .research-card__header {
