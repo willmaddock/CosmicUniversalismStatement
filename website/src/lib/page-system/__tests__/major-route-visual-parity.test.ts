@@ -168,7 +168,7 @@ const protectedGroups = {
 const baselineGroupDigests = {
   shared: 'b84746777bbb340f5362cbfc3753dcbee8c9fef522d03dbec8990ef83f15e3ce',
   cosmicBreath:
-    '2674e03a395940dc2d79e36f10a165d806ccf08e9443ec51befbec6f831903a9',
+    'edcea2ef3d499d2c828643c66b754402ad9d0428036958133ad14e1fee3a7241',
   cuTime: '4be55635476f513a3fa1b93c2111c41cfd53cd2cf3a1377fc00eacde43abc5f9',
   cucii: 'f4f304e7b7936103dfd2e9ef7039be5107329637da879a21fde5d4cfa9cb4b9a',
   research:

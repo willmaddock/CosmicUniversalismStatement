@@ -18,16 +18,22 @@ const values = (value: string | readonly string[]) =>
         Cosmic Breath sources and provenance
       </h3>
       <p>
-        Compact public records for the governed sources used by the Cosmic
-        Breath research area.
+        Public-facing source records governed within the Cosmic Universalism
+        project and used by the Cosmic Breath research area.
       </p>
     </div>
 
     <p class="cosmic-breath-provenance__count">
       <strong>{COSMIC_BREATH_PUBLIC_SOURCE_RECORD_PROJECTION.length}</strong>
-      approved public records
+      published source records
     </p>
   </header>
+
+  <p class="cosmic-breath-provenance__governance-note">
+    Governed and published through the Cosmic Universalism project. This
+    status does not represent external scientific, academic, or governmental
+    endorsement.
+  </p>
 
   <div
     class="cosmic-breath-provenance__scope-controls"
@@ -318,6 +324,16 @@ const values = (value: string | readonly string[]) =>
     text-align: right;
   }
 
+  .cosmic-breath-provenance__governance-note {
+    max-width: var(--measure-readable);
+    margin: var(--space-4) 0 0;
+    padding-inline-start: var(--space-3);
+    border-inline-start: 0.1875rem solid var(--color-border-feature);
+    color: var(--color-text-muted);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+  }
+
   .cosmic-breath-provenance__count strong {
     display: block;
     color: var(--color-cyan);
@@ -414,10 +430,23 @@ const values = (value: string | readonly string[]) =>
 
   .cosmic-breath-provenance__records {
     display: grid;
+    width: 100%;
     margin: 0;
     padding: 0;
     gap: var(--space-3);
     list-style: none;
+  }
+
+  .cosmic-breath-provenance__records > li,
+  .cosmic-breath-provenance article,
+  .cosmic-breath-provenance__summary {
+    width: 100%;
+    box-sizing: border-box;
+    justify-self: stretch;
+  }
+
+  .cosmic-breath-provenance__records > li {
+    max-width: none;
   }
 
   .cosmic-breath-provenance__records > li,
