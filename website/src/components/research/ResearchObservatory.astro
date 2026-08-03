@@ -1,6 +1,7 @@
 ---
 import ClassificationBadge from '../ClassificationBadge.astro';
 import ResearchStatusBadge from '../ResearchStatusBadge.astro';
+import ResearchRelationshipMatrix from './ResearchRelationshipMatrix.astro';
 import {
   publicResearchRegistry,
   serializePublicResearchRegistry,
@@ -461,6 +462,8 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
     </aside>
   </section>
 
+  <ResearchRelationshipMatrix />
+
   <div class="research-observatory__collections" data-cards-panel>
     {
       collections.map((collection) => (
@@ -654,24 +657,42 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
                 </li>
               )}
             </ul>
-            <section class="research-observatory__relationships">
-              <h4>Approved relationships</h4>
+            <section
+              class="research-observatory__relationship-summary"
+              aria-labelledby={`${node.id}-relationship-summary-title`}
+            >
+              <header>
+                <h4 id={`${node.id}-relationship-summary-title`}>
+                  Approved relationships
+                </h4>
+                <p>Derived from the governed relationship matrix.</p>
+              </header>
+
               {relationships.length > 0 ? (
-                <ul>
+                <ul role="list">
                   {relationships.map((relationship) => {
                     const relatedId =
                       relationship.sourceId === node.id
                         ? relationship.targetId
                         : relationship.sourceId;
                     const relatedNode = nodeById.get(relatedId);
+
                     return (
                       <li>
-                        <strong>
+                        <span class="research-observatory__relationship-name">
                           {relatedNode?.title ?? relatedId}
-                          {' — '}
+                        </span>
+                        <span
+                          class:list={[
+                            'research-observatory__relationship-kind',
+                            `research-observatory__relationship-kind--${relationship.kind}`,
+                          ]}
+                        >
                           {relationshipKindLabel(relationship.kind)}
-                        </strong>
-                        <span>{relationship.publicExplanation}</span>
+                        </span>
+                        <span class="research-observatory__relationship-explanation">
+                          {relationship.publicExplanation}
+                        </span>
                       </li>
                     );
                   })}
@@ -747,6 +768,15 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
     const mapControls = root.querySelector<HTMLElement>('[data-map-controls]');
     const relationshipElements = Array.from(
       root.querySelectorAll<SVGPathElement>('[data-relationship-source]'),
+    );
+    const matrixRows = Array.from(
+      root.querySelectorAll<HTMLElement>('[data-matrix-row-id]'),
+    );
+    const matrixColumns = Array.from(
+      root.querySelectorAll<HTMLElement>('[data-matrix-column-id]'),
+    );
+    const matrixCells = Array.from(
+      root.querySelectorAll<HTMLElement>('[data-matrix-cell]'),
     );
 
     if (
@@ -908,6 +938,36 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
         relationship.dataset.direct = String(isDirect);
         relationship.dataset.unrelated = String(isUnrelated);
         relationship.dataset.filteredOutside = String(isFilteredOutside);
+      });
+
+      matrixRows.forEach((row) => {
+        row.dataset.selected = String(
+          hasResearchSelection
+          && row.dataset.matrixRowId === state.selectedNodeId,
+        );
+      });
+
+      matrixColumns.forEach((column) => {
+        column.dataset.selected = String(
+          hasResearchSelection
+          && column.dataset.matrixColumnId === state.selectedNodeId,
+        );
+      });
+
+      matrixCells.forEach((cell) => {
+        const sourceId = cell.dataset.matrixSourceId ?? '';
+        const targetId = cell.dataset.matrixTargetId ?? '';
+        const isDirect =
+          hasResearchSelection
+          && (
+            sourceId === state.selectedNodeId
+            || targetId === state.selectedNodeId
+          );
+
+        cell.dataset.direct = String(isDirect);
+        cell.dataset.unrelated = String(
+          hasResearchSelection && !isDirect,
+        );
       });
 
       root
@@ -1678,34 +1738,80 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
     margin-top: var(--space-4);
   }
 
-  .research-observatory__relationships {
+  .research-observatory__relationship-summary {
     margin-top: var(--space-8);
     padding-top: var(--space-6);
     border-top: 1px solid var(--color-border-section);
   }
 
-  .research-observatory__relationships h4 {
+  .research-observatory__relationship-summary header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .research-observatory__relationship-summary h4,
+  .research-observatory__relationship-summary header p {
     margin: 0;
+  }
+
+  .research-observatory__relationship-summary h4 {
     color: var(--color-white-gold);
   }
 
-  .research-observatory__relationships ul {
+  .research-observatory__relationship-summary header p {
+    color: var(--color-text-muted);
+    font-size: 0.8125rem;
+  }
+
+  .research-observatory__relationship-summary ul {
     display: grid;
     margin-block: var(--space-4) 0;
     padding: 0;
-    gap: var(--space-3);
+    border: 1px solid var(--color-border-quiet);
     list-style: none;
   }
 
-  .research-observatory__relationships li {
-    padding: var(--space-3) var(--space-4);
-    border-left: 0.1875rem solid var(--color-translucent-blue);
+  .research-observatory__relationship-summary li {
+    display: grid;
+    min-width: 0;
+    padding: var(--space-3);
+    grid-template-columns: minmax(9rem, 0.9fr) minmax(5rem, auto) minmax(12rem, 1.4fr);
+    gap: var(--space-3);
+    align-items: start;
+    border-bottom: 1px solid var(--color-border-quiet);
     background: var(--color-panel-quiet);
   }
 
-  .research-observatory__relationships li span {
-    display: block;
-    margin-top: var(--space-1);
+  .research-observatory__relationship-summary li:last-child {
+    border-bottom: 0;
+  }
+
+  .research-observatory__relationship-name {
+    color: var(--color-white-gold);
+    font-weight: 700;
+  }
+
+  .research-observatory__relationship-kind {
+    font-size: 0.8125rem;
+    font-weight: 700;
+  }
+
+  .research-observatory__relationship-kind--strong {
+    color: var(--color-cyan);
+  }
+
+  .research-observatory__relationship-kind--related {
+    color: var(--color-white-gold);
+  }
+
+  .research-observatory__relationship-kind--support {
+    color: var(--color-text-muted);
+  }
+
+  .research-observatory__relationship-explanation {
+    min-width: 0;
     color: var(--color-text-muted);
   }
 
@@ -1762,6 +1868,16 @@ const relationshipPaths = publicResearchRegistry.relationships.map(
     .research-observatory__cards,
     .research-observatory__map-grid {
       grid-template-columns: 1fr;
+    }
+
+    .research-observatory__relationship-summary header {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .research-observatory__relationship-summary li {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-2);
     }
 
     .research-map-node--overview {

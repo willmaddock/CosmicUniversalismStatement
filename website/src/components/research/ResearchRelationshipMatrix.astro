@@ -1,0 +1,491 @@
+---
+import {
+  publicResearchRegistry,
+  type PublicResearchNode,
+} from '../../lib/research/research-observatory';
+
+const matrixNodes = publicResearchRegistry.nodes.filter(
+  (node) => node.role !== 'overview',
+);
+
+const nodeById = new Map(
+  matrixNodes.map((node) => [node.id, node]),
+);
+
+const relationshipByPair = new Map(
+  publicResearchRegistry.relationships.map((relationship) => {
+    const pair = [relationship.sourceId, relationship.targetId]
+      .sort()
+      .join('::');
+
+    return [pair, relationship] as const;
+  }),
+);
+
+const relationshipFor = (sourceId: string, targetId: string) => {
+  const pair = [sourceId, targetId].sort().join('::');
+  return relationshipByPair.get(pair);
+};
+
+const relationshipLabel = (kind: string) =>
+  kind === 'strong'
+    ? 'Strong'
+    : kind === 'related'
+      ? 'Related'
+      : 'Support';
+
+const shortMatrixLabel = (node: PublicResearchNode) => {
+  const labels: Record<string, string> = {
+    'cosmic-breath': 'Breath',
+    'cu-time': 'CU-Time',
+    'ai-alignment': 'AI',
+    'consciousness': 'Conscious.',
+    'free-will': 'Free Will',
+    'empirical-science': 'Empirical',
+    'sources': 'Sources',
+    'methods': 'Methods',
+    'open-questions': 'Questions',
+    'history': 'History',
+  };
+
+  return labels[node.id] ?? node.shortTitle;
+};
+---
+
+<section
+  id="research-relationship-matrix"
+  class="research-matrix"
+  aria-labelledby="research-matrix-title"
+  data-research-matrix
+>
+  <header class="research-matrix__header">
+    <div>
+      <p class="research-matrix__eyebrow">Relationship Matrix</p>
+      <h3 id="research-matrix-title">Approved research relationships</h3>
+    </div>
+
+    <p>
+      The matrix presents the same governed relationships shown by the conceptual
+      map. Select a research area above to emphasize its row and column.
+    </p>
+  </header>
+
+  <div
+    class="research-matrix__scroll"
+    tabindex="0"
+    role="region"
+    aria-label="Scrollable Research Observatory relationship matrix"
+  >
+    <table>
+      <caption>
+        Ten-node matrix of Strong, Related, and Support relationships.
+        A dash means no approved public relationship is recorded.
+      </caption>
+
+      <thead>
+        <tr>
+          <th scope="col">Research area</th>
+          {
+            matrixNodes.map((node) => (
+              <th
+                scope="col"
+                data-matrix-column-id={node.id}
+                title={node.title}
+              >
+                {shortMatrixLabel(node)}
+              </th>
+            ))
+          }
+        </tr>
+      </thead>
+
+      <tbody>
+        {
+          matrixNodes.map((rowNode) => (
+            <tr data-matrix-row-id={rowNode.id}>
+              <th scope="row" title={rowNode.title}>
+                {shortMatrixLabel(rowNode)}
+              </th>
+
+              {
+                matrixNodes.map((columnNode) => {
+                  if (rowNode.id === columnNode.id) {
+                    return (
+                      <td
+                        class="research-matrix__self"
+                        data-matrix-cell
+                        data-matrix-source-id={rowNode.id}
+                        data-matrix-target-id={columnNode.id}
+                        aria-label={`${rowNode.title}: same research area`}
+                      >
+                        <span aria-hidden="true">—</span>
+                      </td>
+                    );
+                  }
+
+                  const relationship = relationshipFor(
+                    rowNode.id,
+                    columnNode.id,
+                  );
+
+                  if (!relationship) {
+                    return (
+                      <td
+                        class="research-matrix__empty"
+                        data-matrix-cell
+                        data-matrix-source-id={rowNode.id}
+                        data-matrix-target-id={columnNode.id}
+                        aria-label={`${rowNode.title} and ${columnNode.title}: no approved public relationship recorded`}
+                      >
+                        <span aria-hidden="true">—</span>
+                      </td>
+                    );
+                  }
+
+                  const relatedNode =
+                    nodeById.get(
+                      relationship.sourceId === rowNode.id
+                        ? relationship.targetId
+                        : relationship.sourceId,
+                    ) ?? columnNode;
+
+                  return (
+                    <td
+                      class:list={[
+                        'research-matrix__relationship',
+                        `research-matrix__relationship--${relationship.kind}`,
+                      ]}
+                      data-matrix-cell
+                      data-matrix-source-id={rowNode.id}
+                      data-matrix-target-id={columnNode.id}
+                      data-matrix-kind={relationship.kind}
+                    >
+                      <button
+                        type="button"
+                        data-matrix-relationship
+                        data-relationship-source-id={relationship.sourceId}
+                        data-relationship-target-id={relationship.targetId}
+                        data-relationship-kind={relationship.kind}
+                        data-relationship-explanation={relationship.publicExplanation}
+                        aria-label={`${rowNode.title} and ${relatedNode.title}: ${relationshipLabel(
+                          relationship.kind,
+                        )} relationship. ${relationship.publicExplanation}`}
+                      >
+                        <span aria-hidden="true">
+                          {relationshipLabel(relationship.kind)}
+                        </span>
+                      </button>
+                    </td>
+                  );
+                })
+              }
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <aside
+    class="research-matrix__legend"
+    aria-labelledby="research-matrix-legend-title"
+  >
+    <h4 id="research-matrix-legend-title">Matrix legend</h4>
+    <ul role="list">
+      <li>
+        <span class="research-matrix__key research-matrix__key--strong" aria-hidden="true"></span>
+        Strong
+      </li>
+      <li>
+        <span class="research-matrix__key research-matrix__key--related" aria-hidden="true"></span>
+        Related
+      </li>
+      <li>
+        <span class="research-matrix__key research-matrix__key--support" aria-hidden="true"></span>
+        Support
+      </li>
+      <li>
+        <span class="research-matrix__key research-matrix__key--empty" aria-hidden="true"></span>
+        No approved connection
+      </li>
+    </ul>
+  </aside>
+
+  <aside
+    class="research-matrix__explanation"
+    data-matrix-explanation
+    aria-live="polite"
+    aria-atomic="true"
+  >
+    <p class="research-matrix__explanation-label">Selected relationship</p>
+    <p data-matrix-explanation-text>
+      Select a populated matrix cell to read its governed public explanation.
+    </p>
+  </aside>
+</section>
+
+<style>
+  .research-matrix {
+    min-width: 0;
+    margin-top: var(--space-12);
+    padding: clamp(var(--space-4), 3vw, var(--space-8));
+    border: 1px solid var(--color-border-section);
+    background:
+      linear-gradient(
+        145deg,
+        var(--color-panel-feature),
+        var(--color-background)
+      );
+  }
+
+  .research-matrix__header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.8fr);
+    gap: var(--space-6);
+    align-items: end;
+  }
+
+  .research-matrix__eyebrow,
+  .research-matrix__explanation-label {
+    margin: 0;
+    color: var(--color-cyan);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .research-matrix h3 {
+    margin: var(--space-2) 0 0;
+    color: var(--color-white-gold);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+  }
+
+  .research-matrix__header > p {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+
+  .research-matrix__scroll {
+    margin-top: var(--space-6);
+    overflow-x: auto;
+    border: 1px solid var(--color-border-quiet);
+  }
+
+  .research-matrix table {
+    width: 100%;
+    min-width: 66rem;
+    border-collapse: collapse;
+    background: var(--color-background);
+  }
+
+  .research-matrix caption {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .research-matrix th,
+  .research-matrix td {
+    min-width: 5.75rem;
+    height: 4rem;
+    padding: var(--space-2);
+    border: 1px solid var(--color-border-quiet);
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .research-matrix thead th,
+  .research-matrix tbody th {
+    background: var(--color-panel-quiet);
+    color: var(--color-white-gold);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+  }
+
+  .research-matrix tbody th {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    min-width: 7.5rem;
+    text-align: left;
+  }
+
+  .research-matrix__self,
+  .research-matrix__empty {
+    color: var(--color-text-muted);
+  }
+
+  .research-matrix__self {
+    background: rgb(255 255 255 / 2%);
+  }
+
+  .research-matrix__relationship {
+    padding: 0;
+  }
+
+  .research-matrix__relationship button {
+    width: 100%;
+    min-height: 4rem;
+    padding: var(--space-2);
+    border: 0;
+    background: transparent;
+    color: var(--color-white-gold);
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .research-matrix__relationship--strong {
+    background: color-mix(in srgb, var(--color-cyan) 20%, transparent);
+    box-shadow: inset 0 0 0 1px var(--color-cyan);
+  }
+
+  .research-matrix__relationship--related {
+    background: color-mix(in srgb, var(--color-white-gold) 14%, transparent);
+    box-shadow: inset 0 0 0 1px var(--color-white-gold);
+  }
+
+  .research-matrix__relationship--support {
+    background: color-mix(in srgb, var(--color-muted-gray) 16%, transparent);
+    box-shadow: inset 0 0 0 1px var(--color-muted-gray);
+  }
+
+  .research-matrix__relationship button:hover,
+  .research-matrix__relationship button:focus-visible {
+    background: rgb(255 255 255 / 8%);
+    outline: 0.1875rem solid var(--color-cyan);
+    outline-offset: -0.1875rem;
+  }
+
+  .research-matrix [data-matrix-row-id][data-selected='true'] > th,
+  .research-matrix [data-matrix-column-id][data-selected='true'] {
+    background: var(--color-panel-feature);
+    color: var(--color-cyan);
+    box-shadow: inset 0 0 0 1px var(--color-cyan);
+  }
+
+  .research-matrix [data-matrix-cell][data-direct='true'] {
+    position: relative;
+    opacity: 1;
+  }
+
+  .research-matrix [data-matrix-cell][data-direct='true']::after {
+    position: absolute;
+    pointer-events: none;
+    content: '';
+    inset: 0.125rem;
+    border: 0.125rem solid var(--color-cyan);
+  }
+
+  .research-matrix [data-matrix-cell][data-unrelated='true'] {
+    opacity: 0.28;
+  }
+
+  .research-matrix__legend {
+    margin-top: var(--space-5);
+  }
+
+  .research-matrix__legend h4 {
+    margin: 0;
+    color: var(--color-white-gold);
+  }
+
+  .research-matrix__legend ul {
+    display: flex;
+    margin: var(--space-3) 0 0;
+    padding: 0;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-6);
+    list-style: none;
+  }
+
+  .research-matrix__legend li {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 0.8125rem;
+    font-weight: 700;
+  }
+
+  .research-matrix__key {
+    width: 1.75rem;
+    height: 0.75rem;
+    border: 1px solid var(--color-border-quiet);
+  }
+
+  .research-matrix__key--strong {
+    border-color: var(--color-cyan);
+    background: color-mix(in srgb, var(--color-cyan) 20%, transparent);
+  }
+
+  .research-matrix__key--related {
+    border-color: var(--color-white-gold);
+    background: color-mix(in srgb, var(--color-white-gold) 14%, transparent);
+  }
+
+  .research-matrix__key--support {
+    border-color: var(--color-muted-gray);
+    background: color-mix(in srgb, var(--color-muted-gray) 16%, transparent);
+  }
+
+  .research-matrix__key--empty {
+    background: var(--color-background);
+  }
+
+  .research-matrix__explanation {
+    margin-top: var(--space-5);
+    padding: var(--space-4);
+    border-left: 0.1875rem solid var(--color-cyan);
+    background: var(--color-panel-quiet);
+  }
+
+  .research-matrix__explanation p:last-child {
+    margin: var(--space-2) 0 0;
+  }
+
+  @media (max-width: 48rem) {
+    .research-matrix__header {
+      grid-template-columns: minmax(0, 1fr);
+      align-items: start;
+    }
+
+    .research-matrix {
+      padding: var(--space-4);
+    }
+  }
+</style>
+
+<script>
+  document
+    .querySelectorAll<HTMLElement>('[data-research-matrix]')
+    .forEach((matrix) => {
+      const output = matrix.querySelector<HTMLElement>(
+        '[data-matrix-explanation-text]',
+      );
+
+      matrix.addEventListener('click', (event) => {
+        const target = event.target;
+
+        if (!(target instanceof Element) || !output) return;
+
+        const control = target.closest<HTMLButtonElement>(
+          '[data-matrix-relationship]',
+        );
+
+        if (!control || !matrix.contains(control)) return;
+
+        const kind = control.dataset.relationshipKind ?? 'relationship';
+        const explanation =
+          control.dataset.relationshipExplanation
+          ?? 'No public explanation is available.';
+
+        output.textContent =
+          `${kind.charAt(0).toUpperCase()}${kind.slice(1)} — ${explanation}`;
+      });
+    });
+</script>

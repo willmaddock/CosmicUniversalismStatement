@@ -275,7 +275,7 @@ describe('Research page-system adoption', () => {
   it('keeps the embedded Observatory interaction script byte-identical', () => {
     expect(scriptSource).toBeDefined();
     expect(digest(scriptSource ?? '')).toBe(
-      '598627b067e870f949370b02cd38b02b0d705caafee9be8185b739e34a2edee6',
+      '83fb2f5b430123295bca601dc095e6b0e1c14e04e9c90c7918557ff5dd97684f',
     );
   });
 

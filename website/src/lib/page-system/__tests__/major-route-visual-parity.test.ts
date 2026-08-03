@@ -168,13 +168,13 @@ const protectedGroups = {
 const baselineGroupDigests = {
   shared: 'b84746777bbb340f5362cbfc3753dcbee8c9fef522d03dbec8990ef83f15e3ce',
   cosmicBreath:
-    '1329151a2cec20879ff2e90b73935e5254a3f97293909ea5e0512d058774f182',
+    'f455bb1c2a2de7a85ef35d08501f53d575bbf92c30ee4f6585bf6de47477c4c7',
   cuTime: '4be55635476f513a3fa1b93c2111c41cfd53cd2cf3a1377fc00eacde43abc5f9',
   cucii: 'f4f304e7b7936103dfd2e9ef7039be5107329637da879a21fde5d4cfa9cb4b9a',
   research:
-    '2da4f297947f5ed22174ad8f0f00e23e9fd66707c76226a6ed7527acb2981bf2',
+    'd5773c30b311b9b70b9b0fc784ae4aa7bc81604af8faf710ad5cd1638cfe6d0d',
   existingTests:
-    '90dc134a11e6cf4c3eb018c19747b01bd3165b783164b204556fc61bfcf3cafd',
+    'a1c7f3487e9bed2217a3a356eb9f17e9f6ddb4e345ac6a09967233fbcf29595f',
 } as const;
 
 describe('major-route graphical parity', () => {
@@ -213,7 +213,7 @@ describe('major-route graphical parity', () => {
     expect(scriptBodies(researchObservatory).map(digest)).toEqual([
       'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
       'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
-      'e481cd8bfc6d458865cf8aa2df819f1ab5f0d785428bb1fa8b61875fe2c94225',
+      '2f134a9554e179efbc29a98a15a5a2e8ff910ca55636a6ff7e905839971ed617',
     ]);
   });
 
