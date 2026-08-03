@@ -186,8 +186,9 @@ describe('Research page-system adoption', () => {
       '.research-observatory__relationship-layer {\n      display: none;',
     );
     expect(componentSource).toContain(
-      'grid-template-columns: repeat(3, minmax(0, 1fr))',
+      'grid-template-columns: repeat(2, minmax(0, 1fr))',
     );
+    expect(componentSource).toContain('grid-column: span 2');
     expect(componentSource).toContain('@media (max-width: 48rem)');
     expect(componentSource).toContain('grid-template-columns: 1fr');
     expect(componentSource).toContain(
@@ -205,7 +206,7 @@ describe('Research page-system adoption', () => {
     )?.[1].replace(/\s+/g, ' ').trim();
 
     expect(explanation).toBe(
-      'On smaller screens, Map uses a structured layout instead of the desktop relationship geometry. All research areas remain available, and the selected panel preserves relationship details.',
+      'On this screen, the map uses a structured layout. All research areas and relationship details remain available.',
     );
     expect(explanation).not.toMatch(
       /\bchronology\b|\bscale\b|\bauthority\b|\bcertainty\b|\bimportance\b/i,
@@ -275,7 +276,7 @@ describe('Research page-system adoption', () => {
   it('keeps the embedded Observatory interaction script byte-identical', () => {
     expect(scriptSource).toBeDefined();
     expect(digest(scriptSource ?? '')).toBe(
-      '83fb2f5b430123295bca601dc095e6b0e1c14e04e9c90c7918557ff5dd97684f',
+      'b4775fb2e7e0512e30ddc66d61096412a7578cd73f9994fe4b898602f3a080f0',
     );
   });
 

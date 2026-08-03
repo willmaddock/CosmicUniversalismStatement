@@ -1059,16 +1059,24 @@ describe('Research Observatory route foundation', () => {
     );
   });
 
-  it('uses a wide map/detail composition that stacks at intermediate widths', () => {
+  it('uses a wide map/detail composition with a full-width matrix row', () => {
     expect(componentSource).toContain(
-      "grid-template-areas: 'map detail'",
+      `grid-template-columns:
+      minmax(0, 1.42fr)
+      minmax(20rem, 1fr)`,
     );
     expect(componentSource).toContain(
-      'grid-template-columns: minmax(0, 3fr) minmax(19rem, 2fr)',
+      `grid-template-areas:
+      'map detail'
+      'matrix matrix';`,
     );
+    expect(componentSource).toContain(
+      '.research-observatory__workspace :global(.research-matrix)',
+    );
+    expect(componentSource).toContain('grid-area: matrix');
     expect(componentSource).toContain('@media (max-width: 72rem)');
     expect(componentSource).toContain(
-      "grid-template-areas:\n        'map'\n        'detail'",
+      "grid-template-areas:\n        'map'\n        'detail'\n        'matrix'",
     );
   });
 
@@ -1080,8 +1088,9 @@ describe('Research Observatory route foundation', () => {
     expect(componentSource).toContain('position: static');
     expect(componentSource).toContain('translate: none');
     expect(componentSource).toContain(
-      'grid-template-columns: repeat(3, minmax(0, 1fr))',
+      'grid-template-columns: repeat(2, minmax(0, 1fr))',
     );
+    expect(componentSource).toContain('grid-column: span 2');
   });
 
   it('keeps Cards and no-JavaScript output independent of the SVG', () => {

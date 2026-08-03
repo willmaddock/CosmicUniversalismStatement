@@ -70,6 +70,10 @@ const shortMatrixLabel = (node: PublicResearchNode) => {
     </p>
   </header>
 
+  <p class="research-matrix__scroll-cue">
+    Swipe horizontally to compare all research areas.
+  </p>
+
   <div
     class="research-matrix__scroll"
     tabindex="0"
@@ -165,6 +169,14 @@ const shortMatrixLabel = (node: PublicResearchNode) => {
                         data-matrix-relationship
                         data-relationship-source-id={relationship.sourceId}
                         data-relationship-target-id={relationship.targetId}
+                        data-relationship-source-title={
+                          nodeById.get(relationship.sourceId)?.title
+                          ?? relationship.sourceId
+                        }
+                        data-relationship-target-title={
+                          nodeById.get(relationship.targetId)?.title
+                          ?? relationship.targetId
+                        }
                         data-relationship-kind={relationship.kind}
                         data-relationship-explanation={relationship.publicExplanation}
                         aria-label={`${rowNode.title} and ${relatedNode.title}: ${relationshipLabel(
@@ -218,8 +230,20 @@ const shortMatrixLabel = (node: PublicResearchNode) => {
     aria-atomic="true"
   >
     <p class="research-matrix__explanation-label">Selected relationship</p>
+    <p
+      class="research-matrix__selected-pair"
+      data-matrix-selected-pair
+    >
+      No relationship selected
+    </p>
+    <p
+      class="research-matrix__selected-kind"
+      data-matrix-selected-kind
+      hidden
+    ></p>
     <p data-matrix-explanation-text>
-      Select a populated matrix cell to read its governed public explanation.
+      Select a populated matrix cell to identify both research areas and read
+      their governed public explanation.
     </p>
   </aside>
 </section>
@@ -266,10 +290,23 @@ const shortMatrixLabel = (node: PublicResearchNode) => {
     color: var(--color-text-muted);
   }
 
+  .research-matrix__scroll-cue {
+    display: none;
+    margin: var(--space-4) 0 0;
+    padding: var(--space-3);
+    border-left: 0.1875rem solid var(--color-cyan);
+    background: var(--color-panel-quiet);
+    color: var(--color-text-muted);
+    font-size: 0.8125rem;
+  }
+
   .research-matrix__scroll {
+    position: relative;
     margin-top: var(--space-6);
     overflow-x: auto;
+    overscroll-behavior-inline: contain;
     border: 1px solid var(--color-border-quiet);
+    scrollbar-width: thin;
   }
 
   .research-matrix table {
@@ -444,8 +481,28 @@ const shortMatrixLabel = (node: PublicResearchNode) => {
     background: var(--color-panel-quiet);
   }
 
-  .research-matrix__explanation p:last-child {
+  .research-matrix__selected-pair {
     margin: var(--space-2) 0 0;
+    color: var(--color-white-gold);
+    font-size: clamp(1.125rem, 2vw, 1.375rem);
+    font-weight: 700;
+    overflow-wrap: anywhere;
+  }
+
+  .research-matrix__selected-kind {
+    width: fit-content;
+    margin: var(--space-2) 0 0;
+    padding: var(--space-1) var(--space-3);
+    border: 1px solid var(--color-border-feature);
+    color: var(--color-cyan);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .research-matrix__explanation p:last-child {
+    margin: var(--space-3) 0 0;
   }
 
   @media (max-width: 48rem) {
@@ -457,6 +514,29 @@ const shortMatrixLabel = (node: PublicResearchNode) => {
     .research-matrix {
       padding: var(--space-4);
     }
+
+    .research-matrix__scroll-cue {
+      display: block;
+    }
+
+    .research-matrix__scroll {
+      margin-top: var(--space-3);
+      scroll-padding-inline: 7.5rem;
+    }
+
+    .research-matrix table {
+      min-width: 62rem;
+    }
+
+    .research-matrix th,
+    .research-matrix td {
+      min-width: 5.25rem;
+      height: 3.5rem;
+    }
+
+    .research-matrix tbody th {
+      min-width: 7rem;
+    }
   }
 </style>
 
@@ -464,14 +544,27 @@ const shortMatrixLabel = (node: PublicResearchNode) => {
   document
     .querySelectorAll<HTMLElement>('[data-research-matrix]')
     .forEach((matrix) => {
-      const output = matrix.querySelector<HTMLElement>(
+      const pairOutput = matrix.querySelector<HTMLElement>(
+        '[data-matrix-selected-pair]',
+      );
+      const kindOutput = matrix.querySelector<HTMLElement>(
+        '[data-matrix-selected-kind]',
+      );
+      const explanationOutput = matrix.querySelector<HTMLElement>(
         '[data-matrix-explanation-text]',
       );
 
       matrix.addEventListener('click', (event) => {
         const target = event.target;
 
-        if (!(target instanceof Element) || !output) return;
+        if (
+          !(target instanceof Element)
+          || !pairOutput
+          || !kindOutput
+          || !explanationOutput
+        ) {
+          return;
+        }
 
         const control = target.closest<HTMLButtonElement>(
           '[data-matrix-relationship]',
@@ -479,13 +572,25 @@ const shortMatrixLabel = (node: PublicResearchNode) => {
 
         if (!control || !matrix.contains(control)) return;
 
+        const sourceTitle =
+          control.dataset.relationshipSourceTitle
+          ?? control.dataset.relationshipSourceId
+          ?? 'Unknown research area';
+        const targetTitle =
+          control.dataset.relationshipTargetTitle
+          ?? control.dataset.relationshipTargetId
+          ?? 'Unknown research area';
         const kind = control.dataset.relationshipKind ?? 'relationship';
         const explanation =
           control.dataset.relationshipExplanation
           ?? 'No public explanation is available.';
+        const kindLabel =
+          `${kind.charAt(0).toUpperCase()}${kind.slice(1)}`;
 
-        output.textContent =
-          `${kind.charAt(0).toUpperCase()}${kind.slice(1)} — ${explanation}`;
+        pairOutput.textContent = `${sourceTitle} ↔ ${targetTitle}`;
+        kindOutput.textContent = `${kindLabel} relationship`;
+        kindOutput.hidden = false;
+        explanationOutput.textContent = explanation;
       });
     });
 </script>

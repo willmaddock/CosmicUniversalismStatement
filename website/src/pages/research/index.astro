@@ -12,6 +12,7 @@ import PageGuide from '../../components/page-system/PageGuide.astro';
 import SourceProvenancePanel from '../../components/page-system/SourceProvenancePanel.astro';
 import CosmicBreathProvenance from '../../components/research/CosmicBreathProvenance.astro';
 import ResearchObservatory from '../../components/research/ResearchObservatory.astro';
+import ResearchSectionNavigator from '../../components/research/ResearchSectionNavigator.astro';
 import {
   allResearchClassifications,
   allResearchStatuses,
@@ -62,6 +63,8 @@ const pageGuideGroups = [
     title="Explore Research"
     groups={pageGuideGroups}
   />
+
+  <ResearchSectionNavigator />
 
   <FullWidthFeaturePanel
     id="research-observatory-feature"
@@ -349,7 +352,18 @@ const pageGuideGroups = [
   }
 
   :global(#source-provenance.source-provenance-panel) {
+    max-width: none;
     scroll-margin-top: var(--space-6);
+  }
+
+  :global(#source-provenance .source-provenance-panel__body) {
+    min-width: 0;
+  }
+
+  :global(#source-provenance .cosmic-breath-provenance) {
+    width: 100%;
+    max-width: none;
+    margin-top: var(--space-10);
   }
 
   :global(#source-provenance .research-provenance-guide),
