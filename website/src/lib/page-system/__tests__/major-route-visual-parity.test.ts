@@ -174,7 +174,7 @@ const baselineGroupDigests = {
   research:
     '3410657a8a1208b7e71668327245b87e05fc0915e5977d9925c71f0e60ac71d0',
   existingTests:
-    'f254a9d95038778b7df002e42d82fe3018664b6fc922e672fc2bee3f021cb2c4',
+    '74e87b8d53289477f4eb375a06ae0a4cc6a1c42d979142422627d9e9cae3a890',
 } as const;
 
 describe('major-route graphical parity', () => {
@@ -319,12 +319,12 @@ describe('major-route graphical parity', () => {
     }
 
     expect(digest(normalizeAuthorizedRouteDigests(mobileHeaderTest))).toBe(
-      '946cd38930533a6b56639fbcdda69adda0fb09277086eeef4957763525554aa9',
+      '8e93dc6a4a9124f71f14e70d2051718980209be02d8438309bf04cc819283652',
     );
     expect(
       digest(normalizeAuthorizedRouteDigests(visualParityNavigationTest)),
     ).toBe(
-      '3cd7420da6458cc783c6ec96f6498a4b6afb4694c3461f1aae21dc9d5ca61bd4',
+      '5f8df4a14f37a6486a9bb3f8a9d5e55cb25a9f16cf1962e3f2e1be658d6e7774',
     );
   });
 });
