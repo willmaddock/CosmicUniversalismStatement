@@ -78,8 +78,8 @@ describe('owner-curated Media authority', () => {
       'ai-alignment-through-cucii',
     ]);
     expect(mediaLibrary.map(({ publicationStatus }) => publicationStatus)).toEqual([
-      'staging',
-      'staging',
+      'published',
+      'published',
     ]);
     expect(mediaLibrary.map(({ providerAvailability }) => providerAvailability)).toEqual([
       'available',
@@ -212,7 +212,7 @@ describe('owner-curated Media authority', () => {
     expect(productionSources).not.toMatch(
       /youtube\.googleapis|google cloud|api[_ -]?key|oauth|client[_ -]?secret|fetch\(|XMLHttpRequest|setInterval\(|channel.{0,24}(?:scrap|discover)|generated.{0,16}cache|scheduled.{0,16}(?:sync|poll)/i,
     );
-    expect(mediaLibrary.every(({ publicationStatus }) => publicationStatus === 'staging'))
+    expect(mediaLibrary.every(({ publicationStatus }) => publicationStatus === 'published'))
       .toBe(true);
   });
 

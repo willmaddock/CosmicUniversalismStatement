@@ -17,7 +17,7 @@ export const mediaLibrary = [
       'philosophical-interpretation',
       'empirical-reference',
     ],
-    publicationStatus: 'staging',
+    publicationStatus: 'published',
     providerAvailability: 'available',
     playlist: 'Cosmic Breath and CU-Time',
     transcriptPath:
@@ -99,7 +99,7 @@ export const mediaLibrary = [
       'cu-theoretical-proposition',
       'philosophical-interpretation',
     ],
-    publicationStatus: 'staging',
+    publicationStatus: 'published',
     providerAvailability: 'available',
     playlist: 'CU Intelligence and CUCII',
     transcriptPath:

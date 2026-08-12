@@ -23,7 +23,7 @@ const protectedDigests = new Map([
   ['../../../pages/cu-time.astro', 'dc557e235883cb18b33766d2d818139b58eb202fcd5d0be3daa1909bbae4c0d3'],
   ['../../../pages/cu-intelligence.astro', '74470433295ab4e7082db998000e5e923f6c311e1b1c9cec1fa22c44f669570e'],
   ['../../../pages/research/index.astro', '7e8c9c3fde81e5c239d81a737b2f8aaa787aaab654e62c63ccc6f81aca0e301a'],
-  ['../../../pages/media.astro', 'b09bd1c7c7fb2844be6931c3d7494984816b274fd772b091e790be0e17753992'],
+  ['../../../pages/media.astro', '3a25bd12d45630ec3e996b514a8d54146548e3d5ac008f3813b6d7564fca8ab4'],
   ['../../../pages/about.astro', '1de1e76e3e27c940af0a09ad0923771b9b1b7b5891060ea6c02022812c27b4d5'],
 ] as const);
 

@@ -23,7 +23,7 @@ describe('Media landing-page library', () => {
 
     for (const [id, title] of [
       ['media-clarity-title', 'Clarity before volume'],
-      ['media-library-title', 'Media entries under review'],
+      ['media-library-title', 'Owner-reviewed Media publications'],
       ['media-publication-standard-title', 'Publication standard'],
     ] as const) {
       expect(countLiteralId(routeSource, id)).toBe(0);
@@ -41,11 +41,16 @@ describe('Media landing-page library', () => {
     expect(routeSource.match(/<MediaCard\b/g)).toHaveLength(1);
 
     for (const entry of mediaLibrary) {
-      expect(entry.publicationStatus).toBe('staging');
+      expect(entry.publicationStatus).toBe('published');
       expect(routeSource).not.toContain(entry.youtubeId);
       expect(routeSource).not.toContain(entry.slug);
       expect(routeSource).not.toContain(entry.title);
     }
+
+    expect(mediaLibrary.map(({ classifications }) => classifications.length)).toEqual([
+      4,
+      2,
+    ]);
   });
 
   it('derives each accessible card from MediaEntry and links to the permanent CU route', () => {
@@ -62,15 +67,20 @@ describe('Media landing-page library', () => {
     expect(cardSource).not.toMatch(/<iframe\b|<video\b|<script\b|client:/);
   });
 
-  it('shows staging truthfully without claiming public release', () => {
-    expect(routeSource).toContain('Media entries under review');
-    expect(routeSource).toContain('Their staging status does not mean public release.');
-    expect(routeSource).toContain('Staging is not release');
+  it('shows the published records truthfully without unsupported release claims', () => {
+    expect(routeSource).toContain('Owner-reviewed Media publications');
+    expect(routeSource).toContain(
+      'These owner-reviewed publications are part of the Cosmic Universalism Media library. Each entry links to a permanent CU detail page with classification, transcript, accessibility resources, source provenance, and publication boundaries.',
+    );
+    expect(routeSource).toContain('Publication remains deliberate');
+    expect(routeSource).not.toMatch(
+      /feature branch|under review|staging status|staging records|staging is not release/i,
+    );
     expect(cardSource).toContain("entry.publicationStatus === 'staging'");
     expect(cardSource).toContain('Staging review');
     expect(cardSource).toContain('not publicly released');
     expect(`${routeSource}\n${cardSource}`).not.toMatch(
-      /available now|now published|latest release|new release/i,
+      /available now|now published|latest|newest|new release|officially verified|view count|views\b/i,
     );
   });
 
