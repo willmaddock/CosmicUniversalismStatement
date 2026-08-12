@@ -40,7 +40,7 @@ const provenanceLinks = entry.sourceBasis.map((source) =>
         kind: 'external' as const,
         label: source.label,
         href: source.href,
-        disclosure: source.disclosure,
+        disclosure: `${source.disclosure} (opens in new tab)`,
       },
 );
 const formatLabel = entry.format === 'video' ? 'Video' : entry.format;
@@ -145,8 +145,20 @@ const boundary =
     />
 
     <div class="media-transcript__actions">
-      <a href={sitePath(entry.transcriptPath)}>Open the plain-text transcript</a>
-      <a href={sitePath(entry.captionPath)}>Open the corrected WebVTT accessibility file</a>
+      <a
+        href={sitePath(entry.transcriptPath)}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Open the plain-text transcript (opens in new tab)
+      </a>
+      <a
+        href={sitePath(entry.captionPath)}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Open the corrected WebVTT accessibility file (opens in new tab)
+      </a>
     </div>
 
     <div class="media-transcript__content">

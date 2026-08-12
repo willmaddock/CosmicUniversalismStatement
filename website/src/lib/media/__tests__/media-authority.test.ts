@@ -187,6 +187,7 @@ describe('owner-curated Media authority', () => {
       /The\s+transcript and direct YouTube link remain available\./,
     );
     expect(embedSource).toContain('target="_blank" rel="noopener noreferrer"');
+    expect(embedSource).toContain('on YouTube (opens in new tab)');
     expect(embedSource).not.toMatch(/probe|availability.*fetch|status.*request/i);
   });
 
@@ -196,8 +197,21 @@ describe('owner-curated Media authority', () => {
     expect(detailRouteSource).toContain('transcriptParagraphs.map');
     expect(detailRouteSource).toContain('sitePath(entry.transcriptPath)');
     expect(detailRouteSource).toContain('sitePath(entry.captionPath)');
+    for (const [path, label] of [
+      ['transcriptPath', 'Open the plain-text transcript'],
+      ['captionPath', 'Open the corrected WebVTT accessibility file'],
+    ] as const) {
+      expect(detailRouteSource).toMatch(
+        new RegExp(
+          `<a\\s+href=\\{sitePath\\(entry\\.${path}\\)\\}\\s+target="_blank"\\s+rel="noopener noreferrer"\\s*>\\s+${label} \\(opens in new tab\\)\\s+<\\/a>`,
+        ),
+      );
+    }
     expect(detailRouteSource).toContain('<ClassificationBadge');
     expect(detailRouteSource).toContain('<SourceProvenancePanel');
+    expect(detailRouteSource).toContain(
+      'disclosure: `${source.disclosure} (opens in new tab)`',
+    );
     expect(detailRouteSource).toContain('source.establishes');
     expect(detailRouteSource).toContain('<EpistemicCallout');
     expect(detailRouteSource).toContain('<ContinuationNavigation');
