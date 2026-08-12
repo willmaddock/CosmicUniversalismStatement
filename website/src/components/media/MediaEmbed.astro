@@ -1,0 +1,219 @@
+---
+import type { MediaProviderAvailability } from '../../data/media/media-types';
+
+interface Props {
+  title: string;
+  youtubeId: string;
+  youtubeUrl: string;
+  posterSrc: string;
+  posterAlt: string;
+  providerAvailability: MediaProviderAvailability;
+}
+
+const {
+  title,
+  youtubeId,
+  youtubeUrl,
+  posterSrc,
+  posterAlt,
+  providerAvailability,
+} = Astro.props;
+const isAvailable = providerAvailability === 'available';
+const headingId = `media-video-${youtubeId}`;
+---
+
+<section class="media-embed" aria-labelledby={headingId}>
+  <header class="media-embed__header">
+    <p class="media-embed__eyebrow">Privacy-aware video</p>
+    <h2 id={headingId}>Watch {title}</h2>
+  </header>
+
+  {
+    isAvailable ? (
+      <div
+        class="media-embed__player"
+        data-media-embed
+        data-youtube-id={youtubeId}
+        data-video-title={title}
+      >
+        <div class="media-embed__surface" data-media-embed-surface>
+          <img src={posterSrc} alt={posterAlt} width="1280" height="720" />
+          <button
+            type="button"
+            class="media-embed__play"
+            data-media-embed-play
+            aria-label={`Play ${title} from YouTube`}
+          >
+            <span aria-hidden="true">▶</span>
+            <span>Load video</span>
+          </button>
+        </div>
+
+        <p class="media-embed__privacy-note">
+          YouTube is not contacted until you activate the video. Activating it loads
+          the privacy-enhanced YouTube player.
+        </p>
+        <noscript>
+          <p class="media-embed__noscript">
+            JavaScript is unavailable, so the embedded player cannot load. The
+            transcript and direct YouTube link remain available.
+          </p>
+        </noscript>
+      </div>
+    ) : (
+      <div class="media-embed__unavailable" role="status">
+        <img src={posterSrc} alt={posterAlt} width="1280" height="720" />
+        <p>
+          This provider video is currently unavailable. The CU transcript,
+          accessibility file, classifications, and provenance remain available below.
+        </p>
+      </div>
+    )
+  }
+
+  {
+    isAvailable && (
+      <p class="media-embed__external-link">
+        <a href={youtubeUrl} target="_blank" rel="noopener noreferrer">
+          Watch {title} on YouTube (opens in new tab)
+        </a>
+      </p>
+    )
+  }
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-media-embed]').forEach((root) => {
+    if (root.dataset.enhanced === 'true') return;
+
+    const surface = root.querySelector<HTMLElement>('[data-media-embed-surface]');
+    const play = root.querySelector<HTMLButtonElement>('[data-media-embed-play]');
+    const youtubeId = root.dataset.youtubeId;
+    const title = root.dataset.videoTitle;
+
+    if (!surface || !play || !youtubeId || !title) return;
+
+    root.dataset.enhanced = 'true';
+    play.addEventListener('click', () => {
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(youtubeId)}?autoplay=1`;
+      iframe.title = `${title} — YouTube video`;
+      iframe.allow =
+        'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.allowFullscreen = true;
+      iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+      iframe.className = 'media-embed__frame';
+      surface.replaceChildren(iframe);
+    });
+  });
+</script>
+
+<style>
+  .media-embed {
+    padding: clamp(var(--space-6), 5vw, var(--space-10));
+    border: 1px solid var(--color-border-feature);
+    background: var(--color-panel-feature);
+  }
+
+  .media-embed__header {
+    max-width: var(--measure-readable);
+  }
+
+  .media-embed__eyebrow {
+    margin: 0 0 var(--space-2);
+    color: var(--color-cyan);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .media-embed h2 {
+    margin: 0;
+    overflow-wrap: anywhere;
+    color: var(--color-white-gold);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+  }
+
+  .media-embed__player,
+  .media-embed__unavailable {
+    margin-top: var(--space-6);
+  }
+
+  .media-embed__surface,
+  .media-embed__unavailable img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+
+  .media-embed__surface {
+    position: relative;
+    overflow: hidden;
+    background: var(--color-background);
+  }
+
+  .media-embed__surface img,
+  .media-embed__unavailable img {
+    display: block;
+    object-fit: cover;
+  }
+
+  .media-embed__play {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    display: inline-flex;
+    min-height: 2.75rem;
+    padding: var(--space-3) var(--space-5);
+    align-items: center;
+    gap: var(--space-2);
+    border: 1px solid var(--color-cyan);
+    background: color-mix(in srgb, var(--color-background) 92%, transparent);
+    color: var(--color-white-gold);
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+  }
+
+  .media-embed__play:hover {
+    background: var(--color-background);
+  }
+
+  .media-embed__play:focus-visible,
+  .media-embed__external-link a:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-cyan);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .media-embed__privacy-note,
+  .media-embed__noscript,
+  .media-embed__unavailable p,
+  .media-embed__external-link {
+    max-width: var(--measure-readable);
+    margin: var(--space-4) 0 0;
+    color: var(--color-text-muted);
+  }
+
+  .media-embed__unavailable {
+    padding: var(--space-4);
+    border-left: 0.25rem solid var(--color-amber);
+    background: var(--color-panel-quiet);
+  }
+
+  :global(.media-embed__frame) {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  @media (max-width: 36rem) {
+    .media-embed {
+      padding: var(--space-4);
+    }
+
+    .media-embed__play {
+      max-width: calc(100% - (2 * var(--space-4)));
+      padding-inline: var(--space-4);
+    }
+  }
+</style>

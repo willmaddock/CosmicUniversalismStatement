@@ -1,0 +1,307 @@
+---
+import { readFileSync } from 'node:fs';
+import ClassificationBadge from '../../components/ClassificationBadge.astro';
+import MediaEmbed from '../../components/media/MediaEmbed.astro';
+import ContinuationNavigation from '../../components/page-system/ContinuationNavigation.astro';
+import EditorialSectionHeading from '../../components/page-system/EditorialSectionHeading.astro';
+import EpistemicCallout from '../../components/page-system/EpistemicCallout.astro';
+import SourceProvenancePanel from '../../components/page-system/SourceProvenancePanel.astro';
+import { sitePath } from '../../config/site';
+import {
+  mediaLibrary,
+  type MediaLibraryEntry,
+} from '../../data/media/media-library';
+import ContentPageLayout from '../../layouts/ContentPageLayout.astro';
+
+export function getStaticPaths() {
+  return mediaLibrary.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: MediaLibraryEntry;
+}
+
+const { entry } = Astro.props;
+const transcript = readFileSync(
+  new URL(`../../../public/${entry.transcriptPath}`, import.meta.url),
+  'utf8',
+).trim();
+const transcriptParagraphs = transcript
+  .split(/\n\s*\n/)
+  .map((paragraph) => paragraph.trim())
+  .filter(Boolean);
+const provenanceLinks = entry.sourceBasis.map((source) =>
+  source.kind === 'internal'
+    ? { kind: 'internal' as const, label: source.label, path: source.path }
+    : {
+        kind: 'external' as const,
+        label: source.label,
+        href: source.href,
+        disclosure: `${source.disclosure} (opens in new tab)`,
+      },
+);
+const formatLabel = entry.format === 'video' ? 'Video' : entry.format;
+const publicationLabel =
+  entry.publicationStatus === 'staging'
+    ? 'Staging review'
+    : entry.publicationStatus;
+const providerLabel =
+  entry.providerAvailability === 'available'
+    ? 'Available from YouTube'
+    : 'Currently unavailable from YouTube';
+const runtimeMatch = entry.runtime.match(/^PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?$/);
+const runtimeLabel = runtimeMatch
+  ? [runtimeMatch[1], runtimeMatch[2] ?? '0', runtimeMatch[3] ?? '0']
+      .filter((part, index) => index > 0 || part)
+      .map((part, index) => (index === 0 ? String(Number(part)) : part.padStart(2, '0')))
+      .join(':')
+  : entry.runtime;
+const boundary =
+  entry.id === 'ai-alignment-through-cucii'
+    ? {
+        label: 'CUCII boundary',
+        text: 'CUCII supplies structured prompt context. It does not retrain, unlock, certify, permanently alter or align, or override an external model or platform. This presentation does not establish machine consciousness or divine authority.',
+      }
+    : {
+        label: 'Interpretive boundary',
+        text: 'The Cosmic Breath and the B-TOM/C-TOM placement are CU mathematics and interpretation, not empirical cosmological measurements. Planck time and the cited empirical references are comparison points; they do not validate the CU framework or identify Planck time as a TOM.',
+      };
+---
+
+<ContentPageLayout
+  metaTitle={`${entry.title} | Media | Cosmic Universalism`}
+  metaDescription={entry.summary}
+  eyebrow="Media publication"
+  title={entry.title}
+  description={entry.summary}
+>
+  <section class="media-record" aria-labelledby="media-record-title">
+    <EditorialSectionHeading
+      eyebrow="Publication record"
+      title="About this media entry"
+      headingId="media-record-title"
+    />
+
+    <dl class="media-record__metadata">
+      <div>
+        <dt>Format</dt>
+        <dd>{formatLabel}</dd>
+      </div>
+      <div>
+        <dt>Runtime</dt>
+        <dd><time datetime={entry.runtime}>{runtimeLabel}</time></dd>
+      </div>
+      <div>
+        <dt>Publication status</dt>
+        <dd>{publicationLabel}</dd>
+      </div>
+      <div>
+        <dt>Provider availability</dt>
+        <dd>{providerLabel}</dd>
+      </div>
+      {
+        entry.playlist && (
+          <div>
+            <dt>Playlist</dt>
+            <dd>{entry.playlist}</dd>
+          </div>
+        )
+      }
+      <div>
+        <dt>Record revision</dt>
+        <dd>{entry.revision}</dd>
+      </div>
+    </dl>
+
+    <div class="media-record__classifications" aria-label="Media classifications">
+      {entry.classifications.map((classification) => (
+        <ClassificationBadge classification={classification} />
+      ))}
+    </div>
+  </section>
+
+  <MediaEmbed
+    title={entry.title}
+    youtubeId={entry.youtubeId}
+    youtubeUrl={entry.youtubeUrl}
+    posterSrc={sitePath(entry.posterPath)}
+    posterAlt={entry.posterAlt}
+    providerAvailability={entry.providerAvailability}
+  />
+
+  <EpistemicCallout kind="boundary" label={boundary.label}>
+    <p>{boundary.text}</p>
+  </EpistemicCallout>
+
+  <section class="media-transcript" aria-labelledby="media-transcript-title">
+    <EditorialSectionHeading
+      eyebrow="Accessible text"
+      title="Transcript"
+      headingId="media-transcript-title"
+      lead="The complete reviewed narration remains available without JavaScript."
+    />
+
+    <div class="media-transcript__actions">
+      <a
+        href={sitePath(entry.transcriptPath)}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Open the plain-text transcript (opens in new tab)
+      </a>
+      <a
+        href={sitePath(entry.captionPath)}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Open the corrected WebVTT accessibility file (opens in new tab)
+      </a>
+    </div>
+
+    <div class="media-transcript__content">
+      {transcriptParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+    </div>
+  </section>
+
+  <SourceProvenancePanel
+    id="media-source-provenance"
+    title="Sources, method, and provenance"
+    links={provenanceLinks}
+  >
+    <p>
+      Each source below is limited to the statement it actually supports. External
+      empirical material remains separate from CU mathematics and interpretation.
+    </p>
+    <dl class="media-provenance">
+      {
+        entry.sourceBasis.map((source) => (
+          <div>
+            <dt>{source.label}</dt>
+            <dd>{source.establishes}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </SourceProvenancePanel>
+
+  <ContinuationNavigation
+    ariaLabel={`Return from ${entry.title} to Media`}
+    title="Return to Media"
+    description="Review the Media publication standard and available CU entries"
+    path="media/"
+  />
+</ContentPageLayout>
+
+<style>
+  .media-record,
+  .media-transcript {
+    padding: clamp(var(--space-6), 5vw, var(--space-10));
+    border: 1px solid var(--color-border-quiet);
+    background: var(--color-panel-quiet);
+  }
+
+  .media-record__metadata {
+    display: grid;
+    margin: var(--space-8) 0 0;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  .media-record__metadata div {
+    min-width: 0;
+    padding: var(--space-4);
+    border: 1px solid var(--color-border-section);
+    background: var(--color-background);
+  }
+
+  .media-record__metadata dt,
+  .media-provenance dt {
+    color: var(--color-amber);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .media-record__metadata dd,
+  .media-provenance dd {
+    margin: var(--space-2) 0 0;
+    overflow-wrap: anywhere;
+    color: var(--color-text);
+  }
+
+  .media-record__classifications {
+    display: flex;
+    margin-top: var(--space-6);
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  :global(.media-embed),
+  :global(.epistemic-callout),
+  .media-transcript,
+  :global(.source-provenance-panel) {
+    margin-top: var(--space-editorial-section);
+  }
+
+  .media-transcript__actions {
+    display: flex;
+    margin-top: var(--space-6);
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-6);
+  }
+
+  .media-transcript__actions a {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    overflow-wrap: anywhere;
+    font-weight: 700;
+  }
+
+  .media-transcript__content {
+    max-width: var(--measure-readable);
+    margin-top: var(--space-8);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-border-section);
+  }
+
+  .media-transcript__content p {
+    margin: 0;
+  }
+
+  .media-transcript__content p + p {
+    margin-top: var(--space-4);
+  }
+
+  .media-provenance {
+    display: grid;
+    margin: var(--space-6) 0 0;
+    gap: var(--space-4);
+  }
+
+  .media-provenance div {
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border-quiet);
+  }
+
+  @media (max-width: 48rem) {
+    .media-record__metadata {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 36rem) {
+    .media-record,
+    .media-transcript {
+      padding: var(--space-4);
+    }
+
+    .media-record__metadata {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

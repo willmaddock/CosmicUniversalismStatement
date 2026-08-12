@@ -1,0 +1,179 @@
+---
+import type { MediaEntry } from '../../data/media/media-types';
+import { sitePath } from '../../config/site';
+import ClassificationBadge from '../ClassificationBadge.astro';
+
+interface Props {
+  entry: MediaEntry;
+}
+
+const { entry } = Astro.props;
+const formatLabel = entry.format === 'video' ? 'Video' : entry.format;
+const runtimeMatch = entry.runtime.match(/^PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?$/);
+const runtimeLabel = runtimeMatch
+  ? [runtimeMatch[1], runtimeMatch[2] ?? '0', runtimeMatch[3] ?? '0']
+      .filter((part, index) => index > 0 || part)
+      .map((part, index) => (index === 0 ? String(Number(part)) : part.padStart(2, '0')))
+      .join(':')
+  : entry.runtime;
+---
+
+<article class="media-card">
+  <img
+    class="media-card__poster"
+    src={sitePath(entry.posterPath)}
+    alt={entry.posterAlt}
+    width="1280"
+    height="720"
+    loading="lazy"
+    decoding="async"
+  />
+
+  <div class="media-card__content">
+    <div class="media-card__status-row">
+      <span class="media-card__format">{formatLabel}</span>
+      <span class="media-card__runtime">
+        <span class="visually-hidden">Runtime: </span>
+        <time datetime={entry.runtime}>{runtimeLabel}</time>
+      </span>
+      {
+        entry.publicationStatus === 'staging' && (
+          <span class="media-card__status">Staging review</span>
+        )
+      }
+    </div>
+
+    <h3>{entry.title}</h3>
+    <p class="media-card__summary">{entry.summary}</p>
+
+    <div class="media-card__classifications" aria-label={`${entry.title} classifications`}>
+      {entry.classifications.map((classification) => (
+        <ClassificationBadge classification={classification} />
+      ))}
+    </div>
+
+    {
+      entry.publicationStatus === 'staging' && (
+        <p class="media-card__staging-note">
+          Available on this feature branch for owner review; not publicly released.
+        </p>
+      )
+    }
+
+    <a class="media-card__detail-link" href={sitePath(`media/${entry.slug}/`)}>
+      View the permanent CU media entry
+    </a>
+  </div>
+</article>
+
+<style>
+  .media-card {
+    display: grid;
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid var(--color-border-feature);
+    background: var(--color-panel-feature);
+    box-shadow: 0 1.25rem 3rem rgb(0 5 16 / 16%);
+  }
+
+  .media-card__poster {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    background: var(--color-background);
+  }
+
+  .media-card__content {
+    display: flex;
+    min-width: 0;
+    padding: clamp(var(--space-5), 4vw, var(--space-8));
+    flex-direction: column;
+  }
+
+  .media-card__status-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-3);
+    color: var(--color-text-muted);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .media-card__format {
+    color: var(--color-cyan);
+  }
+
+  .media-card__runtime::before,
+  .media-card__status::before {
+    margin-right: var(--space-3);
+    color: var(--color-border-section);
+    content: '•';
+  }
+
+  .media-card__status {
+    color: var(--color-amber);
+  }
+
+  .media-card h3 {
+    margin: var(--space-4) 0 0;
+    overflow-wrap: anywhere;
+    color: var(--color-white-gold);
+    font-size: clamp(1.5rem, 3vw, 2.125rem);
+  }
+
+  .media-card__summary,
+  .media-card__staging-note {
+    margin: var(--space-4) 0 0;
+    color: var(--color-text-muted);
+  }
+
+  .media-card__classifications {
+    display: flex;
+    margin-top: var(--space-5);
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .media-card__staging-note {
+    padding-left: var(--space-3);
+    border-left: 0.2rem solid var(--color-amber);
+    font-size: 0.875rem;
+  }
+
+  .media-card__detail-link {
+    display: inline-flex;
+    min-height: 2.75rem;
+    margin-top: var(--space-6);
+    align-items: center;
+    align-self: flex-start;
+    overflow-wrap: anywhere;
+    color: var(--color-cyan);
+    font-weight: 700;
+  }
+
+  .media-card__detail-link:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-cyan);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  @media (max-width: 36rem) {
+    .media-card__content {
+      padding: var(--space-4);
+    }
+
+    .media-card__status-row {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .media-card__runtime::before,
+    .media-card__status::before {
+      display: none;
+    }
+  }
+</style>

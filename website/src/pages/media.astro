@@ -2,15 +2,17 @@
 import ContinuationNavigation from '../components/page-system/ContinuationNavigation.astro';
 import EditorialSectionHeading from '../components/page-system/EditorialSectionHeading.astro';
 import EpistemicCallout from '../components/page-system/EpistemicCallout.astro';
+import MediaCard from '../components/media/MediaCard.astro';
+import { mediaLibrary } from '../data/media/media-library';
 import ContentPageLayout from '../layouts/ContentPageLayout.astro';
 ---
 
 <ContentPageLayout
   metaTitle="Media | Cosmic Universalism"
-  metaDescription="An introduction to future Cosmic Universalism media and explanatory resources."
+  metaDescription="Owner-curated Cosmic Universalism media with explicit classifications, source boundaries, transcripts, and permanent CU context."
   eyebrow="Media"
   title="Different ways into a large framework"
-  description="The media library will gather accessible explanations, visual narratives, and conversations about Cosmic Universalism."
+  description="The CU Media library pairs accessible explanations with owner-reviewed classifications, source boundaries, transcripts, and permanent interpretive context."
 >
   <section
     id="media-clarity"
@@ -24,59 +26,60 @@ import ContentPageLayout from '../layouts/ContentPageLayout.astro';
     />
 
     <div class="media-foundation__body">
-      <EpistemicCallout kind="context" label="Forthcoming">
+      <EpistemicCallout kind="method" label="Deliberate publication">
         <p>
-          Future media will identify whether it explains source science, CU mathematics,
-          a theoretical proposition, or an open question. This foundation keeps those
-          categories visible before the library grows.
+          Every Media entry identifies whether it presents empirical references, CU
+          mathematics, theoretical propositions, philosophical interpretation, or open
+          questions. YouTube delivers video; the CU website retains the owner-reviewed
+          publication record and context.
         </p>
       </EpistemicCallout>
     </div>
   </section>
 
-  <div class="media-details">
-    <section
-      id="media-planned-formats"
-      class="media-detail"
-      aria-labelledby="media-planned-formats-title"
-    >
-      <EditorialSectionHeading
-        eyebrow="Forthcoming"
-        title="Planned formats"
-        headingId="media-planned-formats-title"
-      />
+  <section
+    id="media-library"
+    class="media-library"
+    aria-labelledby="media-library-title"
+  >
+    <EditorialSectionHeading
+      eyebrow="Owner-curated library"
+      title="Owner-reviewed Media publications"
+      headingId="media-library-title"
+      lead="These owner-reviewed publications are part of the Cosmic Universalism Media library. Each entry links to a permanent CU detail page with classification, transcript, accessibility resources, source provenance, and publication boundaries."
+    />
 
-      <div class="media-detail__body">
+    <div class="media-library__grid">
+      {mediaLibrary.map((entry) => <MediaCard entry={entry} />)}
+    </div>
+  </section>
+
+  <section
+    id="media-publication-standard"
+    class="media-standard"
+    aria-labelledby="media-publication-standard-title"
+  >
+    <EditorialSectionHeading
+      eyebrow="Editorial boundary"
+      title="Publication standard"
+      headingId="media-publication-standard-title"
+    />
+
+    <div class="media-standard__body">
+      <p>
+        Established scientific material is sourced separately from CU interpretation.
+        CU mathematics and theoretical propositions retain their canonical classifications,
+        and unresolved issues remain visibly labeled as open questions.
+      </p>
+      <EpistemicCallout kind="boundary" label="Publication remains deliberate">
         <p>
-          Future entries may include written explainers, diagram walkthroughs, recorded
-          conversations, and other educational formats. Each entry should state its subject,
-          classification, and source basis before asking the audience to evaluate its
-          conclusions.
+          These entries were published through an owner-controlled release. Public
+          availability does not change their classification, provenance, accessibility,
+          or epistemic boundaries.
         </p>
-      </div>
-    </section>
-
-    <section
-      id="media-publication-standard"
-      class="media-detail media-detail--standard"
-      aria-labelledby="media-publication-standard-title"
-    >
-      <EditorialSectionHeading
-        eyebrow="Foundation"
-        title="Publication standard"
-        headingId="media-publication-standard-title"
-      />
-
-      <div class="media-detail__body">
-        <p>
-          Media that discusses established scientific material should identify the external
-          source separately from any CU interpretation. Media that presents CU mathematics
-          or theoretical propositions should name that classification directly. Unresolved
-          issues should remain visibly labeled as open questions.
-        </p>
-      </div>
-    </section>
-  </div>
+      </EpistemicCallout>
+    </div>
+  </section>
 
   <ContinuationNavigation
     ariaLabel="Continue from Media"
@@ -106,48 +109,53 @@ import ContentPageLayout from '../layouts/ContentPageLayout.astro';
     max-width: none;
   }
 
-  .media-details {
-    display: grid;
+  .media-library,
+  .media-standard {
     margin-top: var(--space-editorial-section);
+  }
+
+  .media-library__grid {
+    display: grid;
+    margin-top: var(--space-8);
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-6);
   }
 
-  .media-detail {
-    min-width: 0;
-    padding: clamp(var(--space-6), 4vw, var(--space-8));
+  .media-standard {
+    padding: clamp(var(--space-6), 5vw, var(--space-10));
     border: 1px solid var(--color-border-quiet);
     background: var(--color-panel-quiet);
   }
 
-  .media-detail--standard {
-    border-color: var(--color-border-feature);
-    background: var(--color-panel-feature);
-  }
-
-  .media-detail__body {
+  .media-standard__body {
+    max-width: var(--measure-readable);
     margin-top: var(--space-6);
     color: var(--color-text-muted);
   }
 
-  .media-detail__body p {
+  .media-standard__body > p {
     margin: 0;
   }
 
+  .media-standard__body :global(.epistemic-callout) {
+    margin-top: var(--space-6);
+  }
+
   @media (max-width: 48rem) {
-    .media-details {
+    .media-library__grid {
       grid-template-columns: minmax(0, 1fr);
     }
   }
 
   @media (max-width: 36rem) {
     .media-foundation,
-    .media-detail {
+    .media-standard {
       padding: var(--space-4);
     }
 
     .media-foundation__body,
-    .media-detail__body {
+    .media-standard__body,
+    .media-library__grid {
       margin-top: var(--space-4);
     }
   }
