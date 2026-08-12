@@ -174,7 +174,7 @@ const baselineGroupDigests = {
   research:
     '3410657a8a1208b7e71668327245b87e05fc0915e5977d9925c71f0e60ac71d0',
   existingTests:
-    'b369bba46a3529bca609ec68368ba2952d6ab785b320b9aec81df77b7fd2018a',
+    'f254a9d95038778b7df002e42d82fe3018664b6fc922e672fc2bee3f021cb2c4',
 } as const;
 
 describe('major-route graphical parity', () => {

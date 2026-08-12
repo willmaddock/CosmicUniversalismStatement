@@ -9,6 +9,14 @@ const publicRoot = fileURLToPath(new URL('../../../../public/', import.meta.url)
 const assetPath = (path: string) => `${publicRoot}${path}`;
 const sha256 = (path: string) =>
   createHash('sha256').update(readFileSync(assetPath(path))).digest('hex');
+const embedSource = readFileSync(
+  new URL('../../../components/media/MediaEmbed.astro', import.meta.url),
+  'utf8',
+);
+const detailRouteSource = readFileSync(
+  new URL('../../../pages/media/[slug].astro', import.meta.url),
+  'utf8',
+);
 
 const expectedAssetHashes = new Map([
   [
@@ -144,5 +152,72 @@ describe('owner-curated Media authority', () => {
     );
     expect(mediaLibrary.every(({ publicationStatus }) => publicationStatus === 'staging'))
       .toBe(true);
+  });
+
+  it('derives both permanent detail routes from the sealed registry', () => {
+    expect(mediaLibrary.map(({ slug }) => slug)).toEqual([
+      'cu-human-moment-2025-05-12',
+      'ai-alignment-through-cucii',
+    ]);
+    expect(detailRouteSource).toContain('export function getStaticPaths()');
+    expect(detailRouteSource).toContain('mediaLibrary.map((entry)');
+    expect(detailRouteSource).toContain('params: { slug: entry.slug }');
+    expect(detailRouteSource).not.toMatch(
+      /params:\s*\{\s*slug:\s*['"](?:cu-human-moment|ai-alignment)/,
+    );
+  });
+
+  it('uses a native click-to-load privacy-enhanced player without an eager iframe', () => {
+    expect(embedSource).toContain('type="button"');
+    expect(embedSource).toContain('data-media-embed-play');
+    expect(embedSource).toContain("document.createElement('iframe')");
+    expect(embedSource).toContain('https://www.youtube-nocookie.com/embed/');
+    expect(embedSource).not.toContain('https://www.youtube.com/embed/');
+    expect(embedSource).not.toMatch(/<iframe\b/);
+    expect(embedSource).toContain('iframe.title = `${title} — YouTube video`');
+    expect(embedSource).toContain("play.addEventListener('click'");
+    expect(embedSource).toContain(':global(.media-embed__frame)');
+    expect(embedSource).not.toMatch(/fetch\(|XMLHttpRequest|youtube.*api/i);
+  });
+
+  it('keeps provider availability owner-controlled with useful fallback content', () => {
+    expect(embedSource).toContain("providerAvailability === 'available'");
+    expect(embedSource).toContain('This provider video is currently unavailable.');
+    expect(embedSource).toMatch(
+      /The\s+transcript and direct YouTube link remain available\./,
+    );
+    expect(embedSource).toContain('target="_blank" rel="noopener noreferrer"');
+    expect(embedSource).not.toMatch(/probe|availability.*fetch|status.*request/i);
+  });
+
+  it('renders the sealed transcript, accessibility links, taxonomy, and provenance statically', () => {
+    expect(detailRouteSource).toContain("import { readFileSync } from 'node:fs'");
+    expect(detailRouteSource).toContain('entry.transcriptPath');
+    expect(detailRouteSource).toContain('transcriptParagraphs.map');
+    expect(detailRouteSource).toContain('sitePath(entry.transcriptPath)');
+    expect(detailRouteSource).toContain('sitePath(entry.captionPath)');
+    expect(detailRouteSource).toContain('<ClassificationBadge');
+    expect(detailRouteSource).toContain('<SourceProvenancePanel');
+    expect(detailRouteSource).toContain('source.establishes');
+    expect(detailRouteSource).toContain('<EpistemicCallout');
+    expect(detailRouteSource).toContain('<ContinuationNavigation');
+    expect(detailRouteSource).not.toContain('<BackToTop');
+    expect(detailRouteSource).not.toContain('<PageGuide');
+    expect(detailRouteSource).not.toContain('<FullWidthFeaturePanel');
+  });
+
+  it('preserves the two explicit claim boundaries on the detail route', () => {
+    expect(detailRouteSource).toContain(
+      'It does not retrain, unlock, certify, permanently alter or align, or override an external model or platform.',
+    );
+    expect(detailRouteSource).toContain(
+      'This presentation does not establish machine consciousness or divine authority.',
+    );
+    expect(detailRouteSource).toContain(
+      'The Cosmic Breath and the B-TOM/C-TOM placement are CU mathematics and interpretation, not empirical cosmological measurements.',
+    );
+    expect(detailRouteSource).toContain(
+      'they do not validate the CU framework or identify Planck time as a TOM.',
+    );
   });
 });
