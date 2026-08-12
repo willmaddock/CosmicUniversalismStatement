@@ -3,6 +3,11 @@ import { existsSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import { mediaLibrary } from '../../../data/media/media-library';
+import {
+  mediaFormats,
+  mediaProviderAvailabilities,
+  mediaPublicationStatuses,
+} from '../../../data/media/media-types';
 import { allResearchClassifications } from '../../../data/research-taxonomy';
 
 const publicRoot = fileURLToPath(new URL('../../../../public/', import.meta.url));
@@ -15,6 +20,22 @@ const embedSource = readFileSync(
 );
 const detailRouteSource = readFileSync(
   new URL('../../../pages/media/[slug].astro', import.meta.url),
+  'utf8',
+);
+const landingRouteSource = readFileSync(
+  new URL('../../../pages/media.astro', import.meta.url),
+  'utf8',
+);
+const cardSource = readFileSync(
+  new URL('../../../components/media/MediaCard.astro', import.meta.url),
+  'utf8',
+);
+const mediaTypesSource = readFileSync(
+  new URL('../../../data/media/media-types.ts', import.meta.url),
+  'utf8',
+);
+const mediaLibrarySource = readFileSync(
+  new URL('../../../data/media/media-library.ts', import.meta.url),
   'utf8',
 );
 
@@ -50,23 +71,56 @@ const cueRanges = (source: string) =>
     .map((match) => [match[1], match[2]] as const);
 
 describe('owner-curated Media authority', () => {
-  it('contains only the two sealed staging records with unique identities', () => {
+  it('preserves the two sealed release fixtures without inventing a future record', () => {
     expect(mediaLibrary).toHaveLength(2);
     expect(mediaLibrary.map(({ id }) => id)).toEqual([
       'cu-human-moment-2025-05-12',
       'ai-alignment-through-cucii',
     ]);
-    expect(new Set(mediaLibrary.map(({ id }) => id)).size).toBe(2);
-    expect(new Set(mediaLibrary.map(({ slug }) => slug)).size).toBe(2);
-    expect(new Set(mediaLibrary.map(({ youtubeId }) => youtubeId)).size).toBe(2);
+    expect(mediaLibrary.map(({ publicationStatus }) => publicationStatus)).toEqual([
+      'staging',
+      'staging',
+    ]);
+    expect(mediaLibrary.map(({ providerAvailability }) => providerAvailability)).toEqual([
+      'available',
+      'available',
+    ]);
+    expect(mediaLibrary.map(({ revision }) => revision)).toEqual(['1.0', '1.0']);
+  });
+
+  it('validates every registry entry through the centralized extension contract', () => {
+    expect(new Set(mediaLibrary.map(({ id }) => id)).size).toBe(mediaLibrary.length);
+    expect(new Set(mediaLibrary.map(({ slug }) => slug)).size).toBe(mediaLibrary.length);
+    expect(new Set(mediaLibrary.map(({ youtubeId }) => youtubeId)).size).toBe(
+      mediaLibrary.length,
+    );
 
     for (const entry of mediaLibrary) {
-      expect(entry.id).toBe(entry.slug);
-      expect(entry.format).toBe('video');
-      expect(entry.publicationStatus).toBe('staging');
-      expect(entry.providerAvailability).toBe('available');
+      expect(entry.id).toMatch(/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
+      expect(entry.slug).toMatch(/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
+      expect(entry.youtubeId).toMatch(/^[A-Za-z0-9_-]{11}$/);
       expect(entry.youtubeUrl).toBe(`https://youtu.be/${entry.youtubeId}`);
-      expect(entry.revision).toBe('1.0');
+      expect(entry.title.trim()).not.toBe('');
+      expect(entry.summary.trim()).not.toBe('');
+      expect(entry.runtime).toMatch(/^PT(?=\d)(?:(?:\d+)H)?(?:(?:\d+)M)?(?:(?:\d+)S)?$/);
+      expect(mediaFormats).toContain(entry.format);
+      expect(mediaPublicationStatuses).toContain(entry.publicationStatus);
+      expect(mediaProviderAvailabilities).toContain(entry.providerAvailability);
+      expect(entry.classifications.length).toBeGreaterThan(0);
+      expect(new Set(entry.classifications).size).toBe(entry.classifications.length);
+      expect(entry.posterPath).toBe(`media/${entry.slug}/thumbnail.png`);
+      expect(entry.transcriptPath).toBe(`media/${entry.slug}/transcript-en.txt`);
+      expect(entry.captionPath).toBe(`media/${entry.slug}/captions-en.vtt`);
+      expect(entry.captionSha256).toMatch(/^[a-f0-9]{64}$/);
+      expect(entry.posterAlt.trim()).not.toBe('');
+      expect(entry.sourceBasis.length).toBeGreaterThan(0);
+      expect(entry.revision.trim()).not.toBe('');
+      if (entry.playlist !== undefined) expect(entry.playlist.trim()).not.toBe('');
+
+      for (const path of [entry.posterPath, entry.transcriptPath, entry.captionPath]) {
+        expect(existsSync(assetPath(path)), path).toBe(true);
+      }
+      expect(sha256(entry.captionPath)).toBe(entry.captionSha256);
     }
   });
 
@@ -112,15 +166,26 @@ describe('owner-curated Media authority', () => {
       expect(sha256(path), path).toBe(expectedHash);
     }
 
+    for (const entry of mediaLibrary) expect(sha256(entry.captionPath)).toBe(entry.captionSha256);
+  });
+
+  it('keeps all captions normalized with ordered non-overlapping cues', () => {
     for (const entry of mediaLibrary) {
-      expect(sha256(entry.captionPath)).toBe(entry.captionSha256);
-      expect(entry.posterPath).not.toMatch(/^\//);
-      expect(entry.transcriptPath).not.toMatch(/^\//);
-      expect(entry.captionPath).not.toMatch(/^\//);
+      const source = readFileSync(assetPath(entry.captionPath), 'utf8');
+      expect(source.startsWith('WEBVTT\n')).toBe(true);
+      expect(source.endsWith('\n')).toBe(true);
+      expect(source.endsWith('\n\n')).toBe(false);
+      expect(source).not.toContain('\r');
+      const cues = cueRanges(source);
+      expect(cues.length).toBeGreaterThan(0);
+      cues.forEach(([start, end], index) => {
+        expect(start < end).toBe(true);
+        if (index > 0) expect(start >= cues[index - 1]![1]).toBe(true);
+      });
     }
   });
 
-  it('keeps corrected caption terminology and ordered non-overlapping cues', () => {
+  it('keeps the sealed fixtures on their approved terminology', () => {
     const human = readFileSync(
       assetPath(mediaLibrary[0].captionPath),
       'utf8',
@@ -133,38 +198,37 @@ describe('owner-curated Media authority', () => {
     expect(human).not.toMatch(/\bB tom\b|\bC tom\b|\bCOM\b|\bPlank\b/i);
     expect(ai).toContain('CUCII');
     expect(ai).not.toMatch(/\bCUCI\b|\bQCI\b|\bCQI\b/i);
-
-    for (const source of [human, ai]) {
-      expect(source.startsWith('WEBVTT\n')).toBe(true);
-      const cues = cueRanges(source);
-      expect(cues.length).toBeGreaterThan(0);
-      cues.forEach(([start, end], index) => {
-        expect(start < end).toBe(true);
-        if (index > 0) expect(start >= cues[index - 1]![1]).toBe(true);
-      });
-    }
   });
 
-  it('contains no API, credential, cache, polling, or release mechanism', () => {
-    const serialized = JSON.stringify(mediaLibrary);
-    expect(serialized).not.toMatch(
-      /api[_ -]?key|oauth|credential|client[_ -]?secret|polling|scheduled workflow|generated cache/i,
+  it('contains no provider API, discovery, cache, polling, or release mechanism', () => {
+    const productionSources = [
+      mediaTypesSource,
+      mediaLibrarySource,
+      landingRouteSource,
+      detailRouteSource,
+      cardSource,
+      embedSource,
+    ].join('\n');
+    expect(productionSources).not.toMatch(
+      /youtube\.googleapis|google cloud|api[_ -]?key|oauth|client[_ -]?secret|fetch\(|XMLHttpRequest|setInterval\(|channel.{0,24}(?:scrap|discover)|generated.{0,16}cache|scheduled.{0,16}(?:sync|poll)/i,
     );
     expect(mediaLibrary.every(({ publicationStatus }) => publicationStatus === 'staging'))
       .toBe(true);
   });
 
-  it('derives both permanent detail routes from the sealed registry', () => {
-    expect(mediaLibrary.map(({ slug }) => slug)).toEqual([
-      'cu-human-moment-2025-05-12',
-      'ai-alignment-through-cucii',
-    ]);
+  it('derives every landing card and permanent detail route from the registry', () => {
+    expect(landingRouteSource).toContain(
+      'mediaLibrary.map((entry) => <MediaCard entry={entry} />)',
+    );
+    expect(cardSource).toContain('entry: MediaEntry');
+    expect(cardSource).toContain('href={sitePath(`media/${entry.slug}/`)}');
     expect(detailRouteSource).toContain('export function getStaticPaths()');
     expect(detailRouteSource).toContain('mediaLibrary.map((entry)');
     expect(detailRouteSource).toContain('params: { slug: entry.slug }');
-    expect(detailRouteSource).not.toMatch(
-      /params:\s*\{\s*slug:\s*['"](?:cu-human-moment|ai-alignment)/,
-    );
+    for (const entry of mediaLibrary) {
+      expect(landingRouteSource).not.toContain(entry.slug);
+      expect(detailRouteSource).not.toContain(`slug: '${entry.slug}'`);
+    }
   });
 
   it('uses a native click-to-load privacy-enhanced player without an eager iframe', () => {

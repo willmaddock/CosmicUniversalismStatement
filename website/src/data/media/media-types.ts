@@ -1,20 +1,29 @@
 import type { ResearchClassification } from '../research-taxonomy';
 
-export type MediaFormat =
-  | 'video'
-  | 'short'
-  | 'written-explainer'
-  | 'diagram-walkthrough'
-  | 'recorded-conversation'
-  | 'audio';
+export const mediaFormats = [
+  'video',
+  'short',
+  'written-explainer',
+  'diagram-walkthrough',
+  'recorded-conversation',
+  'audio',
+] as const;
 
-export type MediaPublicationStatus =
-  | 'staging'
-  | 'published'
-  | 'archived'
-  | 'superseded';
+export type MediaFormat = (typeof mediaFormats)[number];
 
-export type MediaProviderAvailability = 'available' | 'unavailable';
+export const mediaPublicationStatuses = [
+  'staging',
+  'published',
+  'archived',
+  'superseded',
+] as const;
+
+export type MediaPublicationStatus = (typeof mediaPublicationStatuses)[number];
+
+export const mediaProviderAvailabilities = ['available', 'unavailable'] as const;
+
+export type MediaProviderAvailability =
+  (typeof mediaProviderAvailabilities)[number];
 
 export type MediaSource =
   | {
